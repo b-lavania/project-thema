@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bob Lavania — Product & AI Engineering</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f1112;
+    --ink-mid: #3a3f45;
+    --ink-soft: #6b7280;
+    --rule: #e2e4e7;
+    --teal: #0f6e56;
+    --teal-light: #e1f5ee;
+    --teal-mid: #1d9e75;
+    --amber: #ba7517;
+    --amber-light: #faeeda;
+    --blue: #185fa5;
+    --page: #faf9f7;
+    --white: #ffffff;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'Fraunces', serif;
+  }
+
+  html { background: var(--page); }
+
+  body {
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--page);
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 56px 40px 96px;
+  }
+
+  a { color: var(--blue); text-decoration: underline; }
+  a:hover { color: var(--teal); }
+
+  /* ─────────────────────────────────────────
+     BIO / HERO
+  ───────────────────────────────────────── */
+  .bio {
+    border-top: 3px solid var(--teal);
+    padding-top: 32px;
+    margin-bottom: 64px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .bio-kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .bio-headline {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .bio-headline em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--teal);
+  }
+
+  .bio-positioning {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ink-mid);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    max-width: 500px;
+  }
+
+  .bio-capabilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .cap-pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    color: var(--ink-soft);
+    padding: 6px 14px;
+    border-radius: 20px;
+  }
+
+  .bio-contact {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 24px;
+    min-width: 240px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+  }
+
+  .bio-contact-label {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+
+  .bio-contact-row {
+    color: var(--ink-mid);
+    margin-bottom: 8px;
+    line-height: 1.4;
+    font-size: 14px;
+  }
+
+  .bio-contact-row:last-child { margin-bottom: 0; }
+
+  .bio-contact-row a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+  
+  .bio-contact-row a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Interactivity for cards */
+  .sys-card, .proj-card, .prior-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .sys-card:hover, .proj-card:hover, .prior-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+  }
+
+  /* ─────────────────────────────────────────
+     SECTION WRAPPERS
+  ───────────────────────────────────────── */
+  .section {
+    margin-bottom: 64px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ─────────────────────────────────────────
+     CASE STUDY — HERO
+  ───────────────────────────────────────── */
+  .cs-header {
+    margin-bottom: 32px;
+  }
+
+  .cs-kicker {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+
+  .cs-title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 1.15;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .cs-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--teal);
+  }
+
+  .cs-client {
+    font-size: 13px;
+    font-family: var(--mono);
+    color: var(--ink-soft);
+  }
+
+  /* Stats bar */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 36px;
+  }
+
+  .stat {
+    background: var(--white);
+    padding: 22px 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 34px;
+    font-weight: 500;
+    color: var(--teal);
+    line-height: 1;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  /* Two-col */
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 36px;
+  }
+
+  h3 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--ink-mid);
+    margin-bottom: 12px;
+  }
+  p:last-child { margin-bottom: 0; }
+
+  /* System cards */
+  .system-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .sys-card {
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 18px;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sys-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .sys-card.cv::before  { background: var(--teal); }
+  .sys-card.or::before  { background: var(--amber); }
+  .sys-card.sms::before { background: var(--blue); }
+
+  .sys-tag {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+    display: block;
+  }
+  .cv  .sys-tag { color: var(--teal); }
+  .or  .sys-tag { color: var(--amber); }
+  .sms .sys-tag { color: var(--blue); }
+
+  .sys-title {
+    font-weight: 500;
+    font-size: 13.5px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  .sys-desc {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    margin-bottom: 0;
+  }
+
+  /* Evidence callout */
+  .evidence {
+    background: var(--teal-light);
+    border-left: 3px solid var(--teal-mid);
+    padding: 18px 22px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 32px;
+  }
+
+  .evidence p {
+    color: var(--teal);
+    font-size: 13.5px;
+    margin: 0;
+  }
+
+  .evidence strong { font-weight: 500; }
+
+  /* Outcome table */
+  .outcome-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .outcome-row.head { border-bottom: 2px solid var(--ink); }
+
+  .outcome-row.head .cell {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 0 0 10px;
+  }
+
+  .cell {
+    padding: 11px 0;
+    font-size: 13px;
+    color: var(--ink-mid);
+    padding-right: 14px;
+  }
+
+  .cell.mono  { font-family: var(--mono); font-size: 12.5px; }
+  .cell.after { color: var(--teal); font-weight: 500; font-family: var(--mono); font-size: 12.5px; }
+
+  /* ─────────────────────────────────────────
+     OTHER PROJECTS — CARD GRID
+  ───────────────────────────────────────── */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .proj-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 20px 22px;
+  }
+
+  .proj-tag {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .proj-title {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .proj-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ─────────────────────────────────────────
+     PRIOR EXPERIENCE STRIP
+  ───────────────────────────────────────── */
+  .prior-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .prior-card {
+    border-left: 3px solid var(--rule);
+    padding: 4px 0 4px 18px;
+  }
+
+  .prior-co {
+    font-weight: 500;
+    font-size: 13.5px;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .prior-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .prior-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ─────────────────────────────────────────
+     FOOTER
+  ───────────────────────────────────────── */
+  .footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .footer-label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+
+  .contact-line {
+    font-size: 14px;
+    color: var(--ink-mid);
+  }
+
+  .contact-line a {
+    color: var(--blue);
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .footer-tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 15px;
+    color: var(--ink-soft);
+    text-align: right;
+    max-width: 260px;
+    line-height: 1.5;
+  }
+
+  @media print {
+    body { padding: 24px 32px; }
+    .sys-card, .proj-card, .prior-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     BIO / HERO
+══════════════════════════════════════ -->
+<div class="bio">
+  <div class="bio-main">
+    <div class="bio-kicker">Product &amp; AI Engineering</div>
+    <div class="bio-headline">Your ops problem probably<br>has an <em>AI solution</em>. Here's proof.</div>
+    <div class="bio-positioning">I define the product, build the AI, and measure whether it worked.</div>
+    
+    <div class="bio-capabilities">
+      <span class="cap-pill">Operations Research</span>
+      <span class="cap-pill">Bayesian Inference</span>
+      <span class="cap-pill">Product Strategy</span>
+      <span class="cap-pill">Computer Vision</span>
+      <span class="cap-pill">Growth Modeling</span>
+    </div>
+  </div>
+  
+  <div class="bio-contact">
+    <div class="bio-contact-label">Bob Lavania</div>
+    <div class="bio-contact-row"><a href="mailto:xblavania@gmail.com">xblavania@gmail.com</a></div>
+    <div class="bio-contact-row"><a href="https://linkedin.com/in/blavania">linkedin.com/in/blavania</a></div>
+    <div class="bio-contact-row">(312) 772-7962</div>
+    <div class="bio-contact-row" style="margin-top:14px; padding-top:14px; border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: 12px; line-height: 1.5;">
+      Calgary AB &nbsp;·&nbsp; Remote US &amp; Canada<br>
+      <span style="display:inline-block; margin-top:4px;">References available upon request.</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     HERO CASE STUDY — MOOVEZ / QUOTELY
+══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-tag">Featured case study</span>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="cs-header">
+    <div class="cs-kicker">Last-mile delivery &amp; moving · 2024–present</div>
+    <div class="cs-title">Your ops team shouldn't spend<br><em>an hour quoting every job</em></div>
+    <div class="cs-client">
+      Built for <a href="https://moovez.ca">Moovez</a> &nbsp;·&nbsp; Now available as <a href="https://quoteperfectly.com/">Quotely</a> — a standalone SaaS for logistics operators
+    </div>
+  </div>
+
+  <div class="cols" style="margin-bottom: 28px;">
+    <div>
+      <h3>The problem</h3>
+      <p>Manual job quoting is a hidden tax on operations. Every estimate that takes an hour — built from phone calls, visual guesswork, and spreadsheet arithmetic — is an hour not spent on the next job.</p>
+      <p>Worse, manual quotes are unreliable. When actual job times diverge from quoted times, you get billing disputes, unhappy customers, and a support queue that grows with every booking.</p>
+    </div>
+    <div>
+      <h3>What's possible instead</h3>
+      <p>The same quoting problem is solvable with historical job data, computer vision, and operations research — without replacing your existing workflow wholesale.</p>
+      <p>Three interconnected systems were designed, prototyped, and shipped to production for Moovez. The result is now sold as <a href="https://quoteperfectly.com/">Quotely</a> to other operators in the space.</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-num">20×</span>
+      <span class="stat-label">faster quoting<br>1 hr → 3 min per job</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">85%</span>
+      <span class="stat-label">of jobs finish within<br>the quoted time window</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">~50%</span>
+      <span class="stat-label">fewer support tickets<br>needing human response</span>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom: 20px; margin-top: 36px;">How it works</h3>
+  <div class="system-grid">
+    <div class="sys-card cv">
+      <span class="sys-tag">Computer Vision</span>
+      <div class="sys-title">Customers photograph items — the system quotes the job</div>
+      <p class="sys-desc">A CV-based recommendation tool estimates volume, weight class, and handling complexity from photos. No dispatcher call required to start a quote.</p>
+    </div>
+    <div class="sys-card or">
+      <span class="sys-tag">Operations Research</span>
+      <div class="sys-title">Algorithm sets the time, crew size, and truck load</div>
+      <p class="sys-desc">A predictive framework solves job duration, optimal mover count, and 3D bin packing for truck loading simultaneously — trained on your historical job data.</p>
+    </div>
+    <div class="sys-card sms">
+      <span class="sys-tag">Conversational AI</span>
+      <div class="sys-title">SMS agent handles support so your team doesn't have to</div>
+      <p class="sys-desc">A conversational SMS agent handles booking confirmations, reschedules, and common queries — integrated with your ops backend for real-time job status.</p>
+    </div>
+  </div>
+
+  <div class="evidence" style="margin-top: 28px;">
+    <p>This system went from concept to production in a single engagement. It's now a commercialized SaaS product — which means the architecture is proven, not theoretical. <strong>If your operations have similar shape, the same approach applies.</strong></p>
+  </div>
+
+  <h3 style="margin-bottom: 16px; margin-top: 36px;">Results at Moovez</h3>
+  <div class="outcome-row head">
+    <div class="cell">Metric</div>
+    <div class="cell">Before</div>
+    <div class="cell">After</div>
+  </div>
+  <div class="outcome-row">
+    <div class="cell">Time to generate a job estimate</div>
+    <div class="cell mono">~1 hour</div>
+    <div class="cell after">3 minutes</div>
+  </div>
+  <div class="outcome-row">
+    <div class="cell">Jobs completing within quoted time window</div>
+    <div class="cell mono">Unmeasured / high variance</div>
+    <div class="cell after">85% within range</div>
+  </div>
+  <div class="outcome-row">
+    <div class="cell">Support tickets requiring human response</div>
+    <div class="cell mono">~100% of volume</div>
+    <div class="cell after">~50% deflected</div>
+  </div>
+  <div class="outcome-row" style="border-bottom: none;">
+    <div class="cell">Customer-facing cost accuracy</div>
+    <div class="cell mono">Manual guess</div>
+    <div class="cell after">Algorithm-grounded</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     OTHER PROJECTS
+══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-tag">Other project work · 2022–present</span>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="proj-grid">
+    <div class="proj-card">
+      <span class="proj-tag">Analytics · Marketing</span>
+      <div class="proj-title">Bayesian Media Mix Model — Education Marketplace</div>
+      <p class="proj-desc">Replaced last-click attribution with a Bayesian MMM in R. Merged daily spend from six channels, GA4 sessions, and HubSpot offline enrollments into weekly aggregates, applied adstock and hill-function saturation, and ran ridge regression with macro controls to surface true channel contribution.</p>
+    </div>
+
+    <div class="proj-card">
+      <span class="proj-tag">SaaS · Growth</span>
+      <div class="proj-title">Pricing Consolidation — M&amp;A Financing Platform</div>
+      <p class="proj-desc">Consolidated four pricing tiers to three through customer segmentation analysis, improving take rate 3× and reducing churn from plan confusion. Defined the segmentation model and led the migration strategy.</p>
+    </div>
+
+    <div class="proj-card">
+      <span class="proj-tag">Marketplace · Strategy</span>
+      <div class="proj-title">Cybersecurity Marketplace — Network Security Provider</div>
+      <p class="proj-desc">Defined and led design of a new marketplace integrating EDR/MDR products, firewall services, and CVE data enrichment for a networking and cybersecurity solutions provider.</p>
+    </div>
+
+    <div class="proj-card">
+      <span class="proj-tag">API · Fintech</span>
+      <div class="proj-title">Actuarial &amp; Waterfall Model APIs — Series-A Insurance SaaS</div>
+      <p class="proj-desc">Built new APIs exposing actuarial models and waterfall financial models to downstream clients, enabling a Series-A insurance and finance SaaS to productize previously manual advisory processes.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PRIOR EXPERIENCE
+══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-tag">Prior experience</span>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="prior-grid">
+    <div class="prior-card">
+      <div class="prior-co">Netsweeper</div>
+      <div class="prior-meta">Product Manager · 2022–2023 · Remote</div>
+      <p class="prior-desc">Reduced false-positive alerts by 85% for a student-safety product deployed across a 35-school district — driven by problem re-definition, stakeholder alignment, and detection model collaboration.</p>
+    </div>
+
+    <div class="prior-card">
+      <div class="prior-co">BVXpress</div>
+      <div class="prior-meta">PM – Growth & Marketing · 2012–2021 · Chicago, IL</div>
+      <p class="prior-desc">Built the product function from scratch at an M&A advisory firm. Launched 5 products, grew ARPU from $450 to $600, increased retention 14%, and improved landing page conversion by 7% across a 9-year tenure.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<div class="footer">
+  <div>
+    <div class="footer-label">Get in touch</div>
+    <div class="contact-line">
+      <a href="mailto:xblavania@gmail.com">xblavania@gmail.com</a>
+      &nbsp;·&nbsp; (312) 772-7962
+      &nbsp;·&nbsp; <a href="https://linkedin.com/in/blavania">linkedin.com/in/blavania</a>
+    </div>
+  </div>
+  <div class="footer-tagline">I build things that work, then measure whether they do.</div>
+</div>
+
+</body>
+</html>
