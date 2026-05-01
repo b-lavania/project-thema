@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product & AI Engineering: Bob Lavania</title>
+  <meta name="description" content="Turning a 1-hour quote into 3 minutes — end-to-end product & AI engineering with measurable outcomes (20× faster quoting, 85% on-time).">
+  <meta property="og:title" content="Turning a 1-hour quote into 3 minutes — Case Study">
+  <meta property="og:description" content="End-to-end product & AI engineering with measurable outcomes: 20× faster quoting, 85% on-time, ~50% support deflection.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f1112;
+      --ink-mid: #3a3f45;
+      --ink-soft: #5c6370;
+      --ink-light: #8b92a0;
+      --rule: #e8eaed;
+      --teal: #0a5a46;
+      --teal-light: #f1f8f6;
+      --teal-mid: #1d9e75;
+      --amber: #ba7517;
+      --amber-light: #fdf6ec;
+      --blue: #185fa5;
+      --blue-light: #f0f7ff;
+      --page: #faf9f7;
+      --white: #ffffff;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+      --serif: 'Fraunces', serif;
+      
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.04);
+      --radius: 12px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background: var(--page);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--sans);
+      font-size: 19px;
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--page);
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 80px 40px 120px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--teal);
+    }
+
+    /* ── Skip Link ── */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 20px;
+      background: var(--teal);
+      color: var(--white);
+      padding: 12px 24px;
+      z-index: 100;
+      transition: top 0.3s ease;
+    }
+    .skip-link:focus { top: 20px; }
+
+    /* ── Typography ── */
+    h1, h2, h3 {
+      font-family: var(--serif);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    h1 { font-size: 64px; margin-bottom: 24px; }
+    h1 em { font-style: italic; font-weight: 300; color: var(--teal); }
+    
+    h2 { font-size: 32px; margin-bottom: 20px; }
+    h3 { font-size: 24px; margin-bottom: 16px; }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .subhead {
+      font-size: 22px;
+      color: var(--ink-mid);
+      margin-bottom: 32px;
+      max-width: 800px;
+      line-height: 1.5;
+    }
+
+    /* ── Header & Hero ── */
+    header {
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .contact-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 40px;
+    }
+
+    .contact-name {
+      font-family: var(--serif);
+      font-size: 21px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      line-height: 1.15;
+    }
+
+    .contact-details {
+      font-size: 14px;
+      color: var(--ink-mid);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .contact-details a { text-decoration: none; }
+    .contact-details a:hover { text-decoration: underline; }
+
+    .contact-card .btn-group {
+      margin-top: 14px;
+      gap: 8px;
+    }
+    .contact-card .btn-group + .btn-group {
+      margin-top: 6px;
+    }
+
+    .contact-card .btn {
+      padding: 9px 12px;
+      font-size: 14px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      text-align: center;
+      flex: 1;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: var(--white);
+      border: 1px solid var(--teal);
+    }
+    .btn-primary:hover { background: #084838; transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--ink);
+      border: 1px solid var(--rule);
+    }
+    .btn-secondary:hover { border-color: var(--ink); }
+
+    /* ── Logo Strip ── */
+    .brand-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .brand-label {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .logo-img {
+      height: 52px;
+      width: auto;
+      filter: grayscale(1) contrast(0.8);
+      transition: filter 0.3s ease;
+    }
+    .logo-img:hover { filter: none; }
+
+    /* ── Impact Dashboard ── */
+    .impact-dashboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .impact-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease;
+    }
+    .impact-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+
+    .impact-num {
+      font-family: var(--serif);
+      font-size: 50px;
+      font-weight: 600;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .impact-desc {
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.4;
+    }
+
+    /* ── Narrative Sections ── */
+    .narrative {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-bottom: 80px;
+    }
+
+    .narrative h2 { border-bottom: 1px solid var(--rule); padding-bottom: 16px; margin-bottom: 32px; }
+
+    /* ── System Cards ── */
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+
+    .sys-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sys-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+    }
+    .sys-cv::after { background: var(--teal); }
+    .sys-or::after { background: var(--amber); }
+    .sys-ai::after { background: var(--blue); }
+
+    .sys-icon { font-size: 26px; line-height: 1.2; flex-shrink: 0; }
+    .sys-tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .sys-cv .sys-tag { color: var(--teal); }
+    .sys-or .sys-tag { color: var(--amber); }
+    .sys-ai .sys-tag { color: var(--blue); }
+
+    .sys-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sys-title-row .sys-title { flex: 1; min-width: 0; }
+
+    .sys-title { font-weight: 700; font-size: 18px; line-height: 1.3; }
+    .sys-desc { font-size: 15px; color: var(--ink-mid); line-height: 1.6; }
+
+    /* ── Evidence Box ── */
+    .evidence-box {
+      background: var(--teal-light);
+      border-left: 6px solid var(--teal);
+      padding: 48px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 80px;
+      font-style: italic;
+      color: var(--teal);
+      font-size: 21px;
+      line-height: 1.6;
+    }
+
+    /* ── Outcomes Table ── */
+    .table-container {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 40px;
+      margin-bottom: 32px;
+    }
+
+    .outcome-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .outcome-table th {
+      font-family: var(--mono);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-light);
+      text-align: left;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .outcome-table td {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 17px;
+    }
+
+    .td-metric { font-weight: 500; color: var(--ink); }
+    .td-before { color: var(--ink-soft); }
+    .td-after { color: var(--teal); font-weight: 700; }
+
+    /* ── Growth & GTM Automation ── */
+    .growth-section {
+      margin-bottom: 64px;
+    }
+    .growth-section h2 {
+      margin-bottom: 12px;
+    }
+    .section-intro {
+      color: var(--ink-mid);
+      font-size: 17px;
+      line-height: 1.55;
+      max-width: 760px;
+      margin-bottom: 28px;
+    }
+    .growth-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .growth-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .metric-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+    .metric-pill {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #c2dfd7;
+      border-radius: 999px;
+      background: var(--teal-light);
+      color: var(--teal);
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.2;
+      padding: 5px 8px;
+    }
+
+    /* ── Bottom Sections ── */
+    .bottom-section {
+      margin-top: 48px;
+      padding-top: 48px;
+      border-top: 2px solid var(--rule);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .card-sm {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all 0.2s ease;
+    }
+    .card-sm:hover { border-color: var(--blue); transform: translateY(-2px); }
+
+    /* ── Contact Reveal ── */
+    .contact-reveal {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: var(--blue);
+      font-size: 15px;
+      transition: color 0.2s ease;
+    }
+    .contact-reveal:hover { color: var(--teal); }
+    .contact-reveal::before {
+      content: '🔒';
+      font-size: 12px;
+    }
+    .contact-reveal.revealed::before {
+      content: '✓';
+      color: var(--teal);
+    }
+    .contact-reveal.revealed {
+      cursor: default;
+      color: var(--ink-mid);
+    }
+
+    .card-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .card-title { font-weight: 700; font-size: 17px; margin-bottom: 8px; display: block; text-decoration: none; color: var(--ink); }
+    .card-sm a.card-title {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .card-sm a.card-title:hover { color: var(--teal); }
+    .card-desc { font-size: 14px; color: var(--ink-mid); line-height: 1.5; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 48px;
+      padding-top: 64px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .footer-left { max-width: 500px; }
+    .footer-tag { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-soft); }
+
+    /* ── Scroll Progress Bar ── */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      width: 0%;
+      height: 3px;
+      background: var(--teal-mid);
+      z-index: 999;
+      transition: width 0.1s linear;
+    }
+
+    /* ── Availability Badge ── */
+    .availability-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal);
+      background: var(--teal-light);
+      border: 1px solid #c2dfd7;
+      border-radius: 20px;
+      padding: 3px 8px;
+      margin-bottom: 10px;
+    }
+    .availability-badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal-mid);
+      flex-shrink: 0;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .contact-seeking {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+    .contact-seeking strong { color: var(--ink-mid); font-weight: 500; }
+
+    /* ── How I Work ── */
+    .how-i-work {
+      margin-bottom: 48px;
+    }
+    .how-i-work h2 {
+      margin-bottom: 28px;
+    }
+    .work-principles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .principle {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .principle::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 3px;
+      background: var(--teal-mid);
+      opacity: 0.5;
+    }
+    .principle-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-light);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .principle-title {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .principle-desc {
+      font-size: 14px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+
+    /* ── Bottom CTA ── */
+    .bottom-cta {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      text-align: left;
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+    .bottom-cta h2 {
+      color: var(--ink);
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    .bottom-cta h2 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--teal);
+    }
+    .bottom-cta p {
+      color: var(--ink-mid);
+      font-size: 16px;
+      margin-bottom: 0;
+      max-width: 680px;
+    }
+    .btn-cta {
+      display: inline-block;
+      background: var(--teal);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(10,90,70,0.12);
+      flex-shrink: 0;
+    }
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(10,90,70,0.18);
+      color: var(--white);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      body { padding: 40px 24px; }
+      .hero-layout { grid-template-columns: 1fr; gap: 40px; }
+      .contact-card { position: static; width: 100%; }
+      .impact-dashboard, .systems-grid, .narrative, .grid-2, .work-principles, .growth-grid { grid-template-columns: 1fr; gap: 32px; }
+      h1 { font-size: 48px; }
+      .brand-strip { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .bottom-cta { padding: 28px 24px; flex-direction: column; align-items: flex-start; }
+      .bottom-cta h2 { font-size: 28px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header role="banner">
+    <div class="hero-layout">
+      <div class="hero-main">
+        <span class="kicker">Case Study: Logistics & AI Engineering</span>
+        <h1>Turning a 1-hour quote into <em>3 minutes</em></h1>
+        <p class="subhead">How I rebuilt the estimation engine for a last-mile delivery brokerage, delivering a 20× speed improvement and systemizing their entire operational workflow.</p>
+        
+        <div class="brand-strip">
+          <span class="brand-label">The Work:</span>
+          <div class="logo-container">
+            <img src="moovez_logo.png" alt="Moovez" class="logo-img" title="Built for Moovez">
+            <img src="quotely_logo.png" alt="Quotely" class="logo-img" title="Commercialized as Quotely">
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="availability-badge">Open to opportunities</div>
+        <div class="contact-name">Bob Lavania</div>
+        <div class="contact-seeking">
+          <strong>Founding Engineer · Head of Product · AI/ML</strong><br>
+          Seed → Series B &nbsp;·&nbsp; SF / Remote
+        </div>
+        <div class="contact-details">
+          <span>San Francisco, CA &nbsp;·&nbsp; Calgary, AB</span>
+          <span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span>
+        </div>
+        <div class="btn-group">
+          <a href="https://linkedin.com/in/blavania" class="btn btn-primary">LinkedIn</a>
+          <a href="https://github.com/blavania" class="btn btn-secondary">GitHub</a>
+        </div>
+        <div class="btn-group">
+          <a href="https://calendar.app.google/xhEvxBTPuG3CuTFg8" class="btn btn-secondary" style="flex: unset; width: 100%;">Book 15 min →</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" role="main">
+    <!-- Impact Dashboard -->
+    <div class="impact-dashboard">
+      <div class="impact-card">
+        <span class="impact-num" data-count="20" data-suffix="×">20×</span>
+        <p class="impact-desc">Faster quoting engine<br>1 hr → 3 min per job</p>
+      </div>
+      <div class="impact-card">
+        <span class="impact-num" data-count="85" data-suffix="%">85%</span>
+        <p class="impact-desc">Scheduling accuracy<br>Jobs finish in quoted window</p>
+      </div>
+      <div class="impact-card">
+        <span class="impact-num" data-count="50" data-prefix="~" data-suffix="%">~50%</span>
+        <p class="impact-desc">Support deflection<br>Automated via SMS AI agent</p>
+      </div>
+    </div>
+
+    <!-- Narrative -->
+    <div class="narrative">
+      <section>
+        <h2>The Problem</h2>
+        <p>Moovez, a last-mile delivery brokerage, was quoting jobs manually. Every estimate required a dispatcher to spend an average of one hour on phone calls, visual guesswork, and spreadsheet arithmetic.</p>
+        <p>The quotes were unreliable, leading to billing disputes and unpredictable scheduling. The support burden grew linearly with volume, creating a bottleneck that prevented the company from scaling efficiently.</p>
+      </section>
+      <section>
+        <h2>The Approach</h2>
+        <p>Instead of patching the existing process, I rebuilt the estimation and operations workflow from first principles. By leveraging historical job data, computer vision, and operations research, I defined three interconnected systems.</p>
+        <p>The goal was to transform a manual, subjective process into an algorithm-grounded, automated engine that could be commercialized as a standalone SaaS: <strong>Quotely</strong>.</p>
+      </section>
+    </div>
+
+    <!-- Systems Built -->
+    <section class="systems">
+      <span class="kicker">The Solution</span>
+      <h2 style="margin-bottom: 48px;">Three Interconnected Systems</h2>
+      <div class="systems-grid">
+        <div class="sys-card sys-cv">
+          <span class="sys-tag">Computer Vision</span>
+          <div class="sys-title-row">
+            <span class="sys-icon" aria-hidden="true">📷</span>
+            <div class="sys-title">Visual Cost Estimation Tool</div>
+          </div>
+          <p class="sys-desc">Replaced manual inventory calls with a CV model. Customers photograph items; the model estimates volume and complexity to generate instant quotes.</p>
+        </div>
+        <div class="sys-card sys-or">
+          <span class="sys-tag">Operations Research</span>
+          <div class="sys-title-row">
+            <span class="sys-icon" aria-hidden="true">📊</span>
+            <div class="sys-title">Job-Time & Mover Allocation</div>
+          </div>
+          <p class="sys-desc">A predictive framework solving duration, optimal mover count, and 3D bin packing—trained on years of historical job performance data.</p>
+        </div>
+        <div class="sys-card sys-ai">
+          <span class="sys-tag">Conversational AI</span>
+          <div class="sys-title-row">
+            <span class="sys-icon" aria-hidden="true">💬</span>
+            <div class="sys-title">SMS-Based Support Agent</div>
+          </div>
+          <p class="sys-desc">Built an automated SMS agent handling bookings, schedule changes, and queries, integrated directly with the operations backend.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Evidence -->
+    <div class="evidence-box">
+      "I engineered this entire system as a single contributor—from mining data to defining the predictive frameworks and driving production deployment."
+    </div>
+
+    <!-- How I Work -->
+    <section class="how-i-work">
+      <span class="kicker">Operating Style</span>
+      <h2>How I work</h2>
+      <div class="work-principles">
+        <div class="principle">
+          <span class="principle-num">01</span>
+          <div class="principle-title">Outcomes over outputs</div>
+          <p class="principle-desc">I define the metric first, then build until it moves. I don't hand off work — I own it until it's measurably better.</p>
+        </div>
+        <div class="principle">
+          <span class="principle-num">02</span>
+          <div class="principle-title">0 → 1, then 1 → scale</div>
+          <p class="principle-desc">I go solo from blank slate to working system, then design the handoff so the thing keeps running without me.</p>
+        </div>
+        <div class="principle">
+          <span class="principle-num">03</span>
+          <div class="principle-title">Build fast, measure everything</div>
+          <p class="principle-desc">Speed matters at early stages. I ship, instrument, learn, and deprecate what doesn't work — no attachment to the artifact.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Measured Outcomes -->
+    <section class="table-container">
+      <h2 style="margin-bottom: 32px;">Measured Outcomes</h2>
+      <table class="outcome-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Before</th>
+            <th>After</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-metric">Time to generate a job estimate</td>
+            <td class="td-before">~1 hour</td>
+            <td class="td-after">3 minutes</td>
+          </tr>
+          <tr>
+            <td class="td-metric">Jobs completing within quoted window</td>
+            <td class="td-before">Unmeasured / High variance</td>
+            <td class="td-after">85% within range</td>
+          </tr>
+          <tr>
+            <td class="td-metric">Support tickets requiring human touch</td>
+            <td class="td-before">~100% of volume</td>
+            <td class="td-after">~50% deflected</td>
+          </tr>
+          <tr>
+            <td class="td-metric">Cost accuracy</td>
+            <td class="td-before">Manual guess</td>
+            <td class="td-after">Algorithm-grounded</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Growth & GTM Automation -->
+    <section class="growth-section">
+      <span class="kicker">Growth & GTM Automation</span>
+      <h2>Growth systems beyond the product surface</h2>
+      <p class="section-intro">I've also worked on the GTM side of product: using customer feedback, usage patterns, automation, and lead-routing workflows to improve retention, conversion, and ARPU.</p>
+      <div class="growth-grid">
+        <div class="growth-card">
+          <span class="card-tag">BVXpress</span>
+          <div class="card-title">GTM automation for technical SaaS</div>
+          <p class="card-desc">Built personalized onboarding, usage-research surveys, marketing automation, and a new knowledge-base site for 1,400+ users.</p>
+          <div class="metric-row">
+            <span class="metric-pill">+14% retention</span>
+            <span class="metric-pill">+7% conversion</span>
+            <span class="metric-pill">$450 → $600 ARPU</span>
+          </div>
+        </div>
+        <div class="growth-card">
+          <span class="card-tag">Education Marketplace</span>
+          <div class="card-title">Lead qualification system</div>
+          <p class="card-desc">Launched a 6-question Course Fit Calculator that scored prospects, wrote intent data to Zoho, and routed Tier-A leads to SDRs.</p>
+          <div class="metric-row">
+            <span class="metric-pill">40% faster follow-up</span>
+            <span class="metric-pill">9% → 30% enrollment</span>
+          </div>
+        </div>
+        <div class="growth-card">
+          <span class="card-tag">Automation Playbook</span>
+          <div class="card-title">Journey, data, and measurement</div>
+          <p class="card-desc">I map user journeys, identify system hand-offs, automate APIs and webhooks, then segment lifecycle messaging around measurable lift.</p>
+          <div class="metric-row">
+            <span class="metric-pill">MQL → SQL</span>
+            <span class="metric-pill">Pipeline velocity</span>
+            <span class="metric-pill">CAC payback</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Other Projects -->
+    <section class="bottom-section">
+      <span class="kicker">Range & Background</span>
+      <h2 style="margin-bottom: 48px;">Other Project Work</h2>
+      <div class="grid-2">
+        <div class="card-sm">
+          <span class="card-tag">Energy Infrastructure</span>
+          <a href="https://epsilon.xblavania.workers.dev/" class="card-title">Project Epsilon: Microgrid Financial Modeling</a>
+          <p class="card-desc">End-to-end platform for microgrid siting and LCOE analysis. Generates automated Bill of Materials (BOM) for infrastructure projects.</p>
+        </div>
+        <div class="card-sm">
+          <span class="card-tag">Unit Economics</span>
+          <a href="https://churnos.xblavania.workers.dev/" class="card-title">ChurnOS: Retention & Attribution Modeling</a>
+          <p class="card-desc">Causal analytics platform for retention forecasting and conversion rate optimization (CRO) using Bayesian inference.</p>
+        </div>
+        <div class="card-sm">
+          <span class="card-tag">Prior Experience</span>
+          <span class="card-title">Netsweeper · Product Manager</span>
+          <p class="card-desc">Reduced false-positive alerts by 85% for a student-safety product deployed across 35 school districts.</p>
+        </div>
+        <div class="card-sm">
+          <span class="card-tag">Prior Experience</span>
+          <span class="card-title">BVXpress · PM – Growth</span>
+          <p class="card-desc">Built the product function from scratch at an M&A firm, launching five products across research, workflow, and growth operations.</p>
+        </div>
+      </div>
+    </section>
+    <!-- Bottom CTA -->
+    <div class="bottom-cta">
+      <div>
+        <h2>Useful at the <em>messy stage.</em></h2>
+        <p>I'm interested in roles where product judgment, engineering execution, and measurable outcomes all matter.</p>
+      </div>
+      <a href="https://calendar.app.google/xhEvxBTPuG3CuTFg8" class="btn-cta">Book 15 min →</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-left">
+      <div class="contact-details">
+        <span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span>
+        <a href="https://linkedin.com/in/blavania">linkedin.com/in/blavania</a>
+      </div>
+    </div>
+    <div class="footer-right">
+      <p class="footer-tag">I build things that work, then measure whether they do.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Contact reveal
+    document.querySelectorAll('.contact-reveal').forEach(el => {
+      el.addEventListener('click', function() {
+        if (this.classList.contains('revealed')) return;
+        const decoded = atob(this.dataset.v);
+        const link = document.createElement('a');
+        link.href = 'mailto:' + decoded;
+        link.textContent = decoded;
+        this.replaceWith(link);
+      });
+    });
+
+    // Scroll progress bar
+    const bar = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+    }, { passive: true });
+
+    // Animated stat counters
+    const counters = document.querySelectorAll('.impact-num[data-count]');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isObserving && entry.isIntersecting) {
+          entry.isObserving = true;
+          const el = entry.target;
+          const target = parseInt(el.dataset.count, 10);
+          const prefix = el.dataset.prefix || '';
+          const suffix = el.dataset.suffix || '';
+          const duration = 1200;
+          const startTime = performance.now();
+
+          function tick(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(eased * target);
+            el.textContent = prefix + current + suffix;
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(c => counterObserver.observe(c));
+  </script>
+</body>
+
+</html>

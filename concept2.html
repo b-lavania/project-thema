@@ -19,7 +19,10 @@
     --amber: #ba7517;
     --amber-light: #faeeda;
     --blue: #185fa5;
+    --purple: #6b46c1;
+    --purple-light: #f3f4ff;
     --page: #faf9f7;
+    --page-alt: #f3f2f0;
     --white: #ffffff;
     --mono: 'DM Mono', monospace;
     --sans: 'DM Sans', sans-serif;
@@ -30,13 +33,13 @@
 
   body {
     font-family: var(--sans);
-    font-size: 15px;
-    line-height: 1.65;
+    font-size: 16px;
+    line-height: 1.7;
     color: var(--ink);
     background: var(--page);
-    max-width: 860px;
+    max-width: 1080px;
     margin: 0 auto;
-    padding: 56px 40px 96px;
+    padding: 56px 32px 96px;
   }
 
   a { color: var(--blue); text-decoration: underline; }
@@ -46,8 +49,8 @@
      BIO / HERO
   ───────────────────────────────────────── */
   .bio {
-    border-top: 3px solid var(--teal);
-    padding-top: 32px;
+    border-top: 4px solid var(--teal);
+    padding-top: 40px;
     margin-bottom: 64px;
     display: grid;
     grid-template-columns: 1fr auto;
@@ -67,7 +70,7 @@
   .bio-headline {
     font-family: var(--serif);
     font-weight: 600;
-    font-size: 42px;
+    font-size: 44px;
     line-height: 1.15;
     letter-spacing: -0.01em;
     color: var(--ink);
@@ -84,7 +87,7 @@
     font-size: 18px;
     font-weight: 400;
     color: var(--ink-mid);
-    line-height: 1.5;
+    line-height: 1.6;
     margin-bottom: 24px;
     max-width: 500px;
   }
@@ -112,7 +115,7 @@
     border: 1px solid var(--rule);
     border-radius: 8px;
     padding: 24px;
-    min-width: 240px;
+    min-width: 260px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.03);
   }
 
@@ -199,7 +202,7 @@
   .cs-title {
     font-family: var(--serif);
     font-weight: 600;
-    font-size: 34px;
+    font-size: 36px;
     line-height: 1.15;
     color: var(--ink);
     letter-spacing: -0.01em;
@@ -218,46 +221,60 @@
     color: var(--ink-soft);
   }
 
-  /* Stats bar */
+  /* Stats bar - Enhanced */
   .stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
     background: var(--rule);
     border: 1px solid var(--rule);
-    border-radius: 6px;
+    border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 36px;
+    margin-bottom: 48px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
   }
 
   .stat {
     background: var(--white);
-    padding: 22px 20px;
+    padding: 28px 20px;
     text-align: center;
+    position: relative;
   }
+
+  .stat::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .stat:last-child::after { display: none; }
 
   .stat-num {
     font-family: var(--mono);
-    font-size: 34px;
+    font-size: 42px;
     font-weight: 500;
     color: var(--teal);
     line-height: 1;
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .stat-label {
     font-size: 12px;
     color: var(--ink-soft);
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
   /* Two-col */
   .cols {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 36px;
+    gap: 48px;
+    margin-bottom: 48px;
   }
 
   h3 {
@@ -266,41 +283,47 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--teal);
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--rule);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--rule);
   }
 
   p {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.8;
     color: var(--ink-mid);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
   p:last-child { margin-bottom: 0; }
 
-  /* System cards */
+  /* System cards - Enhanced with icons */
   .system-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-bottom: 28px;
+    gap: 20px;
+    margin-bottom: 32px;
   }
 
   .sys-card {
     border: 1px solid var(--rule);
-    border-radius: 6px;
-    padding: 18px;
+    border-radius: 8px;
+    padding: 24px;
     background: var(--white);
     position: relative;
     overflow: hidden;
+    transition: all 0.2s ease;
   }
 
   .sys-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 3px;
+    height: 4px;
+  }
+
+  .sys-card:hover {
+    border-color: var(--teal);
+    box-shadow: 0 4px 12px rgba(15, 110, 86, 0.1);
   }
 
   .sys-card.cv::before  { background: var(--teal); }
@@ -312,72 +335,85 @@
     font-size: 9.5px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-bottom: 7px;
+    margin-bottom: 10px;
     display: block;
   }
   .cv  .sys-tag { color: var(--teal); }
   .or  .sys-tag { color: var(--amber); }
   .sms .sys-tag { color: var(--blue); }
 
+  .sys-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
   .sys-title {
-    font-weight: 500;
-    font-size: 13.5px;
-    margin-bottom: 8px;
-    line-height: 1.3;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 10px;
+    line-height: 1.4;
     color: var(--ink);
   }
 
   .sys-desc {
-    font-size: 12.5px;
+    font-size: 13px;
     color: var(--ink-soft);
-    line-height: 1.65;
+    line-height: 1.7;
     margin-bottom: 0;
   }
 
-  /* Evidence callout */
+  /* Evidence callout - Enhanced */
   .evidence {
-    background: var(--teal-light);
-    border-left: 3px solid var(--teal-mid);
-    padding: 18px 22px;
-    border-radius: 0 6px 6px 0;
-    margin-bottom: 32px;
+    background: linear-gradient(135deg, var(--teal-light) 0%, #d0f0e3 100%);
+    border-left: 4px solid var(--teal-mid);
+    padding: 24px 28px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
   }
 
   .evidence p {
     color: var(--teal);
-    font-size: 13.5px;
+    font-size: 14px;
     margin: 0;
+    font-weight: 500;
   }
 
-  .evidence strong { font-weight: 500; }
+  .evidence strong { font-weight: 600; }
 
-  /* Outcome table */
+  /* Outcome table - Enhanced */
   .outcome-row {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     border-bottom: 1px solid var(--rule);
+    transition: background 0.2s ease;
   }
+
+  .outcome-row:hover { background: rgba(15, 110, 86, 0.03); }
 
   .outcome-row.head { border-bottom: 2px solid var(--ink); }
 
   .outcome-row.head .cell {
     font-family: var(--mono);
-    font-size: 9.5px;
+    font-size: 10px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    padding: 0 0 10px;
+    padding: 0 0 12px;
   }
 
   .cell {
-    padding: 11px 0;
-    font-size: 13px;
+    padding: 14px 0;
+    font-size: 14px;
     color: var(--ink-mid);
-    padding-right: 14px;
+    padding-right: 16px;
   }
 
-  .cell.mono  { font-family: var(--mono); font-size: 12.5px; }
-  .cell.after { color: var(--teal); font-weight: 500; font-family: var(--mono); font-size: 12.5px; }
+  .cell.mono  { font-family: var(--mono); font-size: 13px; }
+  .cell.after { color: var(--teal); font-weight: 600; font-family: var(--mono); font-size: 13px; }
+  .cell.arrow { text-align: center; }
+  .arrow-up { color: var(--teal); font-size: 18px; }
 
   /* ─────────────────────────────────────────
      OTHER PROJECTS — CARD GRID
@@ -385,14 +421,20 @@
   .proj-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 20px;
   }
 
   .proj-card {
     background: var(--white);
     border: 1px solid var(--rule);
-    border-radius: 6px;
-    padding: 20px 22px;
+    border-radius: 8px;
+    padding: 24px;
+    transition: all 0.2s ease;
+  }
+
+  .proj-card:hover {
+    border-color: var(--blue);
+    box-shadow: 0 4px 12px rgba(24, 95, 165, 0.1);
   }
 
   .proj-tag {
@@ -401,22 +443,22 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     display: block;
   }
 
   .proj-title {
-    font-weight: 500;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 15px;
     color: var(--ink);
-    margin-bottom: 8px;
-    line-height: 1.3;
+    margin-bottom: 10px;
+    line-height: 1.4;
   }
 
   .proj-desc {
-    font-size: 13px;
-    color: var(--ink-soft);
-    line-height: 1.65;
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.7;
     margin: 0;
   }
 
@@ -426,19 +468,25 @@
   .prior-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 20px;
   }
 
   .prior-card {
-    border-left: 3px solid var(--rule);
-    padding: 4px 0 4px 18px;
+    border-left: 4px solid var(--rule);
+    padding: 4px 0 4px 20px;
+    transition: all 0.2s ease;
+  }
+
+  .prior-card:hover {
+    border-left-color: var(--teal);
+    padding-left: 24px;
   }
 
   .prior-co {
-    font-weight: 500;
-    font-size: 13.5px;
+    font-weight: 600;
+    font-size: 14px;
     color: var(--ink);
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
 
   .prior-meta {
@@ -446,13 +494,13 @@
     font-size: 10px;
     color: var(--ink-soft);
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .prior-desc {
-    font-size: 13px;
-    color: var(--ink-soft);
-    line-height: 1.65;
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.7;
     margin: 0;
   }
 
@@ -461,7 +509,7 @@
   ───────────────────────────────────────── */
   .footer {
     border-top: 1px solid var(--rule);
-    padding-top: 28px;
+    padding-top: 32px;
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
@@ -470,11 +518,11 @@
 
   .footer-label {
     font-family: var(--mono);
-    font-size: 9.5px;
+    font-size: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .contact-line {
@@ -492,11 +540,95 @@
     font-family: var(--serif);
     font-style: italic;
     font-weight: 300;
-    font-size: 15px;
+    font-size: 16px;
     color: var(--ink-soft);
     text-align: right;
-    max-width: 260px;
+    max-width: 280px;
+    line-height: 1.6;
+  }
+
+  /* ─────────────────────────────────────────
+     TECH STACK BADGES
+  ───────────────────────────────────────── */
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .tech-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    color: var(--ink-mid);
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+
+  /* ─────────────────────────────────────────
+     IMPACT HIGHLIGHTS
+  ───────────────────────────────────────── */
+  .impact-highlight {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+
+  .impact-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .impact-item {
+    text-align: center;
+  }
+
+  .impact-num {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .impact-label {
+    font-size: 13px;
+    color: var(--ink-mid);
     line-height: 1.5;
+  }
+
+  /* ─────────────────────────────────────────
+     RESPONSIVE
+  ───────────────────────────────────────── */
+  @media (max-width: 768px) {
+    body { padding: 40px 20px 80px; }
+    
+    .bio { grid-template-columns: 1fr; gap: 32px; }
+    .bio-contact { min-width: auto; }
+    
+    .cs-title { font-size: 30px; }
+    
+    .stats, .impact-grid { grid-template-columns: 1fr; }
+    
+    .cols, .proj-grid, .prior-grid { grid-template-columns: 1fr; }
+    
+    .footer { grid-template-columns: 1fr; text-align: center; }
+    .footer-tagline { text-align: center; }
   }
 
   @media print {
@@ -507,7 +639,7 @@
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
+<!-- ════════════════════════���═════════════
      BIO / HERO
 ══════════════════════════════════════ -->
 <div class="bio">
@@ -522,6 +654,16 @@
       <span class="cap-pill">Product Strategy</span>
       <span class="cap-pill">Computer Vision</span>
       <span class="cap-pill">Growth Modeling</span>
+    </div>
+    
+    <div class="tech-stack">
+      <span class="tech-badge">Python</span>
+      <span class="tech-badge">TensorFlow</span>
+      <span class="tech-badge">PyTorch</span>
+      <span class="tech-badge">R</span>
+      <span class="tech-badge">SQL</span>
+      <span class="tech-badge">AWS</span>
+      <span class="tech-badge">Cloudflare Workers</span>
     </div>
   </div>
   
@@ -555,7 +697,26 @@
     </div>
   </div>
 
-  <div class="cols" style="margin-bottom: 28px;">
+  <!-- Impact Highlights -->
+  <div class="impact-highlight">
+    <div class="impact-title">Results at a glance</div>
+    <div class="impact-grid">
+      <div class="impact-item">
+        <div class="impact-num">20×</div>
+        <div class="impact-label">Faster quoting<br><span style="font-size:11px; color:var(--ink-soft);">1 hr → 3 min per job</span></div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-num">85%</div>
+        <div class="impact-label">Jobs within quoted time<br><span style="font-size:11px; color:var(--ink-soft);">Predictable scheduling</span></div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-num">~50%</div>
+        <div class="impact-label">Fewer support tickets<br><span style="font-size:11px; color:var(--ink-soft);">SMS agent deflection</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols">
     <div>
       <h3>The problem</h3>
       <p>Manual job quoting is a hidden tax on operations. Every estimate that takes an hour — built from phone calls, visual guesswork, and spreadsheet arithmetic — is an hour not spent on the next job.</p>
@@ -568,42 +729,31 @@
     </div>
   </div>
 
-  <div class="stats">
-    <div class="stat">
-      <span class="stat-num">20×</span>
-      <span class="stat-label">faster quoting<br>1 hr → 3 min per job</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">85%</span>
-      <span class="stat-label">of jobs finish within<br>the quoted time window</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">~50%</span>
-      <span class="stat-label">fewer support tickets<br>needing human response</span>
-    </div>
-  </div>
-
   <h3 style="margin-bottom: 20px; margin-top: 36px;">How it works</h3>
   <div class="system-grid">
     <div class="sys-card cv">
       <span class="sys-tag">Computer Vision</span>
+      <span class="sys-icon">📷</span>
       <div class="sys-title">Customers photograph items — the system quotes the job</div>
       <p class="sys-desc">A CV-based recommendation tool estimates volume, weight class, and handling complexity from photos. No dispatcher call required to start a quote.</p>
     </div>
     <div class="sys-card or">
       <span class="sys-tag">Operations Research</span>
+      <span class="sys-icon">📊</span>
       <div class="sys-title">Algorithm sets the time, crew size, and truck load</div>
       <p class="sys-desc">A predictive framework solves job duration, optimal mover count, and 3D bin packing for truck loading simultaneously — trained on your historical job data.</p>
     </div>
     <div class="sys-card sms">
       <span class="sys-tag">Conversational AI</span>
+      <span class="sys-icon">💬</span>
       <div class="sys-title">SMS agent handles support so your team doesn't have to</div>
       <p class="sys-desc">A conversational SMS agent handles booking confirmations, reschedules, and common queries — integrated with your ops backend for real-time job status.</p>
     </div>
   </div>
 
   <div class="evidence" style="margin-top: 28px;">
-    <p>This system went from concept to production in a single engagement. It's now a commercialized SaaS product — which means the architecture is proven, not theoretical. <strong>If your operations have similar shape, the same approach applies.</strong></p>
+    <p><strong>Engineered end-to-end by a single contributor</strong> — from mining historical job data and defining the predictive framework, through rapid prototyping and validation, to driving engineering collaboration for production deployment.</p>
+    <p style="margin-top: 12px; font-size: 13px;">The resulting system is now commercialized as <strong><a href="https://quoteperfectly.com/" style="color: var(--teal);">Quotely</a></strong>, sold as a standalone SaaS product to other operators.</p>
   </div>
 
   <h3 style="margin-bottom: 16px; margin-top: 36px;">Results at Moovez</h3>
@@ -647,8 +797,8 @@
   <div class="proj-grid">
     <div class="proj-card">
       <span class="proj-tag">Analytics · Marketing</span>
-      <div class="proj-title">Bayesian Media Mix Model — Education Marketplace</div>
-      <p class="proj-desc">Replaced last-click attribution with a Bayesian MMM in R. Merged daily spend from six channels, GA4 sessions, and HubSpot offline enrollments into weekly aggregates, applied adstock and hill-function saturation, and ran ridge regression with macro controls to surface true channel contribution.</p>
+        <div class="proj-title"><a href="https://churnos.xblavania.workers.dev/" style="color: var(--blue);">ChurnOS: Retention &amp; Attribution Modeling</a></div>
+        <p class="proj-desc">A causal analytics platform for retention forecasting, churn analysis, and conversion rate optimization (CRO). Implements sophisticated attribution modeling to uncover the true incremental value of marketing spend and simulate P&amp;L outcomes for subscription and marketplace operators.</p>
     </div>
 
     <div class="proj-card">
@@ -660,13 +810,13 @@
     <div class="proj-card">
       <span class="proj-tag">Marketplace · Strategy</span>
       <div class="proj-title">Cybersecurity Marketplace — Network Security Provider</div>
-      <p class="proj-desc">Defined and led design of a new marketplace integrating EDR/MDR products, firewall services, and CVE data enrichment for a networking and cybersecurity solutions provider.</p>
+      <p class="proj-desc">Led Search UX and product design to launch a vendor marketplace for EDR/MDR, firewall services, and virtual appliances. Delivered a search-driven discovery experience with relevance tuning, faceted filters, and promoted placements to surface complementary products and drive upsell and cross-sell.</p>
     </div>
 
     <div class="proj-card">
-      <span class="proj-tag">API · Fintech</span>
-      <div class="proj-title">Actuarial &amp; Waterfall Model APIs — Series-A Insurance SaaS</div>
-      <p class="proj-desc">Built new APIs exposing actuarial models and waterfall financial models to downstream clients, enabling a Series-A insurance and finance SaaS to productize previously manual advisory processes.</p>
+      <span class="proj-tag">Energy Infrastructure · Simulation</span>
+      <div class="proj-title"><a href="https://epsilon.xblavania.workers.dev/" style="color: var(--blue);">Project Epsilon: Microgrid Siting & Financial Modeling</a></div>
+      <p class="proj-desc">An end-to-end platform for microgrid and DER siting, scenario-based financing, and LCOE analysis. Generates automated Bill of Materials (BOM) for infrastructure projects, enabling rapid technical and economic feasibility assessments for decentralized energy systems.</p>
     </div>
   </div>
 </div>
