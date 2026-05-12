@@ -1,0 +1,53 @@
+                                                      Bharat Lavania
+                              linkedin.com/in/blavania • xblavania@gmail.com • (312) 772-7962
+
+SKILLS
+
+    ●​ Product types: Marketplaces, eCommerce, Risk & insurance, Tech (chatbots, voice, vision agents)
+    ●​ Tooling: Aha!, Jira, Confluence, Pendo, Mixpanel, Segment, Heap
+    ●​ User Research: Microsoft Clarity, HotJar, User interviews, Focus groups, Opportunity maps, Tree testing
+    ●​ Market Research / Analytics: Hypothesis Testing, R, SQL, Media Mix Models, Attribution Models, STP
+    ●​ MarTech, Automation & CRM: NorthBeam, GoldMine, ACT, Zoho, HubSpot, ActiveCampaign, Klaviyo
+
+EXPERIENCE
+
+PRODUCT MANAGER - GROWTH & MARKETING​                                                                      CALGARY, AB
+Fractional at various start-ups​                                                                           FEB 2022 - …
+    ●​ B2C SaaS and services for M&A financing: Consolidated pricing plans from 4 tiers to 3 tiers through strategic
+        customer analysis and segmentation, improving take rate by 3x.
+    ●​ Marketplace in last-mile delivery: Managed AI voice agent, conversational AI chatbot with a vision agent.
+    ●​ Marketplace in education: Managed team of content, marketing, product managers to ship first release to 55 users.
+    ●​ B2B Series-A SaaS for insurance and finance: Built new APIs for actuarial models and waterfall models.
+    ●​ Marketplace in building & construction materials: Mapped strategy for monetizing carbon offsets.
+    ●​ B2B SaaS for healthcare: Defined product that focuses on patient engagement strategies for patient intake process
+        and improving hand-offs.
+
+Selected Voice-of-Customer experience​
+    ●​ Ran user interviews and focus groups, and behavioral analytics tools like Pendo and Mixpanel to see how customers
+        were interacting with the products in real-time.
+             ○​ Successfully evolved features and pricing strategies by deeply understanding what users valued.
+    ●​ Cybersecurity marketplace, 2024-25: Defined and led design of a new marketplace for products and services for a
+        networking and cybersecurity solutions provider through a VoC program.
+             ○​ Used user interviews and telemetry to build new features in CVE data enrichment.
+    ●​ Selecting course content to feature on marketplace in education, 2024
+        -​   Replaced their last‑click reporting with a Bayesian media‑mix model in R
+        -​   Merged daily spend from six channels, GA4 sessions, and HubSpot offline enrollments into weekly aggregates,
+             applied adstock + hill‑function saturation, and ran ridge regression with macro controls.
+
+PRODUCT MANAGER​                                                                                                REMOTE
+Netsweeper​ ​                                                                                                2022-2023
+    ●​ Improvement of detection rates for a student-guarding product deployed at a 35-school district by reducing false
+        alerts by 85% by driving problem definition and collaboration.
+
+PRODUCT MANAGER - GROWTH & MARKETING​                                                                       CHICAGO, IL
+BVXpress​ ​                                                                                         SEP 2012 - DEC 2021
+    ●​ Launched 5 new products off the whiteboard to market. Operated a total of 8 products.
+    ●​ Growth: Developed, improved & evolved features and pricing strategies through analyzing customer feedback and
+        usage patterns for 400+ users. Increased revenue per customer (ARPU) from $450 to $600.
+    ●​ Led product messaging & automation for promotion and pricing strategies, increased retention rate by 14% over 2
+        years; increased conversion by 7% through a new landing page & product messaging.
+
+EDUCATION
+
+MBA, UNIVERSITY OF CALGARY​                                                                          (2025) CALGARY, AB​
+

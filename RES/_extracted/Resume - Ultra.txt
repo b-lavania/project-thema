@@ -1,0 +1,44 @@
+                                            Bob Lavania
+                      Go-to market and growth for early-stage startups
+         LinkedIn: linkedin.com/in/blavania | Phone: (312) 772-7962 | Email: xblavania@gmail.com
+
+
+Background
+Selected experience in healthcare and medical applications:
+   ●​ Eye-gaze tracking wearable device, 2025: Working on a solution that enables
+       precise eye-tracking for uses in medical research, kinesiology,
+   ●​ Patient healthcare journey targeted SaaS, 2024: Won a TechStars pitch competition
+       in Calgary, pitched a knowledge-based patient intake solution that also includes
+       targeted interventions for specialized clinics. Mapped entire patient journeys and
+       built mock-ups.
+   ●​ Telehealth project, 2023: Worked on identifying a comprehensive go-to market that
+       leverages health delivery networks in a developing country (govt. grant). Identified
+       partner networks, insurance reimbursements, and geographical segmentations to
+       target and launch.
+   ●​ Medical device for Stimulating Recovery for Mechanically Ventilated Patients, 2023:
+       Worked on pricing strategy (seed-funded).
+   ●​ Medical device for detecting dementia, 2023: Brief involvement in the go-to market
+       for a BCI device that detects certain types of dementia.
+
+Selected experience in online marketplaces:
+   ●​ Last-mile delivery and moving, 2024-... : GMV $500k, focused on simplifying
+       complex operations for last-mile delivery of bulky goods and moving. Delivered new
+       vision agent and voice agent.
+   ●​ Cybersecurity marketplace, 2024-25: Defined and led design of a new marketplace
+       for products and services for a networking and cybersecurity solutions provider.
+   ●​ Interactive learning solutions, 2024: Led improvement and initial launch of initial
+       marketplace designed for interactive online learning for a niche pediatric market.
+   ●​ Financial models, 2019-20: Defined and led design of a new marketplace for models
+       and services for M&A, business valuations, and associated services.
+
+Specialized Skills
+   ●​ Marketplaces: Conversion, Retention, Search experiences, Retargeting, Customer
+      segmentation, Pricing and Discounting
+   ●​ Product types: AI (chat-bots, Voice agents, Vision agents), Marketplaces, Mobile
+      apps (Android, iOS), Risk & insurance
+   ●​ User Research: Microsoft Clarity, HotJar, User interviews, Focus groups,
+      Opportunity maps, Tree testing
+   ●​ Telemetry: Pendo, Mixpanel, Segment
+   ●​ Analytics: Hypothesis Testing, R, Media Mix Models, Attribution Models, Customer &
+      Revenue Analytics
+

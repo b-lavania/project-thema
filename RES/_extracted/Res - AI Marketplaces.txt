@@ -1,0 +1,53 @@
+                                                   Bharat “Bob” Lavania
+                                 linkedin.com/in/blavania • xblavania@gmail.com • (312) 772-7962
+
+PRODUCT MANAGER: AI SYSTEMS & MARKETPLACES
+
+Specialized in applying AI (LLMs, CV pipelines) to operational and pricing problems in real-world marketplaces. Proven
+track record in unit economics, automation, and product-led growth.
+
+SKILLS
+
+    ●​ AI Systems: LLM pipelines, prompt orchestration, model evaluation (accuracy/latency/cost), multi-model tradeoffs
+    ●​ Marketplace Design: Supply-demand balancing, pricing systems, operational automation
+    ●​ Data & Analytics: SQL, R, experimentation, media mix modeling
+    ●​ Product Execution: Product launches, growth optimization, cross-functional leadership
+
+EXPERIENCE
+
+PRODUCT MANAGER: AI & MARKETPLACE SYSTEMS​                                                                      REMOTE
+Fractional at various start-ups​                                                                            FEB 2022 - …​
+Built and operated a marketplace focused on quoting and fulfillment of moving and delivery jobs.
+    ●​ Designed image-based cost estimation system
+            ○​ Input: user-uploaded images + job distance
+            ○​ Pipeline: multi-step prompt system extracting inventory features → mapping to volume/weight heuristics
+            ○​ Model strategy: Gemini Flash for low-latency inference; GPT-4.1 for edge-case reasoning
+            ○​ Built evaluation testbench scoring accuracy, latency, and cost across real job datasets
+    ●​ Built SMS-based operations agent
+            ○​ Automated customer communication (inbound + outbound)
+            ○​ Reduced manual coordination overhead in booking and fulfillment workflows
+            ○​ Built multi-model evaluation framework benchmarking GPT-4.1, GPT-4o, and Gemini variants
+                    ■​ Scored across: accuracy (task completion), latency (UX constraints), cost (per-request optimization)
+                    ■​ Informed model routing decisions based on task complexity and response requirements
+            ○​ Developed prompt pipelines for: operational decisioning (OR problems), computer vision-assisted workflows
+    ●​ Impact:
+            ○​ Enabled automated quoting workflow (previously manual)
+            ○​ Improved estimation consistency across jobs (validated against historical job data)
+            ○​ Reduced time-to-quote from manual process to near real-time
+            ○​ Marketplace performance: CAC: ~$100; LTV: $1,000+; Retention: 12+ months; Fill rate: ~93% via controlled
+                 supply onboarding and pricing discipline
+    ●​ Managed production constraints: latency vs accuracy tradeoffs, cost ceilings for scalable deployment, handling model
+        variability in outputs
+
+PRODUCT MANAGER - GROWTH & MARKETING​                                                                       CHICAGO, IL
+BVXpress​ ​                                                                                          SEP 2012 - DEC 2021
+    ●​ Launched 5 new products off the whiteboard to market. Operated a total of 8 products.
+    ●​ Growth: Developed, improved & evolved features and pricing strategies through analyzing customer feedback and
+        usage patterns for 400+ users. Increased revenue per customer (ARPU) from $450 to $600.
+    ●​ Led product messaging & automation for promotion and pricing strategies, increased retention rate by 14% over 2
+        years; increased conversion by 7% through a new landing page & product messaging.
+
+EDUCATION
+
+MBA, UNIVERSITY OF CALGARY​                                                                          (2025) CALGARY, AB​
+

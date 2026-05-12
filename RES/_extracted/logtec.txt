@@ -1,0 +1,61 @@
+Bharat “Bob” Lavania
+Principal Product Lead | AI, Operations Research & Growth
+(312) 772-7962 | xblavania@gmail.com | linkedin.com/in/blavania
+
+PROFESSIONAL PROFILE
+Technical Product Leader specializing in AI-driven marketplaces and operational efficiency engines.
+Expert in bridging high-level Engineering (Operations Research, Computer Vision, Bayesian Modeling)
+with Commercial Growth (Pricing Strategy, Media Mix Modeling, ARPU optimization). Track record of
+scaling LogTech and Applied AI products from whiteboard to market, delivering 20x efficiency gains.
+
+
+TECHNICAL EXPERTISE
+  ●​   Product: Logistics AI (LogTech), Vision Agents, ML Recommender Systems, Marketplaces
+  ●​   Analytics: Bayesian Media Mix Modeling (MMM), R, SQL, Ridge Regression, Attribution Modeling
+  ●​   Engineering: Operations Research (OR), 3D Bin Packing Algorithms, Predictive Frameworks
+  ●​   Tooling: Jira, Mixpanel, Segment, Pendo, HubSpot, NorthBeam, Google Analytics 4 (GA4)
+
+PROFESSIONAL EXPERIENCE
+STRATEGIC AI & MARKETPLACE VENTURES | Remote/Calgary, AB
+Principal Product Lead | Feb 2022 – Present
+AI-Driven Logistics Optimization (Last-Mile Marketplace)
+    ●​ End-to-End TMS Prototyping: Designed and built a comprehensive, clickable prototype for a
+       Transportation Management System (TMS) to streamline carrier dispatch and driver
+       orchestration.
+    ●​ WMS & Systems Integration: Scoped and mapped technical requirements for Warehouse
+       Management System (WMS) integrations to enable real-time inventory visibility within the
+       delivery marketplace.
+    ●​ Operations Research Engine: Architected an OR engine reducing job costing latency by 95%
+       (from 60 minutes to 3 minutes) via automated mover allocation.
+    ●​ Algorithmic Efficiency: Engineered a 3D bin-packing algorithm that increased volume predictive
+       accuracy to 85%, significantly reducing cargo variance.
+    ●​ Conversational AI: Deployed an SMS/Voice AI agent that deflected 50% of support tickets via
+       automated intake and status updates.
+
+Marketing Science & MMM (E-commerce)
+ ●​ Replaced legacy last-click reporting with a Bayesian Media Mix Model (MMM) in R, merging daily
+    spend from 6 channels with GA4 and HubSpot data.
+ ●​ Applied adstock and Hill-function saturation logic and ran ridge regressions with macro-controls
+    to optimize marketing spend.
+ ●​ Achieved a projected 18% reduction in CAC and leveraged segmentation to contribute to a 24%
+    increase in ARPU.
+
+Applied AI Strategy (B2C)
+  ●​ Redesigned pricing architecture for an M&A financing platform, consolidating 4 tiers into 3 based
+     on Bayesian segmentation, resulting in a 3x increase in take rate.
+
+NETSWEEPER | Remote/Waterloo, ON Product Manager (AI Vision) | 2022 – 2023
+  ●​ Improved detection rates across a 35-school district by reducing false alerts by 85% through
+     iterative model refinement and engineering collaboration.
+
+BVXPRESS | Chicago, IL Product Manager – Growth & Marketing | Sep 2012 – Dec 2021
+  ●​ Built the Product Business Unit from scratch for a lower-middle market M&A advisory firm;
+     launched 5 products off the whiteboard to market.
+  ●​ Increased revenue per customer (ARPU) from $450 to $600 through customer usage pattern
+     analysis and automated pricing evolution.
+  ●​ Achieved a 14% retention increase and 7% conversion lift by re-architecting product messaging
+     and landing page funnels.
+
+EDUCATION
+  ●​ MBA, Energy Economics and Product Leadership | University of Calgary (2025)
+
