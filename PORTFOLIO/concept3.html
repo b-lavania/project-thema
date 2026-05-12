@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bob Lavania | Product & AI Engineering</title>
+<meta name="description" content="Product and AI engineering: shipping computer vision, operations research, and conversational systems to production. Logistics (Moovez/Quotely), pricing architecture, and high-stakes detection products with measurable ROI.">
+<meta property="og:title" content="Bob Lavania | Product & AI Engineering">
+<meta property="og:description" content="I build AI systems that ship: quoting automation, pricing clarity, and operational detection, with measurable outcomes for startups and tech-adjacent teams.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root {
+    --bg-color: #ffffff;
+    --text-main: #111111;
+    --text-muted: #555555;
+    --text-light: #777777;
+    --border-color: #000000;
+    --border-light: #cccccc;
+    --accent: #000000;
+    --teal: #0f6e56;
+    --teal-light: #e1f5ee;
+    --amber: #ba7517;
+    --amber-light: #fef3e6;
+    --blue: #185fa5;
+    --blue-light: #e6f2ff;
+    --purple: #6b46c1;
+    --purple-light: #f3f4ff;
+    --energy: #2d5a4a;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    padding: 1.5rem;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    padding: 0 2.5rem;
+  }
+
+  header, section {
+    border-bottom: 1px solid var(--border-color);
+    padding: 2.5rem 0;
+  }
+  
+  header { padding-top: 1.5rem; }
+
+  h1 {
+    font-size: 2.75rem;
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .subhead {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .proof-points {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .proof-card {
+    border: 2px solid var(--border-color);
+    padding: 1.25rem;
+    background: var(--bg-color);
+  }
+
+  .proof-card.teal { border-color: var(--teal); background: var(--teal-light); }
+  .proof-card.amber { border-color: var(--amber); background: var(--amber-light); }
+  .proof-card.blue { border-color: var(--blue); background: var(--blue-light); }
+  .proof-card.purple { border-color: var(--purple); background: var(--purple-light); }
+
+  .proof-number {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+    font-family: var(--font-mono);
+  }
+
+  .proof-card.teal .proof-number { color: var(--teal); }
+  .proof-card.amber .proof-number { color: var(--amber); }
+  .proof-card.blue .proof-number { color: var(--blue); }
+  .proof-card.purple .proof-number { color: var(--purple); }
+
+  .proof-label {
+    font-size: 0.85rem;
+    color: var(--text-main);
+    line-height: 1.3;
+  }
+
+  .proof-context {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin-top: 0.55rem;
+    line-height: 1.25;
+  }
+
+  .fit-block {
+    margin-top: 1.75rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border-light);
+    background: #fafafa;
+  }
+
+  .fit-block-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .fit-block-lede {
+    font-size: 0.98rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 1rem;
+    max-width: 900px;
+  }
+
+  .fit-list {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--text-main);
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .fit-list li {
+    margin-bottom: 0.45rem;
+  }
+
+  .fit-engagement {
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-width: 900px;
+  }
+
+  .cred-strip {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: var(--text-main);
+    margin-top: 1.5rem;
+  }
+
+  .tech-stack {
+    margin-top: 1.25rem;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--border-light);
+    background: #fafafa;
+  }
+
+  .tech-stack-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+  }
+
+  .tech-stack-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tech-stack-group {
+    margin: 0;
+  }
+
+  .tech-stack-sub {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.28rem;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+
+  .tech-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: center;
+  }
+
+  .tech-chip {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    padding: 0.18rem 0.42rem;
+    border: 1px solid var(--border-light);
+    background: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.25;
+  }
+
+  h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 1.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+    font-family: var(--font-sans);
+  }
+
+  /* What You Get */
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .value-card {
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    background: var(--bg-color);
+  }
+
+  .value-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+
+  .value-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* Core Capabilities Grid */
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .cap-card {
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .cap-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .cap-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+
+  .cap-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .cap-card .examples {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-main);
+    border-top: 1px dotted var(--border-color);
+    padding-top: 0.85rem;
+    line-height: 1.6;
+  }
+
+  /* Selected Work */
+  .case-study {
+    margin-bottom: 2.5rem;
+    border: 2px solid var(--border-color);
+    transition: all 0.2s ease;
+  }
+  
+  .case-study:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  }
+
+  .case-study:last-child {
+    margin-bottom: 0;
+  }
+
+  .cs-header {
+    background-color: var(--text-main);
+    color: var(--bg-color);
+    padding: 1.5rem;
+  }
+
+  .cs-header.teal { background-color: var(--teal); }
+  .cs-header.amber { background-color: var(--amber); }
+  .cs-header.blue { background-color: var(--blue); }
+  .cs-header.energy { background-color: var(--energy); }
+
+  .cs-header h3 { 
+    margin-bottom: 0.4rem;
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-family: var(--font-sans);
+    line-height: 1.2;
+  }
+
+  .cs-meta {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-top: 0.4rem;
+  }
+
+  .cs-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .cs-grid:last-child {
+    border-bottom: none;
+  }
+
+  .cs-label {
+    padding: 1.25rem;
+    border-right: 1px solid var(--border-color);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .cs-content {
+    padding: 1.25rem;
+  }
+
+  .cs-content ul {
+    margin-left: 1.25rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  
+  .cs-content ul li {
+    margin-bottom: 0.4rem;
+  }
+
+  .cs-content p {
+    color: var(--text-muted);
+    margin-bottom: 0.65rem;
+    line-height: 1.65;
+    font-size: 1rem;
+  }
+  
+  .cs-content p:last-child, .cs-content ul:last-child {
+    margin-bottom: 0;
+  }
+
+  .cs-content strong {
+    color: var(--text-main);
+    font-weight: 600;
+  }
+
+  .metric-highlight {
+    background: #fffbea;
+    border-left: 3px solid var(--amber);
+    padding: 0.85rem 1rem;
+    margin: 0.85rem 0;
+    font-weight: 500;
+    color: var(--text-main);
+    font-size: 1rem;
+  }
+
+  .case-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1.35rem;
+    margin-bottom: 1.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .case-nav a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .case-nav a:hover {
+    color: var(--text-main);
+  }
+
+  .case-study-details {
+    margin-bottom: 2.5rem;
+    border: 2px solid var(--border-color);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .case-study-details:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  }
+
+  .case-study-details:last-child {
+    margin-bottom: 0;
+  }
+
+  .case-study-details summary {
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .case-study-details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .case-expand-hint {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    opacity: 0.9;
+    margin-top: 0.65rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* How I Think */
+  .principles-list {
+    list-style: none;
+    counter-reset: principle;
+  }
+
+  .principles-list li {
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .principles-list li::before {
+    counter-increment: principle;
+    content: "0" counter(principle);
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* Logos */
+  .logos-section {
+    margin-top: 1.75rem;
+  }
+
+  .logos-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  .logos-grid {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .logo-item {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .logo-item a {
+    color: var(--text-main);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .logo-item a:hover {
+    border-bottom-color: var(--text-main);
+  }
+
+  /* Systems */
+  .systems-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .systems-tags span {
+    border: 1px solid var(--border-color);
+    padding: 0.55rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+  }
+
+  .systems-tags span:hover {
+    background: var(--text-main);
+    color: var(--bg-color);
+  }
+
+  /* Contact */
+  .contact-section {
+    background: var(--text-main);
+    color: var(--bg-color);
+    padding: 2.5rem;
+    margin: 0 -2.5rem -2.5rem -2.5rem;
+  }
+
+  .contact-intro {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+    margin: 0;
+  }
+
+  .contact-section h2 {
+    color: var(--bg-color);
+    margin-bottom: 1.25rem;
+    text-transform: none;
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .contact-info {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .contact-info a {
+    color: var(--bg-color);
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .contact-info a:hover {
+    opacity: 0.8;
+  }
+
+  .contact-section .contact-reveal {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    color: var(--bg-color);
+    font-size: 1rem;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .contact-section .contact-reveal:hover {
+    opacity: 0.85;
+  }
+
+  .contact-section .contact-reveal.revealed {
+    cursor: default;
+    opacity: 0.95;
+    text-decoration: none;
+  }
+
+  .contact-location {
+    margin-top: 0.85rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .contact-cta {
+    margin: 0;
+  }
+
+  /* Closing */
+  .closing {
+    font-size: 1.15rem;
+    line-height: 1.45;
+    font-weight: 500;
+    max-width: 800px;
+  }
+  
+  .closing p { 
+    margin-bottom: 1.25rem;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .container { border: none; padding: 0 1rem; }
+    body { padding: 1rem; }
+    h1 { font-size: 2rem; }
+    .subhead { font-size: 1rem; }
+    .proof-points { grid-template-columns: 1fr 1fr; }
+    .value-grid { grid-template-columns: 1fr; }
+    .capabilities-grid { grid-template-columns: 1fr; }
+    .cs-grid { grid-template-columns: 1fr; }
+    .cs-label { border-right: none; border-bottom: 1px dashed var(--border-color); padding-bottom: 0.6rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+    .contact-section { margin: 0 -1rem -1.5rem -1rem; padding: 1.75rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>I build AI systems that actually ship to production</h1>
+    <p class="subhead">Product and engineering hybrid specializing in operations research, computer vision, and decision systems. I take messy operational problems and turn them into scalable products with measurable ROI.</p>
+    
+    <div class="proof-points">
+      <div class="proof-card teal">
+        <div class="proof-number">20×</div>
+        <div class="proof-label">Faster quoting (1hr to 3min)</div>
+        <div class="proof-context">Moovez / Quotely</div>
+      </div>
+      <div class="proof-card amber">
+        <div class="proof-number">85%</div>
+        <div class="proof-label">False alert reduction</div>
+        <div class="proof-context">Netsweeper</div>
+      </div>
+      <div class="proof-card blue">
+        <div class="proof-number">3×</div>
+        <div class="proof-label">Pricing take rate improvement</div>
+        <div class="proof-context">BVXpress</div>
+      </div>
+      <div class="proof-card purple">
+        <div class="proof-number">$500k+</div>
+        <div class="proof-label">GMV marketplace scaling</div>
+        <div class="proof-context">Moovez marketplace</div>
+      </div>
+    </div>
+
+    <div class="fit-block">
+      <div class="fit-block-title">Best fit</div>
+      <p class="fit-block-lede">I work best where product, ops, and engineering overlap: turning spreadsheets, manual workflows, and brittle handoffs into reliable systems people actually use.</p>
+      <ul class="fit-list">
+        <li><strong>Startups</strong> shipping logistics, marketplaces, or operations-heavy software (routing, quoting, crew scheduling, customer messaging).</li>
+        <li><strong>Tech-adjacent teams</strong> (education, safety, regulated workflows) that need fewer false alarms, clearer operator trust, and workflows that don’t fall apart under volume.</li>
+        <li><strong>B2B / B2C SaaS</strong> where pricing tiers, segmentation, or funnel friction are leaking conversion and retention.</li>
+      </ul>
+      <p class="fit-engagement"><strong>Engagements:</strong> full-time founding engineer roles, focused product/engineering contracts, and selective advisory (always tied to measurable outcomes).</p>
+    </div>
+
+    <div class="tech-stack">
+      <div class="tech-stack-label">Technical Stack</div>
+      <div class="tech-stack-body">
+        <div class="tech-stack-group">
+          <div class="tech-stack-sub">AI coding (daily)</div>
+          <div class="tech-chip-row">
+            <span class="tech-chip">Cursor</span>
+            <span class="tech-chip">Windsurf</span>
+            <span class="tech-chip">Lovable</span>
+          </div>
+        </div>
+        <div class="tech-stack-group">
+          <div class="tech-stack-sub">Modeling &amp; decisions</div>
+          <div class="tech-chip-row">
+            <span class="tech-chip">R</span>
+            <span class="tech-chip">SQL</span>
+            <span class="tech-chip">Bayesian modeling</span>
+            <span class="tech-chip">Media mix models</span>
+            <span class="tech-chip">Attribution</span>
+            <span class="tech-chip">Hypothesis testing</span>
+            <span class="tech-chip">Predictive analytics</span>
+            <span class="tech-chip">Operations research</span>
+          </div>
+        </div>
+        <div class="tech-stack-group">
+          <div class="tech-stack-sub">Engineering &amp; AI</div>
+          <div class="tech-chip-row">
+            <span class="tech-chip">Computer vision</span>
+            <span class="tech-chip">Conversational AI</span>
+            <span class="tech-chip">Voice agents</span>
+          </div>
+        </div>
+        <div class="tech-stack-group">
+          <div class="tech-stack-sub">Product analytics &amp; GTM tooling</div>
+          <div class="tech-chip-row">
+            <span class="tech-chip">Mixpanel</span>
+            <span class="tech-chip">Segment</span>
+            <span class="tech-chip">Heap</span>
+            <span class="tech-chip">Pendo</span>
+            <span class="tech-chip">HubSpot</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="logos-section">
+      <div class="logos-label">Built for</div>
+      <div class="logos-grid">
+        <div class="logo-item"><a href="https://moovez.ca" target="_blank" rel="noopener noreferrer">Moovez</a> <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">($500k+ GMV marketplace)</span></div>
+        <div class="logo-item"><a href="https://quoteperfectly.com" target="_blank" rel="noopener noreferrer">Quotely</a> <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">(Commercialized SaaS)</span></div>
+        <div class="logo-item">Netsweeper <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">(35-school deployment)</span></div>
+        <div class="logo-item">BVXpress <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">(9 years, 5 products)</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>What You Get</h2>
+    <div class="value-grid">
+      <div class="value-card">
+        <h4>Ship Fast</h4>
+        <p>From concept to production in weeks, not quarters. I define the product, build the system, and deploy to real users.</p>
+      </div>
+      
+      <div class="value-card">
+        <h4>Full Stack</h4>
+        <p>Product strategy, AI engineering, and measurement in one person. No handoffs, no translation loss.</p>
+      </div>
+      
+      <div class="value-card">
+        <h4>Proven ROI</h4>
+        <p>Track record of 3x to 20x improvements in key business metrics. I measure what matters and optimize for it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Core Capabilities</h2>
+    <div class="capabilities-grid">
+      <div class="cap-card">
+        <h4>Complexity Reduction</h4>
+        <p>Simplifying operational systems with too many moving parts, unclear ownership, or broken processes.</p>
+        <div class="examples">
+          Last-mile delivery operations<br>
+          Detection alert reduction<br>
+          Pricing architecture simplification<br>
+          Patient intake handoff systems
+        </div>
+      </div>
+      
+      <div class="cap-card">
+        <h4>Decision Systems</h4>
+        <p>Building frameworks that convert fragmented data into measurable business decisions.</p>
+        <div class="examples">
+          Bayesian media mix modeling<br>
+          Segmentation and pricing optimization<br>
+          Attribution analysis<br>
+          Funnel and retention diagnostics<br>
+          Multi-engine energy scenarios (sizing, stress, finance, network)
+        </div>
+      </div>
+      
+      <div class="cap-card">
+        <h4>AI Operationalization</h4>
+        <p>Applying AI to production workflows where reliability, usability, and operational fit matter more than demos.</p>
+        <div class="examples">
+          Voice agents<br>
+          Conversational AI<br>
+          Vision-assisted workflows<br>
+          Detection tuning
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="selected-work">
+    <h2>Selected Work</h2>
+    <nav class="case-nav" aria-label="Jump to case studies">
+      <a href="#case-moovez">Moovez / Quotely</a>
+      <a href="#case-epsilon">Project Epsilon</a>
+      <a href="#case-pricing">Pricing redesign</a>
+      <a href="#case-netsweeper">Netsweeper</a>
+    </nav>
+
+    <div class="case-study" id="case-moovez">
+      <div class="cs-header teal">
+        <h3>20× Faster Quoting: Computer Vision + Operations Research</h3>
+        <div class="cs-meta">Moovez (Last-Mile Delivery) • 2024 to Present • Now commercialized as Quotely SaaS</div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Challenge</div>
+        <div class="cs-content">
+          <p>Manual job quoting took dispatchers 1 hour per estimate (phone calls, visual guesswork, spreadsheet arithmetic). Quotes were unreliable, creating billing disputes and unpredictable crew scheduling.</p>
+          <p><strong>Business impact:</strong> Support burden scaled linearly with volume, creating a scaling bottleneck.</p>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Solution</div>
+        <div class="cs-content">
+          <p>Built three interconnected AI systems:</p>
+          <ul>
+            <li><strong>Computer Vision:</strong> Customers photograph items, CV model estimates volume, weight class, and handling complexity</li>
+            <li><strong>Operations Research:</strong> Predictive framework solving three NP-hard sub-problems (job duration, optimal crew size, 3D bin packing for truck loading)</li>
+            <li><strong>Conversational AI:</strong> SMS agent handling booking confirmations, reschedules, and support queries</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Technical Stack</div>
+        <div class="cs-content">
+          <p>R (Bayesian modeling), SQL, Computer Vision algorithms, Conversational AI frameworks, SMS API integration, Historical job data analysis, Predictive modeling, Operations research optimization</p>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">My Role</div>
+        <div class="cs-content">
+          <p>Engineered the OR algorithm end-to-end as a single contributor: mined historical job data, defined predictive framework, rapid prototyping and validation, drove engineering collaboration for production deployment.</p>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Results</div>
+        <div class="cs-content">
+          <div class="metric-highlight">Quote generation: 1 hour to 3 minutes (20× faster)</div>
+          <ul>
+            <li>85% of jobs finish within quoted time window (vs. unmeasured high variance before)</li>
+            <li>~50% of support tickets deflected by SMS agent</li>
+            <li>Algorithm-grounded pricing replaced manual guesswork</li>
+            <li><strong>Commercialization:</strong> System now sold as Quotely, a standalone SaaS product to other operators</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Key Insight</div>
+        <div class="cs-content">
+          <p><strong>AI systems succeed when they reduce operational ambiguity, not when they maximize sophistication.</strong> Focused on structured information capture and reliable handoffs over open-ended interaction.</p>
+        </div>
+      </div>
+    </div>
+
+    <details class="case-study-details" id="case-epsilon">
+      <summary>
+        <div class="cs-header energy">
+          <h3>Scenario-First Energy Modeling: Domain Core + Multi-Engine Adapters</h3>
+          <div class="cs-meta">Project Epsilon • Energy systems · Infrastructure • Originated from MBA deployability models</div>
+          <span class="case-expand-hint">Expand full case study</span>
+        </div>
+      </summary>
+      <div>
+
+      <div class="cs-grid">
+        <div class="cs-label">Challenge</div>
+        <div class="cs-content">
+          <p>Clean-energy planning slows down when <strong>sizing, stress-testing, and finance run in disconnected tools</strong>: assumptions drift, comparisons break, and nobody can defend a single narrative from deck to data room. During my MBA I built spreadsheet models to reason about deployability; they surfaced the questions but stayed siloed.</p>
+          <p><strong>Engineering risk:</strong> Naively porting workbook logic to a UI yields surface parity without semantic correctness (hidden unit mismatches, unsafe handoffs between sizing and stress, economics that ignore feeder reality).</p>
+        </div>
+      </div>
+
+      <div class="cs-grid">
+        <div class="cs-label">Solution</div>
+        <div class="cs-content">
+          <p><strong>Project Epsilon</strong> connects those worlds with <strong>one version-controlled <code>Scenario</code></strong> that feeds every engine—no copy-paste drift between models.</p>
+          <ul>
+            <li><strong>Six-step guided workflow:</strong> define scenario → size portfolio → stress-test → evaluate finance → validate network → generate report</li>
+            <li><strong>Three production adapters (today):</strong> DC-PPA · ISO-RTO · Microgrid, plus <strong>network validation</strong> (feeder / N-1 / AC power flow) as the physical feasibility layer</li>
+            <li><strong>Explicit handoffs:</strong> typed <code>CapacitySeed</code> from sizing into stress and finance</li>
+            <li><strong>Assurance layer:</strong> structured audit findings, 100-point confidence scoring with severity-based deductions, SHA-256 scenario-hash staleness, prerequisite gating so stress cannot run on silent stale inputs</li>
+            <li><strong>BOM bridge:</strong> sizing flows emit starter equipment catalog rows (procurement-grade narrative from modeled MW/MWh)</li>
+            <li><strong>Reporting:</strong> compare runs, field-by-field assumption diffs, Markdown/HTML export</li>
+          </ul>
+          <p><strong>Positioning:</strong> Planning and diligence for data centers, microgrids, and RTO-style stress—not a real-time EMS.</p>
+        </div>
+      </div>
+
+      <div class="cs-grid">
+        <div class="cs-label">Technical Stack</div>
+        <div class="cs-content">
+          <p><strong>Python:</strong> custom <strong>PyPSA linear programs</strong> for 24/7 CFE and microgrid sizing; <strong>ISO-RTO Monte Carlo</strong> stress testing; <strong>agent-based VPP dispatch</strong>; <strong>AC power flow</strong> / distribution validation. Typed <code>Scenario</code> contract, <code>EngineRegistry</code>, <code>ScenarioStore</code>, normalized finance assumptions (e.g. WACC, battery efficiency) for cross-engine comparability.</p>
+          <p><strong>Delivery:</strong> Public app hosted on <strong>Cloudflare Workers</strong> (<a href="https://epsilon.xblavania.workers.dev/" target="_blank" rel="noopener noreferrer">epsilon.xblavania.workers.dev</a>).</p>
+        </div>
+      </div>
+
+      <div class="cs-grid">
+        <div class="cs-label">My Role</div>
+        <div class="cs-content">
+          <p>Product builder and engineer: learned distributed-energy dynamics deeply enough to <strong>shape module boundaries</strong> (what must be true for sizing, stress, finance, and network to tell one coherent story). Implemented custom PyPSA LPs, ABM-style VPP dispatch, Monte Carlo stress paths, and end-to-end architecture that <strong>bridges physical network validation with financial planning</strong>. Owned scenario contract, adapter patterns, and assurance story—not just a spreadsheet port.</p>
+        </div>
+      </div>
+
+      <div class="cs-grid">
+        <div class="cs-label">Results</div>
+        <div class="cs-content">
+          <div class="metric-highlight"><a href="https://epsilon.xblavania.workers.dev/" target="_blank" rel="noopener noreferrer" style="color: inherit;">Live platform: epsilon.xblavania.workers.dev</a></div>
+          <ul>
+            <li><strong>Single scenario state</strong> across engines; field-by-field diffs and run comparison</li>
+            <li><strong>Structured audit + confidence</strong> and stale-run detection tied to scenario hashes</li>
+            <li><strong>At a glance:</strong> 6 workflow steps · 3 production adapters · 100-point confidence model · 11 starter BOM SKUs</li>
+          </ul>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.75rem; margin-bottom: 0;">Outputs are for analysis and professional judgment only—not legal, regulatory, or FERC filing advice.</p>
+        </div>
+      </div>
+
+      <div class="cs-grid">
+        <div class="cs-label">Key Insight</div>
+        <div class="cs-content">
+          <p><strong>Each workflow step surfaces a risk class the others cannot see.</strong> Siloed software breaks narrative coherence between pitch physics and finance; deployability is a <strong>coupling problem</strong>. The product’s job is to make those couplings explicit, comparable, and reviewable—not to maximize chart polish.</p>
+        </div>
+      </div>
+
+      </div>
+    </details>
+
+    <details class="case-study-details" id="case-pricing">
+      <summary>
+        <div class="cs-header amber">
+          <h3>3× Take Rate Improvement: Pricing Architecture Redesign</h3>
+          <div class="cs-meta">B2C SaaS (M&A Financing Platform) • 2023</div>
+          <span class="case-expand-hint">Expand full case study</span>
+        </div>
+      </summary>
+      <div>
+
+      <div class="cs-grid">
+        <div class="cs-label">Challenge</div>
+        <div class="cs-content">
+          <p>Four pricing tiers created customer confusion, segmentation overlap, and unclear upgrade paths. Decision friction was killing conversions.</p>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Solution</div>
+        <div class="cs-content">
+          <p>Led customer segmentation analysis and pricing structure redesign:</p>
+          <ul>
+            <li>Reduced tier complexity from 4 to 3</li>
+            <li>Simplified differentiation logic based on customer intent patterns</li>
+            <li>Repositioned plans around clearer value propositions</li>
+            <li>Defined migration strategy for existing customers</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">My Role</div>
+        <div class="cs-content">
+          <p>Owned segmentation analysis, pricing model design, and package consolidation strategy. Worked cross-functionally to implement changes.</p>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Results</div>
+        <div class="cs-content">
+          <div class="metric-highlight">Take rate improved by 3×</div>
+          <ul>
+            <li>Reduced customer decision complexity</li>
+            <li>Created clearer monetization pathways</li>
+            <li>Reduced churn from plan confusion</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Key Insight</div>
+        <div class="cs-content">
+          <p><strong>Pricing problems are often decision architecture problems, not just monetization problems.</strong> Simplifying choices can be more valuable than optimizing price points.</p>
+        </div>
+      </div>
+
+      </div>
+    </details>
+
+    <details class="case-study-details" id="case-netsweeper">
+      <summary>
+        <div class="cs-header blue">
+          <h3>85% False Alert Reduction: Student Safety Detection System</h3>
+          <div class="cs-meta">Netsweeper (EdTech) • 2022 to 2023 • 35-school district deployment</div>
+          <span class="case-expand-hint">Expand full case study</span>
+        </div>
+      </summary>
+      <div>
+
+      <div class="cs-grid">
+        <div class="cs-label">Challenge</div>
+        <div class="cs-content">
+          <p>Student safety monitoring product generated excessive false alerts, creating alert fatigue and reducing operational trust. Staff stopped relying on the system.</p>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Solution</div>
+        <div class="cs-content">
+          <p>Reframed the problem from "detection accuracy" to "operational trust":</p>
+          <ul>
+            <li>Prioritized signal quality over feature expansion</li>
+            <li>Collaborated with detection model team on tuning</li>
+            <li>Redesigned workflow to handle edge cases better</li>
+            <li>Made operational trust a core product metric</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">My Role</div>
+        <div class="cs-content">
+          <p>Product Manager. Drove problem definition, stakeholder alignment, and cross-functional prioritization around detection quality.</p>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Results</div>
+        <div class="cs-content">
+          <div class="metric-highlight">False alerts reduced by 85%</div>
+          <ul>
+            <li>Improved operational usability for school staff</li>
+            <li>Increased trust in system outputs</li>
+            <li>Reduced alert fatigue</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="cs-grid">
+        <div class="cs-label">Key Insight</div>
+        <div class="cs-content">
+          <p><strong>Detection systems fail when users stop trusting the signal. Accuracy metrics alone are insufficient.</strong> Operational reliability matters more than theoretical performance.</p>
+        </div>
+      </div>
+
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2>My Approach</h2>
+    <ul class="principles-list">
+      <li>Build for operational simplicity first, add features only when they solve real problems</li>
+      <li>Ship AI that reduces friction in existing workflows, not AI for novelty's sake</li>
+      <li>Fix decision-making upstream before building dashboards downstream</li>
+      <li>Prioritize signal quality over data volume</li>
+      <li>Design products that reduce cognitive load, not increase it</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Systems I Work In</h2>
+    <div class="systems-tags">
+      <span>AI Agents</span>
+      <span>Marketplaces</span>
+      <span>Workflow Automation</span>
+      <span>Decision Analytics</span>
+      <span>Pricing Systems</span>
+      <span>Operational Tooling</span>
+      <span>B2B SaaS</span>
+      <span>Detection Systems</span>
+      <span>Conversational Interfaces</span>
+      <span>Computer Vision</span>
+      <span>Operations Research</span>
+      <span>Energy &amp; Infrastructure</span>
+      <span>Scenario Modeling</span>
+    </div>
+  </section>
+
+  <section style="border-bottom: none; padding-bottom: 0;">
+    <div class="closing">
+      <p><strong>Ideal for:</strong> Seed to Series-B companies (10 to 50 people) looking to build or scale AI-driven products. Comfortable with equity compensation and excited about 0 to 1 product development.</p>
+    </div>
+  </section>
+
+  <div class="contact-section">
+    <h2>Contact</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div><span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span></div>
+        <div><a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">linkedin.com/in/blavania</a></div>
+        <div class="contact-location">Calgary, AB & San Francisco, CA<br>Remote across US and Canada</div>
+      </div>
+      <div class="contact-cta">
+        <p class="contact-intro">I thrive in fast-moving environments where we're building from scratch and need to ship quickly. If you're scaling your first AI product and need someone who can define, build, and measure, let's talk.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('.contact-reveal').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (this.classList.contains('revealed')) return;
+      var decoded = atob(this.dataset.v);
+      var link = document.createElement('a');
+      link.href = 'mailto:' + decoded;
+      link.textContent = decoded;
+      link.style.color = 'inherit';
+      link.style.fontWeight = '500';
+      this.classList.add('revealed');
+      this.replaceWith(link);
+    });
+  });
+  function openCaseFromHash() {
+    var id = location.hash.slice(1);
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (el && el.tagName === 'DETAILS') el.open = true;
+  }
+  document.addEventListener('DOMContentLoaded', openCaseFromHash);
+  window.addEventListener('hashchange', openCaseFromHash);
+})();
+</script>
+
+</body>
+</html>
