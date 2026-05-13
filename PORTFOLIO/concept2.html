@@ -38,6 +38,7 @@
       --mono: 'DM Mono', monospace;
       --sans: 'DM Sans', sans-serif;
       --serif: 'Fraunces', serif;
+      --radius: 12px;
     }
 
     html {
@@ -72,9 +73,9 @@
       padding-top: 40px;
       margin-bottom: 64px;
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 48px;
-      align-items: center;
+      grid-template-columns: 1fr 300px;
+      gap: 64px;
+      align-items: start;
     }
 
     .bio-kicker {
@@ -129,41 +130,156 @@
       border-radius: 20px;
     }
 
-    .bio-contact {
+    /* ── Contact Card (Synced from Concept 1) ── */
+    .contact-card {
       background: var(--white);
       border: 1px solid var(--rule);
-      border-radius: 8px;
-      padding: 24px;
-      min-width: 260px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 40px;
     }
 
-    .bio-contact-label {
+    .contact-name {
       font-family: var(--serif);
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 14px;
-    }
-
-    .bio-contact-row {
-      color: var(--ink-mid);
       margin-bottom: 8px;
-      line-height: 1.4;
+      line-height: 1.15;
+    }
+
+    .contact-seeking {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+
+    .contact-seeking strong {
+      color: var(--ink-mid);
+      font-weight: 500;
+    }
+
+    .contact-details {
       font-size: 14px;
+      color: var(--ink-mid);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    .bio-contact-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .bio-contact-row a {
-      color: var(--blue);
+    .contact-details a {
       text-decoration: none;
     }
 
-    .bio-contact-row a:hover {
+    .contact-details a:hover {
       text-decoration: underline;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .btn-group+.btn-group {
+      margin-top: 6px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      text-align: center;
+      flex: 1;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: var(--white) !important;
+      border: 1px solid var(--teal);
+    }
+
+    .btn-primary:hover {
+      background: #084838;
+      transform: translateY(-1px);
+      color: var(--white) !important;
+      text-decoration: none;
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--ink);
+      border: 1px solid var(--rule);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--ink);
+      text-decoration: none;
+    }
+
+    .availability-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal);
+      background: var(--teal-light);
+      border: 1px solid #c2dfd7;
+      border-radius: 20px;
+      padding: 3px 8px;
+      margin-bottom: 10px;
+    }
+
+    .availability-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--teal-mid);
+      flex-shrink: 0;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.85);
+      }
+    }
+
+    .contact-reveal {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: var(--blue);
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+
+    .contact-reveal:hover {
+      color: var(--teal);
+    }
+
+    .contact-reveal.revealed {
+      cursor: default;
+      color: var(--ink-mid);
     }
 
     /* Interactivity for cards */
@@ -887,8 +1003,8 @@
   <div class="bio">
     <div class="bio-main">
       <div class="bio-kicker">Pricing &nbsp;·&nbsp; Operations &nbsp;·&nbsp; Growth</div>
-      <div class="bio-headline">Building pricing, ops, and growth<br>systems that turn <em>early-stage
-          chaos</em><br>into scalable businesses.</div>
+      <div class="bio-headline">Building pricing, ops, and growth systems that turn <em>early-stage
+          chaos</em> into scalable businesses.</div>
       <div class="bio-positioning">Chief of Staff turned Product Leader. A decade inside M&amp;A deal-making taught me
         that every business problem is a pricing problem, an operations problem, or a growth problem, usually all three
         at once.</div>
@@ -902,25 +1018,34 @@
       </div>
 
       <div class="tech-stack">
-        <span class="tech-badge">R</span>
-        <span class="tech-badge">SQL</span>
-        <span class="tech-badge">Gemini / GPT-4</span>
-        <span class="tech-badge">Stripe / Square</span>
-        <span class="tech-badge">Mixpanel</span>
-        <span class="tech-badge">HubSpot</span>
+        <span class="tech-badge">LLM Agentic Systems</span>
+        <span class="tech-badge">Context Engineering</span>
+        <span class="tech-badge">Marketplaces / e-Commerce</span>
+        <span class="tech-badge">Product Analytics</span>
+        <span class="tech-badge">TMS / LMS / WMS</span>
         <span class="tech-badge">Media Mix Modeling</span>
       </div>
     </div>
 
-    <div class="bio-contact">
-      <div class="bio-contact-label">Bob Lavania</div>
-      <div class="bio-contact-row"><a href="mailto:xblavania@gmail.com">xblavania@gmail.com</a></div>
-      <div class="bio-contact-row"><a href="https://linkedin.com/in/blavania">linkedin.com/in/blavania</a></div>
-      <div class="bio-contact-row">(312) 772-7962</div>
-      <div class="bio-contact-row"
-        style="margin-top:14px; padding-top:14px; border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: 12px; line-height: 1.5;">
-        Calgary AB &nbsp;·&nbsp; Remote US &amp; Canada<br>
-        <span style="display:inline-block; margin-top:4px;">References available upon request.</span>
+    <div class="contact-card">
+      <div class="availability-badge">Open to opportunities</div>
+      <div class="contact-name">Bob Lavania</div>
+      <div class="contact-seeking">
+        <strong>Product Leader · Pricing · Operations · Growth</strong><br>
+        Early-stage &nbsp;·&nbsp; Remote US &amp; Canada
+      </div>
+      <div class="contact-details">
+        <span>(312) 772-7962</span>
+        <span>Calgary, AB &nbsp;·&nbsp; Remote</span>
+        <span class="contact-reveal" data-v="eGJsYXZhbmlhQGdtYWlsLmNvbQ==">Click to reveal email</span>
+      </div>
+      <div class="btn-group">
+        <a href="https://www.linkedin.com/in/blavania" class="btn btn-primary">LinkedIn</a>
+        <a href="https://github.com/blavania" class="btn btn-secondary">GitHub</a>
+      </div>
+      <div class="btn-group">
+        <a href="https://calendar.app.google/xhEvxBTPuG3CuTFg8" class="btn btn-secondary"
+          style="flex: unset; width: 100%;">Book 15 min →</a>
       </div>
     </div>
   </div>
@@ -1091,22 +1216,8 @@
 ══════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
-      <span class="section-tag">Other project work &middot; 2019&ndash;present</span>
+      <span class="section-tag">Other project work &middot; 2022&ndash;present</span>
       <div class="section-rule"></div>
-    </div>
-
-    <!-- Spotlight: Healthcare -->
-    <div class="proj-card-spotlight">
-      <span class="proj-tag"
-        style="font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; display: block;">Zero-to-One
-        Growth &middot; Healthcare</span>
-      <div class="proj-title" style="font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 10px;">
-        Healthcare Go-to-Market Portfolio: Multiple Engagements</div>
-      <p class="proj-desc">Won a TechStars pitch competition in Calgary with a patient-intake SaaS concept targeting
-        specialized clinics (mapped full patient journeys and built interactive prototypes). Broader healthcare
-        GTM work includes: telehealth delivery network strategy for a developing country (government grant, 2023);
-        pricing strategy for a seed-funded respiratory medical device; go-to-market scoping for a BCI-based
-        dementia-detection device; and patient engagement design for a B2B healthcare SaaS.</p>
     </div>
 
     <div class="proj-grid">
@@ -1143,6 +1254,20 @@
           analysis. Generates automated Bill of Materials (BOM) for infrastructure projects, enabling rapid technical
           and economic feasibility assessments for decentralized energy systems.</p>
       </div>
+    </div>
+
+    <!-- Spotlight: Healthcare -->
+    <div class="proj-card-spotlight" style="margin-top: 20px;">
+      <span class="proj-tag"
+        style="font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; display: block;">Zero-to-One
+        Growth &middot; Healthcare</span>
+      <div class="proj-title" style="font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 10px;">
+        Healthcare Go-to-Market Portfolio: Multiple Engagements</div>
+      <p class="proj-desc">Won a TechStars pitch competition in Calgary with a patient-intake SaaS concept targeting
+        specialized clinics (mapped full patient journeys and built interactive prototypes). Broader healthcare
+        GTM work includes: telehealth delivery network strategy for a developing country (government grant, 2023);
+        pricing strategy for a seed-funded respiratory medical device; go-to-market scoping for a BCI-based
+        dementia-detection device; and patient engagement design for a B2B healthcare SaaS.</p>
     </div>
   </div>
 
@@ -1183,15 +1308,24 @@
     <div>
       <div class="footer-label">Get in touch</div>
       <div class="contact-line">
-        <a href="mailto:xblavania@gmail.com">xblavania@gmail.com</a>
-        &nbsp;&middot;&nbsp; (312) 772-7962
+        <span class="contact-reveal" data-v="eGJsYXZhbmlhQGdtYWlsLmNvbQ==">Reveal email</span>
         &nbsp;&middot;&nbsp; <a href="https://linkedin.com/in/blavania">linkedin.com/in/blavania</a>
       </div>
       <a href="mailto:xblavania@gmail.com" class="cta-btn">Let&rsquo;s talk &rarr;</a>
     </div>
-    <div class="footer-tagline">Pricing &middot; Ops &middot; Growth.<br>Usually all three at once.</div>
+    <div class="footer-tagline">Product &middot; Pricing &middot; Ops &middot; Growth.<br>Usually three at once.</div>
   </div>
 
+  <script>
+    // Contact reveal
+    document.querySelectorAll('.contact-reveal').forEach(el => {
+      el.addEventListener('click', () => {
+        const val = atob(el.getAttribute('data-v'));
+        el.textContent = val;
+        el.classList.add('revealed');
+      });
+    });
+  </script>
 </body>
 
 </html>
