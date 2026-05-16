@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 0.5in;
+        }
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #111;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 20pt;
+            margin: 0 0 5px 0;
+            font-weight: 600;
+        }
+        h2 {
+            font-size: 11pt;
+            margin: 15px 0 5px 0;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000;
+            padding-bottom: 2px;
+            font-weight: 600;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .contact-info {
+            font-size: 9pt;
+        }
+        .tagline {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .section-content {
+            margin-bottom: 10px;
+        }
+        ul {
+            margin: 5px 0 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 4px;
+        }
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 10px;
+            margin-bottom: 2px;
+        }
+        .role-title-company {
+            font-weight: bold;
+        }
+        .role-dates {
+            font-size: 9.5pt;
+        }
+        .company-desc {
+            font-style: italic;
+            margin-bottom: 2px;
+            font-size: 9.5pt;
+        }
+        .role-summary {
+            margin-bottom: 5px;
+        }
+        .skill-label {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Bharat "Bob" Lavania</h1>
+        <div class="tagline">{{ tagline }}</div>
+        <div class="contact-info">
+            (312) 772-7962 | xblavania@gmail.com | linkedin.com/in/blavania | {{ location }}
+        </div>
+    </div>
+
+    {% if mission_body %}
+    <h2>Professional Profile</h2>
+    <div class="section-content">
+        {{ mission_body }}
+    </div>
+    {% endif %}
+
+    {% if skills %}
+    <h2>Technical Expertise</h2>
+    <div class="section-content">
+        <ul>
+        {% for skill in skills %}
+            <li>{{ skill|safe }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if experience %}
+    <h2>Professional Experience</h2>
+    <div class="section-content">
+        {% for role in experience %}
+        <div class="role-header">
+            <div class="role-title-company">{{ role.title_company }}</div>
+            <div class="role-dates">{{ role.dates_location }}</div>
+        </div>
+        {% if role.company_desc %}
+        <div class="company-desc">{{ role.company_desc }}</div>
+        {% endif %}
+        {% if role.summary %}
+        <div class="role-summary">{{ role.summary }}</div>
+        {% endif %}
+        <ul>
+        {% for bullet in role.bullets %}
+            <li>{{ bullet|safe }}</li>
+        {% endfor %}
+        </ul>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h2>Education</h2>
+    <div class="section-content">
+        <div><strong>MBA, Energy Economics and Product Leadership</strong> | University of Calgary (2025)</div>
+        <div><strong>Bachelor of Science</strong> | Illinois Tech, Chicago, IL (2012)</div>
+        <div><strong>CSM & CSPO</strong> | Scrum Alliance (2022)</div>
+    </div>
+</body>
+</html>
