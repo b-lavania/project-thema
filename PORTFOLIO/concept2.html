@@ -112,15 +112,26 @@
       max-width: 500px;
     }
 
-    .bio-capabilities {
+    .bio-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag-divider {
+      color: var(--rule);
+      font-size: 18px;
+      font-weight: 300;
+      padding: 0 4px;
+      user-select: none;
+      line-height: 1;
     }
 
     .cap-pill {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       background: var(--white);
@@ -150,7 +161,7 @@
     }
 
     .contact-seeking {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--ink-soft);
       margin-bottom: 10px;
       line-height: 1.45;
@@ -162,7 +173,7 @@
     }
 
     .contact-details {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--ink-mid);
       display: flex;
       flex-direction: column;
@@ -192,7 +203,7 @@
       padding: 9px 12px;
       border-radius: 8px;
       font-weight: 500;
-      font-size: 14px;
+      font-size: 15px;
       text-decoration: none;
       transition: all 0.2s ease;
       text-align: center;
@@ -269,7 +280,7 @@
       gap: 6px;
       cursor: pointer;
       color: var(--blue);
-      font-size: 14px;
+      font-size: 15px;
       transition: color 0.2s ease;
     }
 
@@ -312,7 +323,7 @@
 
     .section-tag {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--ink-soft);
@@ -334,7 +345,7 @@
 
     .cs-kicker {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--teal);
@@ -358,7 +369,7 @@
     }
 
     .cs-client {
-      font-size: 13px;
+      font-size: 14px;
       font-family: var(--mono);
       color: var(--ink-soft);
     }
@@ -408,7 +419,7 @@
     }
 
     .stat-label {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--ink-soft);
       line-height: 1.5;
     }
@@ -423,7 +434,7 @@
 
     h3 {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--teal);
@@ -433,7 +444,7 @@
     }
 
     p {
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.8;
       color: var(--ink-mid);
       margin-bottom: 16px;
@@ -489,7 +500,7 @@
 
     .sys-tag {
       font-family: var(--mono);
-      font-size: 9.5px;
+      font-size: 10.5px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-bottom: 10px;
@@ -516,14 +527,14 @@
 
     .sys-title {
       font-weight: 600;
-      font-size: 15px;
+      font-size: 16px;
       margin-bottom: 10px;
       line-height: 1.4;
       color: var(--ink);
     }
 
     .sys-desc {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--ink-soft);
       line-height: 1.7;
       margin-bottom: 0;
@@ -568,7 +579,7 @@
 
     .outcome-row.head .cell {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--ink-soft);
@@ -577,21 +588,21 @@
 
     .cell {
       padding: 14px 0;
-      font-size: 14px;
+      font-size: 15px;
       color: var(--ink-mid);
       padding-right: 16px;
     }
 
     .cell.mono {
       font-family: var(--mono);
-      font-size: 13px;
+      font-size: 14px;
     }
 
     .cell.after {
       color: var(--teal);
       font-weight: 600;
       font-family: var(--mono);
-      font-size: 13px;
+      font-size: 14px;
     }
 
     .cell.arrow {
@@ -627,7 +638,7 @@
 
     .proj-tag {
       font-family: var(--mono);
-      font-size: 9.5px;
+      font-size: 10.5px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--ink-soft);
@@ -637,14 +648,14 @@
 
     .proj-title {
       font-weight: 600;
-      font-size: 15px;
+      font-size: 16px;
       color: var(--ink);
       margin-bottom: 10px;
       line-height: 1.4;
     }
 
     .proj-desc {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--ink-mid);
       line-height: 1.7;
       margin: 0;
@@ -672,21 +683,21 @@
 
     .prior-co {
       font-weight: 600;
-      font-size: 14px;
+      font-size: 15px;
       color: var(--ink);
       margin-bottom: 4px;
     }
 
     .prior-meta {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 11px;
       color: var(--ink-soft);
       letter-spacing: 0.06em;
       margin-bottom: 10px;
     }
 
     .prior-desc {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--ink-mid);
       line-height: 1.7;
       margin: 0;
@@ -706,7 +717,7 @@
 
     .footer-label {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--ink-soft);
@@ -714,7 +725,7 @@
     }
 
     .contact-line {
-      font-size: 14px;
+      font-size: 16px;
       color: var(--ink-mid);
     }
 
@@ -728,32 +739,13 @@
       font-family: var(--serif);
       font-style: italic;
       font-weight: 300;
-      font-size: 16px;
+      font-size: 17px;
       color: var(--ink-soft);
       text-align: right;
       max-width: 280px;
       line-height: 1.6;
     }
 
-    /* ─────────────────────────────────────────
-     TECH STACK BADGES
-  ───────────────────────────────────────── */
-    .tech-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .tech-badge {
-      font-family: var(--mono);
-      font-size: 11px;
-      background: var(--white);
-      border: 1px solid var(--rule);
-      color: var(--ink-mid);
-      padding: 6px 12px;
-      border-radius: 4px;
-    }
 
     /* ─────────────────────────────────────────
      THREE PILLARS
@@ -808,14 +800,14 @@
 
     .pillar-title {
       font-weight: 600;
-      font-size: 15px;
+      font-size: 16px;
       color: var(--ink);
       margin-bottom: 10px;
       line-height: 1.4;
     }
 
     .pillar-desc {
-      font-size: 13px;
+      font-size: 16px;
       color: var(--ink-mid);
       line-height: 1.75;
       margin-bottom: 14px;
@@ -823,7 +815,7 @@
 
     .pillar-proof {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 0.06em;
       color: var(--ink-soft);
       border-top: 1px solid var(--rule);
@@ -856,7 +848,7 @@
       background: var(--teal);
       color: var(--white);
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
@@ -874,7 +866,7 @@
 
     /* prior bullet treatment */
     .prior-bullet {
-      font-size: 14px;
+      font-size: 16px;
       color: var(--ink-mid);
       line-height: 1.75;
       margin: 0 0 4px 0;
@@ -884,7 +876,7 @@
     .prior-bullet::before {
       content: '→ ';
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: 12px;
       color: var(--teal);
     }
 
@@ -907,7 +899,7 @@
 
     .impact-title {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 12px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--teal);
@@ -934,9 +926,9 @@
     }
 
     .impact-label {
-      font-size: 13px;
+      font-size: 16px;
       color: var(--ink-mid);
-      line-height: 1.5;
+      line-height: 1.7;
     }
 
     /* ─────────────────────────────────────────
@@ -1009,21 +1001,18 @@
         that every business problem is a pricing problem, an operations problem, or a growth problem, usually all three
         at once.</div>
 
-      <div class="bio-capabilities">
+      <div class="bio-tags">
         <span class="cap-pill">Pricing Architecture</span>
-        <span class="cap-pill">Marketplace Design</span>
+        <span class="cap-pill">M&amp;A Integration</span>
+        <span class="tag-divider">|</span>
         <span class="cap-pill">Operational AI</span>
+        <span class="cap-pill">LLM Agents</span>
+        <span class="tag-divider">|</span>
+        <span class="cap-pill">Marketplace Design</span>
+        <span class="tag-divider">|</span>
         <span class="cap-pill">Growth Systems</span>
-        <span class="cap-pill">M&amp;A / Deal Ops</span>
-      </div>
-
-      <div class="tech-stack">
-        <span class="tech-badge">LLM Agentic Systems</span>
-        <span class="tech-badge">Context Engineering</span>
-        <span class="tech-badge">Marketplaces / e-Commerce</span>
-        <span class="tech-badge">Product Analytics</span>
-        <span class="tech-badge">TMS / LMS / WMS</span>
-        <span class="tech-badge">Media Mix Modeling</span>
+        <span class="cap-pill">Product Analytics</span>
+        <span class="cap-pill">Media Mix Modeling</span>
       </div>
     </div>
 

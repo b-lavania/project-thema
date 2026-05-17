@@ -68,7 +68,7 @@ This file consolidates all resume variants and portfolio metrics into a single s
 ## Roles
 
 ### ROLE 1: AI Product Consultant / Principal Product Lead
-- **Company**: Strategic AI & Marketplace Ventures (Fractional at various start-ups: Moovez, Lio, DeadInventoryStore, others)
+- **Company**: Strategic AI & Marketplace Ventures (Fractional at various start-ups: Moovez, Lio Han, DeadInventoryStore, others)
 - **Title**: Principal Product Lead / AI Product Consultant
 - **Dates**: Feb 2022 - Present
 - **Location**: Remote / Calgary, AB

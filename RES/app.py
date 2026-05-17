@@ -25,8 +25,8 @@ from pdf_generator import create_formatted_pdf
 RES_ROOT = Path(__file__).resolve().parent
 OUTPUT_DIR = RES_ROOT / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
-MASTER_CONTEXT_PATH = RES_ROOT / "master_context.md"
-HISTORY_PATH = RES_ROOT / "history.md"
+MASTER_CONTEXT_PATH = RES_ROOT / "data" / "master_context.md"
+HISTORY_PATH = RES_ROOT / "data" / "history.md"
 ENV_PATH = RES_ROOT / ".env"
 
 # Load .env file if it exists
@@ -115,7 +115,7 @@ def scrape_url(url):
 
 
 def append_to_history(date, company, role, track, jd_source, tokens_used, cost_usd):
-    """Append structured entry to history.md under ## Auto log section."""
+    """Append structured entry to data/history.md under ## Auto log section."""
     entry = f"""
 ### {company} - {role}
 - **Date**: {date}
@@ -197,33 +197,150 @@ def estimate_cost(usage_list):
     return total_tokens, cost
 
 
+def inject_sf_professional_theme():
+    """Modern SF-style professional theme with clean typography and neutral palette."""
+    st.markdown(
+        """
+<style>
+/* Load fonts: Inter for body, Lora for headings */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+/* Root variables */
+:root {
+    --sf-primary: #007AFF;
+    --sf-bg: #F9FAFB;
+    --sf-card: #FFFFFF;
+    --sf-border: #E5E7EB;
+    --sf-text: #111827;
+    --sf-text-muted: #6B7280;
+}
+
+/* Main app background */
+.stApp {
+    background-color: var(--sf-bg);
+}
+
+/* Typography & Readability */
+section[data-testid="stMain"], .stApp {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--sf-text);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lora', serif !important;
+    color: var(--sf-text) !important;
+    letter-spacing: -0.01em !important;
+    font-weight: 600 !important;
+}
+
+section[data-testid="stMain"] h1 {
+    font-size: 2.25rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+section[data-testid="stMain"] h2 {
+    font-size: 1.5rem !important;
+    margin-top: 1.5rem !important;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #F3F4F6 !important;
+    border-right: 1px solid var(--sf-border);
+}
+
+/* Modern Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+    background-color: transparent;
+}
+
+.stTabs [data-baseweb="tab"] {
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: var(--sf-text-muted);
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: var(--sf-card) !important;
+    color: var(--sf-primary) !important;
+    border: 1px solid var(--sf-border) !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+}
+
+/* Improved Inputs */
+.stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] {
+    border-radius: 8px !important;
+    border: 1px solid var(--sf-border) !important;
+}
+
+/* Output Preview Readability */
+div[data-testid="stText"] pre {
+    font-family: 'SF Mono', 'Inter', sans-serif !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    background-color: var(--sf-card) !important;
+    padding: 20px !important;
+    border-radius: 12px !important;
+    border: 1px solid var(--sf-border) !important;
+    white-space: pre-wrap !important;
+    color: var(--sf-text) !important;
+}
+
+/* ATS Card */
+.ats-card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--sf-border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Button Refinement */
+.stButton button {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+}
+</style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 # ---------------------------------------------------------------------------
 # Streamlit App
 # ---------------------------------------------------------------------------
-st.set_page_config(page_title="ResTron — Resume Generator", layout="wide")
-st.title("ResTron — Resume & Cover Letter Generator")
+st.set_page_config(page_title="Project Thema", layout="wide", page_icon="📄")
+inject_sf_professional_theme()
+st.title("Project Thema")
+st.caption("AI-powered resume and cover letter generator with ATS optimization")
 
 # Sidebar
-st.sidebar.header("Configuration")
+st.sidebar.title("⚙️ Configuration")
+st.sidebar.divider()
+
+st.sidebar.subheader("🔑 API Key")
 st.sidebar.text_input(
     "OpenAI API Key",
     type="password",
     key="sidebar_api_key",
     help="Saved locally to .env so you only enter it once"
 )
-if st.sidebar.button("Save Key to .env", key="save_key_btn"):
+if st.sidebar.button("💾 Save Key to .env", key="save_key_btn", use_container_width=True):
     key_to_save = st.session_state.get("sidebar_api_key", "").strip()
     if key_to_save:
         ENV_PATH.write_text(f'OPENAI_API_KEY="{key_to_save}"\n', encoding="utf-8")
         os.environ["OPENAI_API_KEY"] = key_to_save
-        st.sidebar.success("Key saved to .env")
+        st.sidebar.success("✅ Key saved to .env")
     else:
-        st.sidebar.warning("No key to save")
-env_status = "Saved" if os.environ.get("OPENAI_API_KEY") else "Not set"
-st.sidebar.caption(f"API Key status: {env_status}")
+        st.sidebar.warning("⚠️ No key to save")
+env_status = "✅ Saved" if os.environ.get("OPENAI_API_KEY") else "⚠️ Not set"
+st.sidebar.caption(f"Status: {env_status}")
 
 st.sidebar.divider()
-st.sidebar.subheader("Location")
+st.sidebar.subheader("📍 Location")
 selected_location_label = st.sidebar.radio(
     "I am applying from:",
     list(LOCATION_OPTIONS.keys()),
@@ -242,36 +359,41 @@ if not st.session_state.master_context:
 # ---------------------------------------------------------------------------
 # TABS
 # ---------------------------------------------------------------------------
-tab_job, tab_questions, tab_generate = st.tabs(["Job Details", "Application Questions", "Generate & Output"])
+tab_job, tab_questions, tab_generate = st.tabs(["📋 Job Details", "❓ Application Questions", "🚀 Generate & Output"])
 
 # --- TAB 1: Job Details ---
 with tab_job:
+    st.markdown("### Company & Role Information")
     col1, col2 = st.columns(2)
     with col1:
-        company_name = st.text_input("Company Name", key="company_name")
-        target_role = st.text_input("Target Role Title", key="target_role")
+        company_name = st.text_input("Company Name", key="company_name", placeholder="e.g., Acme Corp")
+        target_role = st.text_input("Target Role Title", key="target_role", placeholder="e.g., Senior Product Manager")
     with col2:
         selected_track = st.selectbox("Target Track", TRACK_OPTIONS, key="selected_track")
-        jd_url = st.text_input("JD URL (optional)", key="jd_url")
+        jd_url = st.text_input("JD URL (optional)", key="jd_url", placeholder="https://...")
 
-    jd_text = st.text_area("Job Description (paste full JD)", height=300, key="jd_text")
+    st.markdown("### Job Description")
+    jd_text = st.text_area("Job Description (paste full JD)", height=300, key="jd_text", placeholder="Paste the complete job description here...")
 
     if jd_url and not jd_text:
-        if st.button("Scrape JD from URL"):
+        if st.button("🔍 Scrape JD from URL", use_container_width=True):
             result = scrape_url(jd_url)
             if result["ok"]:
                 st.session_state.jd_text = result["text"]
-                st.success(f"Scraped {len(result['text']):,} chars from URL")
+                st.success(f"✅ Scraped {len(result['text']):,} chars from URL")
                 st.rerun()
             else:
-                st.error(f"Scrape failed: {result['error']}")
+                st.error(f"❌ Scrape failed: {result['error']}")
 
 # --- TAB 2: Application Questions ---
 with tab_questions:
+    st.markdown("### Custom Application Questions")
+    st.caption("Optional: Add any specific questions from the application portal")
     custom_questions = st.text_area(
         "Application-specific questions (optional)",
         height=200,
         key="custom_questions",
+        placeholder="Paste each question on its own line...",
         help="Paste any specific questions from the application portal. Each question on its own line."
     )
 
@@ -279,6 +401,8 @@ with tab_questions:
 with tab_generate:
     # Pre-flight checklist
     st.subheader("Pre-flight Checklist")
+    st.caption("Ensure all requirements are met before generating documents")
+    
     checks = {
         "API Key": bool(get_api_key()),
         "Company Name": bool(st.session_state.get("company_name", "").strip()),
@@ -291,14 +415,15 @@ with tab_generate:
     all_ready = True
     for i, (label, ok) in enumerate(checks.items()):
         with cols[i]:
-            icon = "✅" if ok else "❌"
-            st.markdown(f"{icon} **{label}**")
+            icon = "✅" if ok else "⚠️"
+            status_color = "green" if ok else "orange"
+            st.markdown(f"<div style='text-align: center; padding: 12px; background-color: {'rgba(52, 199, 89, 0.05)' if ok else 'rgba(255, 149, 0, 0.05)'}; border-radius: 10px; border: 1px solid {'#34C759' if ok else '#FF9500'};'><div style='font-size: 1.5rem;'>{icon}</div><div style='font-weight: 600; font-size: 0.85rem; margin-top: 4px; color: #374151;'>{label}</div></div>", unsafe_allow_html=True)
             if not ok:
                 all_ready = False
 
     st.divider()
 
-    if st.button("Generate Documents", disabled=not all_ready, type="primary"):
+    if st.button("🚀 Generate Documents", disabled=not all_ready, type="primary", use_container_width=True):
         api_key = get_api_key()
         company = st.session_state.company_name.strip()
         role = st.session_state.target_role.strip()
@@ -451,21 +576,39 @@ with tab_generate:
         res = st.session_state.gen_results
 
         # Display results
-        st.success(f"Done! {res['total_tokens']:,} tokens used (~${res['total_cost']:.3f})")
+        st.success(f"✨ Generation complete! {res['total_tokens']:,} tokens used (~${res['total_cost']:.3f})")
 
         # ATS Keyword Coverage Report
         coverage_pct = int(res['kw_coverage'] * 100)
         coverage_color = "green" if coverage_pct >= 80 else ("orange" if coverage_pct >= 60 else "red")
-        st.markdown(f"### ATS Keyword Coverage: :{coverage_color}[{coverage_pct}%]")
+        
+        st.markdown(f"""
+        <div class="ats-card" style='background: linear-gradient(135deg, {'rgba(52, 199, 89, 0.05)' if coverage_pct >= 80 else ('rgba(255, 149, 0, 0.05)' if coverage_pct >= 60 else 'rgba(255, 59, 48, 0.05)')} 0%, white 100%); 
+                    border-color: {'#34C759' if coverage_pct >= 80 else ('#FF9500' if coverage_pct >= 60 else '#FF3B30')};'>
+            <h3 style='margin: 0 0 8px 0;'>ATS Keyword Coverage</h3>
+            <div style='font-size: 3.5rem; font-weight: 700; color: {'#34C759' if coverage_pct >= 80 else ('#FF9500' if coverage_pct >= 60 else '#FF3B30')}; letter-spacing: -0.05em;'>{coverage_pct}%</div>
+            <p style='margin: 8px 0 0 0; color: #6B7280; font-weight: 500;'>
+                {'Excellent coverage' if coverage_pct >= 80 else ('Good coverage' if coverage_pct >= 60 else 'Needs improvement')} — 
+                {len(res['kw_found'])} of {len(res['kw_found']) + len(res['kw_missing'])} keywords found
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
         col_found, col_missing = st.columns(2)
         with col_found:
-            st.caption(f"**Found ({len(res['kw_found'])})**")
-            for t in res['kw_found']:
-                st.markdown(f"- {t}")
+            st.markdown("**✅ Found Keywords**")
+            if res['kw_found']:
+                for t in res['kw_found']:
+                    st.markdown(f"<div style='padding: 6px 12px; margin: 4px 0; background-color: rgba(52, 199, 89, 0.1); border-radius: 6px; font-size: 0.9rem;'>• {t}</div>", unsafe_allow_html=True)
+            else:
+                st.caption("No keywords extracted")
         with col_missing:
-            st.caption(f"**Missing ({len(res['kw_missing'])})**")
-            for t in res['kw_missing']:
-                st.markdown(f"- {t}")
+            st.markdown("**⚠️ Missing Keywords**")
+            if res['kw_missing']:
+                for t in res['kw_missing']:
+                    st.markdown(f"<div style='padding: 6px 12px; margin: 4px 0; background-color: rgba(255, 149, 0, 0.1); border-radius: 6px; font-size: 0.9rem;'>• {t}</div>", unsafe_allow_html=True)
+            else:
+                st.caption("All keywords covered!")
 
         with st.expander("JD Keywords Extracted", expanded=False):
             st.text(res['extracted_keywords'])
@@ -473,44 +616,53 @@ with tab_generate:
         st.divider()
 
         # Download buttons
+        st.subheader("📥 Download Documents")
         col_doc, col_pdf = st.columns(2)
         with col_doc:
             with open(res['doc_path'], "rb") as f:
                 st.download_button(
-                    label="Download Resume (DOCX)",
+                    label="📄 Download Resume (DOCX)",
                     data=f,
                     file_name=res['doc_filename'],
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    use_container_width=True
                 )
         with col_pdf:
             with open(res['pdf_path'], "rb") as f:
                 st.download_button(
-                    label="Download Resume (PDF)",
+                    label="📑 Download Resume (PDF)",
                     data=f,
                     file_name=res['pdf_filename'],
                     mime="application/pdf",
-                    type="primary"
+                    type="primary",
+                    use_container_width=True
                 )
 
         # Previews
-        with st.expander("Mission Statement", expanded=True):
+        st.divider()
+        st.subheader("📋 Document Preview")
+        
+        with st.expander("✨ Mission Statement", expanded=True):
             st.text(res['mission'])
 
-        with st.expander("Skills Statements"):
+        with st.expander("🎯 Skills Statements"):
             st.text(res['skills'])
 
-        with st.expander(f"Experience ({len(res['experience_blocks'])} roles)"):
-            for block in res['experience_blocks']:
+        with st.expander(f"💼 Experience ({len(res['experience_blocks'])} roles)"):
+            for i, block in enumerate(res['experience_blocks'], 1):
+                st.markdown(f"**Role {i}**")
                 st.text(block)
-                st.divider()
+                if i < len(res['experience_blocks']):
+                    st.divider()
 
         if res['all_coaching_notes']:
-            with st.expander("Coaching Notes (not in document)", expanded=False):
+            with st.expander("💡 Coaching Notes (not in document)", expanded=False):
                 st.caption("These are internal review notes stripped from the DOCX. Use them to improve your inputs for the next run.")
                 for note_block in res['all_coaching_notes']:
                     st.markdown(note_block)
 
-        st.subheader("Cover Letter")
+        st.divider()
+        st.subheader("✉️ Cover Letter")
         st.caption("Select all and copy to paste into your application.")
         st.text_area(
             label="cover_letter_text",
@@ -521,7 +673,8 @@ with tab_generate:
         )
 
         if res['custom_answers']:
-            st.subheader("Application Q&A")
+            st.divider()
+            st.subheader("❓ Application Q&A")
             st.caption("Select all and copy to paste into your application.")
             st.text_area(
                 label="qa_text",
@@ -532,11 +685,16 @@ with tab_generate:
             )
 
         # Cost breakdown
-        with st.expander("Token Usage & Cost"):
+        with st.expander("💰 Token Usage & Cost Breakdown"):
             st.markdown(f"""
+<div style='background-color: white; padding: 16px; border-radius: 10px; border: 1px solid #E5E7EB; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'>
+
 | Metric | Value |
 |--------|-------|
-| Total tokens | {res['total_tokens']:,} |
-| Approx. cost | ${res['total_cost']:.3f} |
-| API calls | {len(res['usage_log'])} |
-""")
+| **Total tokens** | {res['total_tokens']:,} |
+| **Approx. cost** | ${res['total_cost']:.3f} |
+| **API calls** | {len(res['usage_log'])} |
+| **Cost per token** | ${(res['total_cost'] / res['total_tokens']):.6f} |
+
+</div>
+""", unsafe_allow_html=True)

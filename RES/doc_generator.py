@@ -6,7 +6,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from lxml import etree
 
-TEMPLATE_PATH = Path(__file__).resolve().parent / "historic" / "template.docx"
+TEMPLATE_PATH = Path(__file__).resolve().parent / "assets" / "template.docx"
 
 
 def strip_coaching_notes(text):
@@ -66,7 +66,7 @@ def _add_section_paragraphs(doc, text):
 
 def create_formatted_doc(output_path, resume_sections, location="Sunnyvale, CA"):
     """
-    Build a 1-page resume DOCX by loading template.docx, clearing its content,
+    Build a 1-page resume DOCX by loading assets/template.docx, clearing its content,
     and writing generated resume content using the template's own styles.
 
     Args:

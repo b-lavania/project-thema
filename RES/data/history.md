@@ -65,6 +65,60 @@ Goal: Produce a one-page, ATS-safe cover letter that can be pasted directly into
 
 ## Auto log
 
+### AIApply - Product Manager / Product Operations
+- **Date**: 2026-05-16
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 15,526
+- **Approx cost**: $0.048
+- **Outputs**: Resume, Cover Letter
+
+
+### micro1 - Product Manager – AI Task & Prompt Design
+- **Date**: 2026-05-16
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 15,531
+- **Approx cost**: $0.048
+- **Outputs**: Resume, Cover Letter
+
+
+### micro1 - Product Manager – AI Task & Prompt Design
+- **Date**: 2026-05-16
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 15,327
+- **Approx cost**: $0.048
+- **Outputs**: Resume, Cover Letter
+
+
+### micro1 - Product Manager – AI Task & Prompt Design
+- **Date**: 2026-05-16
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 15,207
+- **Approx cost**: $0.047
+- **Outputs**: Resume, Cover Letter
+
+
+### Ogilvy - Senior Strategist
+- **Date**: 2026-05-16
+- **Track**: BizOps
+- **JD source**: Pasted Text
+- **Tokens used**: 16,065
+- **Approx cost**: $0.050
+- **Outputs**: Resume, Cover Letter
+
+
+### AirOps - Founding Biz Ops Manager
+- **Date**: 2026-05-16
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 18,119
+- **Approx cost**: $0.057
+- **Outputs**: Resume, Cover Letter
+
+
 ### RevenueCat - Senior Product Manager, Agents
 - **Date**: 2026-05-15
 - **Track**: Product/AI

@@ -4,7 +4,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML, CSS
 
-TEMPLATE_DIR = Path(__file__).resolve().parent
+TEMPLATE_DIR = Path(__file__).resolve().parent / "assets"
 
 def strip_coaching_notes(text):
     """Remove COACHING NOTE lines from text."""
