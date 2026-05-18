@@ -49,9 +49,15 @@ OUTPUT FORMAT
 ...
 If needed:
 COACHING NOTE: ...
+
+COHERENCE
+The resume as a whole tells one story as described in the Narrative Brief below. Frame this role's bullets within that larger positioning — emphasize the aspects that support the narrative arc, not just the most impressive-sounding facts.
 ---USER---
 ROLE DETAILS (from candidate history):
 {role_block}
+
+NARRATIVE CONTEXT (frame bullets within this positioning):
+{narrative_brief}
 
 TARGET JOB DESCRIPTION (for relevance):
 {jd_text}

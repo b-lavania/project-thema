@@ -114,6 +114,27 @@ def extract_jd_keywords(client, jd_text):
     return _call_openai(client, system_prompt, user_prompt, max_tokens=400, temperature=0.2)
 
 # ---------------------------------------------------------------------------
+# Narrative Brief
+# ---------------------------------------------------------------------------
+def generate_narrative_brief(client, jd_text, master_context, target_role, company_name, track=""):
+    """Synthesize master_context + JD into a coherent positioning brief.
+
+    The brief feeds into all downstream section prompts to ensure narrative
+    coherence across mission, skills, bullets, and cover letter.
+    """
+    track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
+    system_prompt, user_prompt = load_prompt(
+        "narrative_brief.md",
+        track_line=track_line,
+        target_role=target_role,
+        company_name=company_name,
+        jd_text=jd_text[:4000],
+        master_context=master_context,
+    )
+    return _call_openai(client, system_prompt, user_prompt, max_tokens=700, temperature=0.4)
+
+
+# ---------------------------------------------------------------------------
 # Role selection
 # ---------------------------------------------------------------------------
 def select_relevant_roles(client, jd_text, master_context):
@@ -128,7 +149,7 @@ def select_relevant_roles(client, jd_text, master_context):
 # ---------------------------------------------------------------------------
 # Mission Statement
 # ---------------------------------------------------------------------------
-def generate_mission_statement(client, jd_paragraphs, target_title, company_name, track=""):
+def generate_mission_statement(client, jd_paragraphs, target_title, company_name, track="", narrative_brief=""):
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
     system_prompt, user_prompt = load_prompt(
         "mission_statement.md",
@@ -136,14 +157,15 @@ def generate_mission_statement(client, jd_paragraphs, target_title, company_name
         ANTI_FLUFF=get_anti_fluff(),
         company_name=company_name,
         target_role=target_title,
-        jd_paragraphs=jd_paragraphs[:1500]
+        jd_paragraphs=jd_paragraphs[:1500],
+        narrative_brief=narrative_brief,
     )
     return _call_openai(client, system_prompt, user_prompt, max_tokens=200)
 
 # ---------------------------------------------------------------------------
 # Skills Statements
 # ---------------------------------------------------------------------------
-def generate_skills_statements(client, jd_duties, master_context, target_role, track=""):
+def generate_skills_statements(client, jd_duties, master_context, target_role, track="", narrative_brief=""):
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
     system_prompt, user_prompt = load_prompt(
         "skills_statements.md",
@@ -151,14 +173,15 @@ def generate_skills_statements(client, jd_duties, master_context, target_role, t
         ANTI_FLUFF=get_anti_fluff(),
         target_role=target_role,
         jd_duties=jd_duties,
-        master_context=master_context[:6000]
+        narrative_brief=narrative_brief,
+        master_context=master_context[:4000],
     )
     return _call_openai(client, system_prompt, user_prompt, max_tokens=800)
 
 # ---------------------------------------------------------------------------
 # Experience Bullets (per-role)
 # ---------------------------------------------------------------------------
-def generate_experience_bullets(client, role_block, jd_text, track=""):
+def generate_experience_bullets(client, role_block, jd_text, track="", narrative_brief=""):
     """Generate bullets for ONE role."""
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
     system_prompt, user_prompt = load_prompt(
@@ -166,14 +189,15 @@ def generate_experience_bullets(client, role_block, jd_text, track=""):
         track_line=track_line,
         ANTI_FLUFF=get_anti_fluff(),
         role_block=role_block,
-        jd_text=jd_text[:2000]
+        narrative_brief=narrative_brief,
+        jd_text=jd_text[:2000],
     )
     return _call_openai(client, system_prompt, user_prompt, max_tokens=800)
 
 # ---------------------------------------------------------------------------
 # Cover Letter
 # ---------------------------------------------------------------------------
-def generate_cover_letter(client, jd_text, master_context, target_role, company_name, track=""):
+def generate_cover_letter(client, jd_text, master_context, target_role, company_name, track="", narrative_brief=""):
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
     system_prompt, user_prompt = load_prompt(
         "cover_letter.md",
@@ -181,7 +205,8 @@ def generate_cover_letter(client, jd_text, master_context, target_role, company_
         target_role=target_role,
         company_name=company_name,
         jd_text=jd_text[:3000],
-        master_context=master_context[:5000]
+        narrative_brief=narrative_brief,
+        master_context=master_context[:3000],
     )
     return _call_openai(client, system_prompt, user_prompt, max_tokens=700)
 

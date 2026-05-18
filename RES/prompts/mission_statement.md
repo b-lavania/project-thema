@@ -24,8 +24,14 @@ Line 2: One sentence: action verb + mission language + outcome + at/for {{Compan
 
 LENGTH
 200-250 characters total (including spaces). If over, shorten while preserving mission alignment and clarity.
+
+COHERENCE
+The resume as a whole tells one story as described in the Narrative Brief below. Ensure your mission statement opens that story — do not contradict or diverge from the positioning.
 ---USER---
 Company name: {company_name}
 Target role title: {target_role}
 Job Description (first paragraphs only — no bullets):
 {jd_paragraphs}
+
+Narrative Brief (use this to frame your positioning):
+{narrative_brief}

@@ -65,6 +65,15 @@ Goal: Produce a one-page, ATS-safe cover letter that can be pasted directly into
 
 ## Auto log
 
+### BuildOps - Senior Product Manager
+- **Date**: 2026-05-17
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 24,746
+- **Approx cost**: $0.077
+- **Outputs**: Resume, Cover Letter
+
+
 ### AIApply - Product Manager / Product Operations
 - **Date**: 2026-05-16
 - **Track**: Product/AI

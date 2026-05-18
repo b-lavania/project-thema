@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from generator import (
     get_openai_client,
     extract_jd_keywords,
+    generate_narrative_brief,
     select_relevant_roles,
     generate_mission_statement,
     generate_skills_statements,
@@ -469,24 +470,31 @@ with tab_generate:
                 if not selected_roles:
                     selected_roles = list(all_role_blocks.items())[:3]
 
-                # Step 3: Mission statement
+                # Step 3: Narrative brief
+                st.write("Synthesizing narrative brief...")
+                narrative_brief, usage = generate_narrative_brief(
+                    client, jd, master_ctx, role, company, track
+                )
+                usage_log.append(usage)
+
+                # Step 4: Mission statement
                 st.write("Generating mission statement...")
                 jd_paragraphs = extract_jd_paragraphs(jd)
-                mission, usage = generate_mission_statement(client, jd_paragraphs, role, company, track)
+                mission, usage = generate_mission_statement(client, jd_paragraphs, role, company, track, narrative_brief=narrative_brief)
                 usage_log.append(usage)
 
-                # Step 4: Skills statements (use extracted duties if available)
+                # Step 5: Skills statements (use extracted duties if available)
                 st.write("Generating skills statements...")
                 skills_input = jd_duties if jd_duties else jd[:3000]
-                skills, usage = generate_skills_statements(client, skills_input, master_ctx, role, track)
+                skills, usage = generate_skills_statements(client, skills_input, master_ctx, role, track, narrative_brief=narrative_brief)
                 usage_log.append(usage)
 
-                # Step 5: Experience bullets (per role)
+                # Step 6: Experience bullets (per role)
                 st.write(f"Generating experience bullets for {len(selected_roles)} roles...")
                 experience_blocks = []
                 all_coaching_notes = []
                 for role_name, role_block in selected_roles:
-                    bullets, usage = generate_experience_bullets(client, role_block, jd, track)
+                    bullets, usage = generate_experience_bullets(client, role_block, jd, track, narrative_brief=narrative_brief)
                     usage_log.append(usage)
                     experience_blocks.append(bullets)
                     notes = extract_coaching_notes(bullets)
@@ -498,19 +506,19 @@ with tab_generate:
                 if skills_notes:
                     all_coaching_notes.insert(0, f"### Skills\n{skills_notes}")
 
-                # Step 5: Cover letter
+                # Step 7: Cover letter
                 st.write("Generating cover letter...")
-                cover_letter, usage = generate_cover_letter(client, jd, master_ctx, role, company, track)
+                cover_letter, usage = generate_cover_letter(client, jd, master_ctx, role, company, track, narrative_brief=narrative_brief)
                 usage_log.append(usage)
 
-                # Step 6: Custom Q&A
+                # Step 8: Custom Q&A
                 custom_answers = ""
                 if questions:
                     st.write("Answering application questions...")
                     custom_answers, usage = answer_custom_questions(client, questions, master_ctx, jd)
                     usage_log.append(usage)
 
-                # Step 7: Assemble DOCX and PDF
+                # Step 9: Assemble DOCX and PDF
                 st.write("Assembling resume documents...")
                 resume_sections = {
                     "mission": mission,
@@ -525,7 +533,7 @@ with tab_generate:
                 pdf_path = str(OUTPUT_DIR / pdf_filename)
                 create_formatted_pdf(pdf_path, resume_sections, location=candidate_location)
 
-                # Step 8: Keyword coverage check (ATS-COV)
+                # Step 10: Keyword coverage check (ATS-COV)
                 combined_output = " ".join([
                     mission, skills,
                     " ".join(experience_blocks),
@@ -535,10 +543,10 @@ with tab_generate:
                     extracted_keywords, combined_output
                 )
 
-                # Step 9: Cost summary
+                # Step 11: Cost summary
                 total_tokens, total_cost = estimate_cost(usage_log)
 
-                # Step 10: Log to history
+                # Step 12: Log to history
                 jd_source = st.session_state.get("jd_url", "") or "Pasted Text"
                 append_to_history(
                     datetime.date.today().isoformat(),
@@ -555,6 +563,7 @@ with tab_generate:
                 "kw_found": kw_found,
                 "kw_missing": kw_missing,
                 "extracted_keywords": extracted_keywords,
+                "narrative_brief": narrative_brief,
                 "doc_path": doc_path,
                 "doc_filename": doc_filename,
                 "pdf_path": pdf_path,
@@ -612,6 +621,11 @@ with tab_generate:
 
         with st.expander("JD Keywords Extracted", expanded=False):
             st.text(res['extracted_keywords'])
+
+        if res.get('narrative_brief'):
+            with st.expander("🧭 Narrative Brief (internal framing)", expanded=False):
+                st.caption("This is the strategic positioning synthesized for this application. All resume sections were generated from this framing.")
+                st.text(res['narrative_brief'])
 
         st.divider()
 

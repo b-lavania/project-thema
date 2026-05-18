@@ -37,10 +37,16 @@ OUTPUT FORMAT
    Alt (general) Skill Label: Statement (180-200 chars)
 4) Skill Label: Statement (180-200 chars)
 5) Skill Label: Statement (180-200 chars)
+
+COHERENCE
+The resume as a whole tells one story as described in the Narrative Brief below. Ensure your skill statements support this arc — use the proof points and insights from the brief to ground your statements.
 ---USER---
 Target role title: {target_role}
 Top Duties:
 {jd_duties}
 
-Candidate Resume Context:
+Narrative Brief (primary positioning — use proof points and insights from here):
+{narrative_brief}
+
+Candidate Resume Context (supplementary reference for specific tools/metrics):
 {master_context}

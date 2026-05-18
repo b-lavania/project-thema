@@ -17,11 +17,17 @@ RULES
 - Plain text only. No markdown formatting.
 - If a detail is missing, flag it inline as "[Need detail: <item>]" rather than fabricating.
 - Sign off with: Bob Lavania
+
+COHERENCE
+The resume as a whole tells one story as described in the Narrative Brief below. The cover letter should reinforce this same positioning — use the proof points and strategic reasoning from the brief to build your argument.
 ---USER---
 Target Role: {target_role}
 Company: {company_name}
 Job Description:
 {jd_text}
 
-Candidate Context / Portfolio Proofs:
+Narrative Brief (primary positioning — build your argument from this):
+{narrative_brief}
+
+Candidate Context / Portfolio Proofs (supplementary reference for metrics):
 {master_context}

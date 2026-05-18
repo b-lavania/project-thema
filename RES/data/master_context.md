@@ -15,11 +15,98 @@ This file consolidates all resume variants and portfolio metrics into a single s
 
 ---
 
-## Education
+## Three Operating Themes (Portfolio-Derived Positioning)
 
-- MBA, University of Calgary (2025) — Energy Economics and Product Leadership
-- Bachelor of Science, Illinois Tech (2012) — Chicago, IL
-- CSM (Certified Scrum Master) & CSPO (Certified Scrum Product Owner), Scrum Alliance (2022)
+1. **Pricing Architecture** — Redesigning how value is captured: tier consolidation, real-time quote engines, discount logic, ARPU optimization. Done across M&A SaaS, logistics, education, and insurance.
+   - Proof: 3x take rate · $450→$600 ARPU · 18% lower CAC
+2. **Operational Intelligence** — Replacing manual, chaotic processes with AI systems (computer vision, conversational agents, OR engines, predictive frameworks). Built and deployed in production.
+   - Proof: 60 min→3 min quoting · 50% support deflection · 85% false-alert reduction
+3. **Zero-to-One Build** — Launching products from whiteboard and building the commercial engine around them: messaging, funnels, retention, unit economics.
+   - Proof: 5 products launched · 14% retention lift · 7% conversion lift · 93% fill rate
+
+---
+
+## Key Insights (from Case Studies)
+
+- **AI systems**: "AI systems succeed when they reduce operational ambiguity, not when they maximize sophistication. Focused on structured information capture and reliable handoffs over open-ended interaction." (Moovez/Quotely)
+- **Pricing**: "Pricing problems are often decision architecture problems, not just monetization problems. Simplifying choices can be more valuable than optimizing price points." (Village Wellth)
+- **Detection**: "Detection systems fail when users stop trusting the signal. Accuracy metrics alone are insufficient. Operational reliability matters more than theoretical performance." (Netsweeper)
+- **Energy/Infrastructure**: "Each workflow step surfaces a risk class the others cannot see. Deployability is a coupling problem — the product's job is to make those couplings explicit, comparable, and reviewable." (Project Epsilon)
+
+---
+
+## Working Principles
+
+- Build for operational simplicity first; add features only when they solve real problems
+- Ship AI that reduces friction in existing workflows, not AI for novelty's sake
+- Fix decision-making upstream before building dashboards downstream
+- Prioritize signal quality over data volume
+- Design products that reduce cognitive load, not increase it
+- Define the metric first, then build until it moves; own it until it's measurably better
+- Go solo from blank slate to working system, then design the handoff so it keeps running without me
+- Ship, instrument, learn, and deprecate what doesn't work — no attachment to the artifact
+
+---
+
+## Portfolio Proofs (Quantified Outcomes)
+
+### Moovez / Quotely (Last-Mile Logistics AI)
+| Metric | Before | After |
+|--------|--------|-------|
+| Time to generate job estimate | ~1 hour | 3 minutes (20x faster) |
+| Jobs completing within quoted time | Unmeasured / high variance | 85% within range |
+| Support tickets requiring human response | ~100% of volume | ~50% deflected |
+| Customer-facing cost accuracy | Manual guess | Algorithm-grounded |
+| Marketplace CAC | — | ~$100 |
+| LTV | — | $1,000+ |
+| Retention | — | 12+ months |
+| Fill rate | — | ~93% |
+| GMV | — | $500k+ |
+| System commercialized as | — | Quotely SaaS (quoteperfectly.com) |
+
+### Pricing Consolidation (M&A Platform — Village Wellth)
+- 4 pricing tiers → 3 (reduced decision complexity and segmentation overlap)
+- Take rate improved by 3x
+- Reduced churn from plan confusion
+- Segmentation analysis → clearer upgrade paths and value propositions
+
+### Netsweeper (Student Safety — 35-school district)
+- False alerts reduced by 85%
+- Reframed product goal from "detection accuracy" to "operational trust"
+- Improved usability and staff trust in system outputs
+
+### BVXpress (M&A Advisory — 9 years)
+- ARPU: $450 → $600 (3x take rate)
+- Retention: +14% over 2 years
+- Conversion: +7% via landing page and messaging redesign
+- 5 products launched from whiteboard; 1,400+ users served
+
+### Education Marketplace — Lead Qualification
+- 6-question Course Fit Calculator: intent data to Zoho, Tier-A leads routed to SDRs
+- Follow-up speed: 40% faster
+- Enrollment rate: 9% → 30%
+
+### Marketing Science / MMM (E-commerce)
+- Projected 18% reduction in CAC
+- 24% increase in ARPU through segmentation
+- 134,900 records analyzed with 18 attributes across 6 spend channels
+
+### Project Epsilon (Energy Modeling Platform)
+- Live platform: epsilon.xblavania.workers.dev
+- Scenario-first modeling for microgrid, data center, and RTO-style energy planning
+- Typed Scenario contract drives all engines (sizing, stress-testing, finance, network) from single source of truth — no copy-paste model drift
+- Six-step guided workflow: define scenario → size portfolio → stress-test → evaluate finance → validate network → generate report
+- Three production adapters: DC-PPA · ISO-RTO · Microgrid
+- Technical: PyPSA linear programs for 24/7 CFE sizing, ISO-RTO Monte Carlo stress testing, agent-based VPP dispatch, AC power flow / distribution validation
+- Assurance layer: 100-point confidence scoring with severity-based deductions, SHA-256 scenario-hash staleness detection, prerequisite gating
+- BOM bridge: 11 starter equipment catalog SKUs generated from modeled MW/MWh
+- Comparison: field-by-field assumption diffs, run-vs-run comparison, Markdown/HTML export
+
+### ChurnOS (Retention & Attribution Platform)
+- Live platform: churnos.xblavania.workers.dev
+- Causal analytics for retention forecasting, churn analysis, and CRO using Bayesian inference
+- Attribution modeling for incremental value of marketing spend
+- P&L outcome simulation for subscription and marketplace operators
 
 ---
 
@@ -51,17 +138,6 @@ This file consolidates all resume variants and portfolio metrics into a single s
 ### Product Execution
 - Product launches, growth optimization, cross-functional leadership
 - Aha!, Jira, Confluence
-
----
-
-## Three Operating Themes (Portfolio-Derived Positioning)
-
-1. **Pricing Architecture** — Redesigning how value is captured: tier consolidation, real-time quote engines, discount logic, ARPU optimization. Done across M&A SaaS, logistics, education, and insurance.
-   - Proof: 3x take rate · $450→$600 ARPU · 18% lower CAC
-2. **Operational Intelligence** — Replacing manual, chaotic processes with AI systems (computer vision, conversational agents, OR engines, predictive frameworks). Built and deployed in production.
-   - Proof: 60 min→3 min quoting · 50% support deflection · 85% false-alert reduction
-3. **Zero-to-One Build** — Launching products from whiteboard and building the commercial engine around them: messaging, funnels, retention, unit economics.
-   - Proof: 5 products launched · 14% retention lift · 7% conversion lift · 93% fill rate
 
 ---
 
@@ -170,87 +246,11 @@ This file consolidates all resume variants and portfolio metrics into a single s
 
 ---
 
-## Portfolio Proofs (Quantified Outcomes)
+## Education
 
-### Moovez / Quotely (Last-Mile Logistics AI)
-| Metric | Before | After |
-|--------|--------|-------|
-| Time to generate job estimate | ~1 hour | 3 minutes (20x faster) |
-| Jobs completing within quoted time | Unmeasured / high variance | 85% within range |
-| Support tickets requiring human response | ~100% of volume | ~50% deflected |
-| Customer-facing cost accuracy | Manual guess | Algorithm-grounded |
-| Marketplace CAC | — | ~$100 |
-| LTV | — | $1,000+ |
-| Retention | — | 12+ months |
-| Fill rate | — | ~93% |
-| GMV | — | $500k+ |
-| System commercialized as | — | Quotely SaaS (quoteperfectly.com) |
-
-### Pricing Consolidation (M&A Platform — Village Wellth)
-- 4 pricing tiers → 3 (reduced decision complexity and segmentation overlap)
-- Take rate improved by 3x
-- Reduced churn from plan confusion
-- Segmentation analysis → clearer upgrade paths and value propositions
-
-### Netsweeper (Student Safety — 35-school district)
-- False alerts reduced by 85%
-- Reframed product goal from "detection accuracy" to "operational trust"
-- Improved usability and staff trust in system outputs
-
-### BVXpress (M&A Advisory — 9 years)
-- ARPU: $450 → $600 (3x take rate)
-- Retention: +14% over 2 years
-- Conversion: +7% via landing page and messaging redesign
-- 5 products launched from whiteboard; 1,400+ users served
-
-### Education Marketplace — Lead Qualification
-- 6-question Course Fit Calculator: intent data to Zoho, Tier-A leads routed to SDRs
-- Follow-up speed: 40% faster
-- Enrollment rate: 9% → 30%
-
-### Marketing Science / MMM (E-commerce)
-- Projected 18% reduction in CAC
-- 24% increase in ARPU through segmentation
-- 134,900 records analyzed with 18 attributes across 6 spend channels
-
-### Project Epsilon (Energy Modeling Platform)
-- Live platform: epsilon.xblavania.workers.dev
-- Scenario-first modeling for microgrid, data center, and RTO-style energy planning
-- Typed Scenario contract drives all engines (sizing, stress-testing, finance, network) from single source of truth — no copy-paste model drift
-- Six-step guided workflow: define scenario → size portfolio → stress-test → evaluate finance → validate network → generate report
-- Three production adapters: DC-PPA · ISO-RTO · Microgrid
-- Technical: PyPSA linear programs for 24/7 CFE sizing, ISO-RTO Monte Carlo stress testing, agent-based VPP dispatch, AC power flow / distribution validation
-- Assurance layer: 100-point confidence scoring with severity-based deductions, SHA-256 scenario-hash staleness detection, prerequisite gating
-- BOM bridge: 11 starter equipment catalog SKUs generated from modeled MW/MWh
-- Comparison: field-by-field assumption diffs, run-vs-run comparison, Markdown/HTML export
-
-### ChurnOS (Retention & Attribution Platform)
-- Live platform: churnos.xblavania.workers.dev
-- Causal analytics for retention forecasting, churn analysis, and CRO using Bayesian inference
-- Attribution modeling for incremental value of marketing spend
-- P&L outcome simulation for subscription and marketplace operators
-
----
-
-## Key Insights (from Case Studies)
-
-- **AI systems**: "AI systems succeed when they reduce operational ambiguity, not when they maximize sophistication. Focused on structured information capture and reliable handoffs over open-ended interaction." (Moovez/Quotely)
-- **Pricing**: "Pricing problems are often decision architecture problems, not just monetization problems. Simplifying choices can be more valuable than optimizing price points." (Village Wellth)
-- **Detection**: "Detection systems fail when users stop trusting the signal. Accuracy metrics alone are insufficient. Operational reliability matters more than theoretical performance." (Netsweeper)
-- **Energy/Infrastructure**: "Each workflow step surfaces a risk class the others cannot see. Deployability is a coupling problem — the product's job is to make those couplings explicit, comparable, and reviewable." (Project Epsilon)
-
----
-
-## Working Principles
-
-- Build for operational simplicity first; add features only when they solve real problems
-- Ship AI that reduces friction in existing workflows, not AI for novelty's sake
-- Fix decision-making upstream before building dashboards downstream
-- Prioritize signal quality over data volume
-- Design products that reduce cognitive load, not increase it
-- Define the metric first, then build until it moves; own it until it's measurably better
-- Go solo from blank slate to working system, then design the handoff so it keeps running without me
-- Ship, instrument, learn, and deprecate what doesn't work — no attachment to the artifact
+- MBA, University of Calgary (2025) — Energy Economics and Product Leadership
+- Bachelor of Science, Illinois Tech (2012) — Chicago, IL
+- CSM (Certified Scrum Master) & CSPO (Certified Scrum Product Owner), Scrum Alliance (2022)
 
 ---
 
