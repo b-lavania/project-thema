@@ -1,11 +1,17 @@
 # Master Resume Context — Bob Lavania
 
-This file consolidates all resume variants and portfolio metrics into a single source of truth for generation.
+This file consolidates all resume variants and portfolio metrics into a single source of truth for generation. It is optimized for LLM context windows using metadata tags and structured formatting.
+
+---
+
+## Target Personas (For LLM Context)
+- **Persona A (AI/Technical PM)**: Lead AI Product Manager, Technical Product Manager, PM - AI, PM - Prompting
+- **Persona B (Platform/Ops PM)**: Product Manager - Marketplaces, Product Operations Manager
+- **Persona C (Growth PM)**: PM - Growth/Monetization
 
 ---
 
 ## Contact
-
 - **Name**: Bharat "Bob" Lavania
 - **Email**: xblavania@gmail.com
 - **Phone**: (312) 772-7962
@@ -16,7 +22,6 @@ This file consolidates all resume variants and portfolio metrics into a single s
 ---
 
 ## Three Operating Themes (Portfolio-Derived Positioning)
-
 1. **Pricing Architecture** — Redesigning how value is captured: tier consolidation, real-time quote engines, discount logic, ARPU optimization. Done across M&A SaaS, logistics, education, and insurance.
    - Proof: 3x take rate · $450→$600 ARPU · 18% lower CAC
 2. **Operational Intelligence** — Replacing manual, chaotic processes with AI systems (computer vision, conversational agents, OR engines, predictive frameworks). Built and deployed in production.
@@ -28,240 +33,176 @@ This file consolidates all resume variants and portfolio metrics into a single s
 
 ## Key Insights (from Case Studies)
 
-- **AI systems**: "AI systems succeed when they reduce operational ambiguity, not when they maximize sophistication. Focused on structured information capture and reliable handoffs over open-ended interaction." (Moovez/Quotely)
-- **Pricing**: "Pricing problems are often decision architecture problems, not just monetization problems. Simplifying choices can be more valuable than optimizing price points." (Village Wellth)
-- **Detection**: "Detection systems fail when users stop trusting the signal. Accuracy metrics alone are insufficient. Operational reliability matters more than theoretical performance." (Netsweeper)
-- **Energy/Infrastructure**: "Each workflow step surfaces a risk class the others cannot see. Deployability is a coupling problem — the product's job is to make those couplings explicit, comparable, and reviewable." (Project Epsilon)
+- **AI systems**: "AI systems succeed when they reduce operational ambiguity, not when they maximize sophistication. Focused on structured information capture and reliable handoffs over open-ended interaction." (Moovez/Quotely) → Led me to engineer hard operational handoffs instead of freeform chat loops, deflecting 50% of support tickets.
+- **Pricing**: "Pricing problems are often decision architecture problems, not just monetization problems. Simplifying choices can be more valuable than optimizing price points." (Village Wellth) → Led me to consolidate 4 pricing tiers into 3, resulting in a 3x increase in take rate by eliminating plan confusion.
+- **Detection**: "Detection systems fail when users stop trusting the signal. Accuracy metrics alone are insufficient. Operational reliability matters more than theoretical performance." (Netsweeper) → Led me to freeze feature additions and aggressively prune high false-alert vectors, reducing alerts by 85% and restoring district trust.
+- **Energy/Infrastructure**: "Each workflow step surfaces a risk class the others cannot see. Deployability is a coupling problem — the product's job is to make those couplings explicit, comparable, and reviewable." (Project Epsilon) → Drove the architecture of the Scenario contract interface, eliminating model drift.
 
 ---
 
 ## Working Principles
-
 - Build for operational simplicity first; add features only when they solve real problems
 - Ship AI that reduces friction in existing workflows, not AI for novelty's sake
 - Fix decision-making upstream before building dashboards downstream
 - Prioritize signal quality over data volume
 - Design products that reduce cognitive load, not increase it
-- Define the metric first, then build until it moves; own it until it's measurably better
-- Go solo from blank slate to working system, then design the handoff so it keeps running without me
-- Ship, instrument, learn, and deprecate what doesn't work — no attachment to the artifact
+- **Research narrative rule**: Treat research tools like engineering tools — frame outcomes as **decisions influenced** (funnel change, tier consolidation, alert workflow redesign), not tool laundry lists ("used Hotjar"). Name a tool only when it supports a concrete product decision in that role block.
 
 ---
 
-## Portfolio Proofs (Quantified Outcomes)
-
-### Moovez / Quotely (Last-Mile Logistics AI)
-| Metric | Before | After |
-|--------|--------|-------|
-| Time to generate job estimate | ~1 hour | 3 minutes (20x faster) |
-| Jobs completing within quoted time | Unmeasured / high variance | 85% within range |
-| Support tickets requiring human response | ~100% of volume | ~50% deflected |
-| Customer-facing cost accuracy | Manual guess | Algorithm-grounded |
-| Marketplace CAC | — | ~$100 |
-| LTV | — | $1,000+ |
-| Retention | — | 12+ months |
-| Fill rate | — | ~93% |
-| GMV | — | $500k+ |
-| System commercialized as | — | Quotely SaaS (quoteperfectly.com) |
-
-### Pricing Consolidation (M&A Platform — Village Wellth)
-- 4 pricing tiers → 3 (reduced decision complexity and segmentation overlap)
-- Take rate improved by 3x
-- Reduced churn from plan confusion
-- Segmentation analysis → clearer upgrade paths and value propositions
-
-### Netsweeper (Student Safety — 35-school district)
-- False alerts reduced by 85%
-- Reframed product goal from "detection accuracy" to "operational trust"
-- Improved usability and staff trust in system outputs
-
-### BVXpress (M&A Advisory — 9 years)
-- ARPU: $450 → $600 (3x take rate)
-- Retention: +14% over 2 years
-- Conversion: +7% via landing page and messaging redesign
-- 5 products launched from whiteboard; 1,400+ users served
-
-### Education Marketplace — Lead Qualification
-- 6-question Course Fit Calculator: intent data to Zoho, Tier-A leads routed to SDRs
-- Follow-up speed: 40% faster
-- Enrollment rate: 9% → 30%
-
-### Marketing Science / MMM (E-commerce)
-- Projected 18% reduction in CAC
-- 24% increase in ARPU through segmentation
-- 134,900 records analyzed with 18 attributes across 6 spend channels
-
-### Project Epsilon (Energy Modeling Platform)
-- Live platform: epsilon.xblavania.workers.dev
-- Scenario-first modeling for microgrid, data center, and RTO-style energy planning
-- Typed Scenario contract drives all engines (sizing, stress-testing, finance, network) from single source of truth — no copy-paste model drift
-- Six-step guided workflow: define scenario → size portfolio → stress-test → evaluate finance → validate network → generate report
-- Three production adapters: DC-PPA · ISO-RTO · Microgrid
-- Technical: PyPSA linear programs for 24/7 CFE sizing, ISO-RTO Monte Carlo stress testing, agent-based VPP dispatch, AC power flow / distribution validation
-- Assurance layer: 100-point confidence scoring with severity-based deductions, SHA-256 scenario-hash staleness detection, prerequisite gating
-- BOM bridge: 11 starter equipment catalog SKUs generated from modeled MW/MWh
-- Comparison: field-by-field assumption diffs, run-vs-run comparison, Markdown/HTML export
-
-### ChurnOS (Retention & Attribution Platform)
-- Live platform: churnos.xblavania.workers.dev
-- Causal analytics for retention forecasting, churn analysis, and CRO using Bayesian inference
-- Attribution modeling for incremental value of marketing spend
-- P&L outcome simulation for subscription and marketplace operators
+## Skills & Core Domains (Structured for LLM Parsing)
+- **Product contexts**: Marketplaces, eCommerce, Risk & insurance, Applied tech (chatbots, voice agents, computer vision)
+- **Domains**: AI/Engineering, Marketplace Commerce, eCommerce, Risk & Insurance, Marketing Science, Operations Research, User Research
+- **AI/Modeling Methods**: LLM pipelines, prompt orchestration, Computer Vision (CV), conversational/SMS agents, Bayesian Media Mix Modeling (MMM), Multi-Touch Attribution (MTA), Ridge Regression, Monte Carlo stress testing, PyPSA linear programming, 3D bin packing
+- **Product/Growth Methods**: Supply-demand balancing, checkout funnel optimization, pricing systems, entitlement logic, hypothesis testing, cohort analysis, STP (segmentation, targeting, positioning), GTM scaling
+- **User research methods**: User interviews, focus groups, tree testing, opportunity maps, session replay, funnel diagnostics, clickable prototypes
+- **Market research / analytics**: Hypothesis testing, R, SQL, Media Mix Models, attribution models, STP
+- **Tools/Tech (confirmed by role)**: Aha! (Netsweeper, BVXpress), Pendo (BVXpress), Heap (Moovez), Segment (Moovez), Microsoft Clarity & Hotjar (Moovez), opportunity maps (fractional startups, BVXpress, Moovez, Liohan, and others), Jira, Confluence, Mixpanel, R, SQL, HubSpot, ActiveCampaign, Zoho, Cursor, Windsurf, Lovable, Stripe/Square APIs
 
 ---
 
-## Skills (union of all variants)
+## Career Arc
 
-### AI & Engineering
-- AI Systems: LLM pipelines, prompt orchestration, model evaluation (accuracy/latency/cost), multi-model tradeoffs
-- Product types: chatbots, voice agents, vision agents, computer vision, image generation, UGC
-- Engineering: Operations Research (OR), 3D Bin Packing Algorithms, Predictive Frameworks, PyPSA linear programs
-- AI Coding (daily): Cursor, Windsurf, Lovable
+8+ years in product management across B2B SaaS, AI, marketplaces, logistics, healthcare, and FinTech.
 
-### Modeling & Decisions
-- Bayesian Media Mix Modeling (MMM), Multi-Touch Attribution (MTA), Ridge Regression, adstock/Hill-function saturation
-- R, SQL, Hypothesis testing, Predictive analytics, Scenario modeling, Monte Carlo stress testing
-- Segmentation, cohort analysis, RFM analytics, attribution modeling
-
-### Marketplace & Commerce
-- Marketplace Design: Supply-demand balancing, pricing systems, operational automation
-- Checkout Optimization: funnel analysis, drop-off reduction, UX simplification
-- Payments: payment flows, gateway integrations (Stripe, Square, Chase Paymentech), failure handling
-
-### Analytics & GTM Tooling
-- Mixpanel, Segment, Pendo, Heap, Google Analytics 4 (GA4)
-- NorthBeam, GoldMine, ACT, Zoho, HubSpot, ActiveCampaign, Klaviyo
-
-### User Research
-- Microsoft Clarity, HotJar, User interviews, Focus groups, Opportunity maps, Tree testing
-
-### Product Execution
-- Product launches, growth optimization, cross-functional leadership
-- Aha!, Jira, Confluence
+- **2012–2021 (9 yrs)**: Built the product function from scratch at BVXpress — first PM hire, launched 5 products, 1,400+ users.
+- **2022–2023**: Full-time PM at Netsweeper, shipping an AI content-compliance product for K-12.
+- **2022–2025 (concurrent)**: Fractional Product Lead across AI, logistics, FinTech, and healthcare startups.
+- **2024–Present**: Founding PM at Moovez/Quotely — logistics AI platform commercialized as a standalone SaaS.
 
 ---
 
-## Roles
+## Professional Experience
 
-### ROLE 1: AI Product Consultant / Principal Product Lead
-- **Company**: Strategic AI & Marketplace Ventures (Fractional at various start-ups: Moovez, Lio Han, DeadInventoryStore, others)
-- **Title**: Principal Product Lead / AI Product Consultant
-- **Dates**: Feb 2022 - Present
+### ROLE 1: Founding Product Manager
+- **Company**: Moovez — marketplace for last-mile delivery & moving (Calgary, AB; ~5 employees)
+- **Title**: Founding Product Manager
+- **Dates**: Jan 2024 - Present
 - **Location**: Remote / Calgary, AB
+- **Tags**: `[0-to-1]`, `[Marketplace]`, `[AI/CV]`, `[Pricing]`, `[Operations]`, `[User Research]`, `[eCommerce-adjacent logistics]`
+- **Research & analytics tooling (confirmed)**: Heap, Microsoft Clarity, Hotjar, Segment, focus groups, tree testing, opportunity maps
+- **Environment**: Reported directly to CEO. Product lead owning user research, conversions, and retention. Oversaw a team of 4 developers (1 direct report).
+- **Problem**: Dispatchers were manually estimating job costs over the phone (60+ min per quote), causing margin erosion from inaccurate pricing and losing customers to faster competitors.
+- **Key Outcomes**: GMV $500k+; CAC ~$100; LTV $1,000+; Retention 12+ months; Fill rate ~93% (vs. ~70% industry avg). Time-to-quote reduced from ~1 hour to 3 minutes (20x faster).
+- Engineered 3D bin-packing Operations Research engine solving three NP-hard sub-problems simultaneously (job duration, crew count, truck loading) — reduced job costing latency by 95% and increased volume predictive accuracy to 85%.
+- Built Computer Vision pipeline where customers photograph items for instant quote generation; CV model estimates volume, weight class, and handling complexity — no dispatcher call required. Built multi-model evaluation testbench scoring Gemini Flash and GPT-4.1 on accuracy, latency, and cost.
+- Deployed SMS/Voice AI agent for automated intake, booking confirmations, and reschedules, deflecting 50% of support tickets with zero human intervention.
+- Built real-time pricing and payment flows (Stripe, Square) based on distance and volume, eliminating the major checkout bottleneck and reducing quote-to-payment drop-off.
+- Built opportunity maps for quote-to-booking; focus groups and tree tests plus session replay (Heap, Clarity, Hotjar) and event instrumentation (Segment) drove checkout simplification and intake prioritization — not tool-led discovery.
+- System successfully commercialized as Quotely (quoteperfectly.com), a standalone SaaS now sold to other logistics operators.
 
-#### AI-Driven Logistics Optimization (Last-Mile Marketplace — Moovez/Quotely)
-- Built and operated a last-mile delivery brokerage marketplace focused on quoting and fulfillment of moving and delivery jobs
-- GMV: $500k+; CAC: ~$100; LTV: $1,000+; Retention: 12+ months; Fill rate: ~93%
-- **Computer Vision (CV) Pipeline**: Customers photograph items; CV model estimates volume, weight class, and handling complexity to generate instant quotes — no dispatcher call required
-  - Model strategy: Gemini Flash for low-latency inference; GPT-4.1 for edge-case reasoning
-  - Built evaluation testbench scoring accuracy, latency, and cost across real job datasets
-- **Operations Research (OR) Engine**: Reduced job costing latency 95% (60 min → 3 min) by solving three NP-hard sub-problems simultaneously — job duration, optimal crew/mover count, and 3D bin packing for truck loading — trained on years of historical job performance data
-- **Algorithmic Efficiency**: Engineered 3D bin-packing algorithm increasing volume predictive accuracy to 85%
-- **Conversational AI**: Deployed SMS/Voice AI agent deflecting 50% of support tickets via automated intake, booking confirmations, reschedules, and status updates integrated with ops backend
-- Built multi-model evaluation framework benchmarking GPT-4.1, GPT-4o, and Gemini variants (accuracy, latency, cost)
-- End-to-End TMS Prototyping: Designed comprehensive clickable prototype for Transportation Management System
-- WMS & Systems Integration: Scoped technical requirements for Warehouse Management System integrations
-- **Commercialization**: System now sold as Quotely (quoteperfectly.com), a standalone SaaS to other logistics operators
-- **Single-contributor engineering**: Mined historical job data, defined predictive framework, rapid prototyping and validation, drove engineering collaboration for production deployment
+### ROLE 2: Principal Product Lead (Fractional)
+- **Company**: Various startups (Village Wellth, Liohan, e-commerce, insurance/finance, construction)
+- **Dates**: Feb 2022 - May 2024 (includes short Liohan engagement, Jan–May 2024)
+- **Location**: Remote / Calgary, AB
+- **Tags**: `[Fractional]`, `[eCommerce]`, `[Risk/Insurance]`, `[Marketplace]`, `[User Research]`
+- **Research tooling (confirmed)**: Focus groups, tree testing, opportunity maps (across fractional engagements — pricing, funnel, onboarding, and positioning decisions)
+- **Liohan (Jan–May 2024, small engagement)**: Opportunity maps clarified problem spaces and sequenced bets before build; informed roadmap priorities and scope cuts.
 
-#### Checkout & Conversion Optimization
-- Built real-time pricing system to replace manual quoting, eliminating major checkout bottleneck
-- Reduced user friction by removing delayed quote steps, standardizing pricing outputs
-- Designed and implemented payment flows across: Stripe, Square, Chase Paymentech
-- Built pricing logic based on: distance, estimated inventory volume
-- Designed discounting & entitlement logic: rule-based eligibility, controlled margin leakage prevention
+#### Village Wellth (M&A Financing Platform)
+- **Company**: Village Wellth — technology-first M&A financing platform (Calgary, AB; ~4 employees)
+- **Problem**: Four overlapping pricing tiers were causing customer confusion and decision paralysis, with churn attributable to plan indecision rather than product dissatisfaction.
+- Opportunity maps surfaced plan-confusion patterns; STP and segmentation informed tier consolidation validated with focus groups and tree tests before launch.
+- Achieved a 3x increase in take rate and materially reduced churn from plan confusion.
 
 #### Marketing Science & MMM (E-commerce)
-- Replaced legacy last-click reporting with a Bayesian Media Mix Model (MMM) in R
-- Merged daily spend from 6 channels with GA4 and HubSpot data; analyzed 134,900 records with 18 attributes
-- Applied adstock and Hill-function saturation logic; ran ridge regressions with macro-controls
-- Achieved projected 18% reduction in CAC; leveraged segmentation for 24% increase in ARPU
-
-#### Applied AI Strategy (B2C — M&A Financing Platform / Village Wellth)
-- Redesigned pricing architecture: consolidated 4 tiers into 3 based on customer segmentation analysis
-- Simplified differentiation logic based on customer intent patterns; repositioned plans around clearer value propositions
-- Defined migration strategy for existing customers
-- Result: 3x increase in take rate; reduced churn from plan confusion
-- Key insight: Pricing problems are often decision architecture problems, not just monetization problems
-
-#### Education Marketplace — Lead Qualification System
-- Managed team of content, marketing, product managers to ship first release to 55 users
-- Replaced last-click reporting with Bayesian media-mix model in R for content selection
-- Launched a 6-question Course Fit Calculator scoring prospects, writing intent data to Zoho, and routing Tier-A leads to SDRs
-- Results: 40% faster follow-up, enrollment rate improved from 9% to 30%
-
-#### Cybersecurity Marketplace (2024-25)
-- Defined and led design of a vendor marketplace for networking and cybersecurity solutions: EDR/MDR, firewall services, and virtual appliances
-- Search UX: relevance tuning, faceted filters, promoted placements for upsell/cross-sell
-- Used user interviews and telemetry (VoC program) to build features in CVE data enrichment
+- Replaced legacy last-click attribution with a Bayesian Media Mix Model (MMM) in R, merging 134,900 records across 6 spend channels with GA4 and HubSpot data; applied adstock and Hill-function saturation logic with ridge regression.
+- Achieved projected 18% reduction in CAC and leveraged segmentation for 24% increase in ARPU.
 
 #### B2B Series-A SaaS (Insurance and Finance)
-- Built new APIs for actuarial models and waterfall models
-
-#### B2B SaaS for Healthcare
-- Defined product focusing on patient engagement strategies for patient intake and improving hand-offs
+- Converted legacy Excel actuarial and waterfall models into scalable APIs. Delivered a $140k pilot automating legacy calculation processes for a private-equity firm.
 
 #### Marketplace in Building & Construction Materials
-- Mapped strategy for monetizing carbon offsets
+- Architected TMS/WMS integration hooks and monetization strategy for a construction materials marketplace.
 
-### ROLE 2: Product Manager (AI Vision)
-- **Company**: Netsweeper
+---
+
+### ROLE 3: Product Manager, Health-Tech (User Research & GTM)
+- **Company**: Various health-tech, digital health, and medical device startups
+- **Dates**: 2022 – 2025
+- **Location**: Remote / Calgary, AB
+- **Tags**: `[Healthcare]`, `[GTM]`, `[Pricing]`, `[User Research]`, `[0-to-1]`
+- **Scope**: 0-to-1 product management across health-tech, medical device, and digital health startups — spanning user research, clinical prototyping, GTM strategy, and pricing.
+
+#### Patient Healthcare Journey SaaS (2024)
+- Architected clinical intake patient journeys and built clickable prototypes for knowledge-based patient intake with targeted interventions for specialized clinics.
+- Won the 2024 TechStars Calgary Hackathon; spearheaded user research and MVP prototyping for a telehealth network targeting 100k-user national intake.
+
+#### Eye-Gaze Tracking Wearable (2025)
+- Directed product requirements for millisecond-precision eye tracking applied to clinical research and kinesiology.
+
+#### Telehealth Delivery Network (2023)
+- Orchestrated comprehensive go-to-market and regulatory strategy for a developing-country telehealth network, securing a national government grant.
+
+#### Medical Device GTM & Pricing (2023)
+- Designed value-based pricing strategy for a seed-funded respiratory therapeutics device.
+- Led product scoping, clinical proof metrics, and pricing strategy for a Brain-Computer Interface dementia-detection wearable.
+
+---
+
+### ROLE 4: Product Manager (AI Vision)
+- **Company**: Netsweeper — web filtering & content intelligence platform (Waterloo, ON; ~40 employees)
 - **Title**: Product Manager
-- **Dates**: Jul 2022 - 2023
+- **Dates**: Jul 2022 - 2023 (Full-Time)
 - **Location**: Remote / Waterloo, ON
+- **Tags**: `[AI/CV]`, `[Trust/Safety]`, `[Data Quality]`, `[User Research]`
+- **Research & roadmap tooling (confirmed)**: Aha!, focus groups, tree testing
+- **Problem**: A student-monitoring and content-compliance AI product was behind schedule, running on an outsourced engineering team, with a district client losing trust in the system due to high false-alert rates — staff were ignoring alerts because they couldn't trust the signal.
+- Managed roadmap and backlog in Aha!; aligned district stakeholders and internal teams on prioritization after focus groups and tree tests on alert workflows.
+- Took ownership of the backlog and engineering relationship, reframing the product's core metric from "detection accuracy" to "operational trust" — a shift that unlocked the right prioritization framework.
+- Prioritized signal quality over feature expansion; redesigned alert workflows to aggressively prune false-positive vectors through iterative model refinement and structured QA cycles with the outsourced team.
+- Reduced false alerts by 85% across the 35-school district deployment, restoring staff trust and stabilizing the client relationship.
+- Redesigned workflow edge-case handling that had previously caused the highest-volume incorrect alerts.
 
-#### Key Achievement
-- Improved detection rates for student-guarding product deployed at a 35-school district
-- Reduced false alerts by 85% through iterative model refinement and engineering collaboration
-- Reframed problem from "detection accuracy" to "operational trust" — made operational trust a core product metric
-- Prioritized signal quality over feature expansion; redesigned workflow to handle edge cases better
-- Key insight: Detection systems fail when users stop trusting the signal. Accuracy metrics alone are insufficient; operational reliability matters more than theoretical performance.
+---
 
-### ROLE 3: Product Manager — Growth & Marketing
-- **Company**: BVXpress
-- **Title**: Product Manager — Growth & Marketing (Chief of Staff & Product function)
+### ROLE 5: Product Manager & Chief of Staff
+- **Company**: BVXpress — deal structuring & valuation SaaS for M&A advisors, business brokers, and appraisers (Chicago, IL; ~5 employees)
+- **Title**: Product Manager & Chief of Staff
 - **Dates**: Sep 2012 - Dec 2021 (9-year tenure)
 - **Location**: Chicago, IL
+- **Tags**: `[Growth]`, `[0-to-1]`, `[Pricing]`, `[M&A]`, `[User Research]`
+- **Research & product tooling (confirmed)**: Aha!, Pendo, focus groups, tree testing, opportunity maps
+- **Problem**: The firm had no product function, no digital tooling, and all advisory work was manual and relationship-dependent — no repeatable growth engine.
+- Built the Product Business Unit from scratch; launched 5 products from whiteboard to market and operated a total of 8 products serving 1,400+ users across research, workflow, and growth operations.
+- Roadmap and releases tracked in Aha!; Pendo adoption signals and opportunity maps informed which workflows to fix first; focus groups and tree tests validated pricing, onboarding, and workflow changes across the 8-product suite.
+- Automated pricing evolution based on customer usage-pattern analysis, increasing ARPU from $450 to $600 over 2 years (3x take rate improvement).
+- Built personalized onboarding, lifecycle messaging, and lead-routing workflows, driving a 14% retention increase over 2 years.
+- Re-architected landing page and product messaging funnels, achieving a 7% conversion lift.
+- GTM automation: built MQL→SQL pipeline velocity and CAC payback tracking from scratch.
 
-#### Key Achievements
-- Built the Product Business Unit from scratch for a lower-middle market M&A advisory firm
-- Launched 5 new products off the whiteboard to market; operated a total of 8 products
-- Served 1,400+ users across research, workflow, and growth operations
-- Growth: Increased ARPU from $450 to $600 through customer usage pattern analysis and automated pricing evolution (3x take rate improvement)
-- Retention: 14% retention increase over 2 years via personalized onboarding, usage-research surveys, marketing automation, and a new knowledge-base site
-- Conversion: 7% conversion lift by re-architecting landing page and product messaging funnels
-- GTM automation: Built personalized onboarding, lifecycle messaging, and lead-routing workflows around measurable lift (MQL→SQL pipeline velocity, CAC payback)
+---
 
-### ROLE 4: Healthcare & Medical Applications (Selected Experience)
-- Eye-gaze tracking wearable device (2025): Precise eye-tracking for medical research, kinesiology
-- Patient healthcare journey SaaS (2024): Won TechStars pitch competition in Calgary; mapped full patient journeys and built interactive prototypes for knowledge-based patient intake with targeted interventions for specialized clinics
-- Telehealth delivery network (2023): Comprehensive go-to-market strategy for a developing country, secured government grant
-- Respiratory medical device (2023): Pricing strategy for seed-funded device
-- BCI dementia-detection device (2023): Go-to-market scoping for brain-computer interface device
-- B2B healthcare SaaS: Patient engagement design
+### Additional Projects & Prototypes
 
-### ROLE 5: Financial Models Marketplace
-- **Dates**: 2019-2020
-- Defined and led design of a new marketplace for models and services for M&A, business valuations, and associated services
+#### Project Epsilon (Energy Modeling Platform)
+- **Live platform**: epsilon.xblavania.workers.dev
+- Built scenario-first modeling engine for microgrid, data center, and RTO-style energy planning using PyPSA linear programs.
+- Designed a typed Scenario contract driving all engines (sizing, stress-testing, finance, network) from a single source of truth, eliminating copy-paste model drift.
+
+#### ChurnOS (Retention & Attribution Platform)
+- **Live platform**: churnos.xblavania.workers.dev
+- Built causal analytics platform using Bayesian inference for retention forecasting, churn analysis, and CRO; includes P&L outcome simulation for subscription and marketplace operators.
 
 ---
 
 ## Education
-
-- MBA, University of Calgary (2025) — Energy Economics and Product Leadership
-- Bachelor of Science, Illinois Tech (2012) — Chicago, IL
-- CSM (Certified Scrum Master) & CSPO (Certified Scrum Product Owner), Scrum Alliance (2022)
-
----
-
-## Systems & Domains
-
-AI Agents, Marketplaces, Workflow Automation, Decision Analytics, Pricing Systems, Operational Tooling, B2B SaaS, Detection Systems, Conversational Interfaces, Computer Vision, Operations Research, Energy & Infrastructure, Scenario Modeling, Healthcare, EdTech, eCommerce, LogTech, TMS/LMS/WMS, LLM Agentic Systems, Context Engineering
+- **MBA**, University of Calgary (2025) — Energy Economics and Product Leadership
+- **Bachelor of Science, Business & Finance**, Illinois Tech (2012) — Chicago, IL
+- **Certifications**: CSM (Certified Scrum Master) & CSPO (Certified Scrum Product Owner), Scrum Alliance (2022)
 
 ---
 
-## Positioning
+## Resume generation notes
+- **Voice (research & analytics)**: Never write "used Hotjar/Pendo/Heap" as the outcome. Write the **decision or change**: tier consolidation, funnel fix, alert workflow redesign, scope cut, checkout step removed. Tools may appear only as evidence for that decision, inside the relevant ROLE block.
+- **UX / research-heavy JDs**: Prioritize ROLE 1, ROLE 5, ROLE 4, ROLE 2 fractional (Village Wellth, Liohan line, etc.), ROLE 3.
+- **Growth / analytics JDs**: Prioritize ROLE 2 (MMM, R, SQL, attribution, STP), Segment/Moovez funnel work, ChurnOS, BVXpress GTM metrics.
+- **Marketplace / ops JDs**: Prioritize ROLE 1, construction marketplace (ROLE 2), Moovez/Quotely outcomes.
+- **Only cite tools listed under a ROLE block or in Skills above** — do not invent tools per engagement.
 
+---
+
+## Positioning Narrative
 Chief of Staff turned Product Leader. A decade inside M&A deal-making taught that every business problem is a pricing problem, an operations problem, or a growth problem — usually all three at once.
 
-Ideal for: Seed to Series-B companies (10-50 people) building or scaling AI-driven products. Comfortable with equity compensation. 0-to-1 product development. Technical Product Leader bridging high-level Engineering (OR, CV, Bayesian Modeling, PyPSA) with Commercial Growth (Pricing Strategy, MMM, ARPU optimization). Track record of scaling LogTech and Applied AI products from whiteboard to market, delivering 20x efficiency gains.
+Brings the ability to translate high-level technical paradigms (Operations Research, Computer Vision, Bayesian Modeling, PyPSA) into commercial levers (Pricing Architecture, MMM, ARPU optimization) that unlock scalable revenue. User research and analytics are not checkbox skills — they change what gets built: opportunity maps and discovery work precede roadmap bets; session replay and instrumentation inform funnel and pricing decisions; focus groups and tree tests gate launches. Specialized in taking chaotic 0-to-1 operational processes and replacing them with high-accuracy, automated systems that increase throughput without adding head count proportionally. Proven track record of scaling LogTech, FinTech, and Applied AI products from blank whiteboard to production.

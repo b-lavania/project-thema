@@ -16,6 +16,7 @@ POSITIONING:
 [1 sentence: "For this role, the candidate's story is..."]
 
 TOP PROOF POINTS:
+(Use decision/outcome labels — not product or company names — in the accomplishment slot.)
 1. [Accomplishment] — WHY IT MATTERS: [1 sentence explaining the strategic reasoning, not just the metric]
 2. [Accomplishment] — WHY IT MATTERS: [strategic reasoning]
 3. [Accomplishment] — WHY IT MATTERS: [strategic reasoning]

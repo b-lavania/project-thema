@@ -9,13 +9,18 @@ from dotenv import load_dotenv
 from generator import (
     get_openai_client,
     extract_jd_keywords,
+    extract_jd_pain_point,
     generate_narrative_brief,
     select_relevant_roles,
-    generate_mission_statement,
+    generate_profile_angle,
+    generate_profile_with_lint,
+    normalize_pdf_breaks,
     generate_skills_statements,
     generate_experience_bullets,
+    generate_personal_projects,
     generate_cover_letter,
     answer_custom_questions,
+    PAGE_BREAK_MARKER,
 )
 from doc_generator import create_formatted_doc, extract_coaching_notes, strip_coaching_notes
 from pdf_generator import create_formatted_pdf
@@ -79,6 +84,30 @@ def extract_role_blocks(master_context):
     if current_key:
         blocks[current_key] = "\n".join(current_lines)
     return blocks
+
+
+SCRUM_KEYWORDS = {"scrum", "agile", "csm", "cspo", "certified scrum", "sprint planning"}
+
+
+def jd_requires_scrum(jd_text):
+    """Return True if JD contains Scrum/Agile certification signals."""
+    lower = jd_text.lower()
+    return any(kw in lower for kw in SCRUM_KEYWORDS)
+
+
+def extract_projects_block(master_context):
+    """Extract the Additional Projects section from master_context."""
+    lines = master_context.split("\n")
+    in_section = False
+    result = []
+    for line in lines:
+        if "### Additional Projects" in line:
+            in_section = True
+        elif in_section and line.startswith("## "):
+            break
+        if in_section:
+            result.append(line)
+    return "\n".join(result)
 
 
 def extract_jd_paragraphs(jd_text):
@@ -145,6 +174,44 @@ def get_api_key():
     env_key = os.environ.get("OPENAI_API_KEY", "")
     sidebar_key = st.session_state.get("sidebar_api_key", "")
     return sidebar_key if sidebar_key else env_key
+
+
+def build_pdf_breaks_from_session():
+    """Read PDF layout controls from sidebar session state."""
+    sections = []
+    for flag_key, section_key in (
+        ("break_before_skills", "skills"),
+        ("break_before_experience", "experience"),
+        ("break_before_projects", "projects"),
+        ("break_before_credentials", "credentials"),
+    ):
+        if st.session_state.get(flag_key):
+            sections.append(section_key)
+    role_idx = int(st.session_state.get("break_before_role_index", 0) or 0)
+    return normalize_pdf_breaks({
+        "before_sections": sections,
+        "before_role_index": role_idx if role_idx > 0 else None,
+    })
+
+
+def rerender_resume_files(res, mission_text=None, pdf_breaks=None):
+    """Rebuild DOCX/PDF from stored sections without full LLM regen."""
+    mission = mission_text if mission_text is not None else res["mission"]
+    sections = {
+        "mission": mission,
+        "skills": res["skills"],
+        "experience": res["experience_blocks"],
+        "projects": res.get("projects", ""),
+    }
+    breaks = pdf_breaks if pdf_breaks is not None else res.get("pdf_breaks") or normalize_pdf_breaks()
+    loc = LOCATION_OPTIONS.get(st.session_state.get("location_label", ""), "Sunnyvale, CA")
+    include_scrum = jd_requires_scrum(st.session_state.get("jd_text", ""))
+    create_formatted_doc(
+        res["doc_path"], sections, location=loc, include_scrum=include_scrum, pdf_breaks=breaks
+    )
+    create_formatted_pdf(
+        res["pdf_path"], sections, location=loc, include_scrum=include_scrum, pdf_breaks=breaks
+    )
 
 
 def check_keyword_coverage(extracted_keywords_text, combined_output):
@@ -349,6 +416,24 @@ selected_location_label = st.sidebar.radio(
 )
 candidate_location = LOCATION_OPTIONS[selected_location_label]
 
+st.sidebar.divider()
+st.sidebar.subheader("PDF layout")
+st.sidebar.caption("Optional page breaks (letter PDF, typically 1-2 pages)")
+st.sidebar.checkbox("Break before How I Work", key="break_before_skills")
+st.sidebar.checkbox("Break before The Work", key="break_before_experience")
+st.sidebar.checkbox("Break before Side Builds", key="break_before_projects")
+st.sidebar.checkbox("Break before Credentials", key="break_before_credentials")
+st.sidebar.number_input(
+    "Break before role # (0 = none)",
+    min_value=0,
+    max_value=8,
+    value=0,
+    step=1,
+    key="break_before_role_index",
+    help="1 = first role in The Work. Also supported in experience text: "
+    f"a line containing only `{PAGE_BREAK_MARKER}`.",
+)
+
 # Load master context once
 if "master_context" not in st.session_state:
     st.session_state.master_context = load_master_context()
@@ -470,6 +555,12 @@ with tab_generate:
                 if not selected_roles:
                     selected_roles = list(all_role_blocks.items())[:3]
 
+                # Sort roles in reverse-chronological order (ROLE 1 = newest)
+                def _role_sort_key(role_tuple):
+                    m = re.search(r'ROLE\s+(\d+)', role_tuple[0], re.IGNORECASE)
+                    return int(m.group(1)) if m else 99
+                selected_roles.sort(key=_role_sort_key)
+
                 # Step 3: Narrative brief
                 st.write("Synthesizing narrative brief...")
                 narrative_brief, usage = generate_narrative_brief(
@@ -477,11 +568,40 @@ with tab_generate:
                 )
                 usage_log.append(usage)
 
-                # Step 4: Mission statement
+                # Step 3b: JD pain analysis (feeds profile)
+                st.write("Analyzing JD pain points...")
+                jd_pain, usage = extract_jd_pain_point(client, jd, role, jd_duties=jd_duties)
+                usage_log.append(usage)
+
+                # Step 3c: Profile angle (WHY framing)
+                st.write("Building profile angle...")
+                profile_angle, usage = generate_profile_angle(
+                    client, jd_pain, narrative_brief, role, master_context=master_ctx
+                )
+                usage_log.append(usage)
+
+                # Step 4: Mission statement / profile (with optional WHY lint)
                 st.write("Generating mission statement...")
                 jd_paragraphs = extract_jd_paragraphs(jd)
-                mission, usage = generate_mission_statement(client, jd_paragraphs, role, company, track, narrative_brief=narrative_brief)
-                usage_log.append(usage)
+                mission, profile_usage = generate_profile_with_lint(
+                    client,
+                    jd_paragraphs,
+                    role,
+                    company,
+                    track,
+                    narrative_brief=narrative_brief,
+                    jd_pain=jd_pain,
+                    profile_angle=profile_angle,
+                    master_context=master_ctx,
+                    run_lint=True,
+                )
+                usage_log.extend(profile_usage)
+
+                if len(selected_roles) >= 3:
+                    st.warning(
+                        "Dense resume (3+ roles) — letter PDF is typically 2 pages. "
+                        "Consider fewer roles for cleaner layout."
+                    )
 
                 # Step 5: Skills statements (use extracted duties if available)
                 st.write("Generating skills statements...")
@@ -506,6 +626,12 @@ with tab_generate:
                 if skills_notes:
                     all_coaching_notes.insert(0, f"### Skills\n{skills_notes}")
 
+                # Step 6.5: Personal Projects
+                st.write("Generating projects section...")
+                projects_block = extract_projects_block(master_ctx)
+                projects, usage = generate_personal_projects(client, projects_block, jd, track, narrative_brief=narrative_brief)
+                usage_log.append(usage)
+
                 # Step 7: Cover letter
                 st.write("Generating cover letter...")
                 cover_letter, usage = generate_cover_letter(client, jd, master_ctx, role, company, track, narrative_brief=narrative_brief)
@@ -520,18 +646,33 @@ with tab_generate:
 
                 # Step 9: Assemble DOCX and PDF
                 st.write("Assembling resume documents...")
+                include_scrum = jd_requires_scrum(jd)
                 resume_sections = {
                     "mission": mission,
                     "skills": skills,
                     "experience": experience_blocks,
+                    "projects": projects,
                 }
                 doc_filename = f"Application_{company.replace(' ', '_')}_{datetime.date.today().isoformat()}.docx"
+                pdf_breaks = build_pdf_breaks_from_session()
                 doc_path = str(OUTPUT_DIR / doc_filename)
-                create_formatted_doc(doc_path, resume_sections, location=candidate_location)
-                
+                create_formatted_doc(
+                    doc_path,
+                    resume_sections,
+                    location=candidate_location,
+                    include_scrum=include_scrum,
+                    pdf_breaks=pdf_breaks,
+                )
+
                 pdf_filename = f"Application_{company.replace(' ', '_')}_{datetime.date.today().isoformat()}.pdf"
                 pdf_path = str(OUTPUT_DIR / pdf_filename)
-                create_formatted_pdf(pdf_path, resume_sections, location=candidate_location)
+                create_formatted_pdf(
+                    pdf_path,
+                    resume_sections,
+                    location=candidate_location,
+                    include_scrum=include_scrum,
+                    pdf_breaks=pdf_breaks,
+                )
 
                 # Step 10: Keyword coverage check (ATS-COV)
                 combined_output = " ".join([
@@ -564,6 +705,9 @@ with tab_generate:
                 "kw_missing": kw_missing,
                 "extracted_keywords": extracted_keywords,
                 "narrative_brief": narrative_brief,
+                "jd_pain": jd_pain,
+                "profile_angle": profile_angle,
+                "pdf_breaks": pdf_breaks,
                 "doc_path": doc_path,
                 "doc_filename": doc_filename,
                 "pdf_path": pdf_path,
@@ -571,6 +715,7 @@ with tab_generate:
                 "mission": mission,
                 "skills": skills,
                 "experience_blocks": experience_blocks,
+                "projects": projects,
                 "all_coaching_notes": all_coaching_notes,
                 "cover_letter": cover_letter,
                 "custom_answers": custom_answers,
@@ -627,6 +772,16 @@ with tab_generate:
                 st.caption("This is the strategic positioning synthesized for this application. All resume sections were generated from this framing.")
                 st.text(res['narrative_brief'])
 
+        if res.get('jd_pain'):
+            with st.expander("JD pain analysis", expanded=False):
+                st.caption("Reasoning step (o4-mini) that frames The Quick Take — no company name.")
+                st.text(res['jd_pain'])
+
+        if res.get('profile_angle'):
+            with st.expander("Profile angle (WHY framing)", expanded=False):
+                st.caption("Situation, thesis, and forbidden resume nouns for The Quick Take.")
+                st.text(res['profile_angle'])
+
         st.divider()
 
         # Download buttons
@@ -656,8 +811,86 @@ with tab_generate:
         st.divider()
         st.subheader("📋 Document Preview")
         
-        with st.expander("✨ Mission Statement", expanded=True):
-            st.text(res['mission'])
+        with st.expander("✨ Mission Statement / Professional Profile", expanded=True):
+            edited_mission = st.text_area(
+                "Edit profile (tagline on line 1, then three sentences)",
+                value=res["mission"],
+                height=160,
+                key="profile_edit_area",
+            )
+            col_apply, col_regen = st.columns(2)
+            with col_apply:
+                if st.button("Apply profile edit to DOCX/PDF", use_container_width=True):
+                    try:
+                        rerender_resume_files(res, mission_text=edited_mission)
+                        st.session_state.gen_results["mission"] = edited_mission
+                        st.success("Documents updated with your profile text.")
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Update failed: {e}")
+            with col_regen:
+                regen_clicked = st.button("↻ Regenerate Profile Only", use_container_width=True)
+
+        if regen_clicked:
+            api_key = get_api_key()
+            try:
+                with st.spinner("Regenerating profile..."):
+                    _client = get_openai_client(api_key)
+                    _jd = st.session_state.get("jd_text", "")
+                    _role = st.session_state.get("target_role", "")
+                    _company = st.session_state.get("company_name", "")
+                    _track = st.session_state.get("selected_track", "")
+                    _narrative = res.get("narrative_brief", "")
+                    _master = st.session_state.master_context
+                    _jd_paragraphs = extract_jd_paragraphs(_jd)
+                    old_mission = res["mission"]
+                    _angle = res.get("profile_angle", "")
+                    if not _angle:
+                        _angle, _ = generate_profile_angle(
+                            _client,
+                            res.get("jd_pain", ""),
+                            _narrative,
+                            _role,
+                            master_context=_master,
+                        )
+                    new_mission, _ = generate_profile_with_lint(
+                        _client,
+                        _jd_paragraphs,
+                        _role,
+                        _company,
+                        _track,
+                        narrative_brief=_narrative,
+                        jd_pain=res.get("jd_pain", ""),
+                        profile_angle=_angle,
+                        master_context=_master,
+                        run_lint=True,
+                    )
+                    rerender_resume_files(res, mission_text=new_mission)
+                    st.session_state.gen_results["mission"] = new_mission
+                    st.session_state.gen_results["regen_old_mission"] = old_mission
+                st.rerun()
+            except Exception as e:
+                st.error(f"Regeneration failed: {e}")
+
+        if st.button("↻ Re-export DOCX/PDF with current PDF layout", use_container_width=False):
+            try:
+                breaks = build_pdf_breaks_from_session()
+                rerender_resume_files(res, pdf_breaks=breaks)
+                st.session_state.gen_results["pdf_breaks"] = breaks
+                st.success("Re-exported with sidebar PDF layout settings.")
+                st.rerun()
+            except Exception as e:
+                st.error(f"Re-export failed: {e}")
+
+        if res.get("regen_old_mission"):
+            st.caption("Profile comparison - previous vs regenerated:")
+            col_old, col_new = st.columns(2)
+            with col_old:
+                st.markdown("**Previous**")
+                st.text(res["regen_old_mission"])
+            with col_new:
+                st.markdown("**Regenerated**")
+                st.text(res["mission"])
 
         with st.expander("🎯 Skills Statements"):
             st.text(res['skills'])

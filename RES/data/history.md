@@ -65,6 +65,123 @@ Goal: Produce a one-page, ATS-safe cover letter that can be pasted directly into
 
 ## Auto log
 
+### Lazer Commerce - PM
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 31,316
+- **Approx cost**: $0.096
+- **Outputs**: Resume, Cover Letter
+
+
+### Lazer Commerce - PM
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 34,364
+- **Approx cost**: $0.106
+- **Outputs**: Resume, Cover Letter
+
+
+### EviSmart - Product Manager, AI Products
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 32,391
+- **Approx cost**: $0.100
+- **Outputs**: Resume, Cover Letter
+
+
+### Motorq - Product Consultant
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 27,334
+- **Approx cost**: $0.085
+- **Outputs**: Resume, Cover Letter
+
+
+### Scout Global - Product Manager - AI Orchestration & Agent Platforms
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 25,420
+- **Approx cost**: $0.079
+- **Outputs**: Resume, Cover Letter
+
+
+### Motorq - Product Consultant
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 26,074
+- **Approx cost**: $0.081
+- **Outputs**: Resume, Cover Letter
+
+
+### Motorq - Product Consultant
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 26,591
+- **Approx cost**: $0.113
+- **Outputs**: Resume, Cover Letter
+
+
+### Motorq - Product Consultant
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 26,591
+- **Approx cost**: $0.113
+- **Outputs**: Resume, Cover Letter
+
+
+### Gojiberry - Founding Product Manager
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 27,151
+- **Approx cost**: $0.085
+- **Outputs**: Resume, Cover Letter
+
+
+### Gojiberry - Founding Product Manager
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 26,736
+- **Approx cost**: $0.084
+- **Outputs**: Resume, Cover Letter
+
+
+### Gojiberry - Founding Product Manager
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 25,085
+- **Approx cost**: $0.079
+- **Outputs**: Resume, Cover Letter
+
+
+### Autodesk - Business Strategist, AI Foundation Models
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 24,959
+- **Approx cost**: $0.078
+- **Outputs**: Resume, Cover Letter
+
+
+### Autodesk - Business Strategist, AI Foundation Models
+- **Date**: 2026-05-20
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 25,163
+- **Approx cost**: $0.078
+- **Outputs**: Resume, Cover Letter
+
+
 ### BuildOps - Senior Product Manager
 - **Date**: 2026-05-17
 - **Track**: Product/AI

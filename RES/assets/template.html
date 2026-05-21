@@ -17,7 +17,7 @@
             padding: 0;
         }
         h1 {
-            font-size: 20pt;
+            font-size: 16pt;
             margin: 0 0 5px 0;
             font-weight: 600;
         }
@@ -28,6 +28,18 @@
             border-bottom: 1px solid #000;
             padding-bottom: 2px;
             font-weight: 600;
+            page-break-after: avoid;
+        }
+        .page-break-before {
+            page-break-before: always;
+            break-before: page;
+        }
+        .role-block {
+            page-break-inside: avoid;
+            break-inside: avoid-page;
+        }
+        .role-block + .role-block {
+            margin-top: 8px;
         }
         .header {
             text-align: center;
@@ -87,14 +99,14 @@
     </div>
 
     {% if mission_body %}
-    <h2>Professional Profile</h2>
+    <h2>The Quick Take</h2>
     <div class="section-content">
         {{ mission_body }}
     </div>
     {% endif %}
 
     {% if skills %}
-    <h2>Technical Expertise</h2>
+    <h2 class="{% if 'skills' in break_sections %}page-break-before{% endif %}">How I Work</h2>
     <div class="section-content">
         <ul>
         {% for skill in skills %}
@@ -105,9 +117,10 @@
     {% endif %}
 
     {% if experience %}
-    <h2>Professional Experience</h2>
+    <h2 class="{% if 'experience' in break_sections %}page-break-before{% endif %}">The Work</h2>
     <div class="section-content">
         {% for role in experience %}
+        <div class="role-block{% if role.page_break_before %} page-break-before{% endif %}">
         <div class="role-header">
             <div class="role-title-company">{{ role.title_company }}</div>
             <div class="role-dates">{{ role.dates_location }}</div>
@@ -123,15 +136,36 @@
             <li>{{ bullet|safe }}</li>
         {% endfor %}
         </ul>
+        </div>
         {% endfor %}
     </div>
     {% endif %}
 
-    <h2>Education</h2>
+    {% if projects %}
+    <h2 class="{% if 'projects' in break_sections %}page-break-before{% endif %}">Side Builds</h2>
     <div class="section-content">
-        <div><strong>MBA, Energy Economics and Product Leadership</strong> | University of Calgary (2025)</div>
-        <div><strong>Bachelor of Science</strong> | Illinois Tech, Chicago, IL (2012)</div>
-        <div><strong>CSM & CSPO</strong> | Scrum Alliance (2022)</div>
+        {% for proj in projects %}
+        <div class="role-block{% if proj.page_break_before %} page-break-before{% endif %}">
+        <div class="role-header">
+            <div class="role-title-company">{{ proj.title }}</div>
+        </div>
+        <ul>
+        {% for bullet in proj.bullets %}
+            <li>{{ bullet|safe }}</li>
+        {% endfor %}
+        </ul>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h2 class="{% if 'credentials' in break_sections %}page-break-before{% endif %}">Credentials</h2>
+    <div class="section-content">
+        <div><strong>MBA, Energy Economics and Product Leadership</strong>, University of Calgary (2025)</div>
+        <div><strong>Bachelor of Science, Finance</strong>, Illinois Tech, Chicago, IL (2012)</div>
+        {% if include_scrum %}
+        <div><strong>CSM &amp; CSPO</strong>, Scrum Alliance (2022)</div>
+        {% endif %}
     </div>
 </body>
 </html>
