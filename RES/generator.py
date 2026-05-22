@@ -2,7 +2,8 @@ import os
 import re
 import time
 from pathlib import Path
-from openai import OpenAI
+
+from llm_client import LLMClient, call_llm, get_llm_client, resolve_model
 
 PAGE_BREAK_MARKER = "---PAGEBREAK---"
 PROFILE_WHAT_VERBS = re.compile(
@@ -12,10 +13,9 @@ PROFILE_WHAT_VERBS = re.compile(
 
 PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
 
-PROFILE_MODEL = "gpt-4.1"  # The Quick Take (PROFESSIONAL PROFILE)
+# Legacy OpenAI env overrides (used when provider=openai via llm_client)
 PAIN_POINT_MODEL = os.environ.get("PAIN_POINT_MODEL", "o4-mini")
 PAIN_POINT_FALLBACK = os.environ.get("PAIN_POINT_FALLBACK", "gpt-4.1")
-DEFAULT_MODEL = "gpt-4o"   # All other resume sections
 
 # ---------------------------------------------------------------------------
 # Track-specific prompt fragments
@@ -59,13 +59,11 @@ TRACK_EMPHASIS = {
     ),
 }
 
-def get_openai_client(api_key):
-    return OpenAI(api_key=api_key)
-
 
 def _track_instruction(track: str) -> str:
     """Return track-specific instruction string or empty."""
     return TRACK_EMPHASIS.get(track, "")
+
 
 def get_anti_fluff() -> str:
     """Load the shared ANTI_FLUFF block."""
@@ -122,7 +120,6 @@ def profile_needs_lint(mission: str) -> bool:
     lines = [ln.strip() for ln in mission.split("\n") if ln.strip()]
     if len(lines) < 4:
         return True
-    # Line 3 (index 2) must be candidate parallel, not another employer sentence
     line3 = lines[2].lower() if len(lines) > 2 else ""
     parallel_markers = (
         "seen",
@@ -148,72 +145,60 @@ def profile_needs_lint(mission: str) -> bool:
         return True
     return False
 
+
 def load_prompt(filename: str, **kwargs) -> tuple[str, str]:
     """Load a markdown prompt template and split into system and user prompts."""
     path = PROMPTS_DIR / filename
     if not path.exists():
         raise FileNotFoundError(f"Prompt template {filename} not found.")
-        
+
     text = path.read_text(encoding="utf-8")
-    
+
     if "---USER---" in text:
         sys_part, usr_part = text.split("---USER---", 1)
         return sys_part.format(**kwargs).strip(), usr_part.format(**kwargs).strip()
-    else:
-        return text.format(**kwargs).strip(), ""
+    return text.format(**kwargs).strip(), ""
 
-def _call_openai(client, system_prompt, user_prompt, max_tokens=600, temperature=0.4, retries=3, model=None):
-    """Call OpenAI with retry logic. Returns (content, usage_dict)."""
-    resolved_model = model or DEFAULT_MODEL
-    last_error = None
-    for attempt in range(retries):
-        try:
-            params = {
-                "model": resolved_model,
-                "messages": [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt}
-                ],
-                "max_completion_tokens": max_tokens,
-            }
-            if not resolved_model.startswith("gpt-5"):
-                params["temperature"] = temperature
-            response = client.chat.completions.create(**params)
-            usage = {
-                "prompt_tokens": response.usage.prompt_tokens,
-                "completion_tokens": response.usage.completion_tokens,
-                "total_tokens": response.usage.total_tokens,
-            }
-            content = response.choices[0].message.content
-            if not content:
-                print(f"[DEBUG] Blank response from {resolved_model}. finish_reason={response.choices[0].finish_reason!r}, full_message={response.choices[0].message!r}")
-            return (content or "").strip(), usage
-        except Exception as e:
-            last_error = e
-            if attempt < retries - 1:
-                time.sleep(2 ** attempt)
-    raise last_error
+
+def _call_with_pain_fallback(llm, system_prompt, user_prompt, max_tokens, temperature):
+    """Pain-tier call with one fallback model on failure."""
+    try:
+        return call_llm(
+            llm,
+            system_prompt,
+            user_prompt,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            tier="pain",
+        )
+    except Exception:
+        return call_llm(
+            llm,
+            system_prompt,
+            user_prompt,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            tier="pain_fallback",
+        )
+
 
 # ---------------------------------------------------------------------------
 # JD Keyword Extraction (ATS-KW)
 # ---------------------------------------------------------------------------
-def extract_jd_keywords(client, jd_text):
+def extract_jd_keywords(llm, jd_text):
     """Extract top 5 duties and top 5 requirements from a raw JD for ATS targeting."""
     system_prompt, user_prompt = load_prompt(
-        "extract_keywords.md", 
-        jd_text=jd_text[:4000]
+        "extract_keywords.md",
+        jd_text=jd_text[:4000],
     )
-    return _call_openai(client, system_prompt, user_prompt, max_tokens=400, temperature=0.2)
+    return call_llm(llm, system_prompt, user_prompt, max_tokens=400, temperature=0.2)
+
 
 # ---------------------------------------------------------------------------
 # Narrative Brief
 # ---------------------------------------------------------------------------
-def generate_narrative_brief(client, jd_text, master_context, target_role, company_name, track=""):
-    """Synthesize master_context + JD into a coherent positioning brief.
-
-    The brief feeds into all downstream section prompts to ensure narrative
-    coherence across mission, skills, bullets, and cover letter.
-    """
+def generate_narrative_brief(llm, jd_text, master_context, target_role, company_name, track=""):
+    """Synthesize master_context + JD into a coherent positioning brief."""
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
     system_prompt, user_prompt = load_prompt(
         "narrative_brief.md",
@@ -223,25 +208,26 @@ def generate_narrative_brief(client, jd_text, master_context, target_role, compa
         jd_text=jd_text[:4000],
         master_context=master_context,
     )
-    return _call_openai(client, system_prompt, user_prompt, max_tokens=700, temperature=0.4)
+    return call_llm(llm, system_prompt, user_prompt, max_tokens=700, temperature=0.4)
 
 
 # ---------------------------------------------------------------------------
 # Role selection
 # ---------------------------------------------------------------------------
-def select_relevant_roles(client, jd_text, master_context):
+def select_relevant_roles(llm, jd_text, master_context):
     """LLM picks which roles from master context are most relevant to the JD."""
     system_prompt, user_prompt = load_prompt(
         "select_roles.md",
         jd_text=jd_text[:3000],
-        master_context=master_context
+        master_context=master_context,
     )
-    return _call_openai(client, system_prompt, user_prompt, max_tokens=300)
+    return call_llm(llm, system_prompt, user_prompt, max_tokens=300)
+
 
 # ---------------------------------------------------------------------------
 # JD pain point (reasoning step before profile)
 # ---------------------------------------------------------------------------
-def extract_jd_pain_point(client, jd_text, target_role, jd_duties=""):
+def extract_jd_pain_point(llm, jd_text, target_role, jd_duties=""):
     """Extract CORE_PAIN and related framing from the JD (no company name)."""
     jd_slice = jd_text[:3000]
     if jd_duties:
@@ -251,31 +237,14 @@ def extract_jd_pain_point(client, jd_text, target_role, jd_duties=""):
         target_role=target_role,
         jd_text=jd_slice,
     )
-    try:
-        return _call_openai(
-            client,
-            system_prompt,
-            user_prompt,
-            max_tokens=300,
-            temperature=0.2,
-            model=PAIN_POINT_MODEL,
-        )
-    except Exception:
-        return _call_openai(
-            client,
-            system_prompt,
-            user_prompt,
-            max_tokens=300,
-            temperature=0.2,
-            model=PAIN_POINT_FALLBACK,
-        )
+    return _call_with_pain_fallback(llm, system_prompt, user_prompt, 300, 0.2)
 
 
 # ---------------------------------------------------------------------------
 # Profile angle (WHY framing before The Quick Take)
 # ---------------------------------------------------------------------------
 def generate_profile_angle(
-    client,
+    llm,
     jd_pain,
     narrative_brief,
     target_role,
@@ -289,40 +258,23 @@ def generate_profile_angle(
         narrative_brief=narrative_brief or "(none)",
         profile_context_excerpt=excerpt,
     )
-    try:
-        return _call_openai(
-            client,
-            system_prompt,
-            user_prompt,
-            max_tokens=400,
-            temperature=0.2,
-            model=PAIN_POINT_MODEL,
-        )
-    except Exception:
-        return _call_openai(
-            client,
-            system_prompt,
-            user_prompt,
-            max_tokens=400,
-            temperature=0.2,
-            model=PAIN_POINT_FALLBACK,
-        )
+    return _call_with_pain_fallback(llm, system_prompt, user_prompt, 400, 0.2)
 
 
-def lint_profile_why(client, mission, profile_angle):
+def lint_profile_why(llm, mission, profile_angle):
     """Rewrite profile if it reads WHAT-heavy vs profile_angle."""
     system_prompt, user_prompt = load_prompt(
         "profile_lint.md",
         profile_angle=profile_angle or "(none)",
         mission=mission,
     )
-    return _call_openai(
-        client,
+    return call_llm(
+        llm,
         system_prompt,
         user_prompt,
         max_tokens=400,
         temperature=0.2,
-        model=PROFILE_MODEL,
+        tier="profile",
     )
 
 
@@ -330,7 +282,7 @@ def lint_profile_why(client, mission, profile_angle):
 # Mission Statement
 # ---------------------------------------------------------------------------
 def generate_mission_statement(
-    client,
+    llm,
     jd_paragraphs,
     target_title,
     company_name="",
@@ -354,18 +306,18 @@ def generate_mission_statement(
         profile_angle=profile_angle or "(No profile angle — use jd_pain and narrative brief only.)",
         profile_context_excerpt=profile_context_excerpt,
     )
-    return _call_openai(
-        client,
+    return call_llm(
+        llm,
         system_prompt,
         user_prompt,
         max_tokens=400,
         temperature=0.3,
-        model=PROFILE_MODEL,
+        tier="profile",
     )
 
 
 def generate_profile_with_lint(
-    client,
+    llm,
     jd_paragraphs,
     target_title,
     company_name="",
@@ -379,7 +331,7 @@ def generate_profile_with_lint(
     """Mission statement plus optional WHY lint pass. Returns (mission, usage_list)."""
     excerpt = extract_profile_context_excerpt(master_context)
     mission, u1 = generate_mission_statement(
-        client,
+        llm,
         jd_paragraphs,
         target_title,
         company_name,
@@ -391,14 +343,15 @@ def generate_profile_with_lint(
     )
     usage = [u1]
     if run_lint and profile_angle and profile_needs_lint(mission):
-        mission, u2 = lint_profile_why(client, mission, profile_angle)
+        mission, u2 = lint_profile_why(llm, mission, profile_angle)
         usage.append(u2)
     return mission, usage
+
 
 # ---------------------------------------------------------------------------
 # Skills Statements
 # ---------------------------------------------------------------------------
-def generate_skills_statements(client, jd_duties, master_context, target_role, track="", narrative_brief=""):
+def generate_skills_statements(llm, jd_duties, master_context, target_role, track="", narrative_brief=""):
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
     system_prompt, user_prompt = load_prompt(
         "skills_statements.md",
@@ -409,12 +362,13 @@ def generate_skills_statements(client, jd_duties, master_context, target_role, t
         narrative_brief=narrative_brief,
         master_context=master_context[:4000],
     )
-    return _call_openai(client, system_prompt, user_prompt, max_tokens=800)
+    return call_llm(llm, system_prompt, user_prompt, max_tokens=800)
+
 
 # ---------------------------------------------------------------------------
 # Experience Bullets (per-role)
 # ---------------------------------------------------------------------------
-def generate_experience_bullets(client, role_block, jd_text, track="", narrative_brief=""):
+def generate_experience_bullets(llm, role_block, jd_text, track="", narrative_brief=""):
     """Generate bullets for ONE role."""
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
     system_prompt, user_prompt = load_prompt(
@@ -425,12 +379,13 @@ def generate_experience_bullets(client, role_block, jd_text, track="", narrative
         narrative_brief=narrative_brief,
         jd_text=jd_text[:2000],
     )
-    return _call_openai(client, system_prompt, user_prompt, max_tokens=800)
+    return call_llm(llm, system_prompt, user_prompt, max_tokens=800)
+
 
 # ---------------------------------------------------------------------------
 # Personal Projects
 # ---------------------------------------------------------------------------
-def generate_personal_projects(client, projects_block, jd_text, track="", narrative_brief=""):
+def generate_personal_projects(llm, projects_block, jd_text, track="", narrative_brief=""):
     """Generate a JD-tailored PROJECTS section from the Additional Projects block."""
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
     system_prompt, user_prompt = load_prompt(
@@ -441,12 +396,13 @@ def generate_personal_projects(client, projects_block, jd_text, track="", narrat
         narrative_brief=narrative_brief,
         jd_text=jd_text[:2000],
     )
-    return _call_openai(client, system_prompt, user_prompt, max_tokens=500)
+    return call_llm(llm, system_prompt, user_prompt, max_tokens=500)
+
 
 # ---------------------------------------------------------------------------
 # Cover Letter
 # ---------------------------------------------------------------------------
-def generate_cover_letter(client, jd_text, master_context, target_role, company_name, track="", narrative_brief=""):
+def generate_cover_letter(llm, jd_text, master_context, target_role, company_name, track="", narrative_brief=""):
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
     system_prompt, user_prompt = load_prompt(
         "cover_letter.md",
@@ -457,12 +413,13 @@ def generate_cover_letter(client, jd_text, master_context, target_role, company_
         narrative_brief=narrative_brief,
         master_context=master_context[:3000],
     )
-    return _call_openai(client, system_prompt, user_prompt, max_tokens=700)
+    return call_llm(llm, system_prompt, user_prompt, max_tokens=700)
+
 
 # ---------------------------------------------------------------------------
 # Custom Q&A
 # ---------------------------------------------------------------------------
-def answer_custom_questions(client, questions, master_context, jd_text):
+def answer_custom_questions(llm, questions, master_context, jd_text):
     """Answer application-specific questions grounded in real experience."""
     if not questions.strip():
         return "", {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
@@ -471,6 +428,6 @@ def answer_custom_questions(client, questions, master_context, jd_text):
         "custom_qa.md",
         questions=questions,
         master_context=master_context[:4000],
-        jd_text=jd_text[:2000]
+        jd_text=jd_text[:2000],
     )
-    return _call_openai(client, system_prompt, user_prompt, max_tokens=800)
+    return call_llm(llm, system_prompt, user_prompt, max_tokens=800)

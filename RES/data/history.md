@@ -65,6 +65,24 @@ Goal: Produce a one-page, ATS-safe cover letter that can be pasted directly into
 
 ## Auto log
 
+### 7shifts - Senior Product Manager
+- **Date**: 2026-05-21
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 36,582
+- **Approx cost**: $0.007
+- **Outputs**: Resume, Cover Letter
+
+
+### 7shifts - Senior Product Manager
+- **Date**: 2026-05-21
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 32,401
+- **Approx cost**: $0.100
+- **Outputs**: Resume, Cover Letter
+
+
 ### Lazer Commerce - PM
 - **Date**: 2026-05-20
 - **Track**: Product/AI

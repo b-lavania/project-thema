@@ -24,9 +24,34 @@ Specs, roadmaps, second-brain plan, and analysis live under **[`../docs/RES/`](.
 ```bash
 cd RES
 pip install -r requirements.txt
-# API key: create `RES/.env` with your key (Streamlit sidebar can persist it).
+# API keys in `RES/.env` (or enter in sidebar and Save Key to .env):
+#   OPENAI_API_KEY="..."
+#   GEMINI_API_KEY="..."   # from https://aistudio.google.com/apikey
 streamlit run app.py
 ```
+
+## LLM provider (OpenAI or Gemini)
+
+In the sidebar, choose **OpenAI** or **Google Gemini** (AI Studio). One provider applies to the full generation run.
+
+| Tier | OpenAI default | Gemini default (AI Studio) |
+|------|----------------|----------------------------|
+| Bulk sections | `gpt-4o` | `gemini-2.5-flash` |
+| Profile + lint | `gpt-4.1` | `gemini-2.5-pro` |
+| Pain + profile angle | `o4-mini` | `gemini-2.5-flash` |
+
+Override via **Advanced: models** in the sidebar, or env:
+
+```bash
+GEMINI_DEFAULT_MODEL=gemini-2.5-flash
+GEMINI_PROFILE_MODEL=gemini-2.5-pro
+GEMINI_PAIN_MODEL=gemini-2.5-flash
+PAIN_POINT_MODEL=o4-mini
+```
+
+Alternates if a model ID is unavailable on your account: `gemini-2.5-flash-lite`, `gemini-2.0-flash`, `gemini-2.0-flash-lite`.
+
+Cost display uses approximate per-token rates; Gemini estimates assume Flash pricing (profile steps on Pro may cost more).
 
 ## Editing workflow
 
@@ -46,10 +71,12 @@ streamlit run app.py
 
 ## Professional profile pipeline (problem → parallel → solve)
 
-1. **Narrative brief** (`gpt-4o`) — positioning; proof points use decision/outcome labels and WHY IT MATTERS.
-2. **JD pain analysis** (`o4-mini`) — `prompts/jd_pain_point.md` (SITUATION, CORE_PAIN, stakes, success); no company name.
-3. **Profile angle** (`o4-mini`) — `prompts/profile_angle.md` — THEIR_PROBLEM, ANALOGOUS_EXPERIENCE, SOLUTION_PATTERN, PROOF_SNIPPET, forbidden nouns.
-4. **The Quick Take** (`gpt-4.1`, temperature 0.3) — tagline + 3 sentences: **their problem** / **your parallel** / **how you solve** (one metric max in line 4).
+Uses the sidebar **provider** and tier models above (`default` / `profile` / `pain`).
+
+1. **Narrative brief** — positioning; proof points use decision/outcome labels and WHY IT MATTERS.
+2. **JD pain analysis** — `prompts/jd_pain_point.md` (SITUATION, CORE_PAIN, stakes, success); no company name.
+3. **Profile angle** — `prompts/profile_angle.md` — THEIR_PROBLEM, ANALOGOUS_EXPERIENCE, SOLUTION_PATTERN, PROOF_SNIPPET, forbidden nouns.
+4. **The Quick Take** (temperature 0.3) — tagline + 3 sentences: **their problem** / **your parallel** / **how you solve** (one metric max in line 4).
 5. **Profile lint** — rewrites if WHAT-heavy, missing parallel beat in line 3, or vague corporate phrasing.
 
 **Voice rule:** line 2 is employer-only; line 3 is candidate-only; line 4 is approach + proof. Domain labels OK; employer names not.

@@ -6,8 +6,8 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+from llm_client import get_llm_client, model_choices, GEMINI_DEFAULTS, OPENAI_DEFAULTS
 from generator import (
-    get_openai_client,
     extract_jd_keywords,
     extract_jd_pain_point,
     generate_narrative_brief,
@@ -47,8 +47,12 @@ LOCATION_OPTIONS = {
     "Calgary, AB (Canadian jobs)": "Calgary, AB",
 }
 MIN_JD_LENGTH = 200
-GPT4O_INPUT_PRICE_PER_1K = 0.0025
-GPT4O_OUTPUT_PRICE_PER_1K = 0.01
+PROVIDER_OPTIONS = ["OpenAI", "Google Gemini"]
+OPENAI_INPUT_PRICE_PER_1K = 0.0025
+OPENAI_OUTPUT_PRICE_PER_1K = 0.01
+# Gemini 2.5 Flash approximate (AI Studio; profile steps may use Pro at higher cost)
+GEMINI_INPUT_PRICE_PER_1K = 0.00015
+GEMINI_OUTPUT_PRICE_PER_1K = 0.0006
 
 
 # ---------------------------------------------------------------------------
@@ -169,11 +173,69 @@ def append_to_history(date, company, role, track, jd_source, tokens_used, cost_u
     HISTORY_PATH.write_text(content, encoding="utf-8")
 
 
-def get_api_key():
-    """Resolve API key: env var first, sidebar override second."""
-    env_key = os.environ.get("OPENAI_API_KEY", "")
-    sidebar_key = st.session_state.get("sidebar_api_key", "")
-    return sidebar_key if sidebar_key else env_key
+def get_provider() -> str:
+    """Return 'openai' or 'gemini' from sidebar selection."""
+    label = st.session_state.get("llm_provider", PROVIDER_OPTIONS[0])
+    return "gemini" if label == "Google Gemini" else "openai"
+
+
+def update_env_file(updates: dict):
+    """Merge API keys into .env without removing unrelated variables."""
+    existing = {}
+    if ENV_PATH.exists():
+        for line in ENV_PATH.read_text(encoding="utf-8").splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#") or "=" not in stripped:
+                continue
+            key, _, val = stripped.partition("=")
+            existing[key.strip()] = val.strip().strip('"').strip("'")
+    existing.update(updates)
+    ENV_PATH.write_text(
+        "\n".join(f'{k}="{v}"' for k, v in existing.items()) + "\n",
+        encoding="utf-8",
+    )
+
+
+def get_api_key() -> str:
+    """Resolve API key for the active provider (sidebar override, then env)."""
+    provider = get_provider()
+    if provider == "gemini":
+        return (
+            st.session_state.get("sidebar_gemini_key", "").strip()
+            or os.environ.get("GEMINI_API_KEY", "").strip()
+        )
+    return (
+        st.session_state.get("sidebar_openai_key", "").strip()
+        or os.environ.get("OPENAI_API_KEY", "").strip()
+    )
+
+
+def build_model_overrides() -> dict:
+    """Session-selected model IDs for default / profile / pain tiers."""
+    provider = get_provider()
+    prefix = "gemini" if provider == "gemini" else "openai"
+    overrides = {}
+    for tier in ("default", "profile", "pain"):
+        val = st.session_state.get(f"{prefix}_model_{tier}")
+        if val:
+            overrides[tier] = val
+    return overrides
+
+
+def init_provider_defaults():
+    """Seed model pickers from env defaults once per session."""
+    for tier, val in OPENAI_DEFAULTS.items():
+        key = f"openai_model_{tier}"
+        if key not in st.session_state and tier != "pain_fallback":
+            st.session_state[key] = val
+    for tier, val in GEMINI_DEFAULTS.items():
+        key = f"gemini_model_{tier}"
+        if key not in st.session_state and tier != "pain_fallback":
+            st.session_state[key] = val
+    if "sidebar_openai_key" not in st.session_state:
+        st.session_state.sidebar_openai_key = os.environ.get("OPENAI_API_KEY", "")
+    if "sidebar_gemini_key" not in st.session_state:
+        st.session_state.sidebar_gemini_key = os.environ.get("GEMINI_API_KEY", "")
 
 
 def build_pdf_breaks_from_session():
@@ -256,12 +318,19 @@ def check_keyword_coverage(extracted_keywords_text, combined_output):
     return found, missing, coverage
 
 
-def estimate_cost(usage_list):
-    """Estimate USD cost from list of usage dicts."""
+def estimate_cost(usage_list, provider: str = "openai"):
+    """Estimate USD cost from list of usage dicts (approximate by provider)."""
     total_input = sum(u.get("prompt_tokens", 0) for u in usage_list)
     total_output = sum(u.get("completion_tokens", 0) for u in usage_list)
     total_tokens = total_input + total_output
-    cost = (total_input / 1000 * GPT4O_INPUT_PRICE_PER_1K) + (total_output / 1000 * GPT4O_OUTPUT_PRICE_PER_1K)
+    if provider == "gemini":
+        cost = (total_input / 1000 * GEMINI_INPUT_PRICE_PER_1K) + (
+            total_output / 1000 * GEMINI_OUTPUT_PRICE_PER_1K
+        )
+    else:
+        cost = (total_input / 1000 * OPENAI_INPUT_PRICE_PER_1K) + (
+            total_output / 1000 * OPENAI_OUTPUT_PRICE_PER_1K
+        )
     return total_tokens, cost
 
 
@@ -389,23 +458,66 @@ st.caption("AI-powered resume and cover letter generator with ATS optimization")
 st.sidebar.title("⚙️ Configuration")
 st.sidebar.divider()
 
-st.sidebar.subheader("🔑 API Key")
-st.sidebar.text_input(
-    "OpenAI API Key",
-    type="password",
-    key="sidebar_api_key",
-    help="Saved locally to .env so you only enter it once"
+init_provider_defaults()
+
+st.sidebar.subheader("LLM Provider")
+st.sidebar.radio(
+    "Provider",
+    PROVIDER_OPTIONS,
+    key="llm_provider",
+    help="One provider per generation run (OpenAI or Google AI Studio)",
 )
-if st.sidebar.button("💾 Save Key to .env", key="save_key_btn", use_container_width=True):
-    key_to_save = st.session_state.get("sidebar_api_key", "").strip()
+
+_active_provider = get_provider()
+st.sidebar.subheader("API Key")
+if _active_provider == "gemini":
+    st.sidebar.text_input(
+        "Gemini API Key",
+        type="password",
+        key="sidebar_gemini_key",
+        help="From aistudio.google.com — saved to GEMINI_API_KEY in .env",
+    )
+    _env_var = "GEMINI_API_KEY"
+else:
+    st.sidebar.text_input(
+        "OpenAI API Key",
+        type="password",
+        key="sidebar_openai_key",
+        help="Saved to OPENAI_API_KEY in .env",
+    )
+    _env_var = "OPENAI_API_KEY"
+
+if st.sidebar.button("Save Key to .env", key="save_key_btn", use_container_width=True):
+    key_to_save = get_api_key()
     if key_to_save:
-        ENV_PATH.write_text(f'OPENAI_API_KEY="{key_to_save}"\n', encoding="utf-8")
-        os.environ["OPENAI_API_KEY"] = key_to_save
-        st.sidebar.success("✅ Key saved to .env")
+        update_env_file({_env_var: key_to_save})
+        os.environ[_env_var] = key_to_save
+        st.sidebar.success("Key saved to .env")
     else:
-        st.sidebar.warning("⚠️ No key to save")
-env_status = "✅ Saved" if os.environ.get("OPENAI_API_KEY") else "⚠️ Not set"
-st.sidebar.caption(f"Status: {env_status}")
+        st.sidebar.warning("No key to save")
+
+_key_ok = bool(get_api_key())
+st.sidebar.caption(f"Status: {'Set' if _key_ok else 'Not set'} ({_active_provider})")
+
+with st.sidebar.expander("Advanced: models", expanded=False):
+    _prefix = "gemini" if _active_provider == "gemini" else "openai"
+    _label = "Gemini" if _active_provider == "gemini" else "OpenAI"
+    st.caption(f"{_label} model IDs per pipeline tier")
+    st.selectbox(
+        "Bulk sections (keywords, narrative, skills, bullets, cover)",
+        model_choices(_active_provider, "default"),
+        key=f"{_prefix}_model_default",
+    )
+    st.selectbox(
+        "Profile + lint (The Quick Take)",
+        model_choices(_active_provider, "profile"),
+        key=f"{_prefix}_model_profile",
+    )
+    st.selectbox(
+        "Pain + profile angle",
+        model_choices(_active_provider, "pain"),
+        key=f"{_prefix}_model_pain",
+    )
 
 st.sidebar.divider()
 st.sidebar.subheader("📍 Location")
@@ -511,6 +623,7 @@ with tab_generate:
 
     if st.button("🚀 Generate Documents", disabled=not all_ready, type="primary", use_container_width=True):
         api_key = get_api_key()
+        provider = get_provider()
         company = st.session_state.company_name.strip()
         role = st.session_state.target_role.strip()
         track = st.session_state.selected_track
@@ -522,11 +635,11 @@ with tab_generate:
 
         try:
             with st.status("Generating resume...", expanded=True) as status:
-                client = get_openai_client(api_key)
+                llm = get_llm_client(provider, api_key, build_model_overrides())
 
                 # Step 1: Extract JD keywords (ATS-KW)
                 st.write("Extracting JD duties and requirements...")
-                extracted_keywords, usage = extract_jd_keywords(client, jd)
+                extracted_keywords, usage = extract_jd_keywords(llm, jd)
                 usage_log.append(usage)
 
                 # Parse duties section for skills statements
@@ -537,7 +650,7 @@ with tab_generate:
 
                 # Step 2: Select relevant roles
                 st.write("Selecting relevant roles...")
-                role_selection_text, usage = select_relevant_roles(client, jd, master_ctx)
+                role_selection_text, usage = select_relevant_roles(llm, jd, master_ctx)
                 usage_log.append(usage)
 
                 # Parse selected role blocks
@@ -564,19 +677,19 @@ with tab_generate:
                 # Step 3: Narrative brief
                 st.write("Synthesizing narrative brief...")
                 narrative_brief, usage = generate_narrative_brief(
-                    client, jd, master_ctx, role, company, track
+                    llm, jd, master_ctx, role, company, track
                 )
                 usage_log.append(usage)
 
                 # Step 3b: JD pain analysis (feeds profile)
                 st.write("Analyzing JD pain points...")
-                jd_pain, usage = extract_jd_pain_point(client, jd, role, jd_duties=jd_duties)
+                jd_pain, usage = extract_jd_pain_point(llm, jd, role, jd_duties=jd_duties)
                 usage_log.append(usage)
 
                 # Step 3c: Profile angle (WHY framing)
                 st.write("Building profile angle...")
                 profile_angle, usage = generate_profile_angle(
-                    client, jd_pain, narrative_brief, role, master_context=master_ctx
+                    llm, jd_pain, narrative_brief, role, master_context=master_ctx
                 )
                 usage_log.append(usage)
 
@@ -584,7 +697,7 @@ with tab_generate:
                 st.write("Generating mission statement...")
                 jd_paragraphs = extract_jd_paragraphs(jd)
                 mission, profile_usage = generate_profile_with_lint(
-                    client,
+                    llm,
                     jd_paragraphs,
                     role,
                     company,
@@ -606,7 +719,7 @@ with tab_generate:
                 # Step 5: Skills statements (use extracted duties if available)
                 st.write("Generating skills statements...")
                 skills_input = jd_duties if jd_duties else jd[:3000]
-                skills, usage = generate_skills_statements(client, skills_input, master_ctx, role, track, narrative_brief=narrative_brief)
+                skills, usage = generate_skills_statements(llm, skills_input, master_ctx, role, track, narrative_brief=narrative_brief)
                 usage_log.append(usage)
 
                 # Step 6: Experience bullets (per role)
@@ -614,7 +727,7 @@ with tab_generate:
                 experience_blocks = []
                 all_coaching_notes = []
                 for role_name, role_block in selected_roles:
-                    bullets, usage = generate_experience_bullets(client, role_block, jd, track, narrative_brief=narrative_brief)
+                    bullets, usage = generate_experience_bullets(llm, role_block, jd, track, narrative_brief=narrative_brief)
                     usage_log.append(usage)
                     experience_blocks.append(bullets)
                     notes = extract_coaching_notes(bullets)
@@ -629,19 +742,19 @@ with tab_generate:
                 # Step 6.5: Personal Projects
                 st.write("Generating projects section...")
                 projects_block = extract_projects_block(master_ctx)
-                projects, usage = generate_personal_projects(client, projects_block, jd, track, narrative_brief=narrative_brief)
+                projects, usage = generate_personal_projects(llm, projects_block, jd, track, narrative_brief=narrative_brief)
                 usage_log.append(usage)
 
                 # Step 7: Cover letter
                 st.write("Generating cover letter...")
-                cover_letter, usage = generate_cover_letter(client, jd, master_ctx, role, company, track, narrative_brief=narrative_brief)
+                cover_letter, usage = generate_cover_letter(llm, jd, master_ctx, role, company, track, narrative_brief=narrative_brief)
                 usage_log.append(usage)
 
                 # Step 8: Custom Q&A
                 custom_answers = ""
                 if questions:
                     st.write("Answering application questions...")
-                    custom_answers, usage = answer_custom_questions(client, questions, master_ctx, jd)
+                    custom_answers, usage = answer_custom_questions(llm, questions, master_ctx, jd)
                     usage_log.append(usage)
 
                 # Step 9: Assemble DOCX and PDF
@@ -685,7 +798,7 @@ with tab_generate:
                 )
 
                 # Step 11: Cost summary
-                total_tokens, total_cost = estimate_cost(usage_log)
+                total_tokens, total_cost = estimate_cost(usage_log, provider=provider)
 
                 # Step 12: Log to history
                 jd_source = st.session_state.get("jd_url", "") or "Pasted Text"
@@ -698,6 +811,7 @@ with tab_generate:
                 status.update(label="Generation complete!", state="complete", expanded=False)
 
             st.session_state.gen_results = {
+                "provider": provider,
                 "total_tokens": total_tokens,
                 "total_cost": total_cost,
                 "kw_coverage": kw_coverage,
@@ -730,7 +844,12 @@ with tab_generate:
         res = st.session_state.gen_results
 
         # Display results
-        st.success(f"✨ Generation complete! {res['total_tokens']:,} tokens used (~${res['total_cost']:.3f})")
+        _prov = res.get("provider", "openai")
+        _cost_note = " (Gemini Flash estimate; Pro profile steps may cost more)" if _prov == "gemini" else ""
+        st.success(
+            f"Generation complete! {res['total_tokens']:,} tokens used "
+            f"(~${res['total_cost']:.3f}{_cost_note}) — {_prov}"
+        )
 
         # ATS Keyword Coverage Report
         coverage_pct = int(res['kw_coverage'] * 100)
@@ -833,9 +952,10 @@ with tab_generate:
 
         if regen_clicked:
             api_key = get_api_key()
+            provider = get_provider()
             try:
                 with st.spinner("Regenerating profile..."):
-                    _client = get_openai_client(api_key)
+                    _llm = get_llm_client(provider, api_key, build_model_overrides())
                     _jd = st.session_state.get("jd_text", "")
                     _role = st.session_state.get("target_role", "")
                     _company = st.session_state.get("company_name", "")
@@ -847,14 +967,14 @@ with tab_generate:
                     _angle = res.get("profile_angle", "")
                     if not _angle:
                         _angle, _ = generate_profile_angle(
-                            _client,
+                            _llm,
                             res.get("jd_pain", ""),
                             _narrative,
                             _role,
                             master_context=_master,
                         )
                     new_mission, _ = generate_profile_with_lint(
-                        _client,
+                        _llm,
                         _jd_paragraphs,
                         _role,
                         _company,

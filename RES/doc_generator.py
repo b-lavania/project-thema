@@ -41,6 +41,8 @@ def _clear_body(doc):
             body.remove(child)
 
 
+NAME_FONT = "Playfair Display"
+
 def _add_para(
     doc,
     text,
@@ -49,6 +51,7 @@ def _add_para(
     bold=False,
     italic=False,
     font_size=None,
+    font_name=None,
     keep_with_next=False,
     page_break_before=False,
 ):
@@ -59,6 +62,8 @@ def _add_para(
         run.bold = True
     if italic:
         run.italic = True
+    if font_name:
+        run.font.name = font_name
     if font_size:
         run.font.size = Pt(font_size)
     if align:
@@ -135,8 +140,15 @@ def create_formatted_doc(
 
     # ===== PAGE 1: RESUME =====
 
-    # Name — Heading 1 (font_size override reduces from template default)
-    _add_para(doc, 'Bharat "Bob" Lavania', style="Heading 1", font_size=16)
+    # Name — serif display (Playfair); centered to match PDF header
+    _add_para(
+        doc,
+        'Bharat "Bob" Lavania',
+        style="Heading 1",
+        font_size=18,
+        font_name=NAME_FONT,
+        align=WD_ALIGN_PARAGRAPH.CENTER,
+    )
 
     # Tagline from mission (line 1 only)
     mission_text = resume_sections.get("mission", "")
