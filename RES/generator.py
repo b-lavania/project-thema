@@ -77,13 +77,14 @@ def normalize_pdf_breaks(pdf_breaks=None):
     """Return a consistent pdf_breaks dict for PDF/DOCX renderers."""
     if not pdf_breaks:
         return {"before_sections": [], "before_role_index": None}
-    sections = pdf_breaks.get("before_sections") or []
+    raw_sections = pdf_breaks.get("before_sections")
+    sections = list(raw_sections) if raw_sections else []
     role_idx = pdf_breaks.get("before_role_index")
     if role_idx in (0, "0", None, ""):
         role_idx = None
     else:
         role_idx = int(role_idx)
-    return {"before_sections": list(sections), "before_role_index": role_idx}
+    return {"before_sections": sections, "before_role_index": role_idx}
 
 
 def extract_profile_context_excerpt(master_context: str, max_chars: int = 2500) -> str:
@@ -114,13 +115,13 @@ def profile_is_what_heavy(mission: str) -> bool:
 
 
 def profile_needs_lint(mission: str) -> bool:
-    """True if profile is WHAT-heavy, missing parallel beat, or wrong line count."""
+    """True if profile is WHAT-heavy, vague, or missing parallel-experience beat."""
     if profile_is_what_heavy(mission):
         return True
     lines = [ln.strip() for ln in mission.split("\n") if ln.strip()]
-    if len(lines) < 4:
-        return True
-    line3 = lines[2].lower() if len(lines) > 2 else ""
+    if not lines:
+        return False
+    body_text = " ".join(lines[1:]).lower() if len(lines) > 1 else mission.lower()
     parallel_markers = (
         "seen",
         "same",
@@ -138,11 +139,16 @@ def profile_needs_lint(mission: str) -> bool:
         "pricing",
         "ops",
     )
-    if not any(m in line3 for m in parallel_markers):
-        return True
     vague_markers = ("dynamic", "landscape", "fast-paced", "holistic", "strategic leader")
-    if sum(1 for v in vague_markers if v in " ".join(lines[1:]).lower()) >= 2:
+    if sum(1 for v in vague_markers if v in body_text) >= 2:
         return True
+    if not any(m in body_text for m in parallel_markers):
+        return True
+    # Legacy 4-line profiles: still lint if structure is incomplete
+    if len(lines) >= 4:
+        line3 = lines[2].lower()
+        if not any(m in line3 for m in parallel_markers):
+            return True
     return False
 
 
@@ -160,25 +166,57 @@ def load_prompt(filename: str, **kwargs) -> tuple[str, str]:
     return text.format(**kwargs).strip(), ""
 
 
-def _call_with_pain_fallback(llm, system_prompt, user_prompt, max_tokens, temperature):
-    """Pain-tier call with one fallback model on failure."""
+def _llm(
+    llm,
+    system_prompt: str,
+    user_prompt: str,
+    *,
+    max_tokens: int,
+    temperature: float = 0.4,
+    tier: str = "default",
+    step: str = "Generation step",
+):
+    """Wrapper: require non-empty output (critical for Gemini Flash)."""
+    return call_llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=max_tokens,
+        temperature=temperature,
+        tier=tier,
+        require_nonempty=True,
+        step_label=step,
+    )
+
+
+def _call_with_pain_fallback(llm, system_prompt, user_prompt, max_tokens, temperature, step: str):
+    """Pain-tier call with one fallback model on transient/API failure (not 404 / empty text)."""
+    from llm_client import LLMResponseError
+
     try:
-        return call_llm(
+        return _llm(
             llm,
             system_prompt,
             user_prompt,
             max_tokens=max_tokens,
             temperature=temperature,
             tier="pain",
+            step=step,
         )
-    except Exception:
-        return call_llm(
+    except LLMResponseError:
+        raise
+    except Exception as e:
+        err = str(e)
+        if "404" in err or "NOT_FOUND" in err:
+            raise
+        return _llm(
             llm,
             system_prompt,
             user_prompt,
             max_tokens=max_tokens,
             temperature=temperature,
             tier="pain_fallback",
+            step=f"{step} (fallback)",
         )
 
 
@@ -191,7 +229,14 @@ def extract_jd_keywords(llm, jd_text):
         "extract_keywords.md",
         jd_text=jd_text[:4000],
     )
-    return call_llm(llm, system_prompt, user_prompt, max_tokens=400, temperature=0.2)
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=512,
+        temperature=0.2,
+        step="JD keyword extraction",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -208,7 +253,14 @@ def generate_narrative_brief(llm, jd_text, master_context, target_role, company_
         jd_text=jd_text[:4000],
         master_context=master_context,
     )
-    return call_llm(llm, system_prompt, user_prompt, max_tokens=700, temperature=0.4)
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=900,
+        temperature=0.4,
+        step="Narrative brief",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -221,7 +273,13 @@ def select_relevant_roles(llm, jd_text, master_context):
         jd_text=jd_text[:3000],
         master_context=master_context,
     )
-    return call_llm(llm, system_prompt, user_prompt, max_tokens=300)
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=512,
+        step="Role selection",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -237,7 +295,9 @@ def extract_jd_pain_point(llm, jd_text, target_role, jd_duties=""):
         target_role=target_role,
         jd_text=jd_slice,
     )
-    return _call_with_pain_fallback(llm, system_prompt, user_prompt, 300, 0.2)
+    return _call_with_pain_fallback(
+        llm, system_prompt, user_prompt, 600, 0.2, step="JD pain analysis"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -258,7 +318,9 @@ def generate_profile_angle(
         narrative_brief=narrative_brief or "(none)",
         profile_context_excerpt=excerpt,
     )
-    return _call_with_pain_fallback(llm, system_prompt, user_prompt, 400, 0.2)
+    return _call_with_pain_fallback(
+        llm, system_prompt, user_prompt, 768, 0.2, step="Profile angle"
+    )
 
 
 def lint_profile_why(llm, mission, profile_angle):
@@ -268,13 +330,14 @@ def lint_profile_why(llm, mission, profile_angle):
         profile_angle=profile_angle or "(none)",
         mission=mission,
     )
-    return call_llm(
+    return _llm(
         llm,
         system_prompt,
         user_prompt,
-        max_tokens=400,
+        max_tokens=768,
         temperature=0.2,
         tier="profile",
+        step="Profile lint",
     )
 
 
@@ -306,13 +369,14 @@ def generate_mission_statement(
         profile_angle=profile_angle or "(No profile angle — use jd_pain and narrative brief only.)",
         profile_context_excerpt=profile_context_excerpt,
     )
-    return call_llm(
+    return _llm(
         llm,
         system_prompt,
         user_prompt,
-        max_tokens=400,
+        max_tokens=768,
         temperature=0.3,
         tier="profile",
+        step="The Quick Take (profile)",
     )
 
 
@@ -341,11 +405,12 @@ def generate_profile_with_lint(
         profile_angle=profile_angle,
         profile_context_excerpt=excerpt,
     )
-    usage = [u1]
+    usage = [u1] if u1 else []
     if run_lint and profile_angle and profile_needs_lint(mission):
         mission, u2 = lint_profile_why(llm, mission, profile_angle)
-        usage.append(u2)
-    return mission, usage
+        if u2:
+            usage.append(u2)
+    return mission or "", usage
 
 
 # ---------------------------------------------------------------------------
@@ -362,7 +427,13 @@ def generate_skills_statements(llm, jd_duties, master_context, target_role, trac
         narrative_brief=narrative_brief,
         master_context=master_context[:4000],
     )
-    return call_llm(llm, system_prompt, user_prompt, max_tokens=800)
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=1200,
+        step="Skills statements",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -379,7 +450,13 @@ def generate_experience_bullets(llm, role_block, jd_text, track="", narrative_br
         narrative_brief=narrative_brief,
         jd_text=jd_text[:2000],
     )
-    return call_llm(llm, system_prompt, user_prompt, max_tokens=800)
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=1200,
+        step="Experience bullets",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -396,7 +473,13 @@ def generate_personal_projects(llm, projects_block, jd_text, track="", narrative
         narrative_brief=narrative_brief,
         jd_text=jd_text[:2000],
     )
-    return call_llm(llm, system_prompt, user_prompt, max_tokens=500)
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=900,
+        step="Personal projects",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -413,7 +496,13 @@ def generate_cover_letter(llm, jd_text, master_context, target_role, company_nam
         narrative_brief=narrative_brief,
         master_context=master_context[:3000],
     )
-    return call_llm(llm, system_prompt, user_prompt, max_tokens=700)
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=1000,
+        step="Cover letter",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -430,4 +519,10 @@ def answer_custom_questions(llm, questions, master_context, jd_text):
         master_context=master_context[:4000],
         jd_text=jd_text[:2000],
     )
-    return call_llm(llm, system_prompt, user_prompt, max_tokens=800)
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=1200,
+        step="Application Q&A",
+    )

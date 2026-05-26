@@ -6,7 +6,14 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-from llm_client import get_llm_client, model_choices, GEMINI_DEFAULTS, OPENAI_DEFAULTS
+from llm_client import (
+    get_llm_client,
+    model_choices,
+    GEMINI_DEFAULTS,
+    OPENAI_DEFAULTS,
+    LLMResponseError,
+    normalize_gemini_model_id,
+)
 from generator import (
     extract_jd_keywords,
     extract_jd_pain_point,
@@ -218,7 +225,9 @@ def build_model_overrides() -> dict:
     for tier in ("default", "profile", "pain"):
         val = st.session_state.get(f"{prefix}_model_{tier}")
         if val:
-            overrides[tier] = val
+            overrides[tier] = (
+                normalize_gemini_model_id(val) if provider == "gemini" else val
+            )
     return overrides
 
 
@@ -231,7 +240,7 @@ def init_provider_defaults():
     for tier, val in GEMINI_DEFAULTS.items():
         key = f"gemini_model_{tier}"
         if key not in st.session_state and tier != "pain_fallback":
-            st.session_state[key] = val
+            st.session_state[key] = normalize_gemini_model_id(val)
     if "sidebar_openai_key" not in st.session_state:
         st.session_state.sidebar_openai_key = os.environ.get("OPENAI_API_KEY", "")
     if "sidebar_gemini_key" not in st.session_state:
@@ -498,6 +507,11 @@ if st.sidebar.button("Save Key to .env", key="save_key_btn", use_container_width
 
 _key_ok = bool(get_api_key())
 st.sidebar.caption(f"Status: {'Set' if _key_ok else 'Not set'} ({_active_provider})")
+if _active_provider == "gemini":
+    st.sidebar.caption(
+        "Gemini: profile defaults to **2.5 Flash** (thinking off, higher token caps). "
+        "Avoid **2.5 Pro** on free tier (quota / empty output). Use OpenAI for highest quality."
+    )
 
 with st.sidebar.expander("Advanced: models", expanded=False):
     _prefix = "gemini" if _active_provider == "gemini" else "openai"
@@ -708,7 +722,12 @@ with tab_generate:
                     master_context=master_ctx,
                     run_lint=True,
                 )
-                usage_log.extend(profile_usage)
+                if profile_usage:
+                    usage_log.extend(
+                        profile_usage
+                        if isinstance(profile_usage, list)
+                        else [profile_usage]
+                    )
 
                 if len(selected_roles) >= 3:
                     st.warning(
@@ -836,9 +855,20 @@ with tab_generate:
                 "usage_log": usage_log
             }
 
+        except LLMResponseError as e:
+            st.error(f"Generation failed: {e}")
+            if e.model:
+                st.caption(f"Model: `{e.model}`" + (f" · finish: `{e.finish_reason}`" if e.finish_reason else ""))
+            st.caption(
+                "For Gemini: set **Profile** to `gemini-2.5-flash`, confirm API quota at "
+                "https://aistudio.google.com , or switch provider to OpenAI."
+            )
         except Exception as e:
             st.error(f"Generation failed: {str(e)}")
             st.caption("Check your API key and network connection. If the issue persists, try again.")
+            with st.expander("Error details"):
+                import traceback
+                st.code(traceback.format_exc())
 
     if "gen_results" in st.session_state:
         res = st.session_state.gen_results

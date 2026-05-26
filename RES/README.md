@@ -37,21 +37,30 @@ In the sidebar, choose **OpenAI** or **Google Gemini** (AI Studio). One provider
 | Tier | OpenAI default | Gemini default (AI Studio) |
 |------|----------------|----------------------------|
 | Bulk sections | `gpt-4o` | `gemini-2.5-flash` |
-| Profile + lint | `gpt-4.1` | `gemini-2.5-pro` |
+| Profile + lint | `gpt-4.1` | `gemini-2.5-flash` (recommended) |
 | Pain + profile angle | `o4-mini` | `gemini-2.5-flash` |
 
 Override via **Advanced: models** in the sidebar, or env:
 
 ```bash
 GEMINI_DEFAULT_MODEL=gemini-2.5-flash
-GEMINI_PROFILE_MODEL=gemini-2.5-pro
+GEMINI_PROFILE_MODEL=gemini-2.5-flash
 GEMINI_PAIN_MODEL=gemini-2.5-flash
 PAIN_POINT_MODEL=o4-mini
 ```
 
-Alternates if a model ID is unavailable on your account: `gemini-2.5-flash-lite`, `gemini-2.0-flash`, `gemini-2.0-flash-lite`.
+Alternates: `gemini-2.5-flash-lite`, `gemini-2.5-pro`. Do not use `gemini-2.0-flash` (retired for new API keys).
 
-Cost display uses approximate per-token rates; Gemini estimates assume Flash pricing (profile steps on Pro may cost more).
+If you have `GEMINI_PAIN_FALLBACK=gemini-2.0-flash` in `.env`, change it to `gemini-2.5-flash-lite`.
+
+Cost display uses approximate per-token rates; Gemini estimates assume Flash pricing.
+
+### Gemini quality notes
+
+- **2.5 Flash** uses `thinking_budget=0` and higher `max_output_tokens` so visible text is not eaten by internal reasoning.
+- **2.5 Pro** on the free tier often has **zero quota** or returns empty/truncated profile text — use Flash or OpenAI for profile.
+- The app **retries** on blank/truncated Gemini output and **fails loudly** instead of assembling empty sections.
+- Profile lint no longer forces a second rewrite on every 2-line Quick Take (that was truncating output at 400 tokens).
 
 ## Editing workflow
 

@@ -65,6 +65,69 @@ Goal: Produce a one-page, ATS-safe cover letter that can be pasted directly into
 
 ## Auto log
 
+### Jerry - Product Operations Specialist
+- **Date**: 2026-05-26
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 42,457
+- **Approx cost**: $0.008
+- **Outputs**: Resume, Cover Letter
+
+
+### Jerry - Product Operations Specialist
+- **Date**: 2026-05-26
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 43,395
+- **Approx cost**: $0.008
+- **Outputs**: Resume, Cover Letter
+
+
+### Ideogram - Founding Product Manager
+- **Date**: 2026-05-25
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 40,718
+- **Approx cost**: $0.007
+- **Outputs**: Resume, Cover Letter
+
+
+### Rexzone - AI PM
+- **Date**: 2026-05-25
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 38,603
+- **Approx cost**: $0.007
+- **Outputs**: Resume, Cover Letter
+
+
+### Cohere - PM
+- **Date**: 2026-05-24
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 42,545
+- **Approx cost**: $0.008
+- **Outputs**: Resume, Cover Letter
+
+
+### Jobgether's client - Product Owner
+- **Date**: 2026-05-24
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 42,630
+- **Approx cost**: $0.008
+- **Outputs**: Resume, Cover Letter
+
+
+### your company - Product Owner
+- **Date**: 2026-05-24
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 28,082
+- **Approx cost**: $0.004
+- **Outputs**: Resume, Cover Letter
+
+
 ### 7shifts - Senior Product Manager
 - **Date**: 2026-05-21
 - **Track**: Product/AI
