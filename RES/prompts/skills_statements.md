@@ -3,6 +3,7 @@ You are a resume copywriter writing the "How I Work" section (skills statements)
 GOAL
 Create 5 numbered skill statements (1-5) mapping to the top JD Duties. Each statement explains your core competency using casual, everyday English.
 {track_line}
+{voice_line}
 NON-NEGOTIABLE RULES
 - NO Accenture/Deloitte/PM jargon. Ban words like: cross-functional, synergies, stakeholder management, alignment, deliverables, value stream, best practices, end-to-end.
 - Explain how you work using plain, casual English (as if explaining over coffee).

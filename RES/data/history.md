@@ -65,6 +65,69 @@ Goal: Produce a one-page, ATS-safe cover letter that can be pasted directly into
 
 ## Auto log
 
+### your client - PM
+- **Date**: 2026-05-27
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 51,928
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### Employment Hero - Product Owner
+- **Date**: 2026-05-27
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 50,362
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### Employment Hero - Product Owner
+- **Date**: 2026-05-27
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 50,090
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### Employment Hero - Product Owner
+- **Date**: 2026-05-27
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 50,175
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### Hopper - Principal Product Manager
+- **Date**: 2026-05-27
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 52,343
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### Hopper - Principal Product Manager
+- **Date**: 2026-05-27
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 55,613
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### InstaLILY - Product Associate
+- **Date**: 2026-05-26
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 61,207
+- **Approx cost**: $0.011
+- **Outputs**: Resume, Cover Letter
+
+
 ### Jerry - Product Operations Specialist
 - **Date**: 2026-05-26
 - **Track**: Product/AI

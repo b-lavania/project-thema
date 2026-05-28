@@ -65,6 +65,34 @@ def _track_instruction(track: str) -> str:
     return TRACK_EMPHASIS.get(track, "")
 
 
+# ---------------------------------------------------------------------------
+# Voice-specific prompt fragments
+# ---------------------------------------------------------------------------
+VOICE_EMPHASIS = {
+    "Sharp Product PM": (
+        "Lead with market/user insight, product decisions, tradeoffs, and measured behavior change. "
+        "Every bullet must show product judgment before implementation."
+    ),
+    "Technical Product PM": (
+        "Keep technical credibility, but lead with product judgment before implementation details. "
+        "Show how technical depth informs product decisions, not just what was built."
+    ),
+    "Growth / GTM PM": (
+        "Lead with funnel, pricing, activation, retention, monetization, and GTM learning loops. "
+        "Emphasize measured growth outcomes and go-to-market decisions."
+    ),
+    "Chief of Staff / BizOps": (
+        "Lead with decision systems, operating cadence, executive leverage, and measurable business clarity. "
+        "Emphasize cross-functional execution and strategic alignment."
+    ),
+}
+
+
+def _voice_instruction(voice: str) -> str:
+    """Return voice-specific instruction string or empty."""
+    return VOICE_EMPHASIS.get(voice, "")
+
+
 def get_anti_fluff() -> str:
     """Load the shared ANTI_FLUFF block."""
     path = PROMPTS_DIR / "anti_fluff.md"
@@ -242,12 +270,14 @@ def extract_jd_keywords(llm, jd_text):
 # ---------------------------------------------------------------------------
 # Narrative Brief
 # ---------------------------------------------------------------------------
-def generate_narrative_brief(llm, jd_text, master_context, target_role, company_name, track=""):
+def generate_narrative_brief(llm, jd_text, master_context, target_role, company_name, track="", voice=""):
     """Synthesize master_context + JD into a coherent positioning brief."""
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
+    voice_line = f"\nRESUME VOICE: {_voice_instruction(voice)}" if voice else ""
     system_prompt, user_prompt = load_prompt(
         "narrative_brief.md",
         track_line=track_line,
+        voice_line=voice_line,
         target_role=target_role,
         company_name=company_name,
         jd_text=jd_text[:4000],
@@ -350,17 +380,20 @@ def generate_mission_statement(
     target_title,
     company_name="",
     track="",
+    voice="",
     narrative_brief="",
     jd_pain="",
     profile_angle="",
     profile_context_excerpt="",
 ):
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
+    voice_line = f"\nRESUME VOICE: {_voice_instruction(voice)}" if voice else ""
     if not profile_context_excerpt:
         profile_context_excerpt = "(not provided)"
     system_prompt, user_prompt = load_prompt(
         "mission_statement.md",
         track_line=track_line,
+        voice_line=voice_line,
         ANTI_FLUFF=get_anti_fluff(),
         target_role=target_title,
         jd_paragraphs=jd_paragraphs[:1500],
@@ -386,6 +419,7 @@ def generate_profile_with_lint(
     target_title,
     company_name="",
     track="",
+    voice="",
     narrative_brief="",
     jd_pain="",
     profile_angle="",
@@ -400,6 +434,7 @@ def generate_profile_with_lint(
         target_title,
         company_name,
         track,
+        voice=voice,
         narrative_brief=narrative_brief,
         jd_pain=jd_pain,
         profile_angle=profile_angle,
@@ -416,11 +451,13 @@ def generate_profile_with_lint(
 # ---------------------------------------------------------------------------
 # Skills Statements
 # ---------------------------------------------------------------------------
-def generate_skills_statements(llm, jd_duties, master_context, target_role, track="", narrative_brief=""):
+def generate_skills_statements(llm, jd_duties, master_context, target_role, track="", voice="", narrative_brief=""):
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
+    voice_line = f"\nRESUME VOICE: {_voice_instruction(voice)}" if voice else ""
     system_prompt, user_prompt = load_prompt(
         "skills_statements.md",
         track_line=track_line,
+        voice_line=voice_line,
         ANTI_FLUFF=get_anti_fluff(),
         target_role=target_role,
         jd_duties=jd_duties,
@@ -439,12 +476,14 @@ def generate_skills_statements(llm, jd_duties, master_context, target_role, trac
 # ---------------------------------------------------------------------------
 # Experience Bullets (per-role)
 # ---------------------------------------------------------------------------
-def generate_experience_bullets(llm, role_block, jd_text, track="", narrative_brief=""):
+def generate_experience_bullets(llm, role_block, jd_text, track="", voice="", narrative_brief=""):
     """Generate bullets for ONE role."""
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
+    voice_line = f"\nRESUME VOICE: {_voice_instruction(voice)}" if voice else ""
     system_prompt, user_prompt = load_prompt(
         "experience_bullets.md",
         track_line=track_line,
+        voice_line=voice_line,
         ANTI_FLUFF=get_anti_fluff(),
         role_block=role_block,
         narrative_brief=narrative_brief,
@@ -462,12 +501,14 @@ def generate_experience_bullets(llm, role_block, jd_text, track="", narrative_br
 # ---------------------------------------------------------------------------
 # Personal Projects
 # ---------------------------------------------------------------------------
-def generate_personal_projects(llm, projects_block, jd_text, track="", narrative_brief=""):
+def generate_personal_projects(llm, projects_block, jd_text, track="", voice="", narrative_brief=""):
     """Generate a JD-tailored PROJECTS section from the Additional Projects block."""
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
+    voice_line = f"\nRESUME VOICE: {_voice_instruction(voice)}" if voice else ""
     system_prompt, user_prompt = load_prompt(
         "personal_projects.md",
         track_line=track_line,
+        voice_line=voice_line,
         ANTI_FLUFF=get_anti_fluff(),
         projects_block=projects_block,
         narrative_brief=narrative_brief,
@@ -485,11 +526,13 @@ def generate_personal_projects(llm, projects_block, jd_text, track="", narrative
 # ---------------------------------------------------------------------------
 # Cover Letter
 # ---------------------------------------------------------------------------
-def generate_cover_letter(llm, jd_text, master_context, target_role, company_name, track="", narrative_brief=""):
+def generate_cover_letter(llm, jd_text, master_context, target_role, company_name, track="", voice="", narrative_brief=""):
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
+    voice_line = f"\nRESUME VOICE: {_voice_instruction(voice)}" if voice else ""
     system_prompt, user_prompt = load_prompt(
         "cover_letter.md",
         track_line=track_line,
+        voice_line=voice_line,
         target_role=target_role,
         company_name=company_name,
         jd_text=jd_text[:3000],
@@ -525,4 +568,36 @@ def answer_custom_questions(llm, questions, master_context, jd_text):
         user_prompt,
         max_tokens=1200,
         step="Application Q&A",
+    )
+
+
+def review_resume_quality(
+    llm,
+    jd_text,
+    jd_pain,
+    profile_angle,
+    narrative_brief,
+    mission,
+    skills,
+    experience_blocks,
+    projects,
+):
+    """Post-generation quality review: punchiness, PM signal, JD fit, builder-heavy risk."""
+    system_prompt, user_prompt = load_prompt(
+        "resume_quality_review.md",
+        jd_pain=jd_pain or "(none)",
+        profile_angle=profile_angle or "(none)",
+        narrative_brief=narrative_brief or "(none)",
+        mission=mission or "(none)",
+        skills=skills or "(none)",
+        experience_blocks="\n\n".join(experience_blocks) if experience_blocks else "(none)",
+        projects=projects or "(none)",
+    )
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=900,
+        temperature=0.2,
+        step="Resume quality review",
     )

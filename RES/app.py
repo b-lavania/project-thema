@@ -27,6 +27,7 @@ from generator import (
     generate_personal_projects,
     generate_cover_letter,
     answer_custom_questions,
+    review_resume_quality,
     PAGE_BREAK_MARKER,
 )
 from doc_generator import create_formatted_doc, extract_coaching_notes, strip_coaching_notes
@@ -49,6 +50,7 @@ load_dotenv(ENV_PATH)
 # Constants
 # ---------------------------------------------------------------------------
 TRACK_OPTIONS = ["Product/AI", "Pricing/Ops", "Growth", "Logistics/Marketplace", "BizOps", "Chief of Staff"]
+VOICE_OPTIONS = ["Sharp Product PM", "Technical Product PM", "Growth / GTM PM", "Chief of Staff / BizOps"]
 LOCATION_OPTIONS = {
     "Sunnyvale, CA (SF / Silicon Valley / Remote USA)": "Sunnyvale, CA",
     "Calgary, AB (Canadian jobs)": "Calgary, AB",
@@ -97,6 +99,31 @@ def extract_role_blocks(master_context):
     return blocks
 
 
+def extract_condensed_role_line(role_block: str) -> str:
+    """Extract title, org, dates from role block for condensed display."""
+    lines = role_block.split("\n")
+    title = ""
+    company = ""
+    dates = ""
+    
+    for line in lines:
+        # Extract title from header line (### ROLE X: Title)
+        if line.startswith("### ROLE") and ":" in line:
+            title = line.split(":", 1)[1].strip()
+        # Or from explicit Title field
+        elif line.startswith("- **Title**:"):
+            title = line.split(":", 1)[1].strip()
+        elif line.startswith("- **Company**:"):
+            company = line.split(":", 1)[1].strip().split("—")[0].strip()
+        elif line.startswith("- **Dates**:"):
+            dates = line.split(":", 1)[1].strip()
+    
+    if not title or not company or not dates:
+        return f"Role information incomplete (title={bool(title)}, company={bool(company)}, dates={bool(dates)})"
+    
+    return f"{title} @ {company} ({dates})"
+
+
 SCRUM_KEYWORDS = {"scrum", "agile", "csm", "cspo", "certified scrum", "sprint planning"}
 
 
@@ -104,6 +131,64 @@ def jd_requires_scrum(jd_text):
     """Return True if JD contains Scrum/Agile certification signals."""
     lower = jd_text.lower()
     return any(kw in lower for kw in SCRUM_KEYWORDS)
+
+
+BUILDER_VERBS = ["Built", "Engineered", "Automated", "Deployed", "Architected"]
+CORPORATE_FOG = [
+    # Existing
+    "cross-functional", "stakeholder management", "alignment", "synergies",
+    "best practices", "impactful", "strategic leader", "proven track record",
+    "dynamic environments", "holistic", "fast-paced", "landscape",
+    # Gemini-specific additions
+    "accelerate", "prioritize", "ensure", "enable", "drive",
+    "systemic breakdowns", "operational trust", "measurable business outcomes",
+    "workflow simplification", "reduce ambiguity", "deployment", "engagement",
+    "scalability", "retention",
+]
+
+
+def lint_generated_text(text: str) -> list[str]:
+    """Static lint: flag repeated builder verbs and corporate fog words."""
+    flags = []
+    for phrase in BUILDER_VERBS:
+        count = text.count(phrase)
+        if count >= 3:
+            flags.append(f"Builder-heavy: '{phrase}' appears {count} times")
+    for phrase in CORPORATE_FOG:
+        if phrase.lower() in text.lower():
+            flags.append(f"Corporate fog: '{phrase}'")
+    return flags
+
+
+GEMINI_BANNED_VERBS = ["accelerate", "prioritize", "ensure", "enable", "drive", "deployment", "engagement"]
+ABSTRACT_NOUNS = ["systemic breakdowns", "operational trust", "measurable business outcomes", "workflow simplification", "reduce ambiguity"]
+
+
+def lint_quick_take(mission_text: str) -> list[str]:
+    """Lint Quick Take for Gemini-specific corporate patterns."""
+    import re
+    flags = []
+    lower = mission_text.lower()
+    
+    # Check for Gemini banned verbs
+    for verb in GEMINI_BANNED_VERBS:
+        if verb in lower:
+            flags.append(f"Gemini fog: '{verb}'")
+    
+    # Check for abstract nouns
+    for noun in ABSTRACT_NOUNS:
+        if noun in lower:
+            flags.append(f"Abstract language: '{noun}'")
+    
+    # Check for company names (CamelCase or ALLCAPS words)
+    potential_names = re.findall(r'\b[A-Z][a-z]+[A-Z][a-z]+\b|\b[A-Z]{2,}\b', mission_text)
+    # Filter out common role titles
+    common_titles = {"PM", "AI", "ML", "API", "UI", "UX", "CEO", "CTO", "VP"}
+    potential_names = [n for n in potential_names if n not in common_titles]
+    if potential_names:
+        flags.append(f"Possible company name: {', '.join(potential_names)}")
+    
+    return flags
 
 
 def extract_projects_block(master_context):
@@ -265,14 +350,20 @@ def build_pdf_breaks_from_session():
     })
 
 
-def rerender_resume_files(res, mission_text=None, pdf_breaks=None):
+def rerender_resume_files(
+    res,
+    mission_text=None,
+    skills_text=None,
+    experience_blocks=None,
+    projects_text=None,
+    pdf_breaks=None,
+):
     """Rebuild DOCX/PDF from stored sections without full LLM regen."""
-    mission = mission_text if mission_text is not None else res["mission"]
     sections = {
-        "mission": mission,
-        "skills": res["skills"],
-        "experience": res["experience_blocks"],
-        "projects": res.get("projects", ""),
+        "mission": mission_text if mission_text is not None else res["mission"],
+        "skills": skills_text if skills_text is not None else res["skills"],
+        "experience": experience_blocks if experience_blocks is not None else res["experience_blocks"],
+        "projects": projects_text if projects_text is not None else res.get("projects", ""),
     }
     breaks = pdf_breaks if pdf_breaks is not None else res.get("pdf_breaks") or normalize_pdf_breaks()
     loc = LOCATION_OPTIONS.get(st.session_state.get("location_label", ""), "Sunnyvale, CA")
@@ -560,6 +651,13 @@ st.sidebar.number_input(
     f"a line containing only `{PAGE_BREAK_MARKER}`.",
 )
 
+st.sidebar.divider()
+st.sidebar.subheader("⚡ Cost Controls")
+st.sidebar.caption("Skip expensive steps to reduce API cost")
+st.sidebar.checkbox("Skip quality review", key="skip_quality_review")
+st.sidebar.checkbox("Skip cover letter", key="skip_cover_letter")
+st.sidebar.checkbox("Skip custom Q&A", key="skip_custom_qa")
+
 # Load master context once
 if "master_context" not in st.session_state:
     st.session_state.master_context = load_master_context()
@@ -582,6 +680,7 @@ with tab_job:
         target_role = st.text_input("Target Role Title", key="target_role", placeholder="e.g., Senior Product Manager")
     with col2:
         selected_track = st.selectbox("Target Track", TRACK_OPTIONS, key="selected_track")
+        selected_voice = st.selectbox("Resume Voice", VOICE_OPTIONS, key="selected_voice")
         jd_url = st.text_input("JD URL (optional)", key="jd_url", placeholder="https://...")
 
     st.markdown("### Job Description")
@@ -596,6 +695,74 @@ with tab_job:
                 st.rerun()
             else:
                 st.error(f"❌ Scrape failed: {result['error']}")
+    
+    # Role Selection UI
+    st.divider()
+    st.markdown("### 📋 Role Selection")
+    st.caption("Choose how each role appears on your resume")
+    
+    # Extract all roles from master context
+    all_role_blocks = extract_role_blocks(st.session_state.master_context)
+    
+    # Initialize role selections if not present
+    if "role_selections" not in st.session_state:
+        st.session_state.role_selections = {key: "skip" for key in all_role_blocks.keys()}
+    
+    # LLM Suggestion button
+    col_suggest, col_fill = st.columns(2)
+    with col_suggest:
+        if st.button("🤖 Run LLM Suggestion", use_container_width=True, help="Let AI select most relevant roles"):
+            if jd_text:
+                with st.spinner("Analyzing JD for relevant roles..."):
+                    try:
+                        api_key = get_api_key()
+                        provider = get_provider()
+                        llm = get_llm_client(provider, api_key, build_model_overrides())
+                        role_selection_text, _ = select_relevant_roles(llm, jd_text, st.session_state.master_context)
+                        
+                        # Reset all to skip
+                        for key in st.session_state.role_selections:
+                            st.session_state.role_selections[key] = "skip"
+                        
+                        # Mark LLM-selected as full
+                        for line in role_selection_text.split("\n"):
+                            line = line.strip()
+                            if not line:
+                                continue
+                            for key in all_role_blocks.keys():
+                                if line.lower() in key.lower() or key.lower() in line.lower():
+                                    st.session_state.role_selections[key] = "full"
+                                    break
+                        st.success("✅ LLM suggestions applied")
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"LLM suggestion failed: {e}")
+            else:
+                st.warning("Please enter a job description first")
+    
+    with col_fill:
+        if st.button("📝 Fill Timeline (All Condensed)", use_container_width=True, help="Show all roles as condensed"):
+            for key in st.session_state.role_selections:
+                if st.session_state.role_selections[key] == "skip":
+                    st.session_state.role_selections[key] = "condensed"
+            st.success("✅ All skipped roles set to condensed")
+            st.rerun()
+    
+    # Display role selection radios
+    for role_key in all_role_blocks.keys():
+        # Extract short display name
+        display_name = role_key.replace("ROLE ", "Role ")
+        
+        current_selection = st.session_state.role_selections.get(role_key, "skip")
+        selection = st.radio(
+            display_name,
+            options=["full", "condensed", "skip"],
+            index=["full", "condensed", "skip"].index(current_selection),
+            key=f"role_radio_{role_key}",
+            horizontal=True,
+            format_func=lambda x: {"full": "✅ Full", "condensed": "📝 Condensed", "skip": "❌ Skip"}[x]
+        )
+        st.session_state.role_selections[role_key] = selection
 
 # --- TAB 2: Application Questions ---
 with tab_questions:
@@ -641,6 +808,7 @@ with tab_generate:
         company = st.session_state.company_name.strip()
         role = st.session_state.target_role.strip()
         track = st.session_state.selected_track
+        voice = st.session_state.selected_voice
         jd = st.session_state.jd_text.strip()
         questions = st.session_state.get("custom_questions", "").strip()
         master_ctx = st.session_state.master_context
@@ -662,26 +830,26 @@ with tab_generate:
                     duties_part = extracted_keywords.split("REQUIREMENTS:")[0]
                     jd_duties = duties_part.replace("DUTIES:", "").strip()
 
-                # Step 2: Select relevant roles
-                st.write("Selecting relevant roles...")
-                role_selection_text, usage = select_relevant_roles(llm, jd, master_ctx)
-                usage_log.append(usage)
-
-                # Parse selected role blocks
+                # Step 2: Use role selections from UI
+                st.write("Processing role selections...")
                 all_role_blocks = extract_role_blocks(master_ctx)
+                
+                # Get user's role selections (full or condensed)
+                role_selections = st.session_state.get("role_selections", {})
+                
+                # Validate at least one role selected
+                has_selection = any(sel in ["full", "condensed"] for sel in role_selections.values())
+                if not has_selection:
+                    st.error("Please select at least one role (Full or Condensed)")
+                    st.stop()
+                
+                # Collect roles for processing (both full and condensed)
                 selected_roles = []
-                for line in role_selection_text.split("\n"):
-                    line = line.strip()
-                    if not line:
-                        continue
-                    for key, block in all_role_blocks.items():
-                        if line.lower() in key.lower() or key.lower() in line.lower():
-                            selected_roles.append((key, block))
-                            break
-
-                if not selected_roles:
-                    selected_roles = list(all_role_blocks.items())[:3]
-
+                for key, block in all_role_blocks.items():
+                    selection = role_selections.get(key, "skip")
+                    if selection in ["full", "condensed"]:
+                        selected_roles.append((key, block, selection))
+                
                 # Sort roles in reverse-chronological order (ROLE 1 = newest)
                 def _role_sort_key(role_tuple):
                     m = re.search(r'ROLE\s+(\d+)', role_tuple[0], re.IGNORECASE)
@@ -691,7 +859,7 @@ with tab_generate:
                 # Step 3: Narrative brief
                 st.write("Synthesizing narrative brief...")
                 narrative_brief, usage = generate_narrative_brief(
-                    llm, jd, master_ctx, role, company, track
+                    llm, jd, master_ctx, role, company, track, voice=voice
                 )
                 usage_log.append(usage)
 
@@ -716,6 +884,7 @@ with tab_generate:
                     role,
                     company,
                     track,
+                    voice=voice,
                     narrative_brief=narrative_brief,
                     jd_pain=jd_pain,
                     profile_angle=profile_angle,
@@ -738,20 +907,29 @@ with tab_generate:
                 # Step 5: Skills statements (use extracted duties if available)
                 st.write("Generating skills statements...")
                 skills_input = jd_duties if jd_duties else jd[:3000]
-                skills, usage = generate_skills_statements(llm, skills_input, master_ctx, role, track, narrative_brief=narrative_brief)
+                skills, usage = generate_skills_statements(llm, skills_input, master_ctx, role, track, voice=voice, narrative_brief=narrative_brief)
                 usage_log.append(usage)
 
-                # Step 6: Experience bullets (per role)
-                st.write(f"Generating experience bullets for {len(selected_roles)} roles...")
+                # Step 6: Experience bullets (per role) - handle full vs condensed
+                full_count = sum(1 for _, _, sel in selected_roles if sel == "full")
+                condensed_count = sum(1 for _, _, sel in selected_roles if sel == "condensed")
+                st.write(f"Generating experience: {full_count} full roles, {condensed_count} condensed...")
+                
                 experience_blocks = []
                 all_coaching_notes = []
-                for role_name, role_block in selected_roles:
-                    bullets, usage = generate_experience_bullets(llm, role_block, jd, track, narrative_brief=narrative_brief)
-                    usage_log.append(usage)
-                    experience_blocks.append(bullets)
-                    notes = extract_coaching_notes(bullets)
-                    if notes:
-                        all_coaching_notes.append(f"### {role_name}\n{notes}")
+                for role_name, role_block, selection in selected_roles:
+                    if selection == "full":
+                        # Generate full bullets
+                        bullets, usage = generate_experience_bullets(llm, role_block, jd, track, voice=voice, narrative_brief=narrative_brief)
+                        usage_log.append(usage)
+                        experience_blocks.append(bullets)
+                        notes = extract_coaching_notes(bullets)
+                        if notes:
+                            all_coaching_notes.append(f"### {role_name}\n{notes}")
+                    elif selection == "condensed":
+                        # Generate condensed single-line entry
+                        condensed_line = extract_condensed_role_line(role_block)
+                        experience_blocks.append(condensed_line)
 
                 # Collect coaching notes from skills too
                 skills_notes = extract_coaching_notes(skills)
@@ -761,17 +939,36 @@ with tab_generate:
                 # Step 6.5: Personal Projects
                 st.write("Generating projects section...")
                 projects_block = extract_projects_block(master_ctx)
-                projects, usage = generate_personal_projects(llm, projects_block, jd, track, narrative_brief=narrative_brief)
+                projects, usage = generate_personal_projects(llm, projects_block, jd, track, voice=voice, narrative_brief=narrative_brief)
                 usage_log.append(usage)
 
+                # Step 6.75: Quality review (punchiness + PM signal + builder-heavy risk)
+                quality_review = ""
+                if not st.session_state.get("skip_quality_review"):
+                    st.write("Running punchiness review...")
+                    quality_review, usage = review_resume_quality(
+                        llm,
+                        jd,
+                        jd_pain,
+                        profile_angle,
+                        narrative_brief,
+                        mission,
+                        skills,
+                        experience_blocks,
+                        projects,
+                    )
+                    usage_log.append(usage)
+
                 # Step 7: Cover letter
-                st.write("Generating cover letter...")
-                cover_letter, usage = generate_cover_letter(llm, jd, master_ctx, role, company, track, narrative_brief=narrative_brief)
-                usage_log.append(usage)
+                cover_letter = ""
+                if not st.session_state.get("skip_cover_letter"):
+                    st.write("Generating cover letter...")
+                    cover_letter, usage = generate_cover_letter(llm, jd, master_ctx, role, company, track, voice=voice, narrative_brief=narrative_brief)
+                    usage_log.append(usage)
 
                 # Step 8: Custom Q&A
                 custom_answers = ""
-                if questions:
+                if questions and not st.session_state.get("skip_custom_qa"):
                     st.write("Answering application questions...")
                     custom_answers, usage = answer_custom_questions(llm, questions, master_ctx, jd)
                     usage_log.append(usage)
@@ -849,9 +1046,13 @@ with tab_generate:
                 "skills": skills,
                 "experience_blocks": experience_blocks,
                 "projects": projects,
+                "jd_duties": jd_duties,
+                "selected_roles": selected_roles,
+                "projects_block": projects_block,
                 "all_coaching_notes": all_coaching_notes,
                 "cover_letter": cover_letter,
                 "custom_answers": custom_answers,
+                "quality_review": quality_review,
                 "usage_log": usage_log
             }
 
@@ -916,20 +1117,45 @@ with tab_generate:
         with st.expander("JD Keywords Extracted", expanded=False):
             st.text(res['extracted_keywords'])
 
-        if res.get('narrative_brief'):
-            with st.expander("🧭 Narrative Brief (internal framing)", expanded=False):
-                st.caption("This is the strategic positioning synthesized for this application. All resume sections were generated from this framing.")
-                st.text(res['narrative_brief'])
+        # Static lint warning chips
+        combined_text = "\n".join([res.get("mission", ""), res.get("skills", ""), "\n".join(res.get("experience_blocks", []))])
+        lint_flags = lint_generated_text(combined_text)
+        if lint_flags:
+            st.markdown("**⚠️ Language Flags**")
+            for flag in lint_flags:
+                st.markdown(
+                    f"<div style='display:inline-block; padding: 4px 10px; margin: 2px 4px 2px 0; background-color: rgba(255, 149, 0, 0.12); color: #B45309; border-radius: 12px; font-size: 0.82rem; font-weight: 500;'>🔸 {flag}</div>",
+                    unsafe_allow_html=True,
+                )
 
-        if res.get('jd_pain'):
-            with st.expander("JD pain analysis", expanded=False):
-                st.caption("Reasoning step (o4-mini) that frames The Quick Take — no company name.")
-                st.text(res['jd_pain'])
+        # Strategy Panel (combined into tabs)
+        if any([res.get('narrative_brief'), res.get('jd_pain'), res.get('profile_angle')]):
+            st.markdown("**Strategy Panel**")
+            strat_tabs = st.tabs(["Narrative Brief", "JD Pain", "Profile Angle"])
+            with strat_tabs[0]:
+                if res.get('narrative_brief'):
+                    st.caption("Strategic positioning that guided all resume sections.")
+                    st.text(res['narrative_brief'])
+                else:
+                    st.caption("No narrative brief generated.")
+            with strat_tabs[1]:
+                if res.get('jd_pain'):
+                    st.caption("Reasoning step that frames The Quick Take.")
+                    st.text(res['jd_pain'])
+                else:
+                    st.caption("No JD pain analysis generated.")
+            with strat_tabs[2]:
+                if res.get('profile_angle'):
+                    st.caption("Situation, thesis, and forbidden resume nouns.")
+                    st.text(res['profile_angle'])
+                else:
+                    st.caption("No profile angle generated.")
 
-        if res.get('profile_angle'):
-            with st.expander("Profile angle (WHY framing)", expanded=False):
-                st.caption("Situation, thesis, and forbidden resume nouns for The Quick Take.")
-                st.text(res['profile_angle'])
+        # Punchiness Review
+        if res.get('quality_review'):
+            with st.expander("🧨 Punchiness Review", expanded=True):
+                st.caption("Editorial critique before you download. Fix flagged issues first.")
+                st.text(res['quality_review'])
 
         st.divider()
 
@@ -959,14 +1185,22 @@ with tab_generate:
         # Previews
         st.divider()
         st.subheader("📋 Document Preview")
-        
-        with st.expander("✨ Mission Statement / Professional Profile", expanded=True):
+
+        with st.expander("✨ Quick Take", expanded=True):
             edited_mission = st.text_area(
                 "Edit profile (tagline on line 1, then three sentences)",
                 value=res["mission"],
                 height=160,
                 key="profile_edit_area",
             )
+            
+            # Word counter for paragraph
+            lines = edited_mission.split("\n")
+            paragraph = "\n".join(lines[1:]) if len(lines) > 1 else ""
+            word_count = len(paragraph.split()) if paragraph.strip() else 0
+            color = "green" if word_count <= 60 else "orange" if word_count <= 75 else "red"
+            st.caption(f"Paragraph: <span style='color: {color}'>{word_count} words</span> (target: ≤60)", unsafe_allow_html=True)
+            
             col_apply, col_regen = st.columns(2)
             with col_apply:
                 if st.button("Apply profile edit to DOCX/PDF", use_container_width=True):
@@ -979,6 +1213,13 @@ with tab_generate:
                         st.error(f"Update failed: {e}")
             with col_regen:
                 regen_clicked = st.button("↻ Regenerate Profile Only", use_container_width=True)
+            
+            # Quick Take lint warnings
+            qt_flags = lint_quick_take(res["mission"])
+            if qt_flags:
+                st.caption("⚠️ Quick Take Issues:")
+                for flag in qt_flags:
+                    st.markdown(f"<span style='color: #FF9500; font-size: 0.85rem;'>• {flag}</span>", unsafe_allow_html=True)
 
         if regen_clicked:
             api_key = get_api_key()
@@ -990,6 +1231,7 @@ with tab_generate:
                     _role = st.session_state.get("target_role", "")
                     _company = st.session_state.get("company_name", "")
                     _track = st.session_state.get("selected_track", "")
+                    _voice = st.session_state.get("selected_voice", "")
                     _narrative = res.get("narrative_brief", "")
                     _master = st.session_state.master_context
                     _jd_paragraphs = extract_jd_paragraphs(_jd)
@@ -1009,6 +1251,7 @@ with tab_generate:
                         _role,
                         _company,
                         _track,
+                        voice=_voice,
                         narrative_brief=_narrative,
                         jd_pain=res.get("jd_pain", ""),
                         profile_angle=_angle,
@@ -1043,20 +1286,61 @@ with tab_generate:
                 st.text(res["mission"])
 
         with st.expander("🎯 Skills Statements"):
-            st.text(res['skills'])
+            edited_skills = st.text_area("Edit How I Work", value=res["skills"], height=220, key="skills_edit_area")
+            if st.button("Apply How I Work edit to DOCX/PDF", use_container_width=True, key="skills_apply_btn"):
+                try:
+                    rerender_resume_files(res, skills_text=edited_skills)
+                    st.session_state.gen_results["skills"] = edited_skills
+                    st.success("Documents updated with your skills text.")
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Update failed: {e}")
 
         with st.expander(f"💼 Experience ({len(res['experience_blocks'])} roles)"):
+            new_experience_blocks = []
             for i, block in enumerate(res['experience_blocks'], 1):
                 st.markdown(f"**Role {i}**")
-                st.text(block)
+                edited_block = st.text_area(f"Edit Role {i}", value=block, height=260, key=f"role_edit_{i}")
+                new_experience_blocks.append(edited_block)
                 if i < len(res['experience_blocks']):
                     st.divider()
+            if st.button("Apply Experience edits to DOCX/PDF", use_container_width=True, key="exp_apply_btn"):
+                try:
+                    rerender_resume_files(res, experience_blocks=new_experience_blocks)
+                    st.session_state.gen_results["experience_blocks"] = new_experience_blocks
+                    st.success("Documents updated with your experience text.")
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Update failed: {e}")
+
+        if res.get("projects"):
+            with st.expander("🔧 Side Builds"):
+                edited_projects = st.text_area("Edit Side Builds", value=res["projects"], height=220, key="projects_edit_area")
+                if st.button("Apply Side Builds edit to DOCX/PDF", use_container_width=True, key="projects_apply_btn"):
+                    try:
+                        rerender_resume_files(res, projects_text=edited_projects)
+                        st.session_state.gen_results["projects"] = edited_projects
+                        st.success("Documents updated with your projects text.")
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Update failed: {e}")
 
         if res['all_coaching_notes']:
             with st.expander("💡 Coaching Notes (not in document)", expanded=False):
                 st.caption("These are internal review notes stripped from the DOCX. Use them to improve your inputs for the next run.")
                 for note_block in res['all_coaching_notes']:
                     st.markdown(note_block)
+
+        # Plain-text copy area
+        plain_text = "\n\n".join([
+            res.get("mission", ""),
+            res.get("skills", ""),
+            *res.get("experience_blocks", []),
+            res.get("projects", ""),
+        ])
+        with st.expander("📄 Plain Text (copy-paste)", expanded=False):
+            st.caption("Copy this into Google Docs, Notion, or any plain-text field.")
+            st.text_area("resume_plain", value=plain_text, height=400, label_visibility="collapsed", key="plain_text_area")
 
         st.divider()
         st.subheader("✉️ Cover Letter")

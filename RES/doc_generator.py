@@ -99,10 +99,24 @@ def _is_bullet_line(line):
     return False
 
 
+def _is_condensed_role(text):
+    """Check if text is a condensed role (single line with @ and parentheses)."""
+    import re
+    # Pattern: "Title @ Company (Dates)"
+    return bool(re.match(r'^.+\s+@\s+.+\s+\(.+\)$', text.strip()))
+
+
 def _add_section_paragraphs(doc, text, keep_together=False):
     """Write text block to doc line by line, skipping COACHING NOTEs."""
     clean = strip_coaching_notes(text)
     lines = [ln.strip() for ln in clean.split("\n") if ln.strip()]
+    
+    # Check if entire text is a condensed role (single line)
+    if len(lines) == 1 and _is_condensed_role(lines[0]):
+        # Add as single line, no bullet parsing
+        _add_para(doc, lines[0], style="Normal")
+        return
+    
     in_preface = keep_together
     for stripped in lines:
         keep = keep_together and in_preface
@@ -141,14 +155,13 @@ def create_formatted_doc(
     # ===== PAGE 1: RESUME =====
 
     # Name — serif display (Playfair); centered to match PDF header
-    _add_para(
-        doc,
-        'Bharat "Bob" Lavania',
-        style="Heading 1",
-        font_size=18,
-        font_name=NAME_FONT,
-        align=WD_ALIGN_PARAGRAPH.CENTER,
-    )
+    # Manual paragraph creation to access run.font.spacing for tighter character spacing
+    p = doc.add_paragraph(style="Heading 1")
+    run = p.add_run('Bharat "Bob" Lavania')
+    run.font.name = NAME_FONT
+    run.font.size = Pt(14)
+    run.font.spacing = Pt(-0.5)  # Tighten character spacing (negative = closer letters)
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     # Tagline from mission (line 1 only)
     mission_text = resume_sections.get("mission", "")
@@ -168,7 +181,7 @@ def create_formatted_doc(
 
     # Professional Profile section (mission body)
     if mission_body:
-        _add_para(doc, "THE QUICK TAKE", style="Heading 3")
+        _add_para(doc, "Quick Take", style="Heading 3")
         _add_para(doc, mission_body, style="Normal")
 
     # Technical Expertise / Skills

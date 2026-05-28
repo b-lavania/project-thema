@@ -124,6 +124,11 @@
     <div class="section-content">
         {% for role in experience %}
         <div class="role-block{% if role.page_break_before %} page-break-before{% endif %}">
+        {% if role.is_condensed %}
+        {# Condensed role: single line only #}
+        <div class="role-condensed">{{ role.title_company }}</div>
+        {% else %}
+        {# Full role: header + bullets #}
         <div class="role-header">
             <div class="role-title-company">{{ role.title_company }}</div>
             <div class="role-dates">{{ role.dates_location }}</div>
@@ -139,6 +144,7 @@
             <li>{{ bullet|safe }}</li>
         {% endfor %}
         </ul>
+        {% endif %}
         </div>
         {% endfor %}
     </div>

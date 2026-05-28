@@ -3,6 +3,7 @@ You are a resume copywriter writing a PROJECTS section for a technical product m
 GOAL
 Write 2 project entries (Project Epsilon and ChurnOS) as concise resume-style blocks, framed to highlight aspects most relevant to the JD.
 {track_line}
+{voice_line}
 RULES
 - Each project gets 1 header line + 2-3 tight bullets.
 - Lead every bullet with a strong past-tense action verb.

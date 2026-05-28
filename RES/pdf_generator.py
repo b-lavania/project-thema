@@ -31,6 +31,12 @@ def _is_page_break_line(line):
     return line.strip() in (PAGE_BREAK_MARKER, PAGE_BREAK_MARKER.strip("-"))
 
 
+def _is_condensed_role(text):
+    """Check if text is a condensed role (single line with @ and parentheses)."""
+    # Pattern: "Title @ Company (Dates)"
+    return bool(re.match(r'^.+\s+@\s+.+\s+\(.+\)$', text.strip()))
+
+
 def _parse_role_block(role_text, page_break_before=False):
     """Parse one experience role chunk into template dict."""
     clean_role = strip_coaching_notes(role_text)
@@ -47,6 +53,18 @@ def _parse_role_block(role_text, page_break_before=False):
 
     if not lines:
         return None
+
+    # Check if this is a condensed role (single line)
+    if len(lines) == 1 and _is_condensed_role(lines[0]):
+        return {
+            "title_company": lines[0],
+            "dates_location": "",
+            "company_desc": "",
+            "summary": "",
+            "bullets": [],
+            "page_break_before": pending_break,
+            "is_condensed": True,
+        }
 
     header_line = lines[0]
     title_company = header_line
@@ -70,6 +88,7 @@ def _parse_role_block(role_text, page_break_before=False):
         "summary": summary,
         "bullets": bullets,
         "page_break_before": pending_break,
+        "is_condensed": False,
     }
 
 
