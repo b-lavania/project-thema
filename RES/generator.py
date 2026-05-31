@@ -6,6 +6,115 @@ from pathlib import Path
 from llm_client import LLMClient, call_llm, get_llm_client, resolve_model
 
 PAGE_BREAK_MARKER = "---PAGEBREAK---"
+
+# First quantified token in a bullet (shared by PDF + DOCX renderers)
+METRIC_PATTERN = re.compile(
+    r"\d+%|\d+\s*[xX]|[$]\d+[kKmM]?|\d+\s*(?:min|mins|minutes|hours|hour|days|day)\b",
+    re.IGNORECASE,
+)
+
+# Quick Take lint / sanitizer (positioning only — no tools or proof numbers)
+QUICK_TAKE_TOOL_NAMES = (
+    "heap", "segment", "mixpanel", "pypsa", "hotjar", "clarity", "pendo", "aha",
+    "amplitude", "fullstory", "looker", "tableau", "snowflake", "databricks",
+)
+
+_QUICK_TAKE_METRIC_PATTERNS = (
+    re.compile(r"\$[\d,]+(?:\.\d+)?[kKmM%]?", re.I),
+    re.compile(r"\b\d[\d,]*(?:\.\d+)?%", re.I),
+    re.compile(r"\b\d+\s*[x×X]\b", re.I),
+    re.compile(
+        r"\b\d+\s*(?:min|mins|minutes|hours|hour|days|day|seconds|sec)\b",
+        re.I,
+    ),
+    re.compile(
+        r"\b(?:one|two|three|four|five|twenty|3|20)\s*(?:x|×|times|fold)\b",
+        re.I,
+    ),
+)
+_QUICK_TAKE_DIGIT_RE = re.compile(r"\b\d[\d,]*(?:\.\d+)?\b")
+
+
+def _normalize_quick_take_dashes(text: str) -> str:
+    """Replace em/en dashes and clause-break hyphens; keep word-word compounds."""
+    text = text.replace("\u2014", ". ").replace("\u2013", ". ")
+    text = text.replace("—", ". ").replace("–", ". ")
+    text = re.sub(r"(?<!\w)\s-\s(?!\w)", ", ", text)
+    text = re.sub(r"\s*\.\s*\.\s*", ". ", text)
+    text = re.sub(r",\s*,+", ", ", text)
+    return text.strip()
+
+
+def _strip_quick_take_metrics(text: str) -> str:
+    """Remove metric-like spans from a single line (safety net after LLM)."""
+    for pat in _QUICK_TAKE_METRIC_PATTERNS:
+        text = pat.sub("", text)
+    text = _QUICK_TAKE_DIGIT_RE.sub("", text)
+    text = re.sub(r"\s{2,}", " ", text)
+    text = re.sub(r"\s+([,.])", r"\1", text)
+    text = re.sub(r"([,.])\s*([,.])+", r"\1", text)
+    return text.strip()
+
+
+def normalize_quick_take_text(text: str) -> str:
+    """ASCII dash cleanup and metric removal for tagline + Quick Take paragraph."""
+    if not text or not text.strip():
+        return text or ""
+    out_lines: list[str] = []
+    for line in text.split("\n"):
+        if not line.strip():
+            out_lines.append(line)
+            continue
+        cleaned = _normalize_quick_take_dashes(line.strip())
+        cleaned = _strip_quick_take_metrics(cleaned)
+        cleaned = _normalize_quick_take_dashes(cleaned)
+        out_lines.append(cleaned)
+    return "\n".join(out_lines).strip()
+
+
+def quick_take_has_metric(text: str) -> bool:
+    """True if paragraph or tagline still contains a metric pattern."""
+    if not text:
+        return False
+    for line in (ln.strip() for ln in text.split("\n") if ln.strip()):
+        if any(p.search(line) for p in _QUICK_TAKE_METRIC_PATTERNS):
+            return True
+        if _QUICK_TAKE_DIGIT_RE.search(line):
+            return True
+    return False
+
+
+def find_first_metric_span(text: str) -> tuple[int, int] | None:
+    """Return (start, end) of the first metric-like substring, or None."""
+    if not text:
+        return None
+    m = METRIC_PATTERN.search(text)
+    if m:
+        return m.start(), m.end()
+    return None
+
+
+def bold_first_metric_html(text: str) -> str:
+    """Wrap the first metric in <strong> for PDF/HTML."""
+    span = find_first_metric_span(text)
+    if not span:
+        return text
+    start, end = span
+    return f"{text[:start]}<strong>{text[start:end]}</strong>{text[end:]}"
+
+
+def bold_anchor_words_html(text: str, num_words: int = 4) -> str:
+    """Bold the first num_words of a company-description line."""
+    words = text.split()
+    if not words:
+        return text
+    if len(words) <= num_words:
+        return f"<strong>{text}</strong>"
+    head = " ".join(words[:num_words])
+    tail = " ".join(words[num_words:])
+    return f"<strong>{head}</strong> {tail}"
+
+
 PROFILE_WHAT_VERBS = re.compile(
     r"\b(Built|Engineered|Deployed|Launched|Led implementation)\b",
     re.IGNORECASE,
@@ -115,6 +224,31 @@ def normalize_pdf_breaks(pdf_breaks=None):
     return {"before_sections": sections, "before_role_index": role_idx}
 
 
+def extract_condensed_role_line(role_block: str) -> str:
+    """Extract title, org, dates from role block for condensed display."""
+    lines = role_block.split("\n")
+    title = ""
+    company = ""
+    dates = ""
+    
+    for line in lines:
+        # Extract title from header line (### ROLE X: Title)
+        if line.startswith("### ROLE") and ":" in line:
+            title = line.split(":", 1)[1].strip()
+        # Or from explicit Title field
+        elif line.startswith("- **Title**:"):
+            title = line.split(":", 1)[1].strip()
+        elif line.startswith("- **Company**:"):
+            company = line.split(":", 1)[1].strip().split("—")[0].strip()
+        elif line.startswith("- **Dates**:"):
+            dates = line.split(":", 1)[1].strip()
+    
+    if not title or not company or not dates:
+        return f"Role information incomplete (title={bool(title)}, company={bool(company)}, dates={bool(dates)})"
+    
+    return f"{title} @ {company} ({dates})"
+
+
 def extract_profile_context_excerpt(master_context: str, max_chars: int = 2500) -> str:
     """Key Insights + Working Principles (+ resume generation notes) for profile prompts."""
     parts = []
@@ -178,6 +312,38 @@ def profile_needs_lint(mission: str) -> bool:
         if not any(m in line3 for m in parallel_markers):
             return True
     return False
+
+
+def _extract_markdown_section(master_context: str, heading: str) -> str:
+    """Return body text under a ## heading until the next ## section."""
+    marker = f"## {heading}"
+    if marker not in master_context:
+        return ""
+    start = master_context.index(marker) + len(marker)
+    rest = master_context[start:].lstrip("\n")
+    lines = []
+    for line in rest.split("\n"):
+        if line.startswith("## ") and not line.startswith("###"):
+            break
+        lines.append(line)
+    return "\n".join(lines).strip()
+
+
+def _extract_how_i_work_source(master_context: str) -> str:
+    """Curated methods/tools block for How I Work generation."""
+    section = _extract_markdown_section(master_context, "How I Work (generation source)")
+    if section:
+        return section
+    parts = []
+    skills = _extract_markdown_section(
+        master_context, "Skills & Core Domains (Structured for LLM Parsing)"
+    )
+    if skills:
+        parts.append(f"## Skills & Core Domains\n{skills}")
+    positioning = _extract_markdown_section(master_context, "Positioning Narrative")
+    if positioning:
+        parts.append(f"## Positioning Narrative\n{positioning}")
+    return "\n\n".join(parts) if parts else master_context[:1500]
 
 
 def load_prompt(filename: str, **kwargs) -> tuple[str, str]:
@@ -445,24 +611,47 @@ def generate_profile_with_lint(
         mission, u2 = lint_profile_why(llm, mission, profile_angle)
         if u2:
             usage.append(u2)
-    return mission or "", usage
+    mission = normalize_quick_take_text(mission or "")
+    return mission, usage
 
 
 # ---------------------------------------------------------------------------
 # Skills Statements
 # ---------------------------------------------------------------------------
-def generate_skills_statements(llm, jd_duties, master_context, target_role, track="", voice="", narrative_brief=""):
+def generate_skills_statements(
+    llm,
+    jd_duties,
+    master_context,
+    target_role,
+    track="",
+    voice="",
+    narrative_brief="",
+    jd_context="",
+    jd_tools=None,
+    required_tools=None,
+):
     track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
     voice_line = f"\nRESUME VOICE: {_voice_instruction(voice)}" if voice else ""
+    how_i_work_source = _extract_how_i_work_source(master_context)
+    if not jd_context:
+        jd_context = jd_duties or "(No JD context provided.)"
+    if required_tools is None:
+        from ats_coverage import jd_tools_supported
+
+        required_tools = jd_tools_supported(jd_tools or [])
+    tools_line = ", ".join(required_tools) if required_tools else "(none — use How I Work source only)"
     system_prompt, user_prompt = load_prompt(
         "skills_statements.md",
         track_line=track_line,
         voice_line=voice_line,
         ANTI_FLUFF=get_anti_fluff(),
         target_role=target_role,
-        jd_duties=jd_duties,
+        jd_duties=jd_duties or "(No duties extracted.)",
+        jd_context=jd_context,
         narrative_brief=narrative_brief,
-        master_context=master_context[:4000],
+        how_i_work_source=how_i_work_source,
+        master_context=master_context[:2500],
+        required_tools=tools_line,
     )
     return _llm(
         llm,

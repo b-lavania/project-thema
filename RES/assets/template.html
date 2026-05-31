@@ -3,30 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Resume</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&amp;display=swap">
     <style>
         @page {
             size: letter;
             margin: 0.5in;
         }
+        @page :first {
+            margin: 0.45in 0.5in 0.5in 0.5in;
+        }
         body {
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 10pt;
-            line-height: 1.4;
+            font-size: 11pt;
+            line-height: 1.32;
             color: #111;
             margin: 0;
             padding: 0;
+            orphans: 2;
+            widows: 2;
+        }
+        body.compact-pdf {
+            font-size: 10pt;
+            line-height: 1.24;
+        }
+        body.compact-pdf h2 {
+            margin: 8px 0 3px 0;
+        }
+        body.compact-pdf li {
+            margin-bottom: 3px;
+        }
+        body.compact-pdf .role-block + .role-block {
+            margin-top: 3px;
+        }
+        body.compact-pdf .section-content {
+            margin-bottom: 4px;
         }
         h1.resume-name {
-            font-family: "Playfair Display", Playfair, Georgia, "Times New Roman", serif;
-            font-size: 18pt;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 17pt;
             margin: 0 0 5px 0;
-            font-weight: 600;
-            letter-spacing: 0.02em;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
         h2 {
-            font-size: 11pt;
-            margin: 15px 0 5px 0;
+            font-size: 10.5pt;
+            margin: 12px 0 5px 0;
             text-transform: uppercase;
             border-bottom: 1px solid #000;
             padding-bottom: 2px;
@@ -37,34 +57,51 @@
             page-break-before: always;
             break-before: page;
         }
-        .role-block {
+        /* Side Builds: keep each project block on one page */
+        .section-content > .role-block {
             page-break-inside: avoid;
             break-inside: avoid-page;
         }
+        /* The Work: roles may split across pages; bullets can continue on next page */
+        .experience-section .role-block {
+            page-break-inside: auto;
+            break-inside: auto;
+        }
         .role-block + .role-block {
-            margin-top: 8px;
+            margin-top: 6px;
         }
         .header {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         .contact-info {
             font-size: 9pt;
         }
         .tagline {
-            font-size: 11pt;
+            font-size: 10.5pt;
             font-weight: bold;
             margin-bottom: 5px;
         }
         .section-content {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+        }
+        .section-content.keep-together {
+            page-break-inside: avoid;
+            break-inside: avoid-page;
+        }
+        .experience-section {
+            margin-bottom: 8px;
+        }
+        .experience-section > h2 {
+            page-break-after: avoid;
+            break-after: avoid-page;
         }
         ul {
-            margin: 5px 0 10px 0;
+            margin: 5px 0 7px 0;
             padding-left: 20px;
         }
         li {
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
         .role-header {
             display: flex;
@@ -72,27 +109,29 @@
             align-items: baseline;
             margin-top: 10px;
             margin-bottom: 2px;
+            page-break-inside: avoid;
+            break-inside: avoid-page;
         }
         .role-title-company {
             font-weight: bold;
         }
         .role-dates {
-            font-size: 9.5pt;
+            font-size: 9pt;
         }
         .company-desc {
             font-style: italic;
-            margin-bottom: 2px;
-            font-size: 9.5pt;
+            margin-bottom: 4px;
+            font-size: 9pt;
         }
         .role-summary {
-            margin-bottom: 5px;
+            margin-bottom: 7px;
         }
         .skill-label {
             font-weight: 600;
         }
     </style>
 </head>
-<body>
+<body class="{% if compact_pdf %}compact-pdf{% endif %}">
     <div class="header">
         <h1 class="resume-name">Bharat "Bob" Lavania</h1>
         <div class="tagline">{{ tagline }}</div>
@@ -102,15 +141,15 @@
     </div>
 
     {% if mission_body %}
-    <h2>The Quick Take</h2>
-    <div class="section-content">
+    <h2>Quick Take</h2>
+    <div class="section-content keep-together">
         {{ mission_body }}
     </div>
     {% endif %}
 
     {% if skills %}
     <h2 class="{% if 'skills' in break_sections %}page-break-before{% endif %}">How I Work</h2>
-    <div class="section-content">
+    <div class="section-content keep-together">
         <ul>
         {% for skill in skills %}
             <li>{{ skill|safe }}</li>
@@ -120,13 +159,16 @@
     {% endif %}
 
     {% if experience %}
-    <h2 class="{% if 'experience' in break_sections %}page-break-before{% endif %}">The Work</h2>
-    <div class="section-content">
+    <div class="experience-section{% if 'experience' in break_sections %} page-break-before{% endif %}">
+    <h2>The Work</h2>
         {% for role in experience %}
         <div class="role-block{% if role.page_break_before %} page-break-before{% endif %}">
         {% if role.is_condensed %}
-        {# Condensed role: single line only #}
-        <div class="role-condensed">{{ role.title_company }}</div>
+        {# Condensed role: flex header matching full role style #}
+        <div class="role-header">
+            <div class="role-title-company">{{ role.title_company }}</div>
+            <div class="role-dates">{{ role.dates_location }}</div>
+        </div>
         {% else %}
         {# Full role: header + bullets #}
         <div class="role-header">
@@ -134,7 +176,7 @@
             <div class="role-dates">{{ role.dates_location }}</div>
         </div>
         {% if role.company_desc %}
-        <div class="company-desc">{{ role.company_desc }}</div>
+        <div class="company-desc">{{ role.company_desc|safe }}</div>
         {% endif %}
         {% if role.summary %}
         <div class="role-summary">{{ role.summary }}</div>

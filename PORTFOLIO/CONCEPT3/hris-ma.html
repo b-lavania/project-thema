@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HRIS for M&amp;A Transactions | Product Notes | Bob Lavania</title>
+<meta name="description" content="Product case study: HRIS for M&amp;A transaction readiness, built at BVXpress. API-first workforce integration, normalized people data, and diligence dashboards.">
+<meta property="og:title" content="HRIS for M&amp;A Transactions | BVXpress">
+<meta property="og:description" content="Internal HRIS product at BVXpress for merger and acquisition workflows: connect acquired entities, normalize workforce data, and answer diligence questions without months-long migrations.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --bg-color: #ffffff;
+    --text-main: #111111;
+    --text-muted: #555555;
+    --text-light: #777777;
+    --border-color: #000000;
+    --border-light: #cccccc;
+    --accent: #000000;
+    --teal: #0f6e56;
+    --teal-light: #e1f5ee;
+    --amber: #ba7517;
+    --amber-light: #fef3e6;
+    --blue: #185fa5;
+    --blue-light: #e6f2ff;
+    --purple: #6b46c1;
+    --purple-light: #f3f4ff;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    padding: 1.25rem;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    padding: 0 2rem;
+  }
+
+  header, section {
+    border-bottom: 1px solid var(--border-color);
+    padding: 2rem 0;
+  }
+
+  header { padding-top: 1.25rem; }
+
+  .back-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+  }
+
+  .back-link a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .back-link a:hover { color: var(--text-main); }
+
+  h1 {
+    font-size: 2.35rem;
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .subhead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .cred-strip {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    color: var(--text-main);
+    margin-top: 1.25rem;
+  }
+
+  .proof-points {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+  }
+
+  .proof-card {
+    border: 2px solid var(--border-color);
+    padding: 1rem;
+    background: var(--bg-color);
+  }
+
+  .proof-card.teal { border-color: var(--teal); background: var(--teal-light); }
+  .proof-card.amber { border-color: var(--amber); background: var(--amber-light); }
+  .proof-card.blue { border-color: var(--blue); background: var(--blue-light); }
+  .proof-card.purple { border-color: var(--purple); background: var(--purple-light); }
+
+  .proof-number {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-mono);
+  }
+
+  .proof-card.teal .proof-number { color: var(--teal); }
+  .proof-card.amber .proof-number { color: var(--amber); }
+  .proof-card.blue .proof-number { color: var(--blue); }
+  .proof-card.purple .proof-number { color: var(--purple); }
+
+  .proof-label {
+    font-size: 0.82rem;
+    color: var(--text-main);
+    line-height: 1.3;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .pain-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .pain-list li { margin-bottom: 0.35rem; }
+
+  .metric-highlight {
+    background: #fffbea;
+    border-left: 3px solid var(--amber);
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-weight: 500;
+    color: var(--text-main);
+    font-size: 0.95rem;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .compare-card {
+    border: 2px solid var(--border-color);
+    padding: 1.15rem;
+  }
+
+  .compare-card.legacy {
+    border-color: var(--border-light);
+    background: #fafafa;
+  }
+
+  .compare-card.modern {
+    border-color: var(--teal);
+    background: var(--teal-light);
+  }
+
+  .compare-card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.65rem;
+  }
+
+  .flow-block {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--text-main);
+    padding: 0.65rem 0.75rem;
+    border: 1px dashed var(--border-light);
+    background: var(--bg-color);
+    margin-bottom: 0.65rem;
+  }
+
+  .compare-card ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .compare-card ul li { margin-bottom: 0.3rem; }
+
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .cap-card {
+    border: 1px solid var(--border-color);
+    padding: 1.15rem;
+    transition: all 0.2s ease;
+  }
+
+  .cap-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .cap-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.45rem;
+    font-weight: 600;
+  }
+
+  .cap-card p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .learn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .learn-card {
+    border: 1px solid var(--border-light);
+    padding: 1rem 1.15rem;
+    background: #fafafa;
+  }
+
+  .learn-card h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .learn-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .cs-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+  }
+
+  .cs-grid:last-child { border-bottom: 1px solid var(--border-color); }
+
+  .cs-label {
+    padding: 0.85rem 1rem;
+    border-right: 1px solid var(--border-color);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    background: #fafafa;
+  }
+
+  .cs-content {
+    padding: 0.85rem 1rem;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .cs-content strong { color: var(--text-main); }
+
+  .principles-list {
+    list-style: none;
+    counter-reset: principle;
+  }
+
+  .principles-list li {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .principles-list li::before {
+    counter-increment: principle;
+    content: "0" counter(principle);
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .systems-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .systems-tags span {
+    border: 1px solid var(--border-color);
+    padding: 0.45rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .two-col-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .quote-block {
+    font-size: 1.05rem;
+    line-height: 1.45;
+    font-weight: 500;
+    color: var(--text-muted);
+    font-style: italic;
+    max-width: 640px;
+    margin-top: 0.5rem;
+  }
+
+  .contact-section {
+    background: var(--text-main);
+    color: var(--bg-color);
+    padding: 2.5rem;
+    margin: 0 -2rem -1.25rem -2rem;
+  }
+
+  .contact-intro {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+    margin: 0;
+  }
+
+  .contact-section h2 {
+    color: var(--bg-color);
+    margin-bottom: 1.25rem;
+    text-transform: none;
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .contact-info {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .contact-info a {
+    color: var(--bg-color);
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .contact-info a:hover {
+    opacity: 0.8;
+  }
+
+  .contact-section .contact-reveal {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    color: var(--bg-color);
+    font-size: 1rem;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .contact-section .contact-reveal:hover {
+    opacity: 0.85;
+  }
+
+  .contact-section .contact-reveal.revealed {
+    cursor: default;
+    opacity: 0.95;
+    text-decoration: none;
+  }
+
+  .contact-location {
+    margin-top: 0.85rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .contact-cta {
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .proof-points { grid-template-columns: 1fr 1fr; }
+    .compare-grid, .learn-grid, .two-col-section { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .container { border: none; padding: 0 1rem; }
+    body { padding: 1rem; }
+    h1 { font-size: 1.85rem; }
+    .proof-points { grid-template-columns: 1fr; }
+    .cs-grid { grid-template-columns: 1fr; }
+    .cs-label { border-right: none; border-bottom: 1px dashed var(--border-color); }
+    .contact-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+    .contact-section { margin: 0 -1rem -1rem -1rem; padding: 1.75rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <p class="back-link"><a href="index.html">← Portfolio</a></p>
+    <h1>HRIS built for M&amp;A transaction readiness</h1>
+    <p class="subhead">At <strong>BVXpress</strong> (2012–2021), I led product for an internal HRIS built for our own M&amp;A program: connect acquired companies quickly, normalize workforce data across systems, and give deal teams diligence-ready answers without six-month migration projects.</p>
+
+    <div class="cred-strip">
+      <span>Product Manager · BVXpress</span>
+      <span>M&amp;A · HR Tech</span>
+      <span>2012–2021</span>
+    </div>
+
+    <div class="proof-points">
+      <div class="proof-card teal">
+        <div class="proof-number">API-first</div>
+        <div class="proof-label">Connect any source HRIS; analytics layer, not rip-and-replace</div>
+      </div>
+      <div class="proof-card amber">
+        <div class="proof-number">Adapters</div>
+        <div class="proof-label">System-agnostic integration: Workday, SAP, ADP, local payroll</div>
+      </div>
+      <div class="proof-card blue">
+        <div class="proof-number">Normalized</div>
+        <div class="proof-label">Job families, comp views, hierarchy mapping, employment types</div>
+      </div>
+      <div class="proof-card purple">
+        <div class="proof-number">Diligence-ready</div>
+        <div class="proof-label">Headcount, comp burden, retention risk, without custom reports</div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>Why we needed this</h2>
+    <p class="metric-highlight"><strong>Legacy HR doesn&rsquo;t handle mergers well.</strong> Every acquisition meant months of migration, incompatible systems, duplicate records, and HR teams drowning in manual reconciliation, with no combined workforce metrics during due diligence.</p>
+    <ul class="pain-list">
+      <li>Months of data migration per target</li>
+      <li>Systems that couldn&rsquo;t talk to each other</li>
+      <li>Duplicate employee records across platforms</li>
+      <li>No visibility into combined workforce metrics</li>
+      <li>Manual reconciliation blocking deal teams</li>
+    </ul>
+    <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);max-width:720px;">We built for <strong style="color:var(--text-main);">transaction readiness from day one</strong>, not bolt-on reporting after the fact.</p>
+  </section>
+
+  <section>
+    <h2>The M&amp;A problem we solved</h2>
+    <div class="compare-grid">
+      <div class="compare-card legacy">
+        <h3>Traditional approach</h3>
+        <div class="flow-block">Acquired Co A → Their HRIS → Migrate to ours → 6 to 18 mo<br>Acquired Co B → Different HRIS → Another migration → +6 mo</div>
+        <ul>
+          <li>Each integration is a one-off project</li>
+          <li>Data quality varies wildly</li>
+          <li>No standard data model</li>
+          <li>HR can&rsquo;t answer basic diligence questions</li>
+        </ul>
+      </div>
+      <div class="compare-card modern">
+        <h3>Our approach</h3>
+        <div class="flow-block">Acquired Co → API connect → Instant visibility<br>→ Standardized model → Dashboards → Transaction reporting</div>
+        <ul>
+          <li>Reusable integration pattern</li>
+          <li>Validation and confidence at ingestion</li>
+          <li>Normalized schema across targets</li>
+          <li>Real-time answers for deal teams</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Key product requirements</h2>
+    <div class="capabilities-grid">
+      <div class="cap-card">
+        <h4>1. Universal adapter pattern</h4>
+        <p>Integration layer is system-agnostic. Frappe HRMS is the reference implementation; adapters extend to Workday, SuccessFactors, ADP, and regional payroll.</p>
+      </div>
+      <div class="cap-card">
+        <h4>2. Normalized data model</h4>
+        <p>Map job titles to families, compensation to currency-neutral views, org hierarchy flexibly, and employment types to consistent categories.</p>
+      </div>
+      <div class="cap-card">
+        <h4>3. Transaction-ready dashboards</h4>
+        <p>Headcount by country, total comp burden, key performers to retain, attrition risk: instant answers for diligence, not ad-hoc reports.</p>
+      </div>
+      <div class="cap-card">
+        <h4>4. Audit &amp; compliance</h4>
+        <p>Historical preservation, full audit trails, GDPR-aware handling, and document retention built in from the start.</p>
+      </div>
+      <div class="cap-card">
+        <h4>5. Separation of concerns</h4>
+        <p>Payroll stays with specialists. We pull, normalize, and analyze; Frappe handles payroll complexity so we focus on M&amp;A-specific analytics.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="two-col-section">
+      <div>
+        <h2>What discovery showed</h2>
+        <div class="learn-grid">
+          <div class="learn-card">
+            <h4>M&amp;A is a different job-to-be-done</h4>
+            <p>Focus groups with HR ops and deal-team stakeholders during live transactions surfaced a split from day-to-day HR: users needed rapid multi-source ingestion, flexible schema mapping, and diligence-ready rollups, not another ESS portal. Opportunity maps ranked transaction visibility above employee self-service for the first release.</p>
+          </div>
+          <div class="learn-card">
+            <h4>Integration beat replacement</h4>
+            <p>Workflow interviews and a build-vs-buy matrix killed the &ldquo;replace every payroll system&rdquo; hypothesis. Stakeholders wanted source systems to stay authoritative; the product should connect, normalize, and report. That research drove the adapter pattern and Frappe for payroll depth instead of rebuilding compliance engines.</p>
+          </div>
+          <div class="learn-card">
+            <h4>Data trust was the workflow blocker</h4>
+            <p>Shadowing reconciliation during diligence showed duplicate records and inconsistent fields were why teams reverted to spreadsheets. Tree tests on dashboard tasks (headcount by country, comp burden, retention risk) failed when numbers disagreed across sources. We prioritized validation at ingestion, duplicate handling, and confidence scores before adding net-new analytics.</p>
+          </div>
+          <div class="learn-card">
+            <h4>Adoption had to survive deal crunch</h4>
+            <p>HR leads in post-close integration said they would not learn a new tool mid-transaction unless paths were obvious under pressure. Prototype walkthroughs and tree tests on core diligence flows informed a minimal dashboard set and plain-language labels, so change management was not blocked by navigation.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>Technical decisions</h2>
+        <div class="cs-grid">
+          <div class="cs-label">Stack</div>
+          <div class="cs-content"><strong>.NET / Azure</strong></div>
+        </div>
+        <div class="cs-grid">
+          <div class="cs-label">Payroll</div>
+          <div class="cs-content"><strong>Frappe HRMS</strong>: compliance-heavy domain; we don&rsquo;t rebuild payroll engines</div>
+        </div>
+        <div class="cs-grid">
+          <div class="cs-label">Sync</div>
+          <div class="cs-content"><strong>Bidirectional</strong>: source systems remain system of record; HRIS is analytics layer</div>
+        </div>
+        <div class="cs-grid">
+          <div class="cs-label">Events</div>
+          <div class="cs-content"><strong>Event-driven</strong>: real-time updates aligned to deal pace</div>
+        </div>
+        <div class="cs-grid">
+          <div class="cs-label">API</div>
+          <div class="cs-content"><strong>API-first</strong>: deal rooms, data rooms, and diligence tooling</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What&rsquo;s next</h2>
+    <div class="systems-tags">
+      <span>Workday adapter</span>
+      <span>SAP SuccessFactors</span>
+      <span>ADP</span>
+      <span>Virtual data room push</span>
+      <span>Attrition &amp; retention scoring</span>
+      <span>Mobile exec metrics</span>
+      <span>Employment diligence docs</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>PM takeaways</h2>
+    <ul class="principles-list">
+      <li>Solve real M&amp;A pain, not features because they&rsquo;re cool</li>
+      <li>Embrace integration; no single system wins every workflow</li>
+      <li>Design for change; deal context shifts weekly</li>
+      <li>Start with the exit; build for sale and separation from day one</li>
+      <li>Listen to HR: they surface what&rsquo;s broken in incumbent tools</li>
+    </ul>
+    <p class="quote-block">&ldquo;The best HR system for M&amp;A is one that makes the deal team say &lsquo;finally, something that just works.&rsquo;&rdquo;</p>
+  </section>
+
+  <section style="border-bottom: none; padding-bottom: 0;">
+    <div class="contact-section">
+      <h2>Contact</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div><span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span></div>
+          <div><a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">linkedin.com/in/blavania</a></div>
+          <div class="contact-location">Calgary, AB<br>Remote across US and Canada</div>
+        </div>
+        <div class="contact-cta">
+          <p class="contact-intro">If your team is navigating the gap between product decisions and business outcomes, such as pricing that&rsquo;s leaking, ops that don&rsquo;t scale, or AI investments with unclear ROI, let&rsquo;s talk. I&rsquo;ve worked through those problems across logistics, M&amp;A SaaS, edtech, and healthcare.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('.contact-reveal').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (this.classList.contains('revealed')) return;
+      var decoded = atob(this.dataset.v);
+      var link = document.createElement('a');
+      link.href = 'mailto:' + decoded;
+      link.textContent = decoded;
+      link.style.color = 'inherit';
+      link.style.fontWeight = '500';
+      this.classList.add('revealed');
+      this.replaceWith(link);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

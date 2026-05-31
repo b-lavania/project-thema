@@ -74,53 +74,6 @@
     line-height: 1.5;
   }
 
-  .proof-points {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-
-  .proof-card {
-    border: 2px solid var(--border-color);
-    padding: 1.25rem;
-    background: var(--bg-color);
-  }
-
-  .proof-card.teal { border-color: var(--teal); background: var(--teal-light); }
-  .proof-card.amber { border-color: var(--amber); background: var(--amber-light); }
-  .proof-card.blue { border-color: var(--blue); background: var(--blue-light); }
-  .proof-card.purple { border-color: var(--purple); background: var(--purple-light); }
-
-  .proof-number {
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 0.4rem;
-    font-family: var(--font-mono);
-  }
-
-  .proof-card.teal .proof-number { color: var(--teal); }
-  .proof-card.amber .proof-number { color: var(--amber); }
-  .proof-card.blue .proof-number { color: var(--blue); }
-  .proof-card.purple .proof-number { color: var(--purple); }
-
-  .proof-label {
-    font-size: 0.85rem;
-    color: var(--text-main);
-    line-height: 1.3;
-  }
-
-  .proof-context {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--text-muted);
-    margin-top: 0.55rem;
-    line-height: 1.25;
-  }
-
   .fit-block {
     margin-top: 1.75rem;
     padding: 1.25rem 1.5rem;
@@ -251,33 +204,14 @@
     font-family: var(--font-sans);
   }
 
-  /* What You Get */
-  .value-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .value-card {
-    border: 1px solid var(--border-color);
-    padding: 1.5rem;
-    background: var(--bg-color);
-  }
-
-  .value-card h4 {
-    font-size: 1.1rem;
-    margin-bottom: 0.6rem;
-    font-weight: 600;
-  }
-
-  .value-card p {
+  .theme-lede {
+    font-size: 0.98rem;
     color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.55;
+    margin-bottom: 1.35rem;
+    max-width: 900px;
   }
 
-  /* Core Capabilities Grid */
   .capabilities-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -301,11 +235,26 @@
     font-weight: 600;
   }
 
-  .cap-card p {
+  .cap-card .card-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+    margin-top: 0.65rem;
+  }
+
+  .cap-card .card-label:first-of-type {
+    margin-top: 0;
+  }
+
+  .cap-card .card-outcome,
+  .cap-card .card-how {
     color: var(--text-muted);
     font-size: 0.95rem;
-    margin-bottom: 1rem;
     line-height: 1.5;
+    margin-bottom: 0.5rem;
   }
 
   .cap-card .examples {
@@ -314,10 +263,16 @@
     color: var(--text-main);
     border-top: 1px dotted var(--border-color);
     padding-top: 0.85rem;
+    margin-top: 0.5rem;
     line-height: 1.6;
   }
 
   /* Selected Work */
+  .case-study,
+  .case-study-details {
+    scroll-margin-top: 1.5rem;
+  }
+
   .case-study {
     margin-bottom: 2.5rem;
     border: 2px solid var(--border-color);
@@ -438,6 +393,41 @@
     color: var(--text-main);
   }
 
+  .cs-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.65rem;
+    margin-top: 0.65rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: var(--text-muted);
+  }
+
+  .cap-card .cs-links {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px dotted var(--border-light);
+  }
+
+  .cs-links-label {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.68rem;
+  }
+
+  .cs-link {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .cs-link:hover {
+    color: var(--text-main);
+  }
+
   .case-study-details {
     margin-bottom: 2.5rem;
     border: 2px solid var(--border-color);
@@ -541,14 +531,26 @@
   }
 
   .logo-item a {
-    color: var(--text-main);
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.2s ease;
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 600;
+    transition: color 0.2s ease;
   }
 
-  .logo-item a:hover {
-    border-bottom-color: var(--text-main);
+  .logo-item a:visited {
+    color: var(--blue);
+  }
+
+  .logo-item a:hover,
+  .logo-item a:focus-visible {
+    color: var(--text-main);
+  }
+
+  .logo-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
   }
 
   /* Systems */
@@ -667,8 +669,6 @@
     body { padding: 1rem; }
     h1 { font-size: 2rem; }
     .subhead { font-size: 1rem; }
-    .proof-points { grid-template-columns: 1fr 1fr; }
-    .value-grid { grid-template-columns: 1fr; }
     .capabilities-grid { grid-template-columns: 1fr; }
     .cs-grid { grid-template-columns: 1fr; }
     .cs-label { border-right: none; border-bottom: 1px dashed var(--border-color); padding-bottom: 0.6rem; }
@@ -681,37 +681,15 @@
 
 <div class="container">
   <header>
-    <h1>Product & BizOps Leader, from M&A deal rooms to AI-powered logistics platforms</h1>
+    <h1>Product for BizOps</h1>
+    <h2>From M&A deal rooms to AI-powered logistics platforms</h2>
     <p class="subhead">Chief of Staff turned Product Leader. A decade inside M&A deal-making taught that every business problem is a pricing problem, an operations problem, or a growth problem (usually all three at once). MBA in Energy Economics & Product Leadership (University of Calgary, 2025).</p>
-    
-    <div class="proof-points">
-      <div class="proof-card teal">
-        <div class="proof-number">20×</div>
-        <div class="proof-label">Quote acceleration protecting margins</div>
-        <div class="proof-context">Moovez / Quotely</div>
-      </div>
-      <div class="proof-card amber">
-        <div class="proof-number">18%</div>
-        <div class="proof-label">CAC reduction improving acquisition IRR</div>
-        <div class="proof-context">Media Mix Modeling</div>
-      </div>
-      <div class="proof-card blue">
-        <div class="proof-number">3×</div>
-        <div class="proof-label">Take rate &amp; product NPV improvement</div>
-        <div class="proof-context">BVXpress / Village Wellth</div>
-      </div>
-      <div class="proof-card purple">
-        <div class="proof-number">$500k+</div>
-        <div class="proof-label">GMV accelerating predictable cash flows</div>
-        <div class="proof-context">Moovez marketplace</div>
-      </div>
-    </div>
- 
+
     <div class="fit-block">
       <div class="fit-block-title">Best fit</div>
-      <p class="fit-block-lede">I work best where product, operations, and finance overlap, turning spreadsheets, manual workflows, and brittle handoffs into reliable systems with clear commercial viability. Three operating themes run through everything I build:</p>
+      <p class="fit-block-lede">I work best where product, operations, finance, and <strong>HR / HRIS</strong> overlap, turning spreadsheets, manual workflows, and brittle handoffs into reliable systems with clear commercial viability. A forte: workforce systems for M&amp;A (integration layers, diligence dashboards, normalized people data), not just day-to-day HR ops. Three operating themes run through everything I build:</p>
       <ul class="fit-list">
-        <li><strong>Pricing Architecture</strong>: Redesigning how value is captured: tier consolidation, real-time quote engines, discount logic, ARPU expansion. Proven across M&A SaaS, logistics, education, and insurance. Proof: 3× take rate · $450→$600 ARPU · 18% lower CAC.</li>
+        <li><strong>Pricing Architecture</strong>: Redesigning how value is captured: tier consolidation, real-time quote engines, discount logic, ARPU expansion. Proven across M&amp;A SaaS, logistics, education, and insurance. Proof: 3× take rate · $450→$600 ARPU · 18% lower CAC.</li>
         <li><strong>Operational Intelligence</strong>: Replacing manual, chaotic processes with AI systems (computer vision, conversational agents, OR engines, predictive frameworks) built and deployed in production. Proof: 60 min→3 min quoting · 50% support deflection · 85% false-alert reduction.</li>
         <li><strong>Zero-to-One Build</strong>: Launching products from whiteboard and building the commercial engine around them: messaging, funnels, retention, unit economics. Proof: 5 products launched · 14% retention lift · 7% conversion lift · 93% fill rate.</li>
       </ul>
@@ -752,74 +730,80 @@
             <span class="tech-chip">HubSpot</span>
           </div>
         </div>
+        <div class="tech-stack-group">
+          <div class="tech-stack-sub">HR &amp; Workforce Systems</div>
+          <div class="tech-chip-row">
+            <span class="tech-chip">HRIS / HCM</span>
+            <span class="tech-chip">M&amp;A workforce integration</span>
+            <span class="tech-chip">Workday</span>
+            <span class="tech-chip">SAP SuccessFactors</span>
+            <span class="tech-chip">ADP</span>
+            <span class="tech-chip">Frappe HRMS</span>
+            <span class="tech-chip">.NET / Azure</span>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="logos-section">
       <div class="logos-label">Built for</div>
       <div class="logos-grid">
-        <div class="logo-item"><a href="https://moovez.ca" target="_blank" rel="noopener noreferrer">Moovez</a> <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">($500k+ GMV marketplace)</span></div>
-        <div class="logo-item"><a href="https://quoteperfectly.com" target="_blank" rel="noopener noreferrer">Quotely</a> <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">(Commercialized SaaS)</span></div>
-        <div class="logo-item">Netsweeper <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">(35-school deployment)</span></div>
-        <div class="logo-item">BVXpress <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">(9 years, 5 products)</span></div>
+        <div class="logo-item"><a href="https://moovez.ca" target="_blank" rel="noopener noreferrer">Moovez</a> <span class="logo-meta">(Marketplace for last-mile delivery & moving)</span></div>
+        <div class="logo-item"><a href="https://quoteperfectly.com" target="_blank" rel="noopener noreferrer">Quotely</a> <span class="logo-meta">(Moovez SaaS spin-off)</span></div>
+        <div class="logo-item">Netsweeper <span class="logo-meta">(Student safeguarding)</span></div>
+        <div class="logo-item">BVXpress <span class="logo-meta">(SaaS for M&A)</span></div>
+        <div class="logo-item"><a href="hris-ma.html" rel="noopener noreferrer">HRIS for M&amp;A</a> <span class="logo-meta">(dedicated case study)</span></div>
       </div>
     </div>
   </header>
 
   <section>
-    <h2>What You Get</h2>
-    <div class="value-grid">
-      <div class="value-card">
-        <h4>Commercial Viability</h4>
-        <p>Assessing product bets through rigorous NPV and IRR analysis. I tie every product decision to unit economics and cash flow.</p>
-      </div>
-      
-      <div class="value-card">
-        <h4>Operational Scale</h4>
-        <p>Systematizing chaotic processes to protect margins. I turn messy manual workflows into scalable, measurable systems.</p>
-      </div>
-      
-      <div class="value-card">
-        <h4>Product Strategy</h4>
-        <p>Full-stack product leadership: from user research and pricing architecture to technical prototyping and P&amp;L management.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Core Capabilities</h2>
+    <h2>How I deliver</h2>
+    <p class="theme-lede">Three operating themes from the work above: what you get commercially, how it is built, and where to see it in the case studies below.</p>
     <div class="capabilities-grid">
       <div class="cap-card">
         <h4>Pricing Architecture</h4>
-        <p>Redesigning how value is captured: tier consolidation, real-time quote engines, discount logic, and ARPU expansion.</p>
+        <div class="card-label">Outcome</div>
+        <p class="card-outcome">Product bets assessed through NPV and IRR; every major decision tied to unit economics and cash flow.</p>
+        <div class="card-label">How</div>
+        <p class="card-how">Redesigning how value is captured: tier consolidation, real-time quote engines, discount logic, and ARPU expansion.</p>
         <div class="examples">
           Real-time logistics quoting<br>
           SaaS tier consolidation<br>
           Value-based pricing<br>
           Take rate optimization
         </div>
+        <div class="cs-links"><span class="cs-links-label">Proof in:</span> <a class="cs-link" href="#case-pricing">Pricing redesign</a> <a class="cs-link" href="#case-bvxpress">BVXpress</a> <a class="cs-link" href="#case-epsilon">Project Epsilon</a></div>
       </div>
-      
+
       <div class="cap-card">
-        <h4>Operations Research</h4>
-        <p>Replacing manual, chaotic processes with systems that scale throughput without proportional headcount growth.</p>
+        <h4>Operational Intelligence</h4>
+        <div class="card-label">Outcome</div>
+        <p class="card-outcome">Chaotic processes systematized to protect margins; manual workflows replaced with scalable, measurable systems.</p>
+        <div class="card-label">How</div>
+        <p class="card-how">AI and operations research in production: computer vision, conversational agents, OR engines, and predictive frameworks that scale throughput without proportional headcount.</p>
         <div class="examples">
           NP-hard routing &amp; bin packing<br>
           Detection alert reduction<br>
           Linear programming (PyPSA)<br>
           Scenario-first modeling
         </div>
+        <div class="cs-links"><span class="cs-links-label">Proof in:</span> <a class="cs-link" href="#case-moovez">Moovez / Quotely</a> <a class="cs-link" href="#case-netsweeper">Netsweeper</a> <a class="cs-link" href="#case-epsilon">Project Epsilon</a></div>
       </div>
-      
+
       <div class="cap-card">
-        <h4>Growth &amp; Funnel Analytics</h4>
-        <p>Diagnosing unit economics and conversion leakage using advanced analytics to improve customer acquisition IRR.</p>
+        <h4>Zero-to-One Build</h4>
+        <div class="card-label">Outcome</div>
+        <p class="card-outcome">Full-stack product leadership from user research and pricing architecture to technical prototyping and P&amp;L management.</p>
+        <div class="card-label">How</div>
+        <p class="card-how">Commercial engines around new products: messaging, funnels, retention, and analytics that diagnose conversion leakage and improve acquisition IRR.</p>
         <div class="examples">
           Media mix modeling (MMM)<br>
           Funnel diagnostics<br>
           Segmentation analysis<br>
           Attribution modeling
         </div>
+        <div class="cs-links"><span class="cs-links-label">Proof in:</span> <a class="cs-link" href="#case-bvxpress">BVXpress</a> <a class="cs-link" href="#case-moovez">Moovez / Quotely</a> <a class="cs-link" href="hris-ma.html">HRIS for M&amp;A</a></div>
       </div>
     </div>
   </section>
@@ -829,6 +813,7 @@
     <nav class="case-nav" aria-label="Jump to case studies">
       <a href="#case-moovez">Moovez / Quotely</a>
       <a href="#case-bvxpress">BVXpress (9 yrs)</a>
+      <a href="hris-ma.html">HRIS for M&amp;A</a>
       <a href="#case-epsilon">Project Epsilon</a>
       <a href="#case-pricing">Pricing redesign</a>
       <a href="#case-netsweeper">Netsweeper</a>
@@ -1196,17 +1181,17 @@
   <section>
     <h2>Career Arc</h2>
     <div style="display:grid;grid-template-columns:auto 1fr;gap:0.5rem 1.5rem;align-items:baseline;">
-      <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">2012&ndash;2021</div>
-      <div><strong>BVXpress</strong>: First PM hire. Built product function from scratch, launched 5 products, 1,400+ users, 9-year tenure. Chicago, IL.</div>
-      <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">2022&ndash;2023</div>
-      <div><strong>Netsweeper</strong>: Full-time PM. AI content-compliance product for K&ndash;12 districts, 35-school deployment. Waterloo, ON.</div>
-      <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--teal);white-space:nowrap;">2022&ndash;2025</div>
-      <div style="color:var(--teal);"><strong>MBA, University of Calgary</strong>: Energy Economics &amp; Product Leadership. <em>Concurrent with fractional product work throughout.</em></div>
-      <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">2022&ndash;2025</div>
-      <div><strong>Fractional Product Lead</strong>: Embedded, active product leadership across AI, logistics, FinTech, and healthcare startups (Village Wellth, Liohan, eCommerce, insurance, construction) while completing the MBA.</div>
       <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">2024&ndash;Now</div>
-      <div><strong>Moovez / Quotely</strong>: Founding PM. $500k+ GMV logistics marketplace commercialized as standalone SaaS. Calgary, AB.</div>
-    </div>
+      <div><strong>Moovez / Quotely</strong>: Founding PM; Validated & commercialized a standalone SaaS. <a class="cs-link" href="#case-moovez">Quoting &amp; OR case study</a></div>
+      <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">2012&ndash;2021</div>
+      <div><strong>BVXpress</strong>: Product & Chief of Staff; built the product function from zero and launched five products. <a class="cs-link" href="#case-bvxpress">Zero-to-one case study</a></div>
+      <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">2022&ndash;2023</div>
+      <div><strong>Netsweeper</strong>: Reframed success from detection accuracy to operational trust; 85% false-alert reduction across 35 schools. <a class="cs-link" href="#case-netsweeper">Alert-quality case study</a></div>
+      <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--teal);white-space:nowrap;">2022&ndash;2025</div>
+      <div style="color:var(--teal);"><strong>MBA, University of Calgary</strong>: Energy economics and product leadership; deployability models became <a class="cs-link" href="#case-epsilon">Project Epsilon</a>. <em>Concurrent with fractional product work.</em></div>
+      <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">2022&ndash;2025</div>
+      <div><strong>Fractional Product Lead</strong>: Embedded leadership across logistics, FinTech, and healthcare; Village Wellth pricing architecture drove 3× take rate. <a class="cs-link" href="#case-pricing">Pricing redesign case study</a></div>
+     </div>
     <div style="margin-top:1rem;font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);">CSM &middot; CSPO (Scrum Alliance, 2022) &middot; B.S. Business &amp; Finance, Illinois Tech (2012)</div>
   </section>
 
@@ -1234,6 +1219,8 @@
   <section>
     <h2>Systems I Work In</h2>
     <div class="systems-tags">
+      <span>HR Tech</span>
+      <span>HRIS / HCM</span>
       <span>AI Agents</span>
       <span>Marketplaces</span>
       <span>Workflow Automation</span>
@@ -1262,10 +1249,10 @@
       <div class="contact-info">
         <div><span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span></div>
         <div><a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">linkedin.com/in/blavania</a></div>
-        <div class="contact-location">Calgary, AB & San Francisco, CA<br>Remote across US and Canada</div>
+        <div class="contact-location">Calgary, AB<br>Remote across US and Canada</div>
       </div>
       <div class="contact-cta">
-        <p class="contact-intro">If your team is navigating the gap between product decisions and business outcomes, such as pricing that&rsquo;s leaking, ops that don&rsquo;t scale, or AI investments with unclear ROI, let&rsquo;s talk. I&rsquo;ve worked through those problems across logistics, M&amp;A SaaS, edtech, and healthcare. The conversation is free.</p>
+        <p class="contact-intro">If your team is navigating the gap between product decisions and business outcomes, such as pricing that&rsquo;s leaking, ops that don&rsquo;t scale, or AI investments with unclear ROI, let&rsquo;s talk. I&rsquo;ve worked through those problems across logistics, M&amp;A SaaS, edtech, and healthcare.</p>
       </div>
     </div>
   </div>

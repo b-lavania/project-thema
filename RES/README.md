@@ -71,7 +71,7 @@ Cost display uses approximate per-token rates; Gemini estimates assume Flash pri
 ## Resume layout (PDF / DOCX)
 
 - Output is **letter size**, typically **1–2 pages** depending on role count and profile length.
-- **PDF:** each experience/project block uses `page-break-inside: avoid` so a role title is not orphaned with bullets on the next page.
+- **PDF:** The Work roles may split across pages (bullets can continue on the next page); title/dates row stays together. Side Builds still use `page-break-inside: avoid` per project. Optional hard breaks: sidebar “Break before role #” and `---PAGEBREAK---` in experience text.
 - **DOCX:** role header, company description, and summary use `keep_with_next` where possible.
 - **Manual page breaks (sidebar “PDF layout”):** checkboxes to start a new page before How I Work, The Work, Side Builds, or Credentials; optional “break before role #” (1-based).
 - **Power user:** put a line containing only `---PAGEBREAK---` in an experience block to force a break before the following content (stripped from DOCX).

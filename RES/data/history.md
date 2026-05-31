@@ -65,6 +65,96 @@ Goal: Produce a one-page, ATS-safe cover letter that can be pasted directly into
 
 ## Auto log
 
+### Co. - PM
+- **Date**: 2026-05-30
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 60,840
+- **Approx cost**: $0.011
+- **Outputs**: Resume, Cover Letter
+
+
+### Co. - PM
+- **Date**: 2026-05-29
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 60,474
+- **Approx cost**: $0.011
+- **Outputs**: Resume, Cover Letter
+
+
+### Client Co. - PM
+- **Date**: 2026-05-29
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 54,632
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### Client Co. - PM
+- **Date**: 2026-05-29
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 55,515
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### Your client - PM
+- **Date**: 2026-05-29
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 55,016
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### Elastic - PM
+- **Date**: 2026-05-28
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 51,823
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### Elastic - PM
+- **Date**: 2026-05-28
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 53,881
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### Robots & Pencils - PM
+- **Date**: 2026-05-28
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 56,824
+- **Approx cost**: $0.011
+- **Outputs**: Resume, Cover Letter
+
+
+### Nylas - Product Manager
+- **Date**: 2026-05-27
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 54,726
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
+### SMB Deal Hunter - Chief of Staff
+- **Date**: 2026-05-27
+- **Track**: Chief of Staff
+- **JD source**: Pasted Text
+- **Tokens used**: 50,686
+- **Approx cost**: $0.010
+- **Outputs**: Resume, Cover Letter
+
+
 ### your client - PM
 - **Date**: 2026-05-27
 - **Track**: Product/AI

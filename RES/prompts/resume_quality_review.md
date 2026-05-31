@@ -38,6 +38,8 @@ RULES
 - PM Signal: market/user insight -> decision -> shipped product -> outcome. Penalize bullets that lead with Built, Engineered, Automated, Deployed, Architected, Led implementation, Spearheaded.
 - JD Fit: uses the employer's exact pain, not generic PM language.
 - Builder-Heavy Risk: High if >40% of bullets start with build verbs OR the first bullet in a role is implementation-heavy OR Quick Take talks more about past systems than employer pain.
+- Quick Take: Penalize any digit, percentage, dollar amount, time duration, or x/× multiplier. Penalize em-dashes, en-dashes, or clause-break dashes. Penalize tool proper nouns (Heap, Segment, Mixpanel, PyPSA) or proof-point echoes from the narrative brief. Quick Take is positioning only; metrics and tools belong in How I Work and The Work.
+- How I Work: Penalize generic duty blurbs with no method or tool grounding. Expect a discover→decide→build→measure pipeline; at least three statements should name a concrete method (e.g. opportunity maps, STP, OR, MMM, Segment). Flag tool laundry lists ("used Heap, Mixpanel...") with no decision described.
 - Suggest concrete rewrites, not vague feedback.
 - Do NOT invent metrics. Use only what appears in the generated resume.
 ---USER---

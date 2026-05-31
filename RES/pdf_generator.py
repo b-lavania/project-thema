@@ -4,7 +4,13 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML, CSS
 
-from generator import PAGE_BREAK_MARKER, normalize_pdf_breaks
+from generator import (
+    PAGE_BREAK_MARKER,
+    bold_anchor_words_html,
+    bold_first_metric_html,
+    normalize_pdf_breaks,
+    normalize_quick_take_text,
+)
 
 TEMPLATE_DIR = Path(__file__).resolve().parent / "assets"
 
@@ -20,11 +26,12 @@ def strip_coaching_notes(text):
 
 
 def parse_bullet_line(line):
-    """Bold the label in 'Label: Rest of the bullet'."""
+    """Bold PM MOVE label and the first metric in the bullet body."""
     parts = line.split(":", 1)
-    if len(parts) == 2 and len(parts[0].split()) <= 5: # likely a label
-        return f"<span class='skill-label'>{parts[0].strip()}:</span> {parts[1].strip()}"
-    return line
+    if len(parts) == 2 and len(parts[0].split()) <= 5:
+        body = bold_first_metric_html(parts[1].strip())
+        return f"<span class='skill-label'>{parts[0].strip()}:</span> {body}"
+    return bold_first_metric_html(line)
 
 
 def _is_page_break_line(line):
@@ -37,18 +44,52 @@ def _is_condensed_role(text):
     return bool(re.match(r'^.+\s+@\s+.+\s+\(.+\)$', text.strip()))
 
 
+def _extract_condensed_dates(condensed_text):
+    """Extract title_company and simplified dates from condensed role string.
+    
+    Input:  'Title @ Company (Feb 2022 - May 2024 (includes ...))'
+    Output: ('Title @ Company', '2022–2024')
+    """
+    # Match: Title @ Company (dates...)
+    match = re.match(r'^(.+)\s+@\s+(.+)\s+\((.+)\)$', condensed_text.strip())
+    if not match:
+        return condensed_text, ""
+    
+    title = match.group(1).strip()
+    company = match.group(2).strip()
+    dates_raw = match.group(3).strip()
+    
+    # Strip nested parenthetical notes: "Feb 2022 - May 2024 (includes...)" → "Feb 2022 - May 2024"
+    dates_clean = re.sub(r'\s*\([^)]*\)', '', dates_raw).strip()
+    
+    # Simplify to year range: extract years (4-digit numbers)
+    years = re.findall(r'\b(20\d{2})\b', dates_clean)
+    if len(years) >= 2:
+        dates_simplified = f"{years[0]}–{years[-1]}"
+    elif len(years) == 1:
+        dates_simplified = years[0]
+    else:
+        dates_simplified = dates_clean  # fallback
+    
+    return f"{title} @ {company}", dates_simplified
+
+
 def _parse_role_block(role_text, page_break_before=False):
     """Parse one experience role chunk into template dict."""
     clean_role = strip_coaching_notes(role_text)
     lines = []
     pending_break = page_break_before
+    saw_content = False
     for raw in clean_role.split("\n"):
         stripped = raw.strip()
         if not stripped:
             continue
         if _is_page_break_line(stripped):
-            pending_break = True
+            # Leading marker before any role lines would orphan "The Work" heading
+            if saw_content:
+                pending_break = True
             continue
+        saw_content = True
         lines.append(stripped)
 
     if not lines:
@@ -56,9 +97,10 @@ def _parse_role_block(role_text, page_break_before=False):
 
     # Check if this is a condensed role (single line)
     if len(lines) == 1 and _is_condensed_role(lines[0]):
+        title_company, dates_location = _extract_condensed_dates(lines[0])
         return {
-            "title_company": lines[0],
-            "dates_location": "",
+            "title_company": title_company,
+            "dates_location": dates_location,
             "company_desc": "",
             "summary": "",
             "bullets": [],
@@ -74,7 +116,7 @@ def _parse_role_block(role_text, page_break_before=False):
         title_company = header_parts[0].strip()
         dates_location = ", ".join(p.strip() for p in header_parts[1:])
 
-    company_desc = lines[1] if len(lines) > 1 else ""
+    company_desc = bold_anchor_words_html(lines[1]) if len(lines) > 1 else ""
     summary = lines[2] if len(lines) > 2 else ""
     bullets = []
     for line in lines[3:]:
@@ -92,12 +134,13 @@ def _parse_role_block(role_text, page_break_before=False):
     }
 
 
-def create_formatted_pdf(
+def render_resume_pdf(
     output_path,
     resume_sections,
     location="Sunnyvale, CA",
     include_scrum=False,
     pdf_breaks=None,
+    compact_pdf=False,
 ):
     """
     Build a letter-size resume PDF (typically 1-2 pages) by rendering template.html
@@ -114,9 +157,11 @@ def create_formatted_pdf(
     env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))
     template = env.get_template("template.html")
 
-    mission_text = resume_sections.get("mission", "")
+    mission_text = normalize_quick_take_text(resume_sections.get("mission", ""))
     mission_lines = [l.strip() for l in mission_text.split("\n") if l.strip()]
     tagline = mission_lines[0] if mission_lines else ""
+    if tagline and " - " in tagline and ": " not in tagline[: tagline.find(" - ") + 1]:
+        tagline = tagline.replace(" - ", ": ", 1)
     mission_body = "\n".join(mission_lines[1:]) if len(mission_lines) > 1 else ""
 
     skills_raw = resume_sections.get("skills", "")
@@ -143,11 +188,12 @@ def create_formatted_pdf(
                 chunk = chunk.strip()
                 if not chunk:
                     continue
-                parsed = _parse_role_block(
-                    chunk,
-                    page_break_before=role_break or chunk_i > 0,
-                )
+                want_break = role_break or chunk_i > 0
+                parsed = _parse_role_block(chunk, page_break_before=want_break)
                 if parsed:
+                    # Never break before the first role (avoids orphan section title)
+                    if not experience_list and parsed.get("page_break_before"):
+                        parsed = {**parsed, "page_break_before": False}
                     experience_list.append(parsed)
 
     projects_raw = resume_sections.get("projects", "")
@@ -160,14 +206,16 @@ def create_formatted_pdf(
         for line in proj_clean.split("\n"):
             stripped = line.strip()
             if _is_page_break_line(stripped):
-                pending_proj_break = True
+                if current_title is not None:
+                    pending_proj_break = True
                 continue
             if not stripped:
                 if current_title:
+                    proj_break = pending_proj_break and bool(projects_list)
                     projects_list.append({
                         "title": current_title,
                         "bullets": current_bullets,
-                        "page_break_before": pending_proj_break,
+                        "page_break_before": proj_break,
                     })
                     current_title = None
                     current_bullets = []
@@ -179,10 +227,11 @@ def create_formatted_pdf(
                 bullet = re.sub(r'^-\s*', '', stripped)
                 current_bullets.append(parse_bullet_line(bullet))
         if current_title:
+            proj_break = pending_proj_break and bool(projects_list)
             projects_list.append({
                 "title": current_title,
                 "bullets": current_bullets,
-                "page_break_before": pending_proj_break,
+                "page_break_before": proj_break,
             })
 
     html_content = template.render(
@@ -194,9 +243,31 @@ def create_formatted_pdf(
         projects=projects_list,
         include_scrum=include_scrum,
         break_sections=break_sections,
+        compact_pdf=compact_pdf,
     )
 
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    HTML(string=html_content, base_url=str(TEMPLATE_DIR)).write_pdf(output_path)
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+    doc = HTML(string=html_content, base_url=str(TEMPLATE_DIR)).render()
+    page_count = len(doc.pages)
+    doc.write_pdf(output_path)
+    return output_path, page_count
 
-    return output_path
+
+def create_formatted_pdf(
+    output_path,
+    resume_sections,
+    location="Sunnyvale, CA",
+    include_scrum=False,
+    pdf_breaks=None,
+    compact_pdf=False,
+):
+    """Build PDF; returns output path only (backward compatible)."""
+    path, _page_count = render_resume_pdf(
+        output_path,
+        resume_sections,
+        location=location,
+        include_scrum=include_scrum,
+        pdf_breaks=pdf_breaks,
+        compact_pdf=compact_pdf,
+    )
+    return path

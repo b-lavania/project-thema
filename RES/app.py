@@ -22,6 +22,9 @@ from generator import (
     generate_profile_angle,
     generate_profile_with_lint,
     normalize_pdf_breaks,
+    extract_condensed_role_line,
+    QUICK_TAKE_TOOL_NAMES,
+    quick_take_has_metric,
     generate_skills_statements,
     generate_experience_bullets,
     generate_personal_projects,
@@ -31,7 +34,15 @@ from generator import (
     PAGE_BREAK_MARKER,
 )
 from doc_generator import create_formatted_doc, extract_coaching_notes, strip_coaching_notes
-from pdf_generator import create_formatted_pdf
+from pdf_generator import create_formatted_pdf, render_resume_pdf
+from ats_coverage import check_keyword_coverage, jd_tools_supported, parse_extracted_keywords
+from export_guardrails import (
+    MAX_PDF_PAGES,
+    apply_two_page_compact,
+    ats_readiness_checks,
+    compact_resume_sections,
+)
+from outcomes import append_application_record, render_outcomes_tab
 
 # ---------------------------------------------------------------------------
 # Path resolution (P0-PATH)
@@ -99,31 +110,6 @@ def extract_role_blocks(master_context):
     return blocks
 
 
-def extract_condensed_role_line(role_block: str) -> str:
-    """Extract title, org, dates from role block for condensed display."""
-    lines = role_block.split("\n")
-    title = ""
-    company = ""
-    dates = ""
-    
-    for line in lines:
-        # Extract title from header line (### ROLE X: Title)
-        if line.startswith("### ROLE") and ":" in line:
-            title = line.split(":", 1)[1].strip()
-        # Or from explicit Title field
-        elif line.startswith("- **Title**:"):
-            title = line.split(":", 1)[1].strip()
-        elif line.startswith("- **Company**:"):
-            company = line.split(":", 1)[1].strip().split("—")[0].strip()
-        elif line.startswith("- **Dates**:"):
-            dates = line.split(":", 1)[1].strip()
-    
-    if not title or not company or not dates:
-        return f"Role information incomplete (title={bool(title)}, company={bool(company)}, dates={bool(dates)})"
-    
-    return f"{title} @ {company} ({dates})"
-
-
 SCRUM_KEYWORDS = {"scrum", "agile", "csm", "cspo", "certified scrum", "sprint planning"}
 
 
@@ -165,28 +151,66 @@ ABSTRACT_NOUNS = ["systemic breakdowns", "operational trust", "measurable busine
 
 
 def lint_quick_take(mission_text: str) -> list[str]:
-    """Lint Quick Take for Gemini-specific corporate patterns."""
+    """Enhanced Quick Take linting with structure validation."""
     import re
     flags = []
-    lower = mission_text.lower()
+    lines = [l.strip() for l in mission_text.split("\n") if l.strip()]
     
-    # Check for Gemini banned verbs
+    # Structure check
+    if len(lines) < 2:
+        flags.append("⚠️ Structure: Must have tagline + paragraph (2+ lines)")
+        return flags
+    
+    tagline = lines[0]
+    paragraph = " ".join(lines[1:])
+    lower = paragraph.lower()
+    
+    # Tagline format check
+    if " for " not in tagline.lower():
+        flags.append("⚠️ Tagline: Should list domain areas (e.g., 'for marketplaces, AI workflows')")
+    
+    # Paragraph length check
+    word_count = len(paragraph.split())
+    if word_count > 40:
+        flags.append(f"⚠️ Length: Paragraph is {word_count} words (target: ≤40)")
+    
+    # Capability verb check
+    capability_verbs = ["Fixes", "Rebuilds", "Streamlines", "Accelerates", "Optimizes", "Transforms"]
+    if not any(paragraph.startswith(verb) for verb in capability_verbs):
+        flags.append(f"⚠️ Structure: Should start with capability verb (Fixes, Rebuilds, Streamlines, etc.)")
+    
+    # Dash check (Quick Take uses periods between clauses)
+    if re.search(r"[—–]", mission_text) or re.search(r"(?<!\w)\s-\s(?!\w)", paragraph):
+        flags.append("🔴 Dashes: Use periods between clauses, not em-dash or space-hyphen-space")
+
+    # Metric check (should have none in tagline or paragraph)
+    if quick_take_has_metric(mission_text):
+        flags.append("🔴 Critical: Contains metrics (belong in How I Work / The Work only)")
+
+    # Tool names belong in How I Work / The Work
+    lower_all = mission_text.lower()
+    tools_found = [t for t in QUICK_TAKE_TOOL_NAMES if t in lower_all]
+    if tools_found:
+        flags.append(
+            f"⚠️ Tools in Quick Take: {', '.join(sorted(set(tools_found)))} — move to How I Work"
+        )
+    
+    # Gemini banned verbs
     for verb in GEMINI_BANNED_VERBS:
         if verb in lower:
-            flags.append(f"Gemini fog: '{verb}'")
+            flags.append(f"🔴 Gemini fog: '{verb}' (use concrete language)")
     
-    # Check for abstract nouns
+    # Abstract nouns
     for noun in ABSTRACT_NOUNS:
         if noun in lower:
-            flags.append(f"Abstract language: '{noun}'")
+            flags.append(f"⚠️ Abstract: '{noun}' (use specific systems/tools)")
     
-    # Check for company names (CamelCase or ALLCAPS words)
+    # Company names check
     potential_names = re.findall(r'\b[A-Z][a-z]+[A-Z][a-z]+\b|\b[A-Z]{2,}\b', mission_text)
-    # Filter out common role titles
     common_titles = {"PM", "AI", "ML", "API", "UI", "UX", "CEO", "CTO", "VP"}
     potential_names = [n for n in potential_names if n not in common_titles]
     if potential_names:
-        flags.append(f"Possible company name: {', '.join(potential_names)}")
+        flags.append(f"🔴 Company name: {', '.join(potential_names)}")
     
     return flags
 
@@ -357,65 +381,48 @@ def rerender_resume_files(
     experience_blocks=None,
     projects_text=None,
     pdf_breaks=None,
+    compact_pdf=None,
+    *,
+    use_compact_sections=False,
 ):
-    """Rebuild DOCX/PDF from stored sections without full LLM regen."""
+    """Rebuild DOCX/PDF from stored sections without full LLM regen. Returns PDF page count."""
     sections = {
         "mission": mission_text if mission_text is not None else res["mission"],
         "skills": skills_text if skills_text is not None else res["skills"],
         "experience": experience_blocks if experience_blocks is not None else res["experience_blocks"],
         "projects": projects_text if projects_text is not None else res.get("projects", ""),
     }
+    if use_compact_sections or res.get("compact_applied"):
+        sections = compact_resume_sections(
+            sections,
+            max_bullets_per_role=3,
+            omit_projects=res.get("omit_projects_for_pdf", False),
+        )
     breaks = pdf_breaks if pdf_breaks is not None else res.get("pdf_breaks") or normalize_pdf_breaks()
+    if res.get("compact_applied"):
+        breaks = normalize_pdf_breaks()
+    compact = compact_pdf if compact_pdf is not None else res.get("compact_pdf", False)
     loc = LOCATION_OPTIONS.get(st.session_state.get("location_label", ""), "Sunnyvale, CA")
     include_scrum = jd_requires_scrum(st.session_state.get("jd_text", ""))
     create_formatted_doc(
         res["doc_path"], sections, location=loc, include_scrum=include_scrum, pdf_breaks=breaks
     )
-    create_formatted_pdf(
-        res["pdf_path"], sections, location=loc, include_scrum=include_scrum, pdf_breaks=breaks
+    _path, page_count = render_resume_pdf(
+        res["pdf_path"],
+        sections,
+        location=loc,
+        include_scrum=include_scrum,
+        pdf_breaks=breaks,
+        compact_pdf=compact,
     )
+    return page_count
 
 
-def check_keyword_coverage(extracted_keywords_text, combined_output):
-    """Check which extracted JD duties/requirements appear in the generated output.
-
-    Returns (found, missing, coverage_pct) where found/missing are lists of term strings.
-    Uses full-line matching first, then falls back to bigram matching.
-    """
-    if not extracted_keywords_text:
-        return [], [], 0.0
-
-    terms = []
-    for line in extracted_keywords_text.split("\n"):
-        match = re.match(r"^\d+\.\s+(.+)", line.strip())
-        if match:
-            terms.append(match.group(1).strip())
-
-    if not terms:
-        return [], [], 0.0
-
-    output_lower = combined_output.lower()
-    found, missing = [], []
-    for term in terms:
-        words = term.lower().split()
-        # Try full term, then slide a 3-word window, then bigrams
-        if term.lower() in output_lower:
-            found.append(term)
-        elif any(
-            " ".join(words[i:i+3]) in output_lower
-            for i in range(len(words) - 2)
-        ):
-            found.append(term)
-        elif any(
-            f"{words[i]} {words[i+1]}" in output_lower
-            for i in range(len(words) - 1)
-        ):
-            found.append(term)
-        else:
-            missing.append(term)
-
-    coverage = len(found) / len(terms) if terms else 0.0
-    return found, missing, coverage
+def rerender_and_update_pages(res, **kwargs):
+    """Re-export files and refresh pdf_page_count in gen_results."""
+    page_count = rerender_resume_files(res, **kwargs)
+    st.session_state.gen_results["pdf_page_count"] = page_count
+    return page_count
 
 
 def estimate_cost(usage_list, provider: str = "openai"):
@@ -552,10 +559,9 @@ div[data-testid="stText"] pre {
 st.set_page_config(page_title="Project Thema", layout="wide", page_icon="📄")
 inject_sf_professional_theme()
 st.title("Project Thema")
-st.caption("AI-powered resume and cover letter generator with ATS optimization")
 
 # Sidebar
-st.sidebar.title("⚙️ Configuration")
+st.sidebar.title("Configuration")
 st.sidebar.divider()
 
 init_provider_defaults()
@@ -640,6 +646,11 @@ st.sidebar.checkbox("Break before How I Work", key="break_before_skills")
 st.sidebar.checkbox("Break before The Work", key="break_before_experience")
 st.sidebar.checkbox("Break before Side Builds", key="break_before_projects")
 st.sidebar.checkbox("Break before Credentials", key="break_before_credentials")
+st.sidebar.checkbox(
+    "Compact PDF typography (tighter spacing)",
+    key="compact_pdf",
+    help="Ultra-dense layout: 10pt font, 1.24 line-height, minimal margins. Use if default spacing still exceeds 1 page.",
+)
 st.sidebar.number_input(
     "Break before role # (0 = none)",
     min_value=0,
@@ -658,6 +669,14 @@ st.sidebar.checkbox("Skip quality review", key="skip_quality_review")
 st.sidebar.checkbox("Skip cover letter", key="skip_cover_letter")
 st.sidebar.checkbox("Skip custom Q&A", key="skip_custom_qa")
 
+st.sidebar.divider()
+st.sidebar.markdown("<p style='color: #dc3545; font-weight: 600; margin-bottom: 4px;'>Danger Zone</p>", unsafe_allow_html=True)
+if st.sidebar.button("Kill App", key="kill_app_btn", use_container_width=True):
+    import sys
+    st.sidebar.error("Shutting down...")
+    sys.stdout.flush()
+    os._exit(0)
+
 # Load master context once
 if "master_context" not in st.session_state:
     st.session_state.master_context = load_master_context()
@@ -669,7 +688,14 @@ if not st.session_state.master_context:
 # ---------------------------------------------------------------------------
 # TABS
 # ---------------------------------------------------------------------------
-tab_job, tab_questions, tab_generate = st.tabs(["📋 Job Details", "❓ Application Questions", "🚀 Generate & Output"])
+tab_job, tab_questions, tab_generate, tab_outcomes = st.tabs(
+    [
+        "📋 Job Details",
+        "❓ Application Questions",
+        "🚀 Generate & Output",
+        "📊 Outcomes",
+    ]
+)
 
 # --- TAB 1: Job Details ---
 with tab_job:
@@ -748,21 +774,36 @@ with tab_job:
             st.success("✅ All skipped roles set to condensed")
             st.rerun()
     
-    # Display role selection radios
-    for role_key in all_role_blocks.keys():
-        # Extract short display name
-        display_name = role_key.replace("ROLE ", "Role ")
-        
-        current_selection = st.session_state.role_selections.get(role_key, "skip")
-        selection = st.radio(
-            display_name,
-            options=["full", "condensed", "skip"],
-            index=["full", "condensed", "skip"].index(current_selection),
-            key=f"role_radio_{role_key}",
-            horizontal=True,
-            format_func=lambda x: {"full": "✅ Full", "condensed": "📝 Condensed", "skip": "❌ Skip"}[x]
-        )
-        st.session_state.role_selections[role_key] = selection
+    # Selection summary
+    full_count = sum(1 for v in st.session_state.role_selections.values() if v == "full")
+    condensed_count = sum(1 for v in st.session_state.role_selections.values() if v == "condensed")
+    skip_count = sum(1 for v in st.session_state.role_selections.values() if v == "skip")
+    
+    st.markdown(f"""
+    <div style='padding: 12px; background: #F3F4F6; border-radius: 8px; margin: 12px 0; border-left: 4px solid #3B82F6;'>
+        <strong style='color: #1F2937;'>Selection Summary:</strong> 
+        <span style='color: #059669;'>✅ {full_count} Full</span> | 
+        <span style='color: #D97706;'>📝 {condensed_count} Condensed</span> | 
+        <span style='color: #DC2626;'>❌ {skip_count} Skipped</span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Display role selection radios (collapsible)
+    with st.expander("🎯 Configure Role Display", expanded=False):
+        for role_key in all_role_blocks.keys():
+            # Extract short display name
+            display_name = role_key.replace("ROLE ", "Role ")
+            
+            current_selection = st.session_state.role_selections.get(role_key, "skip")
+            selection = st.radio(
+                display_name,
+                options=["full", "condensed", "skip"],
+                index=["full", "condensed", "skip"].index(current_selection),
+                key=f"role_radio_{role_key}",
+                horizontal=True,
+                format_func=lambda x: {"full": "✅ Full", "condensed": "📝 Condensed", "skip": "❌ Skip"}[x]
+            )
+            st.session_state.role_selections[role_key] = selection
 
 # --- TAB 2: Application Questions ---
 with tab_questions:
@@ -824,11 +865,15 @@ with tab_generate:
                 extracted_keywords, usage = extract_jd_keywords(llm, jd)
                 usage_log.append(usage)
 
-                # Parse duties section for skills statements
-                jd_duties = ""
-                if "DUTIES:" in extracted_keywords:
+                # Parse duties / tools for skills + ATS
+                parsed_kw = parse_extracted_keywords(extracted_keywords)
+                jd_duties = "\n".join(
+                    f"{i}. {d}" for i, d in enumerate(parsed_kw["duties"], start=1)
+                )
+                if not jd_duties and "DUTIES:" in extracted_keywords:
                     duties_part = extracted_keywords.split("REQUIREMENTS:")[0]
                     jd_duties = duties_part.replace("DUTIES:", "").strip()
+                jd_tools = parsed_kw["tools"]
 
                 # Step 2: Use role selections from UI
                 st.write("Processing role selections...")
@@ -907,7 +952,28 @@ with tab_generate:
                 # Step 5: Skills statements (use extracted duties if available)
                 st.write("Generating skills statements...")
                 skills_input = jd_duties if jd_duties else jd[:3000]
-                skills, usage = generate_skills_statements(llm, skills_input, master_ctx, role, track, voice=voice, narrative_brief=narrative_brief)
+                jd_context_parts = []
+                if extracted_keywords:
+                    jd_context_parts.append(extracted_keywords.strip())
+                jd_paragraph_snippet = extract_jd_paragraphs(jd)[:600]
+                if jd_paragraph_snippet:
+                    jd_context_parts.append(
+                        f"Company/industry cues (JD opening):\n{jd_paragraph_snippet}"
+                    )
+                jd_context = "\n\n".join(jd_context_parts) if jd_context_parts else jd[:1500]
+                required_tools = jd_tools_supported(jd_tools)
+                skills, usage = generate_skills_statements(
+                    llm,
+                    skills_input,
+                    master_ctx,
+                    role,
+                    track,
+                    voice=voice,
+                    narrative_brief=narrative_brief,
+                    jd_context=jd_context,
+                    jd_tools=jd_tools,
+                    required_tools=required_tools,
+                )
                 usage_log.append(usage)
 
                 # Step 6: Experience bullets (per role) - handle full vs condensed
@@ -995,12 +1061,14 @@ with tab_generate:
 
                 pdf_filename = f"Application_{company.replace(' ', '_')}_{datetime.date.today().isoformat()}.pdf"
                 pdf_path = str(OUTPUT_DIR / pdf_filename)
-                create_formatted_pdf(
+                compact_pdf = bool(st.session_state.get("compact_pdf"))
+                _pdf_path, pdf_page_count = render_resume_pdf(
                     pdf_path,
                     resume_sections,
                     location=candidate_location,
                     include_scrum=include_scrum,
                     pdf_breaks=pdf_breaks,
+                    compact_pdf=compact_pdf,
                 )
 
                 # Step 10: Keyword coverage check (ATS-COV)
@@ -1009,7 +1077,7 @@ with tab_generate:
                     " ".join(experience_blocks),
                     cover_letter
                 ])
-                kw_found, kw_missing, kw_coverage = check_keyword_coverage(
+                kw_found, kw_missing, kw_coverage, kw_meta = check_keyword_coverage(
                     extracted_keywords, combined_output
                 )
 
@@ -1024,20 +1092,33 @@ with tab_generate:
                     total_tokens, total_cost
                 )
 
+                app_id = append_application_record(
+                    company, role, track, voice, kw_coverage
+                )
+
                 status.update(label="Generation complete!", state="complete", expanded=False)
 
             st.session_state.gen_results = {
                 "provider": provider,
+                "app_id": app_id,
                 "total_tokens": total_tokens,
                 "total_cost": total_cost,
                 "kw_coverage": kw_coverage,
                 "kw_found": kw_found,
                 "kw_missing": kw_missing,
+                "kw_tools_found": kw_meta.get("tools_found", []),
+                "kw_tools_missing": kw_meta.get("tools_missing", []),
+                "jd_tools": jd_tools,
+                "required_tools": required_tools,
                 "extracted_keywords": extracted_keywords,
                 "narrative_brief": narrative_brief,
                 "jd_pain": jd_pain,
                 "profile_angle": profile_angle,
                 "pdf_breaks": pdf_breaks,
+                "pdf_page_count": pdf_page_count,
+                "compact_pdf": compact_pdf,
+                "compact_applied": False,
+                "omit_projects_for_pdf": False,
                 "doc_path": doc_path,
                 "doc_filename": doc_filename,
                 "pdf_path": pdf_path,
@@ -1081,6 +1162,11 @@ with tab_generate:
             f"Generation complete! {res['total_tokens']:,} tokens used "
             f"(~${res['total_cost']:.3f}{_cost_note}) — {_prov}"
         )
+        if res.get("app_id"):
+            st.caption(
+                f"Logged application `{res['app_id']}` → data/applications.csv (stage: sent). "
+                "Update stage on the **Outcomes** tab."
+            )
 
         # ATS Keyword Coverage Report
         coverage_pct = int(res['kw_coverage'] * 100)
@@ -1113,6 +1199,38 @@ with tab_generate:
                     st.markdown(f"<div style='padding: 6px 12px; margin: 4px 0; background-color: rgba(255, 149, 0, 0.1); border-radius: 6px; font-size: 0.9rem;'>• {t}</div>", unsafe_allow_html=True)
             else:
                 st.caption("All keywords covered!")
+        if res.get("kw_tools_found"):
+            st.caption(
+                "Tools matched in resume: "
+                + ", ".join(res["kw_tools_found"][:12])
+                + (" …" if len(res["kw_tools_found"]) > 12 else "")
+            )
+        
+        # Actionable keyword suggestions
+        if res['kw_missing']:
+            st.markdown("### 🎯 Quick Wins")
+            st.caption("Add these keywords to improve ATS score:")
+            
+            # Show top 3 missing keywords with suggestions
+            for kw in res['kw_missing'][:3]:
+                # Suggest location based on keyword type
+                kw_lower = kw.lower()
+                if any(tool in kw_lower for tool in ['sql', 'python', 'figma', 'jira', 'tableau', 'aws', 'gcp', 'azure']):
+                    location = "Skills section (How I Work)"
+                    icon = "🎯"
+                elif any(domain in kw_lower for domain in ['saas', 'b2b', 'marketplace', 'pricing', 'trust', 'safety']):
+                    location = "Quick Take or experience bullets"
+                    icon = "✨"
+                else:
+                    location = "Experience bullets"
+                    icon = "💼"
+                
+                st.markdown(f"""
+                <div style='padding: 10px 14px; margin: 8px 0; background: #FEF3C7; border-left: 4px solid #F59E0B; border-radius: 6px;'>
+                    <strong style='color: #92400E;'>{icon} {kw}</strong><br>
+                    <span style='font-size: 0.85rem; color: #78350F;'>💡 Suggestion: Add to {location}</span>
+                </div>
+                """, unsafe_allow_html=True)
 
         with st.expander("JD Keywords Extracted", expanded=False):
             st.text(res['extracted_keywords'])
@@ -1159,6 +1277,97 @@ with tab_generate:
 
         st.divider()
 
+        pdf_pages = res.get("pdf_page_count")
+        if pdf_pages is not None:
+            if pdf_pages <= MAX_PDF_PAGES:
+                st.success(f"PDF: {pdf_pages} page{'s' if pdf_pages != 1 else ''}")
+            else:
+                st.warning(
+                    f"PDF: {pdf_pages} pages — recommended max {MAX_PDF_PAGES} for most ATS "
+                    f"and recruiters. You can still download; use Compact to 2 pages if you want to trim."
+                )
+
+        combined_export = "\n".join([
+            res.get("mission", ""),
+            res.get("skills", ""),
+            "\n".join(res.get("experience_blocks", [])),
+            res.get("projects", ""),
+        ])
+        coaching_in_output = "COACHING NOTE" in combined_export.upper()
+        readiness = ats_readiness_checks(
+            res.get("mission", ""),
+            res.get("skills", ""),
+            res.get("projects", ""),
+            res.get("kw_coverage", 0.0),
+            pdf_pages,
+            coaching_notes_in_output=coaching_in_output,
+        )
+        with st.expander("ATS readiness (in-app only — not printed on resume)", expanded=False):
+            for item in readiness:
+                icon = "✅" if item["ok"] else "❌"
+                st.markdown(f"{icon} **{item['label']}** — {item['detail']}")
+
+        if pdf_pages is not None and pdf_pages > MAX_PDF_PAGES:
+            if st.button("Compact to 2 pages", type="primary", use_container_width=True, key="compact_two_pages_btn"):
+                try:
+                    role_selections = st.session_state.get("role_selections", {})
+                    full_count = sum(1 for v in role_selections.values() if v == "full")
+
+                    # Progressive compaction: try less aggressive options first
+                    max_full_candidates = sorted(
+                        set([min(full_count, 4), min(full_count, 3), 2]), reverse=True
+                    )
+
+                    best_sections, best_selections, best_selected = None, None, None
+                    best_page_count = pdf_pages
+                    used_compact_typography = False
+
+                    for mf in max_full_candidates:
+                        sections, new_selections, updated_selected = apply_two_page_compact(
+                            res, role_selections, max_full=mf
+                        )
+                        page_count = rerender_resume_files(
+                            st.session_state.gen_results,
+                            experience_blocks=sections["experience"],
+                            projects_text=sections["projects"],
+                            pdf_breaks=normalize_pdf_breaks(),
+                            compact_pdf=False,
+                            use_compact_sections=True,
+                        )
+                        if page_count < best_page_count:
+                            best_sections, best_selections, best_selected = (
+                                sections, new_selections, updated_selected
+                            )
+                            best_page_count = page_count
+                            if page_count <= MAX_PDF_PAGES:
+                                break
+
+                    # Last resort: enable compact typography (smaller fonts / tighter spacing)
+                    if best_page_count > MAX_PDF_PAGES and best_sections:
+                        page_count = rerender_resume_files(
+                            st.session_state.gen_results,
+                            experience_blocks=best_sections["experience"],
+                            projects_text=best_sections["projects"],
+                            pdf_breaks=normalize_pdf_breaks(),
+                            compact_pdf=True,
+                            use_compact_sections=True,
+                        )
+                        best_page_count = page_count
+                        used_compact_typography = True
+
+                    st.session_state.role_selections = best_selections
+                    st.session_state.gen_results["compact_applied"] = True
+                    st.session_state.gen_results["omit_projects_for_pdf"] = True
+                    st.session_state.gen_results["compact_pdf"] = used_compact_typography
+                    st.session_state.gen_results["selected_roles"] = best_selected
+                    st.session_state.gen_results["experience_blocks"] = best_sections["experience"]
+                    st.session_state.gen_results["projects"] = best_sections["projects"]
+                    st.session_state.gen_results["pdf_breaks"] = normalize_pdf_breaks()
+                    st.session_state.gen_results["pdf_page_count"] = best_page_count
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Compact failed: {e}")
+
         # Download buttons
         st.subheader("📥 Download Documents")
         col_doc, col_pdf = st.columns(2)
@@ -1179,7 +1388,7 @@ with tab_generate:
                     file_name=res['pdf_filename'],
                     mime="application/pdf",
                     type="primary",
-                    use_container_width=True
+                    use_container_width=True,
                 )
 
         # Previews
@@ -1205,7 +1414,7 @@ with tab_generate:
             with col_apply:
                 if st.button("Apply profile edit to DOCX/PDF", use_container_width=True):
                     try:
-                        rerender_resume_files(res, mission_text=edited_mission)
+                        rerender_and_update_pages(res, mission_text=edited_mission)
                         st.session_state.gen_results["mission"] = edited_mission
                         st.success("Documents updated with your profile text.")
                         st.rerun()
@@ -1220,6 +1429,7 @@ with tab_generate:
                 st.caption("⚠️ Quick Take Issues:")
                 for flag in qt_flags:
                     st.markdown(f"<span style='color: #FF9500; font-size: 0.85rem;'>• {flag}</span>", unsafe_allow_html=True)
+                st.caption("Metrics and tools belong in **How I Work** and **The Work**, not Quick Take.")
 
         if regen_clicked:
             api_key = get_api_key()
@@ -1258,7 +1468,7 @@ with tab_generate:
                         master_context=_master,
                         run_lint=True,
                     )
-                    rerender_resume_files(res, mission_text=new_mission)
+                    rerender_and_update_pages(res, mission_text=new_mission)
                     st.session_state.gen_results["mission"] = new_mission
                     st.session_state.gen_results["regen_old_mission"] = old_mission
                 st.rerun()
@@ -1268,7 +1478,7 @@ with tab_generate:
         if st.button("↻ Re-export DOCX/PDF with current PDF layout", use_container_width=False):
             try:
                 breaks = build_pdf_breaks_from_session()
-                rerender_resume_files(res, pdf_breaks=breaks)
+                rerender_and_update_pages(res, pdf_breaks=breaks)
                 st.session_state.gen_results["pdf_breaks"] = breaks
                 st.success("Re-exported with sidebar PDF layout settings.")
                 st.rerun()
@@ -1285,18 +1495,18 @@ with tab_generate:
                 st.markdown("**Regenerated**")
                 st.text(res["mission"])
 
-        with st.expander("🎯 Skills Statements"):
+        with st.expander("🎯 Skills Statements", expanded=False):
             edited_skills = st.text_area("Edit How I Work", value=res["skills"], height=220, key="skills_edit_area")
             if st.button("Apply How I Work edit to DOCX/PDF", use_container_width=True, key="skills_apply_btn"):
                 try:
-                    rerender_resume_files(res, skills_text=edited_skills)
+                    rerender_and_update_pages(res, skills_text=edited_skills)
                     st.session_state.gen_results["skills"] = edited_skills
                     st.success("Documents updated with your skills text.")
                     st.rerun()
                 except Exception as e:
                     st.error(f"Update failed: {e}")
 
-        with st.expander(f"💼 Experience ({len(res['experience_blocks'])} roles)"):
+        with st.expander(f"💼 Experience ({len(res['experience_blocks'])} roles)", expanded=False):
             new_experience_blocks = []
             for i, block in enumerate(res['experience_blocks'], 1):
                 st.markdown(f"**Role {i}**")
@@ -1306,7 +1516,7 @@ with tab_generate:
                     st.divider()
             if st.button("Apply Experience edits to DOCX/PDF", use_container_width=True, key="exp_apply_btn"):
                 try:
-                    rerender_resume_files(res, experience_blocks=new_experience_blocks)
+                    rerender_and_update_pages(res, experience_blocks=new_experience_blocks)
                     st.session_state.gen_results["experience_blocks"] = new_experience_blocks
                     st.success("Documents updated with your experience text.")
                     st.rerun()
@@ -1314,11 +1524,11 @@ with tab_generate:
                     st.error(f"Update failed: {e}")
 
         if res.get("projects"):
-            with st.expander("🔧 Side Builds"):
+            with st.expander("🔧 Side Builds", expanded=False):
                 edited_projects = st.text_area("Edit Side Builds", value=res["projects"], height=220, key="projects_edit_area")
                 if st.button("Apply Side Builds edit to DOCX/PDF", use_container_width=True, key="projects_apply_btn"):
                     try:
-                        rerender_resume_files(res, projects_text=edited_projects)
+                        rerender_and_update_pages(res, projects_text=edited_projects)
                         st.session_state.gen_results["projects"] = edited_projects
                         st.success("Documents updated with your projects text.")
                         st.rerun()
@@ -1379,3 +1589,7 @@ with tab_generate:
 
 </div>
 """, unsafe_allow_html=True)
+
+# --- TAB 4: Outcomes ---
+with tab_outcomes:
+    render_outcomes_tab()
