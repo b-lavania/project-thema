@@ -13,31 +13,32 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Roboto+Mono:wght@400;500&display=swap"
     rel="stylesheet">
   <style>
     :root {
-      --ink: #0f1112;
-      --ink-mid: #3a3f45;
-      --ink-soft: #5c6370;
-      --ink-light: #8b92a0;
-      --rule: #e8eaed;
-      --teal: #0a5a46;
-      --teal-light: #f1f8f6;
-      --teal-mid: #1d9e75;
-      --amber: #ba7517;
-      --amber-light: #fdf6ec;
-      --blue: #185fa5;
-      --blue-light: #f0f7ff;
-      --page: #faf9f7;
+      --ink: #0a0c0d;
+      --ink-mid: #31363a;
+      --ink-soft: #52585f;
+      --ink-light: #7a818c;
+      --rule: rgba(0, 0, 0, 0.08);
+      --rule-light: rgba(0, 0, 0, 0.04);
+      --teal: #064d3b;
+      --teal-light: #f4f8f7;
+      --teal-mid: #148062;
+      --amber: #a3620d;
+      --amber-light: #fef9f2;
+      --blue: #12518c;
+      --blue-light: #f4f8fd;
+      --page: #f9f8f6;
       --white: #ffffff;
-      --mono: 'DM Mono', monospace;
-      --sans: 'DM Sans', sans-serif;
-      --serif: 'Fraunces', serif;
+      --mono: 'Roboto Mono', monospace;
+      --sans: 'Hanken Grotesk', sans-serif;
       
-      --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
-      --shadow-md: 0 4px 12px rgba(0,0,0,0.04);
-      --radius: 12px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.8);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.01), 0 10px 15px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.9);
+      --shadow-lg: 0 20px 40px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,1);
+      --radius: 0px;
     }
 
     *, *::before, *::after {
@@ -53,21 +54,21 @@
 
     body {
       font-family: var(--sans);
-      font-size: 19px;
-      line-height: 1.65;
+      font-size: 18px;
+      line-height: 1.6;
       color: var(--ink);
       background: var(--page);
-      max-width: 1120px;
+      max-width: 1040px;
       margin: 0 auto;
       padding: 80px 40px 120px;
       -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.01em;
     }
 
     a {
       color: var(--blue);
       text-decoration: underline;
       text-underline-offset: 3px;
-      transition: color 0.2s ease;
     }
 
     a:hover {
@@ -83,41 +84,42 @@
       color: var(--white);
       padding: 12px 24px;
       z-index: 100;
-      transition: top 0.3s ease;
     }
     .skip-link:focus { top: 20px; }
 
     /* ── Typography ── */
     h1, h2, h3 {
-      font-family: var(--serif);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
+      font-family: var(--sans);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
       color: var(--ink);
     }
 
-    h1 { font-size: 58px; margin-bottom: 24px; }
-    h1 em { font-style: italic; font-weight: 300; color: var(--teal); }
+    h1 { font-size: 64px; margin-bottom: 32px; }
+    h1 em { font-style: italic; font-weight: 300; color: var(--teal-mid); }
     
-    h2 { font-size: 32px; margin-bottom: 20px; }
-    h3 { font-size: 24px; margin-bottom: 16px; }
+    h2 { font-size: 36px; margin-bottom: 24px; letter-spacing: -0.03em; }
+    h3 { font-size: 26px; margin-bottom: 18px; letter-spacing: -0.02em; }
 
     .kicker {
       font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: 0.1em;
+      font-size: 12px;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 16px;
+      color: var(--teal-mid);
+      margin-bottom: 20px;
       display: block;
+      font-weight: 500;
     }
 
     .subhead {
-      font-size: 20px;
+      font-size: 22px;
       color: var(--ink-mid);
-      margin-bottom: 32px;
-      max-width: 800px;
-      line-height: 1.5;
+      margin-bottom: 48px;
+      max-width: 760px;
+      line-height: 1.45;
+      letter-spacing: -0.02em;
     }
 
     /* ── Header & Hero ── */
@@ -134,21 +136,22 @@
     }
 
     .contact-card {
-      background: var(--white);
+      background: linear-gradient(to bottom, #ffffff, #fafaf9);
       border: 1px solid var(--rule);
       border-radius: var(--radius);
-      padding: 18px 20px;
-      box-shadow: var(--shadow-md);
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
       position: sticky;
       top: 40px;
     }
 
     .contact-name {
-      font-family: var(--serif);
-      font-size: 21px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      line-height: 1.15;
+      font-family: var(--sans);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1;
+      letter-spacing: -0.03em;
     }
 
     .contact-details {
@@ -184,28 +187,36 @@
     .btn {
       display: inline-block;
       padding: 12px 20px;
-      border-radius: 8px;
+      border-radius: 0;
       font-weight: 500;
       font-size: 15px;
       text-decoration: none;
-      transition: all 0.2s ease;
       text-align: center;
       flex: 1;
     }
 
     .btn-primary {
-      background: var(--teal);
+      background: linear-gradient(to bottom, var(--teal), #04382b);
       color: var(--white);
-      border: 1px solid var(--teal);
+      border: 1px solid #032b21;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1);
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
-    .btn-primary:hover { background: #084838; transform: translateY(-1px); }
+    .btn-primary:hover { 
+      background: linear-gradient(to bottom, #096d54, var(--teal));
+      border-color: #04382b;
+      color: var(--white);
+    }
 
     .btn-secondary {
-      background: var(--white);
+      background: linear-gradient(to bottom, #ffffff, #f9f9f8);
       color: var(--ink);
       border: 1px solid var(--rule);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02), inset 0 1px 0 #fff;
+      font-weight: 500;
     }
-    .btn-secondary:hover { border-color: var(--ink); }
+    .btn-secondary:hover { border-color: var(--ink-light); background: #fdfdfc; }
 
     /* ── Logo Strip ── */
     .brand-strip {
@@ -235,43 +246,41 @@
       height: 64px;
       width: auto;
       filter: grayscale(1) opacity(0.7);
-      transition: all 0.3s ease;
     }
-    .logo-img:hover { filter: none; opacity: 1; }
 
     /* ── Impact Dashboard ── */
     .impact-dashboard {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 32px;
       margin-bottom: 80px;
     }
 
     .impact-card {
-      background: var(--white);
+      background: linear-gradient(to bottom, #ffffff, #fafaf9);
       border: 1px solid var(--rule);
       border-radius: var(--radius);
-      padding: 40px 32px;
+      padding: 48px 32px;
       text-align: center;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.2s ease;
+      box-shadow: var(--shadow-md);
     }
-    .impact-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
 
     .impact-num {
-      font-family: var(--serif);
-      font-size: 38px;
-      font-weight: 600;
-      color: var(--teal);
+      font-family: var(--sans);
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--teal-mid);
       line-height: 1;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       display: block;
+      letter-spacing: -0.05em;
     }
 
     .impact-desc {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--ink-soft);
-      line-height: 1.4;
+      line-height: 1.5;
+      font-weight: 500;
     }
 
     /* ── Narrative Sections ── */
@@ -282,7 +291,7 @@
       margin-bottom: 80px;
     }
 
-    .narrative h2 { border-bottom: 1px solid var(--rule); padding-bottom: 16px; margin-bottom: 32px; }
+    .narrative h2 { border-bottom: 1px solid var(--rule-light); padding-bottom: 16px; margin-bottom: 40px; }
 
     .narrative-logo {
       height: 60px;
@@ -300,32 +309,25 @@
     }
 
     .sys-card {
-      background: var(--white);
+      background: linear-gradient(to bottom, #ffffff, #fafaf9);
       border: 1px solid var(--rule);
       border-radius: var(--radius);
       padding: 32px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
       position: relative;
       overflow: hidden;
+      box-shadow: var(--shadow-md);
     }
 
-    .sys-card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 4px;
-    }
-    .sys-cv::after { background: var(--teal); }
-    .sys-or::after { background: var(--amber); }
-    .sys-ai::after { background: var(--blue); }
-
-    .sys-icon { font-size: 26px; line-height: 1.2; flex-shrink: 0; }
+    .sys-icon { font-size: 32px; line-height: 1; flex-shrink: 0; }
     .sys-tag {
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.12em;
+      font-weight: 600;
     }
     .sys-cv .sys-tag { color: var(--teal); }
     .sys-or .sys-tag { color: var(--amber); }
@@ -344,23 +346,26 @@
     /* ── Evidence Box ── */
     .evidence-box {
       background: var(--teal-light);
-      border-left: 6px solid var(--teal);
-      padding: 48px;
+      border-left: 4px solid var(--teal-mid);
+      padding: 48px 64px;
       border-radius: 0 var(--radius) var(--radius) 0;
       margin-bottom: 80px;
       font-style: italic;
-      color: var(--teal);
-      font-size: 21px;
-      line-height: 1.6;
+      color: var(--teal-mid);
+      font-size: 24px;
+      line-height: 1.5;
+      font-weight: 400;
+      letter-spacing: -0.01em;
     }
 
     /* ── Outcomes Table ── */
     .table-container {
-      background: var(--white);
+      background: linear-gradient(to bottom, #ffffff, #fafaf9);
       border: 1px solid var(--rule);
       border-radius: var(--radius);
-      padding: 40px;
-      margin-bottom: 32px;
+      padding: 48px;
+      margin-bottom: 48px;
+      box-shadow: var(--shadow-md);
     }
 
     .outcome-table {
@@ -392,9 +397,9 @@
     /* ── Growth & GTM Automation ── */
     .growth-section {
       margin-top: 48px;
-      margin-bottom: 64px;
+      margin-bottom: 80px;
       padding-top: 48px;
-      border-top: 2px solid var(--rule);
+      border-top: 1px solid var(--rule);
     }
     .growth-subkicker {
       color: var(--ink-soft);
@@ -416,13 +421,13 @@
       gap: 24px;
     }
     .growth-card {
-      background: var(--white);
+      background: linear-gradient(to bottom, #ffffff, #fafaf9);
       border: 1px solid var(--rule);
       border-radius: var(--radius);
-      padding: 24px;
+      padding: 32px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
       box-shadow: var(--shadow-sm);
     }
     .metric-row {
@@ -435,21 +440,23 @@
     .metric-pill {
       display: inline-flex;
       align-items: center;
-      border: 1px solid #c2dfd7;
-      border-radius: 999px;
+      border: 1px solid rgba(20, 128, 98, 0.15);
+      border-radius: 0;
       background: var(--teal-light);
-      color: var(--teal);
+      color: var(--teal-mid);
       font-family: var(--mono);
       font-size: 11px;
       line-height: 1.2;
-      padding: 5px 8px;
+      padding: 6px 10px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
     }
 
     /* ── Bottom Sections ── */
     .bottom-section {
       margin-top: 48px;
       padding-top: 48px;
-      border-top: 2px solid var(--rule);
+      border-top: 1px solid var(--rule);
     }
 
     .grid-2 {
@@ -459,13 +466,12 @@
     }
 
     .card-sm {
-      background: var(--white);
+      background: linear-gradient(to bottom, #ffffff, #fafaf9);
       border: 1px solid var(--rule);
       border-radius: var(--radius);
-      padding: 24px;
-      transition: all 0.2s ease;
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
     }
-    .card-sm:hover { border-color: var(--blue); transform: translateY(-2px); }
 
     /* ── Contact Reveal ── */
     .contact-reveal {
@@ -475,17 +481,9 @@
       cursor: pointer;
       color: var(--blue);
       font-size: 15px;
-      transition: color 0.2s ease;
     }
     .contact-reveal:hover { color: var(--teal); }
-    .contact-reveal::before {
-      content: '';
-      font-size: 12px;
-    }
-    .contact-reveal.revealed::before {
-      content: '';
-      color: var(--teal);
-    }
+
     .contact-reveal.revealed {
       cursor: default;
       color: var(--ink-mid);
@@ -506,12 +504,11 @@
       text-decoration: underline;
       text-underline-offset: 3px;
     }
-    .card-sm a.card-title:hover { color: var(--teal); }
     .card-desc { font-size: 14px; color: var(--ink-mid); line-height: 1.5; }
 
     /* ── Footer ── */
     footer {
-      margin-top: 48px;
+      margin-top: 64px;
       padding-top: 64px;
       border-top: 1px solid var(--rule);
       display: flex;
@@ -520,47 +517,10 @@
     }
 
     .footer-left { max-width: 500px; }
-    .footer-tag { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-soft); }
+    .footer-tag { font-family: var(--sans); font-style: italic; font-size: 20px; color: var(--ink-soft); }
 
     /* ── Scroll Progress Bar ── */
-    .scroll-progress {
-      position: fixed;
-      top: 0; left: 0;
-      width: 0%;
-      height: 3px;
-      background: var(--teal-mid);
-      z-index: 999;
-      transition: width 0.1s linear;
-    }
-
     /* ── Availability Badge ── */
-    .availability-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--teal);
-      background: var(--teal-light);
-      border: 1px solid #c2dfd7;
-      border-radius: 20px;
-      padding: 3px 8px;
-      margin-bottom: 10px;
-    }
-    .availability-badge::before {
-      content: '';
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--teal-mid);
-      flex-shrink: 0;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
-    }
 
     .contact-seeking {
       font-size: 12px;
@@ -583,19 +543,13 @@
       gap: 24px;
     }
     .principle {
-      background: var(--white);
+      background: linear-gradient(to bottom, #ffffff, #fafaf9);
       border: 1px solid var(--rule);
       border-radius: var(--radius);
-      padding: 28px;
+      padding: 32px;
       position: relative;
       overflow: hidden;
-    }
-    .principle::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 3px;
-      background: var(--teal-mid);
-      opacity: 0.5;
+      box-shadow: var(--shadow-md);
     }
     .principle-num {
       font-family: var(--mono);
@@ -621,17 +575,17 @@
 
     /* ── Bottom CTA ── */
     .bottom-cta {
-      background: var(--white);
+      background: linear-gradient(to bottom, #ffffff, #fafaf9);
       border: 1px solid var(--rule);
       border-radius: var(--radius);
-      padding: 28px 32px;
+      padding: 40px 48px;
       text-align: left;
       margin-top: 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 32px;
-      box-shadow: var(--shadow-sm);
+      gap: 48px;
+      box-shadow: var(--shadow-lg);
     }
     .bottom-cta h2 {
       color: var(--ink);
@@ -651,20 +605,18 @@
     }
     .btn-cta {
       display: inline-block;
-      background: var(--teal);
+      background: linear-gradient(to bottom, var(--teal), #084838);
       color: var(--white);
       font-weight: 700;
       font-size: 15px;
       padding: 12px 22px;
-      border-radius: 8px;
+      border-radius: 0;
       text-decoration: none;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(10,90,70,0.12);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.2);
       flex-shrink: 0;
     }
     .btn-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(10,90,70,0.18);
+      background: linear-gradient(to bottom, #128265, var(--teal));
       color: var(--white);
     }
 
@@ -683,7 +635,6 @@
 </head>
 
 <body>
-  <div class="scroll-progress" id="scrollProgress"></div>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header role="banner">
@@ -697,7 +648,6 @@
       </div>
 
       <div class="contact-card">
-        <div class="availability-badge">Open to opportunities</div>
         <div class="contact-name">Bob Lavania</div>
         <div class="contact-seeking">
           <strong>Founding Engineer · Head of Product · AI/ML</strong><br>
@@ -722,15 +672,15 @@
     <!-- Impact Dashboard -->
     <div class="impact-dashboard">
       <div class="impact-card">
-        <span class="impact-num" data-count="20" data-suffix="×">20×</span>
+        <span class="impact-num">20×</span>
         <p class="impact-desc">Faster quoting engine<br>1 hr → 3 min per job</p>
       </div>
       <div class="impact-card">
-        <span class="impact-num" data-count="85" data-suffix="%">85%</span>
+        <span class="impact-num">85%</span>
         <p class="impact-desc">Scheduling accuracy<br>Jobs finish in quoted window</p>
       </div>
       <div class="impact-card">
-        <span class="impact-num" data-count="50" data-prefix="~" data-suffix="%">~50%</span>
+        <span class="impact-num">~50%</span>
         <p class="impact-desc">Support deflection<br>Automated via SMS AI agent</p>
       </div>
     </div>
@@ -781,11 +731,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Evidence -->
-    <div class="evidence-box">
-      "I engineered this entire system as a single contributor, from mining data to defining the predictive frameworks and driving production deployment."
-    </div>
 
     <!-- How I Work -->
     <section class="how-i-work">
@@ -947,42 +892,6 @@
       });
     });
 
-    // Scroll progress bar
-    const bar = document.getElementById('scrollProgress');
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
-    }, { passive: true });
-
-    // Animated stat counters
-    const counters = document.querySelectorAll('.impact-num[data-count]');
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isObserving && entry.isIntersecting) {
-          entry.isObserving = true;
-          const el = entry.target;
-          const target = parseInt(el.dataset.count, 10);
-          const prefix = el.dataset.prefix || '';
-          const suffix = el.dataset.suffix || '';
-          const duration = 1200;
-          const startTime = performance.now();
-
-          function tick(now) {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            // ease-out cubic
-            const eased = 1 - Math.pow(1 - progress, 3);
-            const current = Math.round(eased * target);
-            el.textContent = prefix + current + suffix;
-            if (progress < 1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    counters.forEach(c => counterObserver.observe(c));
   </script>
 </body>
 

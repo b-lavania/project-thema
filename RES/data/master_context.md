@@ -38,7 +38,7 @@ This file consolidates all resume variants and portfolio metrics into a single s
 - **Pricing**: "Pricing problems are often decision architecture problems, not just monetization problems. Simplifying choices can be more valuable than optimizing price points." (Village Wellth) → Led me to consolidate 4 pricing tiers into 3, resulting in a 3x increase in take rate by eliminating plan confusion.
 - **Detection**: "Detection systems fail when users stop trusting the signal. Accuracy metrics alone are insufficient. Operational reliability matters more than theoretical performance." (Netsweeper) → Led me to freeze feature additions and aggressively prune high false-alert vectors, reducing alerts by 85% and restoring district trust.
 - **Energy/Infrastructure**: "Each workflow step surfaces a risk class the others cannot see. Deployability is a coupling problem — the product's job is to make those couplings explicit, comparable, and reviewable." (Project Epsilon) → Drove the architecture of the Scenario contract interface, eliminating model drift.
-- **HR / M&A integration**: "Legacy HRIS optimizes for payroll and ESS; M&A optimizes for rapid ingestion, normalized workforce truth, and diligence-ready answers. Integration beats replacement — source systems stay authoritative, the product connects and reports." (BVXpress HRIS) → Led adapter-first architecture, ingestion validation, and transaction dashboards instead of rip-and-replace migrations.
+- **HR / M&A integration**: "Legacy HRIS optimizes for payroll and ESS; M&A optimizes for rapid ingestion, normalized workforce truth, and diligence-ready answers. Integration beats replacement — source systems stay authoritative, the product connects and reports." (BVXpress HRIS — **shipped as a BVXpress product for ICI clients and acquired companies, not internal-only tooling**) → Led adapter-first architecture, ingestion validation, and transaction dashboards instead of rip-and-replace migrations.
 
 ---
 
@@ -56,7 +56,8 @@ This file consolidates all resume variants and portfolio metrics into a single s
 - **Product contexts**: Marketplaces, eCommerce, Risk & insurance, Applied tech (chatbots, voice agents, computer vision), HR Tech / HRIS (M&A workforce integration)
 - **Domains**: AI/Engineering, Marketplace Commerce, eCommerce, Risk & Insurance, Marketing Science, Operations Research, User Research, HR Tech & People Systems
 - **AI/Modeling Methods**: LLM pipelines, prompt orchestration, Computer Vision (CV), conversational/SMS agents, Bayesian Media Mix Modeling (MMM), Multi-Touch Attribution (MTA), Ridge Regression, Monte Carlo stress testing, PyPSA linear programming, 3D bin packing
-- **Product/Growth Methods**: Supply-demand balancing, checkout funnel optimization, pricing systems, entitlement logic, hypothesis testing, cohort analysis, STP (segmentation, targeting, positioning), GTM scaling
+- **Product/Growth Methods**: Supply-demand balancing, checkout funnel optimization, pricing systems, entitlement logic, hypothesis testing, **A/B testing and controlled experiments** (traffic splits, null-hypothesis framing), cohort analysis, STP (segmentation, targeting, positioning), GTM scaling, conversion lift, attribution modeling
+- **Product analytics & experimentation**: Deep background in product analytics, attribution modeling, and quantitative synthesis of product decisions from telemetry; tools include Mixpanel, Pendo, Heap, Segment, Microsoft Clarity, Hotjar; built **in-house analytics suites** (BVXpress) for customer behavior, profile/segment tests, and feature enhance-vs-deprecate decisions
 - **User research methods**: User interviews, focus groups, tree testing, opportunity maps, session replay, funnel diagnostics, clickable prototypes
 - **Market research / analytics**: Hypothesis testing, R, SQL, Media Mix Models, attribution models, STP
 - **HR / HCM (BVXpress HRIS — integration & product scope)**: Workday, SAP SuccessFactors, ADP (adapter targets); Frappe HRMS (payroll reference implementation); universal adapter pattern, normalized employee data model, transaction-ready workforce dashboards, bidirectional sync, event-driven updates, API-first diligence reporting
@@ -73,7 +74,7 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 1. **Discover** — Opportunity maps, focus groups, tree tests, user interviews, session replay (Heap, Microsoft Clarity, Hotjar), funnel diagnostics, clickable prototypes. Outcome: scope cuts and roadmap bets grounded in where users actually stall.
 2. **Decide** — STP, pricing architecture, tier consolidation, hypothesis framing, entitlement logic. Outcome: plan architecture and pricing UX that remove decision friction (not cosmetic label changes).
 3. **Build** — Operations research (3D bin packing, job-duration models), PyPSA linear programming, computer vision pipelines, conversational/SMS agents, LLM prompt orchestration, Cursor/Windsurf for MVP validation. Outcome: production systems that replace manual ops without proportional headcount.
-4. **Measure** — Segment, Mixpanel, cohort analysis, Bayesian media mix modeling (R, SQL), attribution and funnel instrumentation, Aha!/Pendo for in-product behavior. Outcome: what to kill, keep, or scale after launch.
+4. **Measure** — A/B tests and controlled rollouts (traffic redirects, null-hypothesis tests), Segment, Mixpanel, Pendo, Heap, Microsoft Clarity, Hotjar, cohort analysis, Bayesian media mix modeling (R, SQL), attribution and funnel instrumentation, in-house telemetry (BVXpress). Outcome: what to kill, keep, or scale after launch; conversion and attribution clarity for fractional clients.
 5. **Commercialize** — Real-time quoting engines, Stripe/Square payment flows, GTM automation (HubSpot, ActiveCampaign), lifecycle messaging, ARPU and take-rate levers. Outcome: unit economics and cash flow tied to product changes.
 
 **Industries (map JD industry terms here when truthful):** Transport and last-mile logistics, warehousing and fulfillment, construction materials marketplaces, finance and insurance, M&A and deal-structuring, healthcare and digital health, marketing attribution and e-commerce growth, energy and infrastructure planning, HR technology and workforce systems (M&A transaction readiness).
@@ -92,7 +93,7 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 
 8+ years in product management across B2B SaaS, AI, marketplaces, logistics, healthcare, and FinTech.
 
-- **2012–2021 (9 yrs)**: Built the product function from scratch at BVXpress — first PM hire, launched 5 products, 1,400+ users; also led product for an internal **HRIS built for M&A transaction readiness** (API-first workforce integration across acquisitions).
+- **2012–2021 (9 yrs)**: Built the product function from scratch at BVXpress — **employee #3 (first product hire)**; launched 5 products, 1,400+ users; also owned **HRIS for M&A transaction readiness** in the BVXpress suite. **The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling.**
 - **2022–2023**: Full-time PM at Netsweeper, shipping an AI content-compliance product for K-12.
 - **2022–2025 (concurrent)**: Fractional Product Lead across AI, logistics, FinTech, and healthcare startups.
 - **2024–Present**: Founding PM at Moovez/Quotely — logistics AI platform commercialized as a standalone SaaS.
@@ -102,13 +103,14 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 ## Professional Experience
 
 ### ROLE 1: Founding Product Manager
-- **Company**: Moovez — marketplace for last-mile delivery & moving (Calgary, AB; ~5 employees)
+- **Company**: Moovez — marketplace for last-mile delivery & moving (Calgary, AB)
+- **Company descriptor (resume)**: Last-mile moving marketplace; **employee #6 (first product hire)** — five employees before join.
 - **Title**: Founding Product Manager
 - **Dates**: Jan 2024 - Present
 - **Location**: Remote / Calgary, AB
-- **Tags**: `[0-to-1]`, `[Marketplace]`, `[AI/CV]`, `[Pricing]`, `[Operations]`, `[User Research]`, `[eCommerce-adjacent logistics]`
+- **Tags**: `[0-to-1]`, `[Marketplace]`, `[AI/CV]`, `[Pricing]`, `[Operations]`, `[User Research]`, `[eCommerce-adjacent logistics]`, `[Experimentation]`
 - **Research & analytics tooling (confirmed)**: Heap, Microsoft Clarity, Hotjar, Segment, focus groups, tree testing, opportunity maps
-- **Environment**: Reported directly to CEO. Product lead owning user research, conversions, and retention. Oversaw a team of 4 developers (1 direct report).
+- **Environment**: Reported directly to CEO. **Employee #6 (first product hire).** Product lead owning user research, conversions, retention, and experimentation. Oversaw a team of 4 developers (1 direct report).
 - **Problem**: Dispatchers were manually estimating job costs over the phone (60+ min per quote), causing margin erosion from inaccurate pricing and losing customers to faster competitors.
 - **Key Outcomes**: GMV $500k+; CAC ~$100; LTV $1,000+; Retention 12+ months; Fill rate ~93% (vs. ~70% industry avg). Time-to-quote reduced from ~1 hour to 3 minutes (20x faster).
 
@@ -123,14 +125,17 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 - Deployed SMS/Voice AI agent for automated intake, booking confirmations, and reschedules, deflecting 50% of support tickets with zero human intervention.
 - Built real-time pricing and payment flows (Stripe, Square) based on distance and volume, eliminating the major checkout bottleneck and reducing quote-to-payment drop-off.
 - Built opportunity maps for quote-to-booking; focus groups and tree tests plus session replay (Heap, Clarity, Hotjar) and event instrumentation (Segment) drove checkout simplification and intake prioritization — not tool-led discovery.
+- Ran a **controlled experiment** redirecting traffic to **automated quoting vs. manual quoting**, testing against the null hypothesis before scaling the automated quote path.
 - System successfully commercialized as Quotely (quoteperfectly.com), a standalone SaaS now sold to other logistics operators.
 
 ### ROLE 2: Fractional Product Consultant
 - **Company**: Various startups (Village Wellth, Liohan, e-commerce, insurance/finance, construction)
+- **Company descriptor (resume)**: Fractional product lead for early-stage startups; **often the only product hire**, turning operational complexity into scalable systems through experimentation, conversion lift, and attribution clarity (telemetry-driven decisions), plus hands-on data science and ops execution when needed.
 - **Dates**: Feb 2022 - May 2024 (includes short Liohan engagement, Jan–May 2024)
 - **Location**: Remote / Calgary, AB
-- **Tags**: `[Fractional]`, `[eCommerce]`, `[Risk/Insurance]`, `[Marketplace]`, `[User Research]`
-- **Research tooling (confirmed)**: Focus groups, tree testing, opportunity maps (across fractional engagements — pricing, funnel, onboarding, and positioning decisions)
+- **Tags**: `[Fractional]`, `[eCommerce]`, `[Risk/Insurance]`, `[Marketplace]`, `[User Research]`, `[Experimentation]`, `[Attribution]`
+- **Research tooling (confirmed)**: Focus groups, tree testing, opportunity maps (across fractional engagements — pricing, funnel, onboarding, positioning, **conversion experiments**, and **attribution** work)
+- **Experimentation & analytics scope**: Product analytics, funnel diagnostics, A/B-style tests and controlled rollouts where applicable; attribution modeling (including Bayesian MMM); conversion-lift work tied to pricing, onboarding, and GTM changes — not tool-led reporting.
 - **Liohan (Jan–May 2024, small engagement)**: Opportunity maps clarified problem spaces and sequenced bets before build; informed roadmap priorities and scope cuts.
 
 #### Village Wellth (M&A Financing Platform)
@@ -178,11 +183,13 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 ---
 
 ### ROLE 4: Product Manager (AI Vision)
-- **Company**: Netsweeper — web filtering & content intelligence platform (Waterloo, ON; ~40 employees)
+- **Company**: Netsweeper — web filtering & content intelligence platform (Waterloo, ON; ~40 employees; est. 1999 — not a startup)
+- **Company descriptor (resume)**: K-12 web filtering and content-intelligence platform (~40 employees); **only product hire on the team at the time**.
 - **Title**: Product Manager
 - **Dates**: Jul 2022 - 2023 (Full-Time)
 - **Location**: Remote / Waterloo, ON
 - **Tags**: `[AI/CV]`, `[Trust/Safety]`, `[Data Quality]`, `[User Research]`
+- **At join**: **Only product hire** on the team at the time (company not a startup).
 - **Research & roadmap tooling (confirmed)**: Aha!, focus groups, tree testing
 - **Problem**: A student-monitoring and content-compliance AI product was behind schedule, running on an outsourced engineering team, with a district client losing trust in the system due to high false-alert rates — staff were ignoring alerts because they couldn't trust the signal.
 
@@ -201,12 +208,15 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 ---
 
 ### ROLE 5: Product Manager & Chief of Staff
-- **Company**: BVXpress — deal structuring & valuation SaaS for M&A advisors, business brokers, and appraisers (Chicago, IL; ~5 employees)
+- **Company**: BVXpress — SaaS business unit within **ICI** (M&A advisory); deal structuring & valuation SaaS for advisors, business brokers, and appraisers (Chicago / Lincolnshire, IL)
+- **Company descriptor (resume)**: M&A deal-structuring SaaS unit within ICI advisory; **employee #3 (first product hire)**.
 - **Title**: Product Manager & Chief of Staff
 - **Dates**: Sep 2012 - Dec 2021 (9-year tenure)
 - **Location**: Lincolnshire, IL
-- **Tags**: `[Growth]`, `[0-to-1]`, `[Pricing]`, `[M&A]`, `[User Research]`, `[HR Tech]`, `[HRIS]`
-- **Research & product tooling (confirmed)**: Aha!, in-house telemetry, focus groups, tree testing, opportunity maps, workflow interviews, prototype walkthroughs, build-vs-buy analysis
+- **Tags**: `[Growth]`, `[0-to-1]`, `[Pricing]`, `[M&A]`, `[User Research]`, `[HR Tech]`, `[HRIS]`, `[Experimentation]`
+- **At join**: **Employee #3 (first product hire).**
+- **Research & product tooling (confirmed)**: Aha!, **in-house analytics/telemetry suite (built at BVXpress)**, Pendo, focus groups, tree testing, opportunity maps, workflow interviews, prototype walkthroughs, build-vs-buy analysis
+- **Experimentation & analytics**: Used Mixpanel-class telemetry, Pendo, and **custom in-house analytics** to understand customer behavior, run tests on **customer profiles/segments**, and decide which features to enhance vs. deprecate; landing-page and onboarding experiments informed conversion lift (e.g. 7% message test).
 - **Problem**: The firm had no product function, no digital tooling, and all advisory work was manual and relationship-dependent — no repeatable growth engine. Through multiple M&A transactions, legacy HR systems could not deliver combined workforce visibility during diligence (months-long migrations, duplicate records, manual reconciliation).
 
 #### PM Story
@@ -215,19 +225,24 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 - **Decision made (and what got cut)**: Pivoted the roadmap from analytical depth to presentation and export speed. Products 3–5 were sequenced to address successive steps in the advisor's client-facing workflow, not internal analysis. Killed a planned "deal database" product (surfaced low discovery demand at high build cost) and a fee-benchmarking tool that in-house telemetry showed was a demo feature, not a workflow feature. Each subsequent launch was gated on confirmed workflow adoption from a cohort of 20+ existing users before scaling.
 - **Post-launch iteration**: The ARPU jump from $450 to $600 was not from a price increase — it came from users voluntarily upgrading to access the presentation and export tools, which confirmed the workflow-friction diagnosis. Retention analysis showed multi-product adopters (3+ products) retained at 2x the rate of single-product users, which drove the GTM shift to onboarding depth over acquisition breadth. The 7% conversion lift came from switching the landing page message from "most accurate valuation tool" to "fastest route from Excel to client presentation" — a direct output of the discovery work.
 
-- Built the Product Business Unit from scratch; launched 5 products from whiteboard to market and operated a total of 8 products serving 1,400+ users across research, workflow, and growth operations.
-- Roadmap and releases tracked in Aha!; in-house telemetry and opportunity maps informed which workflows to fix first; focus groups and tree tests validated pricing, onboarding, and workflow changes across the 8-product suite.
+- Built the Product Business Unit from scratch as **employee #3 (first product hire)**; launched 5 products from whiteboard to market and operated a total of 8 products serving 1,400+ users across research, workflow, and growth operations.
+- Roadmap and releases tracked in Aha!; **in-house telemetry/analytics suite** plus Pendo informed which workflows to fix first and which features to enhance or deprecate; focus groups and tree tests validated pricing, onboarding, and workflow changes across the 8-product suite.
 - Automated pricing evolution based on customer usage-pattern analysis, increasing ARPU from $450 to $600 over 2 years (3x take rate improvement).
 - Built personalized onboarding, lifecycle messaging, and lead-routing workflows, driving a 14% retention increase over 2 years.
 - Re-architected landing page and product messaging funnels, achieving a 7% conversion lift.
 - GTM automation: built MQL→SQL pipeline velocity and CAC payback tracking from scratch.
 
-#### HRIS for M&A Transactions (internal product, BVXpress)
-- **Scope**: Product Manager leading HR technology for merger & acquisition scenarios — transaction-ready HRIS (not day-to-day ESS-first). Built while at BVXpress (2012–2021) across multiple acquisitions.
-- **Portfolio / product notes**: `PORTFOLIO/hris-ma.html` (case-style write-up)
-- **Tags**: `[HR Tech]`, `[HRIS]`, `[M&A]`, `[0-to-1]`, `[User Research]`, `[Integrations]`, `[Data Quality]`
-- **Problem**: Each acquisition meant 6–18 month migrations, incompatible HR stacks, duplicate employee records, and HR teams reconciling spreadsheets while deal teams could not answer basic diligence questions (headcount by country, total comp burden, retention risk, key performers).
-- **Product thesis**: Design for **transaction readiness from day one** — rapid multi-source ingestion, normalized workforce model, real-time diligence dashboards, clean audit trails — instead of bolt-on reporting after migrations complete.
+#### HRIS for M&A Transactions (BVXpress / ICI)
+- **Product positioning**: **The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling.**
+- **0-to-1 overview**: Built the HRIS **0→1** in the BVXpress product family: HRIS ingestion from acquired entities' tooling, normalized workforce model, people analytics (payroll/contract risk on diligence dashboards), diligence reporting, and transaction compliance/audit for PMI teams.
+- **Adoption proof**: **3 HR/diligence teams** successfully onboarded (data uploaded and actively using the product on live deal work).
+- **Scope**: **Owned the complete HRIS product** end-to-end (in addition to other BVXpress products). HR technology for merger & acquisition workforce diligence and integration — transaction-ready HRIS (not day-to-day ESS-first). Deployed with ICI clients and acquired companies; requirements driven by **post-merger integration teams** on live deals.
+- **Portfolio / product notes**: `PORTFOLIO/CONCEPT3/hris-ma.html` (live: https://xblavania.netlify.app/hris-ma)
+- **Tags**: `[HR Tech]`, `[HRIS]`, `[People Analytics]`, `[M&A]`, `[0-to-1]`, `[User Research]`, `[Integrations]`, `[Data Quality]`
+- **Users**: **ICI clients and acquired companies** on the BVXpress suite — M&A workforce **due diligence and integration teams**; **post-merger entities** (HR operations, deal-team / diligence stakeholders, HR leads in post-close integration during real deals). Adoption path: sticky product for integration teams first, then **management and HR business partners** in the combined company.
+- **Problem**: Each acquisition meant 6–18 month migrations, incompatible HR stacks, duplicate employee records, and HR teams reconciling spreadsheets while deal teams could not answer basic diligence questions or surface payroll/contract risk quickly.
+- **Product thesis**: Design for **transaction readiness from day one** — HRIS ingestion from other HR tooling, normalization, **people analytics and diligence dashboards** (including payroll and employee-contract concern identification), diligence reporting, and **compliance/audit for transactions** — instead of bolt-on reporting after migrations complete.
+- **Core data & analytics (beyond roster)**: Employee roster, reporting structure, pay information, employment types; people analytics on **payroll anomalies** and **employee contract concerns**; combined workforce metrics (headcount by geography, comp burden, retention/key-performer risk).
 
 ##### PM Story (HRIS)
 - **Market / job-to-be-done**: Incumbent HRIS products optimize payroll, employee self-service, and compliance tracking. M&A buyers and HR ops need flexible schema mapping, multi-source aggregation, privacy-preserving rollups, and clean exit paths when entities separate — a different job-to-be-done than core HR operations.
@@ -239,7 +254,7 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 - **Key product requirements (shipped or architected)**:
   1. **Universal adapter pattern** — system-agnostic integration layer; Frappe HRMS as reference implementation; extend to Workday, SAP SuccessFactors, ADP, regional payroll.
   2. **Normalized data model** — job titles → job families; compensation → currency-neutral views; org hierarchy mapping; employment type categorization.
-  3. **Transaction-ready dashboards** — instant answers for diligence (headcount by geography, total compensation burden, retention risk, key performers) without custom report projects.
+  3. **People analytics & diligence dashboards** — headcount by geography, total compensation burden, retention/key-performer risk; **quick identification of payroll and employee-contract concerns**; diligence reporting without custom report projects.
   4. **Audit & compliance** — historical preservation, audit trails, GDPR-aware handling, document retention built in from start.
   5. **Separation of concerns** — payroll stays with specialists; pull, normalize, analyze on top (integration > replacement).
 - **Technical decisions**:
@@ -252,12 +267,14 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
   - Virtual data room report push
   - Predictive attrition and retention-risk scoring
   - Mobile exec metrics; employment diligence doc automation
-- **Resume bullets (HR / HRIS JDs — pick 2–4, ground in discovery)**:
-  - Led product for an **M&A-ready HRIS** at BVXpress: API-first integration across acquired entities, normalized workforce model, and diligence dashboards replacing months-long migration cycles.
+- **Resume bullets (HR / HRIS / people analytics JDs — pick 2–4, ground in discovery)**:
+  - **Owned 0→1 HRIS** at BVXpress (ICI)—**BVXpress product for ICI clients and acquired companies**: ingestion, normalization, people analytics/diligence dashboards, transaction compliance; **3 teams onboarded and actively using** on live deals.
+  - **Owned end-to-end HRIS** at BVXpress (ICI)—**a BVXpress product for ICI clients and acquired companies, not internal-only tooling**: ingestion, normalized workforce model, **people analytics and diligence dashboards** (payroll/contract risk, comp burden, retention), and transaction compliance.
+  - Built for **diligence and PMI teams** first, with adoption path to **management and HR business partners** in post-merger entities.
   - Ran **focus groups, opportunity maps, workflow interviews, and tree tests** with HR ops and deal teams; pivoted from rip-and-replace to **adapter-first architecture** and payroll integration (Frappe HRMS) based on research.
-  - Defined **universal adapter pattern** and normalized employee schema (job families, comp views, hierarchy, employment types) so deal teams could answer headcount, comp burden, and retention questions without ad-hoc reports.
+  - Defined **universal adapter pattern** and normalized employee schema (roster, hierarchy, pay, employment types) so teams could answer diligence questions and **surface payroll and contract concerns** without ad-hoc reports.
   - Prioritized **ingestion validation, duplicate management, and confidence scores** after shadowing reconciliation workflows and failed tree tests on dashboard trust.
-  - Shipped **audit trail, historical preservation, and GDPR-aware** data handling for transaction and separation scenarios — not bolted on post-launch.
+  - Shipped **audit trail, historical preservation, and GDPR-aware** data handling driven by post-merger integration requirements — not bolted on post-launch.
 
 ---
 
@@ -282,7 +299,9 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 ---
 
 ## Resume generation notes
-- **Voice (research & analytics)**: Never write "used Hotjar/Pendo/Heap" as the outcome. Write the **decision or change**: tier consolidation, funnel fix, alert workflow redesign, scope cut, checkout step removed. Tools may appear only as evidence for that decision, inside the relevant ROLE block.
+- **Company descriptor line**: If the role block includes **Company descriptor (resume)**, **Employee #N**, **first product hire**, or **only product hire**, weave into the company description line using compact form: e.g. `Employee #6 (first product hire)` or `Employee #3 (first product hire)`. Do not say "PM hire."
+- **Voice (research & analytics)**: Never write "used Hotjar/Pendo/Heap" as the outcome. Write the **decision or change**: tier consolidation, funnel fix, alert workflow redesign, scope cut, checkout step removed, A/B or controlled-test outcome. Tools may appear only as evidence for that decision, inside the relevant ROLE block.
+- **Experimentation JDs**: Surface Moovez automated-vs-manual quote test, BVXpress telemetry-driven feature decisions, fractional conversion/attribution work (MMM, take rate, funnel) when JD mentions A/B testing, experimentation, product analytics, or attribution.
 - **UX / research-heavy JDs**: Prioritize ROLE 1, ROLE 5, ROLE 4, ROLE 2 fractional (Village Wellth, Liohan line, etc.), ROLE 3.
 - **Growth / analytics JDs**: Prioritize ROLE 2 (MMM, R, SQL, attribution, STP), Segment/Moovez funnel work, ChurnOS, BVXpress GTM metrics.
 - **Marketplace / ops JDs**: Prioritize ROLE 1, construction marketplace (ROLE 2), Moovez/Quotely outcomes.

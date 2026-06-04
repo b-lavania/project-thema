@@ -2,6 +2,8 @@ import os
 import re
 import datetime
 from pathlib import Path
+import json
+import base64
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
@@ -31,6 +33,7 @@ from generator import (
     generate_cover_letter,
     answer_custom_questions,
     review_resume_quality,
+    perform_gap_analysis,
     PAGE_BREAK_MARKER,
 )
 from doc_generator import create_formatted_doc, extract_coaching_notes, strip_coaching_notes
@@ -41,8 +44,10 @@ from export_guardrails import (
     apply_two_page_compact,
     ats_readiness_checks,
     compact_resume_sections,
+    recommended_page_limit,
 )
 from outcomes import append_application_record, render_outcomes_tab
+from jobs_ui import render_jobs_tab
 
 # ---------------------------------------------------------------------------
 # Path resolution (P0-PATH)
@@ -60,8 +65,26 @@ load_dotenv(ENV_PATH)
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-TRACK_OPTIONS = ["Product/AI", "Pricing/Ops", "Growth", "Logistics/Marketplace", "BizOps", "Chief of Staff"]
+TRACK_OPTIONS = [
+    "Product/AI",
+    "Pricing/Ops",
+    "Growth",
+    "Logistics/Marketplace",
+    "BizOps",
+    "Chief of Staff",
+    "HR/HRIS",
+]
 VOICE_OPTIONS = ["Sharp Product PM", "Technical Product PM", "Growth / GTM PM", "Chief of Staff / BizOps"]
+EXPORT_MODE_OPTIONS = ["standard", "digital"]
+EXPORT_MODE_LABELS = {
+    "standard": "ATS / Standard",
+    "digital": "Digital / Presentation",
+}
+PDF_PAGE_SIZE_OPTIONS = ["letter", "legal"]
+PDF_PAGE_SIZE_LABELS = {
+    "letter": "Letter",
+    "legal": "Legal",
+}
 LOCATION_OPTIONS = {
     "Sunnyvale, CA (SF / Silicon Valley / Remote USA)": "Sunnyvale, CA",
     "Calgary, AB (Canadian jobs)": "Calgary, AB",
@@ -374,6 +397,15 @@ def build_pdf_breaks_from_session():
     })
 
 
+def build_export_settings_from_session():
+    """Return effective export mode + page size from sidebar state."""
+    export_mode = st.session_state.get("export_mode", "standard")
+    pdf_page_size = st.session_state.get("pdf_page_size", "letter")
+    if export_mode != "digital":
+        pdf_page_size = "letter"
+    return export_mode, pdf_page_size
+
+
 def rerender_resume_files(
     res,
     mission_text=None,
@@ -382,6 +414,8 @@ def rerender_resume_files(
     projects_text=None,
     pdf_breaks=None,
     compact_pdf=None,
+    export_mode=None,
+    pdf_page_size=None,
     *,
     use_compact_sections=False,
 ):
@@ -392,11 +426,16 @@ def rerender_resume_files(
         "experience": experience_blocks if experience_blocks is not None else res["experience_blocks"],
         "projects": projects_text if projects_text is not None else res.get("projects", ""),
     }
+    mode = export_mode if export_mode is not None else res.get("export_mode", "standard")
+    page_size = pdf_page_size if pdf_page_size is not None else res.get("pdf_page_size", "letter")
+    if mode != "digital":
+        page_size = "letter"
     if use_compact_sections or res.get("compact_applied"):
         sections = compact_resume_sections(
             sections,
-            max_bullets_per_role=3,
+            max_bullets_per_role=None,
             omit_projects=res.get("omit_projects_for_pdf", False),
+            export_mode=mode,
         )
     breaks = pdf_breaks if pdf_breaks is not None else res.get("pdf_breaks") or normalize_pdf_breaks()
     if res.get("compact_applied"):
@@ -405,7 +444,12 @@ def rerender_resume_files(
     loc = LOCATION_OPTIONS.get(st.session_state.get("location_label", ""), "Sunnyvale, CA")
     include_scrum = jd_requires_scrum(st.session_state.get("jd_text", ""))
     create_formatted_doc(
-        res["doc_path"], sections, location=loc, include_scrum=include_scrum, pdf_breaks=breaks
+        res["doc_path"],
+        sections,
+        location=loc,
+        include_scrum=include_scrum,
+        pdf_breaks=breaks,
+        export_mode=mode,
     )
     _path, page_count = render_resume_pdf(
         res["pdf_path"],
@@ -414,6 +458,8 @@ def rerender_resume_files(
         include_scrum=include_scrum,
         pdf_breaks=breaks,
         compact_pdf=compact,
+        export_mode=mode,
+        pdf_page_size=page_size,
     )
     return page_count
 
@@ -640,8 +686,31 @@ selected_location_label = st.sidebar.radio(
 candidate_location = LOCATION_OPTIONS[selected_location_label]
 
 st.sidebar.divider()
+st.sidebar.subheader("Export mode")
+st.sidebar.radio(
+    "Resume output policy",
+    EXPORT_MODE_OPTIONS,
+    key="export_mode",
+    format_func=lambda x: EXPORT_MODE_LABELS[x],
+    help="Use ATS / Standard for recruiter-safe Letter PDF + plain DOCX. Use Digital / Presentation for a richer PDF, with optional Legal size.",
+)
+st.sidebar.selectbox(
+    "PDF page size",
+    PDF_PAGE_SIZE_OPTIONS,
+    key="pdf_page_size",
+    format_func=lambda x: PDF_PAGE_SIZE_LABELS[x],
+    help="Legal size is only applied for Digital / Presentation mode. ATS / Standard always renders as Letter.",
+)
+selected_export_mode, selected_pdf_page_size = build_export_settings_from_session()
+st.sidebar.caption(
+    f"Active export: {EXPORT_MODE_LABELS[selected_export_mode]} · {PDF_PAGE_SIZE_LABELS[selected_pdf_page_size]} PDF"
+)
+
+st.sidebar.divider()
 st.sidebar.subheader("PDF layout")
-st.sidebar.caption("Optional page breaks (letter PDF, typically 1-2 pages)")
+st.sidebar.caption(
+    f"Optional page breaks ({PDF_PAGE_SIZE_LABELS[selected_pdf_page_size]} PDF, target ≤{recommended_page_limit(selected_export_mode)} pages)"
+)
 st.sidebar.checkbox("Break before How I Work", key="break_before_skills")
 st.sidebar.checkbox("Break before The Work", key="break_before_experience")
 st.sidebar.checkbox("Break before Side Builds", key="break_before_projects")
@@ -666,8 +735,41 @@ st.sidebar.divider()
 st.sidebar.subheader("⚡ Cost Controls")
 st.sidebar.caption("Skip expensive steps to reduce API cost")
 st.sidebar.checkbox("Skip quality review", key="skip_quality_review")
+st.sidebar.checkbox("Run gap analysis", key="run_gap_analysis", value=True)
 st.sidebar.checkbox("Skip cover letter", key="skip_cover_letter")
 st.sidebar.checkbox("Skip custom Q&A", key="skip_custom_qa")
+
+st.sidebar.divider()
+st.sidebar.subheader("🔗 Browser Integration")
+st.sidebar.caption("Drag a link below to your Firefox bookmarks bar. Click it on any JD page.")
+
+base_url = "http://localhost:8501"
+
+bookmarklet_full = (
+    "javascript:(function(){try{"
+    "var t=document.title||'';"
+    "var u=location.href;"
+    "var sel=(window.getSelection?(''+window.getSelection()):'');"
+    "var body=(document.querySelector('article,main')||document.body).innerText;"
+    "var jd=(sel&&sel.length>200?sel:body).slice(0,45000);"
+    "var guessRole=t.split(' - ')[0]||'';"
+    "var guessCompany=(t.split(' - ')[1]||'').split(' | ')[0]||'';"
+    "var data={jd_text:jd,jd_url:u,company:guessCompany,role:guessRole};"
+    "var btoa_utf8=function(s){return btoa(unescape(encodeURIComponent(s)))};"
+    "var p=encodeURIComponent(btoa_utf8(JSON.stringify(data)));"
+    "location.href='" + base_url + "?p='+p;"
+    "}catch(e){alert('Bookmarklet error: '+e);}})()"
+)
+
+bookmarklet_url = (
+    "javascript:(function(){try{"
+    "var u=location.href;"
+    "location.href='" + base_url + "?jd_url='+encodeURIComponent(u);"
+    "}catch(e){alert('Bookmarklet error: '+e);}})()"
+)
+
+st.sidebar.markdown(f"[📌 Send Full Page → App]({bookmarklet_full})", unsafe_allow_html=True)
+st.sidebar.markdown(f"[🔗 Send URL Only → App]({bookmarklet_url})", unsafe_allow_html=True)
 
 st.sidebar.divider()
 st.sidebar.markdown("<p style='color: #dc3545; font-weight: 600; margin-bottom: 4px;'>Danger Zone</p>", unsafe_allow_html=True)
@@ -676,6 +778,55 @@ if st.sidebar.button("Kill App", key="kill_app_btn", use_container_width=True):
     st.sidebar.error("Shutting down...")
     sys.stdout.flush()
     os._exit(0)
+
+# Query param ingestion (one-time)
+def _get_query_params():
+    try:
+        qp = getattr(st, "query_params", None)
+        if qp is not None:
+            try:
+                return {k: v for k, v in qp.items()}
+            except Exception:
+                return dict(qp)
+    except Exception:
+        pass
+    try:
+        return {k: (v[0] if isinstance(v, list) and v else v) for k, v in st.experimental_get_query_params().items()}
+    except Exception:
+        return {}
+
+if "_qp_init" not in st.session_state:
+    st.session_state._qp_init = True
+    _qp = _get_query_params()
+    p = _qp.get("p", "")
+    if p:
+        try:
+            raw = base64.b64decode(p + "===")
+            data = json.loads(raw.decode("utf-8", errors="ignore"))
+            if isinstance(data, dict):
+                if data.get("company"):
+                    st.session_state["company_name"] = data["company"]
+                if data.get("role"):
+                    st.session_state["target_role"] = data["role"]
+                if data.get("jd_text"):
+                    st.session_state["jd_text"] = data["jd_text"]
+                if data.get("jd_url"):
+                    st.session_state["jd_url"] = data["jd_url"]
+        except Exception:
+            pass
+    if _qp.get("company"):
+        st.session_state["company_name"] = _qp["company"]
+    if _qp.get("role"):
+        st.session_state["target_role"] = _qp["role"]
+    if _qp.get("jd_text"):
+        st.session_state["jd_text"] = _qp["jd_text"]
+    if _qp.get("jd_url"):
+        st.session_state["jd_url"] = _qp["jd_url"]
+        if not st.session_state.get("jd_text"):
+            st.session_state["_auto_scrape_from_url"] = True
+    # Autorun query param (truthy unless '0'/'false'/'off')
+    if _qp.get("autorun") is not None:
+        st.session_state["autorun"] = _qp.get("autorun")
 
 # Load master context once
 if "master_context" not in st.session_state:
@@ -688,14 +839,19 @@ if not st.session_state.master_context:
 # ---------------------------------------------------------------------------
 # TABS
 # ---------------------------------------------------------------------------
-tab_job, tab_questions, tab_generate, tab_outcomes = st.tabs(
+tab_jobs, tab_job, tab_questions, tab_generate, tab_outcomes = st.tabs(
     [
+        "🎯 Jobs",
         "📋 Job Details",
         "❓ Application Questions",
         "🚀 Generate & Output",
         "📊 Outcomes",
     ]
 )
+
+# --- TAB 0: Jobs Watcher ---
+with tab_jobs:
+    render_jobs_tab(st.session_state.master_context)
 
 # --- TAB 1: Job Details ---
 with tab_job:
@@ -711,6 +867,18 @@ with tab_job:
 
     st.markdown("### Job Description")
     jd_text = st.text_area("Job Description (paste full JD)", height=300, key="jd_text", placeholder="Paste the complete job description here...")
+
+    # Auto-scrape when URL present but text missing (from deep link)
+    if st.session_state.get("_auto_scrape_from_url") and st.session_state.get("jd_url") and not st.session_state.get("jd_text"):
+        result = scrape_url(st.session_state["jd_url"])
+        if result["ok"]:
+            st.session_state.jd_text = result["text"]
+            st.session_state._auto_scrape_from_url = False
+            st.success(f"✅ Auto-scraped {len(result['text']):,} chars from URL")
+            st.rerun()
+        else:
+            st.session_state._auto_scrape_from_url = False
+            st.warning(f"Scrape failed ({result['error']}). You can still paste the JD.")
 
     if jd_url and not jd_text:
         if st.button("🔍 Scrape JD from URL", use_container_width=True):
@@ -843,7 +1011,16 @@ with tab_generate:
 
     st.divider()
 
-    if st.button("🚀 Generate Documents", disabled=not all_ready, type="primary", use_container_width=True):
+    generate_clicked = st.button("🚀 Generate Documents", disabled=not all_ready, type="primary", use_container_width=True)
+
+    # Auto-run generation if query param provided and checks pass (one-shot)
+    _ar_val = str(st.session_state.get("autorun", "")).lower()
+    _ar_active = bool(_ar_val) and _ar_val not in ("0", "false", "off")
+    if all_ready and _ar_active and not st.session_state.get("_autorun_done"):
+        st.session_state["_autorun_done"] = True
+        generate_clicked = True
+
+    if generate_clicked:
         api_key = get_api_key()
         provider = get_provider()
         company = st.session_state.company_name.strip()
@@ -1025,6 +1202,19 @@ with tab_generate:
                     )
                     usage_log.append(usage)
 
+                # Step 6.85: Gap Analysis
+                gap_analysis = ""
+                if st.session_state.get("run_gap_analysis"):
+                    st.write("Running ruthless gap analysis...")
+                    resume_full_text = f"{mission}\n\n{skills}\n\n" + "\n\n".join(experience_blocks) + f"\n\n{projects}"
+                    gap_analysis, usage = perform_gap_analysis(
+                        llm,
+                        extracted_keywords,
+                        master_ctx,
+                        resume_full_text,
+                    )
+                    usage_log.append(usage)
+
                 # Step 7: Cover letter
                 cover_letter = ""
                 if not st.session_state.get("skip_cover_letter"):
@@ -1042,13 +1232,15 @@ with tab_generate:
                 # Step 9: Assemble DOCX and PDF
                 st.write("Assembling resume documents...")
                 include_scrum = jd_requires_scrum(jd)
+                export_mode, pdf_page_size = build_export_settings_from_session()
                 resume_sections = {
                     "mission": mission,
                     "skills": skills,
                     "experience": experience_blocks,
                     "projects": projects,
                 }
-                doc_filename = f"Application_{company.replace(' ', '_')}_{datetime.date.today().isoformat()}.docx"
+                export_slug = f"{export_mode}_{pdf_page_size}"
+                doc_filename = f"Application_{company.replace(' ', '_')}_{datetime.date.today().isoformat()}_{export_slug}.docx"
                 pdf_breaks = build_pdf_breaks_from_session()
                 doc_path = str(OUTPUT_DIR / doc_filename)
                 create_formatted_doc(
@@ -1057,9 +1249,10 @@ with tab_generate:
                     location=candidate_location,
                     include_scrum=include_scrum,
                     pdf_breaks=pdf_breaks,
+                    export_mode=export_mode,
                 )
 
-                pdf_filename = f"Application_{company.replace(' ', '_')}_{datetime.date.today().isoformat()}.pdf"
+                pdf_filename = f"Application_{company.replace(' ', '_')}_{datetime.date.today().isoformat()}_{export_slug}.pdf"
                 pdf_path = str(OUTPUT_DIR / pdf_filename)
                 compact_pdf = bool(st.session_state.get("compact_pdf"))
                 _pdf_path, pdf_page_count = render_resume_pdf(
@@ -1069,6 +1262,8 @@ with tab_generate:
                     include_scrum=include_scrum,
                     pdf_breaks=pdf_breaks,
                     compact_pdf=compact_pdf,
+                    export_mode=export_mode,
+                    pdf_page_size=pdf_page_size,
                 )
 
                 # Step 10: Keyword coverage check (ATS-COV)
@@ -1117,6 +1312,8 @@ with tab_generate:
                 "pdf_breaks": pdf_breaks,
                 "pdf_page_count": pdf_page_count,
                 "compact_pdf": compact_pdf,
+                "export_mode": export_mode,
+                "pdf_page_size": pdf_page_size,
                 "compact_applied": False,
                 "omit_projects_for_pdf": False,
                 "doc_path": doc_path,
@@ -1134,6 +1331,7 @@ with tab_generate:
                 "cover_letter": cover_letter,
                 "custom_answers": custom_answers,
                 "quality_review": quality_review,
+                "gap_analysis": gap_analysis,
                 "usage_log": usage_log
             }
 
@@ -1275,16 +1473,28 @@ with tab_generate:
                 st.caption("Editorial critique before you download. Fix flagged issues first.")
                 st.text(res['quality_review'])
 
+        # Gap Analysis
+        if res.get('gap_analysis'):
+            with st.expander("🕳️ Genuine Weaknesses & Gaps", expanded=True):
+                st.caption("Ruthless reality check on experience gaps and narrative stretches.")
+                st.markdown(res['gap_analysis'])
+
         st.divider()
 
         pdf_pages = res.get("pdf_page_count")
+        export_mode = res.get("export_mode", "standard")
+        pdf_page_size = res.get("pdf_page_size", "letter")
+        page_limit = recommended_page_limit(export_mode)
+        st.caption(
+            f"Export mode: **{EXPORT_MODE_LABELS.get(export_mode, export_mode)}** · PDF page size: **{PDF_PAGE_SIZE_LABELS.get(pdf_page_size, pdf_page_size.title())}**"
+        )
         if pdf_pages is not None:
-            if pdf_pages <= MAX_PDF_PAGES:
+            if pdf_pages <= page_limit:
                 st.success(f"PDF: {pdf_pages} page{'s' if pdf_pages != 1 else ''}")
             else:
                 st.warning(
-                    f"PDF: {pdf_pages} pages — recommended max {MAX_PDF_PAGES} for most ATS "
-                    f"and recruiters. You can still download; use Compact to 2 pages if you want to trim."
+                    f"PDF: {pdf_pages} pages — recommended max {page_limit} for "
+                    f"{EXPORT_MODE_LABELS.get(export_mode, export_mode).lower()} output. You can still download; use Compact if you want to trim."
                 )
 
         combined_export = "\n".join([
@@ -1300,6 +1510,9 @@ with tab_generate:
             res.get("projects", ""),
             res.get("kw_coverage", 0.0),
             pdf_pages,
+            experience_blocks=res.get("experience_blocks", []),
+            export_mode=export_mode,
+            pdf_page_size=pdf_page_size,
             coaching_notes_in_output=coaching_in_output,
         )
         with st.expander("ATS readiness (in-app only — not printed on resume)", expanded=False):
@@ -1307,16 +1520,18 @@ with tab_generate:
                 icon = "✅" if item["ok"] else "❌"
                 st.markdown(f"{icon} **{item['label']}** — {item['detail']}")
 
-        if pdf_pages is not None and pdf_pages > MAX_PDF_PAGES:
-            if st.button("Compact to 2 pages", type="primary", use_container_width=True, key="compact_two_pages_btn"):
+        if pdf_pages is not None and pdf_pages > page_limit:
+            if st.button(f"Compact to {page_limit} page{'s' if page_limit != 1 else ''}", type="primary", use_container_width=True, key="compact_two_pages_btn"):
                 try:
                     role_selections = st.session_state.get("role_selections", {})
                     full_count = sum(1 for v in role_selections.values() if v == "full")
 
                     # Progressive compaction: try less aggressive options first
-                    max_full_candidates = sorted(
-                        set([min(full_count, 4), min(full_count, 3), 2]), reverse=True
-                    )
+                    max_full_candidates = sorted(set([
+                        min(full_count, 5 if export_mode == "digital" else 4),
+                        min(full_count, 4 if export_mode == "digital" else 3),
+                        3 if export_mode == "digital" else 2,
+                    ]), reverse=True)
 
                     best_sections, best_selections, best_selected = None, None, None
                     best_page_count = pdf_pages
@@ -1324,7 +1539,7 @@ with tab_generate:
 
                     for mf in max_full_candidates:
                         sections, new_selections, updated_selected = apply_two_page_compact(
-                            res, role_selections, max_full=mf
+                            res, role_selections, max_full=mf, export_mode=export_mode
                         )
                         page_count = rerender_resume_files(
                             st.session_state.gen_results,
@@ -1332,24 +1547,28 @@ with tab_generate:
                             projects_text=sections["projects"],
                             pdf_breaks=normalize_pdf_breaks(),
                             compact_pdf=False,
+                            export_mode=export_mode,
+                            pdf_page_size=pdf_page_size,
                             use_compact_sections=True,
                         )
-                        if page_count < best_page_count:
+                        if best_sections is None or page_count < best_page_count:
                             best_sections, best_selections, best_selected = (
                                 sections, new_selections, updated_selected
                             )
                             best_page_count = page_count
-                            if page_count <= MAX_PDF_PAGES:
+                            if page_count <= page_limit:
                                 break
 
                     # Last resort: enable compact typography (smaller fonts / tighter spacing)
-                    if best_page_count > MAX_PDF_PAGES and best_sections:
+                    if best_page_count > page_limit and best_sections:
                         page_count = rerender_resume_files(
                             st.session_state.gen_results,
                             experience_blocks=best_sections["experience"],
                             projects_text=best_sections["projects"],
                             pdf_breaks=normalize_pdf_breaks(),
                             compact_pdf=True,
+                            export_mode=export_mode,
+                            pdf_page_size=pdf_page_size,
                             use_compact_sections=True,
                         )
                         best_page_count = page_count
@@ -1359,6 +1578,8 @@ with tab_generate:
                     st.session_state.gen_results["compact_applied"] = True
                     st.session_state.gen_results["omit_projects_for_pdf"] = True
                     st.session_state.gen_results["compact_pdf"] = used_compact_typography
+                    st.session_state.gen_results["export_mode"] = export_mode
+                    st.session_state.gen_results["pdf_page_size"] = pdf_page_size
                     st.session_state.gen_results["selected_roles"] = best_selected
                     st.session_state.gen_results["experience_blocks"] = best_sections["experience"]
                     st.session_state.gen_results["projects"] = best_sections["projects"]

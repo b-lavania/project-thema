@@ -65,6 +65,24 @@ Goal: Produce a one-page, ATS-safe cover letter that can be pasted directly into
 
 ## Auto log
 
+### Structure Studios - Senior PM
+- **Date**: 2026-06-03
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 65,764
+- **Approx cost**: $0.012
+- **Outputs**: Resume, Cover Letter
+
+
+### Boomerang - PM
+- **Date**: 2026-06-02
+- **Track**: HR/HRIS
+- **JD source**: Pasted Text
+- **Tokens used**: 66,098
+- **Approx cost**: $0.012
+- **Outputs**: Resume, Cover Letter
+
+
 ### Co. - PM
 - **Date**: 2026-05-30
 - **Track**: Product/AI

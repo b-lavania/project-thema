@@ -141,9 +141,11 @@ def render_resume_pdf(
     include_scrum=False,
     pdf_breaks=None,
     compact_pdf=False,
+    export_mode="standard",
+    pdf_page_size="letter",
 ):
     """
-    Build a letter-size resume PDF (typically 1-2 pages) by rendering template.html
+    Build a resume PDF by rendering template.html
     with Jinja2 and converting to PDF with WeasyPrint. Role blocks use CSS to avoid
     splitting a job header from its bullets across pages.
 
@@ -156,6 +158,8 @@ def render_resume_pdf(
 
     env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))
     template = env.get_template("template.html")
+    effective_page_size = "legal" if export_mode == "digital" and pdf_page_size == "legal" else "letter"
+    first_page_margin = "0.4in 0.55in 0.5in 0.55in" if export_mode == "digital" else "0.45in 0.5in 0.5in 0.5in"
 
     mission_text = normalize_quick_take_text(resume_sections.get("mission", ""))
     mission_lines = [l.strip() for l in mission_text.split("\n") if l.strip()]
@@ -244,12 +248,20 @@ def render_resume_pdf(
         include_scrum=include_scrum,
         break_sections=break_sections,
         compact_pdf=compact_pdf,
+        export_mode=export_mode,
+        pdf_page_size=pdf_page_size,
     )
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
-    doc = HTML(string=html_content, base_url=str(TEMPLATE_DIR)).render()
+    page_css = CSS(
+        string=(
+            f"@page {{ size: {effective_page_size}; margin: 0.5in; }} "
+            f"@page :first {{ margin: {first_page_margin}; }}"
+        )
+    )
+    doc = HTML(string=html_content, base_url=str(TEMPLATE_DIR)).render(stylesheets=[page_css])
     page_count = len(doc.pages)
-    doc.write_pdf(output_path)
+    doc.write_pdf(output_path, stylesheets=[page_css])
     return output_path, page_count
 
 
@@ -260,6 +272,8 @@ def create_formatted_pdf(
     include_scrum=False,
     pdf_breaks=None,
     compact_pdf=False,
+    export_mode="standard",
+    pdf_page_size="letter",
 ):
     """Build PDF; returns output path only (backward compatible)."""
     path, _page_count = render_resume_pdf(
@@ -269,5 +283,7 @@ def create_formatted_pdf(
         include_scrum=include_scrum,
         pdf_breaks=pdf_breaks,
         compact_pdf=compact_pdf,
+        export_mode=export_mode,
+        pdf_page_size=pdf_page_size,
     )
     return path

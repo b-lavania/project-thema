@@ -2,6 +2,15 @@
 
 *A product manager's journey building an HR system for merger & acquisition scenarios*
 
+**Context:** BVXpress was the SaaS business unit within **ICI** (M&A advisory). I owned the complete HRIS product (2012–2021), in addition to other BVXpress products. **The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling.** Portfolio case study: `PORTFOLIO/CONCEPT3/hris-ma.html` (https://xblavania.netlify.app/hris-ma).
+
+---
+
+## Who It Was For
+
+- **ICI clients and acquired companies** (BVXpress product suite): M&A workforce due diligence and integration teams, and **post-merger entities** — HR operations, deal-team / diligence stakeholders, HR leads in post-close integration during real deals.
+- **Adoption goal:** Sticky product for integration and diligence teams first, then **management and HR business partners** in the new company.
+
 ---
 
 ## Why We Needed This
@@ -57,14 +66,19 @@ Every company structures employee data differently. We built adapters to normali
 - Organization hierarchy → Flexible mapping
 - Employment types → Consistent categorization
 
-### 3. Transaction-Ready Dashboards
-During due diligence, buyers need to answer:
-- "How many employees in each country?"
-- "What's the total compensation burden?"
-- "Who are the key performers we need to retain?"
-- "What's the attrition risk?"
+### 3. People Analytics & Diligence Dashboards
+**Workforce foundation:** employee roster, reporting structure, pay information, employment types (normalized across entities).
 
-Our HRIS provides instant answers—no custom reports needed.
+**People analytics (dashboarding):** teams could quickly identify **concerns with payroll and employee contracts**, plus standard diligence questions:
+- Headcount by geography
+- Total compensation burden
+- Key performers to retain; attrition / retention risk
+
+Instant answers for diligence and PMI—no custom report projects.
+
+### 3b. Diligence Reporting & HRIS Ingestion
+- Ingest data from acquired entities' HRIS and payroll tooling (adapter pattern)
+- API-first reporting for deal rooms and data rooms
 
 ### 4. Audit Trail & Compliance
 M&A requires:

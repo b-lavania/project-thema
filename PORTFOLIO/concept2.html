@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bob Lavania: Portfolio Operating Partner · Operational Systems · AI & Marketplace Intelligence</title>
+  <title>Bob Lavania: Operational Systems Architect · Business Architecture · AI & Marketplace Intelligence</title>
   <meta name="description"
-    content="Operator specializing in AI-enabled operational systems and coordination-heavy businesses. Available for fractional engagement across portfolio companies.">
+    content="Operational systems architect helping organizations reduce decision latency and improve economic outcomes through structural intelligence and synthesis.">
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Public+Sans:wght@800;900&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet">
   <style>
     *,
@@ -32,25 +32,22 @@
     }
 
     :root {
-      --ink: #0f1112;
-      --ink-mid: #3a3f45;
-      --ink-soft: #6b7280;
-      --rule: #e2e4e7;
-      --teal: #0f6e56;
-      --teal-light: #e1f5ee;
-      --teal-mid: #1d9e75;
-      --amber: #ba7517;
-      --amber-light: #faeeda;
-      --blue: #185fa5;
-      --purple: #6b46c1;
-      --purple-light: #f3f4ff;
-      --page: #faf9f7;
-      --page-alt: #f3f2f0;
+      --ink: #000000;
+      --ink-mid: #1a1a1a;
+      --ink-soft: #4d4d4d;
+      --rule: #000000;
+      --rule-dim: rgba(0, 0, 0, 0.1);
+      --accent: #ff5c00; /* Safety Orange */
+      --accent-dim: #fff0eb;
+      --page: #ffffff;
       --white: #ffffff;
-      --mono: 'DM Mono', monospace;
-      --sans: 'DM Sans', sans-serif;
-      --serif: 'Fraunces', serif;
-      --radius: 12px;
+      --mono: 'Space Mono', monospace;
+      --sans: 'Inter', sans-serif;
+      --heading: 'Public Sans', sans-serif;
+      --radius: 0px;
+      --border-thick: 3px;
+      --shadow-hard: 6px 6px 0px #000000;
+      --shadow-hard-sm: 4px 4px 0px #000000;
     }
 
     html {
@@ -60,292 +57,138 @@
     body {
       font-family: var(--sans);
       font-size: 16px;
-      line-height: 1.7;
+      line-height: 1.6;
       color: var(--ink);
       background: var(--page);
       max-width: 1080px;
       margin: 0 auto;
-      padding: 56px 32px 96px;
+      padding: 64px 32px 120px;
+      letter-spacing: -0.01em;
     }
 
     a {
-      color: var(--blue);
+      color: var(--ink);
       text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 500;
     }
 
     a:hover {
-      color: var(--teal);
+      background: var(--ink);
+      color: var(--white) !important;
+      text-decoration: none;
     }
 
-    /* ─────────────────────────────────────────
-     BIO / HERO
-  ───────────────────────────────────────── */
-    .bio {
-      border-top: 4px solid var(--teal);
-      padding-top: 40px;
-      margin-bottom: 64px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 48px;
-      align-items: start;
-    }
-
-    .bio-kicker {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.12em;
+    /* ── Typography Refinement ── */
+    h1, h2, h3, h4 {
+      font-family: var(--heading);
       text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 12px;
+      line-height: 1;
+      letter-spacing: -0.04em;
     }
 
     .bio-headline {
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: 44px;
-      line-height: 1.15;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      margin-bottom: 16px;
+      font-size: 56px;
+      font-weight: 900;
+      margin-bottom: 24px;
     }
 
     .bio-headline em {
-      font-style: italic;
-      font-weight: 300;
-      color: var(--teal);
+      font-style: normal;
+      color: var(--accent);
     }
 
     .bio-positioning {
-      font-size: 18px;
-      font-weight: 400;
+      font-size: 20px;
+      font-weight: 500;
       color: var(--ink-mid);
-      line-height: 1.6;
-      margin-bottom: 24px;
-      max-width: 500px;
+      max-width: 600px;
+      margin-bottom: 32px;
     }
 
-    .bio-tags {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 6px;
-      margin-top: 4px;
-    }
-
-    .tag-divider {
-      color: var(--rule);
-      font-size: 18px;
-      font-weight: 300;
-      padding: 0 4px;
-      user-select: none;
-      line-height: 1;
-    }
-
-    .cap-pill {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: var(--white);
-      border: 1px solid var(--rule);
-      color: var(--ink-soft);
-      padding: 6px 14px;
-      border-radius: 20px;
-    }
-
-    /* ── Contact Card (Synced from Concept 1) ── */
+    /* ─────────────────────────────────────────
+     COMPONENTS: HARD EDGES & BINARY LOGIC
+  ───────────────────────────────────────── */
     .contact-card {
       background: var(--white);
-      border: 1px solid var(--rule);
+      border: var(--border-thick) solid var(--rule);
       border-radius: var(--radius);
-      padding: 18px 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      padding: 32px;
+      box-shadow: var(--shadow-hard);
       position: sticky;
       top: 40px;
     }
 
-    .contact-name {
-      font-family: var(--serif);
-      font-size: 21px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      line-height: 1.15;
-    }
-
-    .contact-seeking {
-      font-size: 13px;
-      color: var(--ink-soft);
-      margin-bottom: 10px;
-      line-height: 1.45;
-    }
-
-    .contact-seeking strong {
-      color: var(--ink-mid);
-      font-weight: 500;
-    }
-
-    .contact-details {
-      font-size: 15px;
-      color: var(--ink-mid);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .contact-details a {
-      text-decoration: none;
-    }
-
-    .contact-details a:hover {
-      text-decoration: underline;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .btn-group+.btn-group {
-      margin-top: 6px;
-    }
-
     .btn {
       display: inline-block;
-      padding: 9px 12px;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 15px;
+      padding: 12px 20px;
+      border-radius: 0;
+      font-weight: 700;
+      font-size: 14px;
+      font-family: var(--mono);
+      text-transform: uppercase;
       text-decoration: none;
-      transition: all 0.2s ease;
       text-align: center;
       flex: 1;
+      border: 2px solid var(--rule);
+      transition: none;
     }
 
     .btn-primary {
-      background: var(--teal);
+      background: var(--accent);
       color: var(--white) !important;
-      border: 1px solid var(--teal);
+      border-color: var(--rule);
     }
 
     .btn-primary:hover {
-      background: #084838;
-      transform: translateY(-1px);
-      color: var(--white) !important;
-      text-decoration: none;
+      background: var(--white);
+      color: var(--ink) !important;
     }
 
     .btn-secondary {
       background: var(--white);
       color: var(--ink);
-      border: 1px solid var(--rule);
     }
 
     .btn-secondary:hover {
-      border-color: var(--ink);
-      text-decoration: none;
+      background: var(--ink);
+      color: var(--white);
     }
 
-    .availability-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .cap-pill {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--teal);
-      background: var(--teal-light);
-      border: 1px solid #c2dfd7;
-      border-radius: 20px;
-      padding: 3px 8px;
-      margin-bottom: 10px;
+      background: var(--white);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      padding: 4px 10px;
+      font-weight: 600;
     }
 
-    .availability-badge::before {
-      content: '';
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--teal-mid);
-      flex-shrink: 0;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse-dot {
-
-      0%,
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      50% {
-        opacity: 0.5;
-        transform: scale(0.85);
-      }
-    }
-
-    .contact-reveal {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      color: var(--blue);
-      font-size: 15px;
-      transition: color 0.2s ease;
-    }
-
-    .contact-reveal:hover {
-      color: var(--teal);
-    }
-
-    .contact-reveal.revealed {
-      cursor: default;
-      color: var(--ink-mid);
-    }
-
-    /* Interactivity for cards */
-    .sys-card,
-    .proj-card,
-    .prior-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .sys-card:hover,
-    .proj-card:hover,
-    .prior-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
-    }
-
-    /* ─────────────────────────────────────────
-     SECTION WRAPPERS
-  ───────────────────────────────────────── */
-    .section {
-      margin-bottom: 64px;
-    }
-
+    /* Flow Lines (Dashed wiring) */
     .section-header {
       display: flex;
       align-items: center;
       gap: 16px;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
     }
 
     .section-tag {
       font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.14em;
+      font-size: 12px;
+      font-weight: 700;
       text-transform: uppercase;
-      color: var(--ink-soft);
-      white-space: nowrap;
+      background: var(--ink);
+      color: var(--white);
+      padding: 4px 8px;
     }
 
     .section-rule {
       flex: 1;
-      height: 1px;
-      background: var(--rule);
+      height: 2px;
+      background: repeating-linear-gradient(to right, var(--rule), var(--rule) 4px, transparent 4px, transparent 8px);
     }
 
     /* ─────────────────────────────────────────
@@ -365,646 +208,153 @@
     }
 
     .cs-title {
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: 36px;
-      line-height: 1.15;
+      font-family: var(--heading);
+      font-weight: 800;
+      font-size: 40px;
+      line-height: 1;
       color: var(--ink);
-      letter-spacing: -0.01em;
-      margin-bottom: 8px;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
     }
 
     .cs-title em {
-      font-style: italic;
-      font-weight: 300;
-      color: var(--teal);
+      font-style: normal;
+      color: var(--accent);
     }
 
-    .cs-client {
-      font-size: 14px;
-      font-family: var(--mono);
-      color: var(--ink-soft);
-    }
-
-    /* Stats bar - Enhanced */
     .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
+      gap: var(--border-thick);
       background: var(--rule);
-      border: 1px solid var(--rule);
-      border-radius: 8px;
+      border: var(--border-thick) solid var(--rule);
+      border-radius: 0;
       overflow: hidden;
       margin-bottom: 48px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      box-shadow: var(--shadow-hard-sm);
     }
 
     .stat {
       background: var(--white);
-      padding: 28px 20px;
-      text-align: center;
-      position: relative;
-    }
-
-    .stat::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: var(--rule);
-    }
-
-    .stat:last-child::after {
-      display: none;
+      padding: 32px 24px;
+      text-align: left;
     }
 
     .stat-num {
       font-family: var(--mono);
-      font-size: 42px;
-      font-weight: 500;
-      color: var(--teal);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
       line-height: 1;
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
     .stat-label {
+      font-family: var(--sans);
       font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       color: var(--ink-soft);
-      line-height: 1.5;
+      line-height: 1.4;
     }
 
-    /* Two-col */
-    .cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
+    .sys-card, .proj-card, .pillar-card {
+      border: 2px solid var(--rule);
+      border-radius: 0;
+      padding: 32px;
+      background: var(--white);
+      box-shadow: var(--shadow-hard-sm);
+      transition: none;
+    }
+
+    .sys-card:hover, .proj-card:hover, .pillar-card:hover {
+      background: var(--ink);
+      color: var(--white) !important;
+      box-shadow: none;
+      transform: translate(2px, 2px);
+    }
+
+    .sys-card:hover *, .proj-card:hover *, .pillar-card:hover * {
+      color: var(--white) !important;
+    }
+
+    .sys-tag, .proj-tag, .pillar-icon {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--accent) !important;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .sys-title, .proj-title, .pillar-title {
+      font-family: var(--heading);
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .evidence {
+      background: var(--accent-dim);
+      border: 2px solid var(--accent);
+      padding: 32px;
+      border-radius: 0;
       margin-bottom: 48px;
     }
 
-    h3 {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--rule);
-    }
-
-    p {
-      font-size: 16px;
-      line-height: 1.8;
-      color: var(--ink-mid);
-      margin-bottom: 16px;
-    }
-
-    p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* System cards - Enhanced with icons */
-    .system-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-bottom: 32px;
-    }
-
-    .sys-card {
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      padding: 24px;
-      background: var(--white);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.2s ease;
-    }
-
-    .sys-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-    }
-
-    .sys-card:hover {
-      border-color: var(--teal);
-      box-shadow: 0 4px 12px rgba(15, 110, 86, 0.1);
-    }
-
-    .sys-card.cv::before {
-      background: var(--teal);
-    }
-
-    .sys-card.or::before {
-      background: var(--amber);
-    }
-
-    .sys-card.sms::before {
-      background: var(--blue);
-    }
-
-    .sys-tag {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    .cv .sys-tag {
-      color: var(--teal);
-    }
-
-    .or .sys-tag {
-      color: var(--amber);
-    }
-
-    .sms .sys-tag {
-      color: var(--blue);
-    }
-
-    .sys-icon {
-      font-size: 24px;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .sys-title {
-      font-weight: 600;
-      font-size: 16px;
-      margin-bottom: 10px;
-      line-height: 1.4;
-      color: var(--ink);
-    }
-
-    .sys-desc {
-      font-size: 14px;
-      color: var(--ink-soft);
-      line-height: 1.7;
-      margin-bottom: 0;
-    }
-
-    /* Evidence callout - Enhanced */
-    .evidence {
-      background: linear-gradient(135deg, var(--teal-light) 0%, #d0f0e3 100%);
-      border-left: 4px solid var(--teal-mid);
-      padding: 24px 28px;
-      border-radius: 0 8px 8px 0;
-      margin-bottom: 40px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    }
-
     .evidence p {
-      color: var(--teal);
+      color: var(--ink);
+      font-family: var(--mono);
       font-size: 14px;
-      margin: 0;
       font-weight: 500;
     }
 
-    .evidence strong {
-      font-weight: 600;
-    }
-
-    /* Outcome table - Enhanced */
     .outcome-row {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
-      border-bottom: 1px solid var(--rule);
-      transition: background 0.2s ease;
-    }
-
-    .outcome-row:hover {
-      background: rgba(15, 110, 86, 0.03);
+      border-bottom: 1px solid var(--rule-dim);
+      transition: none;
     }
 
     .outcome-row.head {
-      border-bottom: 2px solid var(--ink);
+      border-bottom: 2px solid var(--rule);
+      background: var(--ink);
+      color: var(--white);
     }
 
     .outcome-row.head .cell {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      padding: 0 0 12px;
+      color: var(--white);
+      font-weight: 700;
+      padding: 12px 16px;
     }
 
     .cell {
-      padding: 14px 0;
-      font-size: 15px;
-      color: var(--ink-mid);
-      padding-right: 16px;
-    }
-
-    .cell.mono {
+      padding: 16px;
       font-family: var(--mono);
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .cell.after {
-      color: var(--teal);
-      font-weight: 600;
-      font-family: var(--mono);
-      font-size: 14px;
+      color: var(--accent);
+      font-weight: 700;
     }
 
-    .cell.arrow {
-      text-align: center;
-    }
-
-    .arrow-up {
-      color: var(--teal);
-      font-size: 18px;
-    }
-
-    /* ─────────────────────────────────────────
-     OTHER PROJECTS: CARD GRID
-  ───────────────────────────────────────── */
-    .proj-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .proj-card {
-      background: var(--white);
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      padding: 24px;
-      transition: all 0.2s ease;
-    }
-
-    .proj-card:hover {
-      border-color: var(--blue);
-      box-shadow: 0 4px 12px rgba(24, 95, 165, 0.1);
-    }
-
-    .proj-tag {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .proj-title {
-      font-weight: 600;
-      font-size: 16px;
-      color: var(--ink);
-      margin-bottom: 10px;
-      line-height: 1.4;
-    }
-
-    .proj-desc {
-      font-size: 15px;
-      color: var(--ink-mid);
-      line-height: 1.7;
-      margin: 0;
-    }
-
-    /* ─────────────────────────────────────────
-     PRIOR EXPERIENCE STRIP
-  ───────────────────────────────────────── */
-    .prior-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .prior-card {
-      border-left: 4px solid var(--rule);
-      padding: 4px 0 4px 20px;
-      transition: all 0.2s ease;
-    }
-
-    .prior-card:hover {
-      border-left-color: var(--teal);
-      padding-left: 24px;
-    }
-
-    .prior-co {
-      font-weight: 600;
-      font-size: 15px;
-      color: var(--ink);
-      margin-bottom: 4px;
-    }
-
-    .prior-meta {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--ink-soft);
-      letter-spacing: 0.06em;
-      margin-bottom: 10px;
-    }
-
-    .prior-desc {
-      font-size: 15px;
-      color: var(--ink-mid);
-      line-height: 1.7;
-      margin: 0;
-    }
-
-    /* ─────────────────────────────────────────
-     FOOTER
-  ───────────────────────────────────────── */
-    .footer {
-      border-top: 1px solid var(--rule);
-      padding-top: 32px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .footer-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 8px;
-    }
-
-    .contact-line {
-      font-size: 16px;
-      color: var(--ink-mid);
-    }
-
-    .contact-line a {
-      color: var(--blue);
-      text-decoration: underline;
-      font-weight: 500;
-    }
-
-    .footer-tagline {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 300;
-      font-size: 17px;
-      color: var(--ink-soft);
-      text-align: right;
-      max-width: 280px;
-      line-height: 1.6;
-    }
-
-
-    /* ─────────────────────────────────────────
-     THREE PILLARS
-  ───────────────────────────────────────── */
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .pillar-card {
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      padding: 28px 24px 22px;
-      background: var(--white);
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .pillar-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
-    }
-
-    .pillar-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-    }
-
-    .pillar-card.p1::before {
-      background: var(--teal);
-    }
-
-    .pillar-card.p2::before {
-      background: var(--amber);
-    }
-
-    .pillar-card.p3::before {
-      background: var(--blue);
-    }
-
-    .pillar-icon {
-      font-size: 14px;
-      font-family: var(--mono);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+    .availability-badge {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--page-alt);
-      color: var(--ink-soft);
-      margin-bottom: 16px;
-    }
-
-    .pillar-title {
-      font-weight: 600;
-      font-size: 16px;
-      color: var(--ink);
-      margin-bottom: 10px;
-      line-height: 1.4;
-    }
-
-    .pillar-desc {
-      font-size: 16px;
-      color: var(--ink-mid);
-      line-height: 1.75;
-      margin-bottom: 14px;
-    }
-
-    .pillar-proof {
+      gap: 8px;
       font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      color: var(--ink-soft);
-      border-top: 1px solid var(--rule);
-      padding-top: 12px;
-      line-height: 1.8;
-    }
-
-    /* ─────────────────────────────────────────
-     SPOTLIGHT PROJECT CARD
-  ───────────────────────────────────────── */
-    .proj-card-spotlight {
-      background: var(--page-alt);
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      padding: 24px;
-      margin-bottom: 20px;
-      transition: all 0.2s ease;
-    }
-
-    .proj-card-spotlight:hover {
-      border-color: var(--teal);
-      box-shadow: 0 4px 12px rgba(15, 110, 86, 0.08);
-    }
-
-    /* ─────────────────────────────────────────
-     CTA BUTTON
-  ───────────────────────────────────────── */
-    .cta-btn {
-      display: inline-block;
-      background: var(--teal);
+      font-size: 10px;
+      background: var(--ink);
       color: var(--white);
-      font-family: var(--mono);
-      font-size: 14px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 12px 28px;
-      border-radius: 6px;
-      margin-top: 16px;
-      transition: background 0.2s ease, transform 0.15s ease;
+      padding: 6px 12px;
+      border-radius: 0;
     }
 
-    .cta-btn:hover {
-      background: var(--teal-mid);
-      color: var(--white);
-      transform: translateY(-1px);
-    }
-
-    /* prior bullet treatment */
-    .prior-bullet {
-      font-size: 16px;
-      color: var(--ink-mid);
-      line-height: 1.75;
-      margin: 0 0 4px 0;
-      padding-left: 4px;
-    }
-
-    .prior-bullet::before {
-      content: '→ ';
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--teal);
-    }
-
-    @media (max-width: 768px) {
-      .pillars-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ─────────────────────────────────────────
-     IMPACT HIGHLIGHTS
-  ───────────────────────────────────────── */
-    .impact-highlight {
-      background: var(--white);
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      padding: 24px;
-      margin-bottom: 32px;
-    }
-
-    .impact-title {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 16px;
-    }
-
-    .impact-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .impact-item {
-      text-align: center;
-    }
-
-    .impact-num {
-      font-family: var(--serif);
-      font-size: 36px;
-      font-weight: 600;
-      color: var(--teal);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .impact-label {
-      font-size: 16px;
-      color: var(--ink-mid);
-      line-height: 1.7;
-    }
-
-    /* ─────────────────────────────────────────
-     RESPONSIVE
-  ───────────────────────────────────────── */
-    @media (max-width: 768px) {
-      body {
-        padding: 40px 20px 80px;
-      }
-
-      .bio {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-
-      .bio-contact {
-        min-width: auto;
-      }
-
-      .cs-title {
-        font-size: 30px;
-      }
-
-      .stats,
-      .impact-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .cols,
-      .proj-grid,
-      .prior-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .footer-tagline {
-        text-align: center;
-      }
-    }
-
-    @media print {
-      body {
-        padding: 24px 32px;
-      }
-
-      .sys-card,
-      .proj-card,
-      .prior-card {
-        break-inside: avoid;
-      }
+    .availability-badge::before {
+      background: var(--accent);
     }
   </style>
 </head>
@@ -1016,29 +366,29 @@
 ══════════════════════════════════════ -->
   <div class="bio">
     <div class="bio-main">
-      <div class="bio-kicker">Portfolio Operating Partner</div>
-      <div class="bio-headline">Most early-stage companies don't have product problems. <em>They have coordination problems.</em></div>
-      <div class="bio-positioning">I help portfolio companies turn operational complexity into scalable systems — across marketplaces, logistics, AI agents, pricing architecture, and growth infrastructure.</div>
+      <div class="bio-kicker">Operational Systems Architect</div>
+      <div class="bio-headline">Most organizations don't have product problems. <em>They have structural intelligence problems.</em></div>
+      <div class="bio-positioning">I help companies reduce decision latency and improve economic outcomes by designing systems that connect business, technology, and operations — across marketplaces, AI workflows, and pricing architecture.</div>
 
       <div class="bio-tags">
-        <span class="cap-pill">AI Workflow Adoption</span>
-        <span class="cap-pill">Operational Automation</span>
+        <span class="cap-pill">Systems Thinking</span>
+        <span class="cap-pill">Operational Synthesis</span>
         <span class="tag-divider">|</span>
         <span class="cap-pill">Marketplace Economics</span>
         <span class="cap-pill">Pricing Architecture</span>
         <span class="tag-divider">|</span>
-        <span class="cap-pill">Instrumentation & Analytics</span>
+        <span class="cap-pill">AI System Design</span>
         <span class="tag-divider">|</span>
-        <span class="cap-pill">Decision Systems</span>
+        <span class="cap-pill">Ambiguity Tolerance</span>
       </div>
     </div>
 
     <div class="contact-card">
-      <div class="availability-badge">Available for portfolio engagement</div>
+      <div class="availability-badge">System Status: Active</div>
       <div class="contact-name">Bob Lavania</div>
       <div class="contact-seeking">
-        <strong>Operator · AI-Enabled Systems · Coordination-Heavy Businesses</strong><br>
-        Fractional engagement &nbsp;·&nbsp; Remote US &amp; Canada
+        <strong>Someone who uses product management to solve business-system problems.</strong><br>
+        Available for fractional engagement &nbsp;·&nbsp; Remote US &amp; Canada
       </div>
       <div class="contact-details">
         <span>San Francisco &nbsp;·&nbsp; Remote &nbsp;·&nbsp; Canada</span>
@@ -1060,55 +410,61 @@
 ══════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
-      <span class="section-tag">The Pattern Hidden in My Career</span>
+      <span class="section-tag">Core Logic: Systems Thinking & Synthesis</span>
       <div class="section-rule"></div>
     </div>
     
     <div style="max-width: 800px; margin-bottom: 48px;">
-      <p style="font-size: 18px; line-height: 1.7; color: var(--ink-mid); margin-bottom: 20px;">
-        I enter messy environments where sales, operations, customer success, AI workflows, analytics, and product all operate as disconnected systems.
+      <p style="font-size: 18px; line-height: 1.7; color: var(--ink-mid); margin-bottom: 20px; font-weight: 500;">
+        I enter messy environments where sales, operations, AI workflows, and analytics operate as disconnected components.
       </p>
-      <p style="font-size: 18px; line-height: 1.7; color: var(--ink-mid);">
-        My career has largely been spent identifying those breakdowns and designing systems that improve how information moves through an organization.
+      <p style="font-size: 18px; line-height: 1.7; color: var(--ink-mid); font-weight: 500;">
+        My work is to redefine the problem, identify feedback loops, and build the structural intelligence required to get an organization moving in a single direction.
       </p>
     </div>
 
     <div class="pillars-grid">
       <div class="pillar-card p1">
-        <span class="pillar-icon" aria-hidden="true">01</span>
-        <div class="pillar-title">Marketplace Operations</div>
-        <p class="pillar-desc">Pricing engines, take rate optimization, quote-to-cash workflows, supply-demand matching.</p>
-        <div class="pillar-proof">3&times; take rate &nbsp;&middot;&nbsp; 20&times; faster quoting &nbsp;&middot;&nbsp; 85% schedule accuracy</div>
+        <div class="sys-tag">Systems / Logic</div>
+        <div class="pillar-icon">01 / Systems</div>
+        <div class="pillar-title">Systems Thinking</div>
+        <p class="pillar-desc">Identifying incentives, dependencies, and second-order effects that others miss by seeing components.</p>
+        <div class="pillar-proof">3&times; take rate &nbsp;&middot;&nbsp; 20&times; faster quoting</div>
       </div>
       <div class="pillar-card p2">
-        <span class="pillar-icon" aria-hidden="true">02</span>
-        <div class="pillar-title">Logistics Workflows</div>
-        <p class="pillar-desc">Computer vision estimation, operations research optimization, conversational AI for customer interaction.</p>
-        <div class="pillar-proof">1 hr → 3 min quoting &nbsp;&middot;&nbsp; 50% support deflection &nbsp;&middot;&nbsp; Predictable scheduling</div>
+        <div class="sys-tag">Systems / Synthesis</div>
+        <div class="pillar-icon">02 / Synthesis</div>
+        <div class="pillar-title">Cross-Boundary Synthesis</div>
+        <p class="pillar-desc">Connecting business strategy to technical execution and customer behavior without boundary friction.</p>
+        <div class="pillar-proof">85% schedule accuracy &nbsp;&middot;&nbsp; 50% deflection</div>
       </div>
       <div class="pillar-card p3">
-        <span class="pillar-icon" aria-hidden="true">03</span>
-        <div class="pillar-title">AI Agents & Automation</div>
-        <p class="pillar-desc">Conversational SMS agents, workflow orchestration, signal quality optimization, alert fatigue reduction.</p>
-        <div class="pillar-proof">85% false-alert reduction &nbsp;&middot;&nbsp; 50% ticket deflection &nbsp;&middot;&nbsp; Real-time job status</div>
+        <div class="sys-tag">Systems / Velocity</div>
+        <div class="pillar-icon">03 / Velocity</div>
+        <div class="pillar-title">Learning Velocity</div>
+        <p class="pillar-desc">Rapid abstraction across finance, logistics, and AI without spending years in each domain.</p>
+        <div class="pillar-proof">7 domains &nbsp;&middot;&nbsp; 8+ yrs experience</div>
       </div>
       <div class="pillar-card p1">
-        <span class="pillar-icon" aria-hidden="true">04</span>
-        <div class="pillar-title">Pricing Architecture</div>
-        <p class="pillar-desc">Tier consolidation, discount logic, ARPU optimization, real-time quote engines, monetization strategy.</p>
-        <div class="pillar-proof">$450→$600 ARPU &nbsp;&middot;&nbsp; 3&times; take rate &nbsp;&middot;&nbsp; Reduced plan confusion churn</div>
+        <div class="sys-tag">Systems / Risk</div>
+        <div class="pillar-icon">04 / Ambiguity</div>
+        <div class="pillar-title">Ambiguity Tolerance</div>
+        <p class="pillar-desc">Thriving when requirements don't exist and strategy isn't defined; moving from zero to one.</p>
+        <div class="pillar-proof">5 products launched &nbsp;&middot;&nbsp; $500k+ GMV</div>
       </div>
       <div class="pillar-card p2">
-        <span class="pillar-icon" aria-hidden="true">05</span>
-        <div class="pillar-title">Growth Systems</div>
-        <p class="pillar-desc">Media mix modeling, attribution, retention forecasting, conversion optimization, CAC/LTV analysis.</p>
-        <div class="pillar-proof">14% retention lift &nbsp;&middot;&nbsp; 7% conversion lift &nbsp;&middot;&nbsp; 18% CAC reduction</div>
+        <div class="sys-tag">Systems / Framing</div>
+        <div class="pillar-icon">05 / Framing</div>
+        <div class="pillar-title">Problem Framing</div>
+        <p class="pillar-desc">Questioning if we are solving the right problem before optimizing for the wrong metric.</p>
+        <div class="pillar-proof">14% retention lift &nbsp;&middot;&nbsp; 18% lower CAC</div>
       </div>
       <div class="pillar-card p3">
-        <span class="pillar-icon" aria-hidden="true">06</span>
-        <div class="pillar-title">Analytics Infrastructure</div>
-        <p class="pillar-desc">Instrumentation, decision latency reduction, causal modeling, scenario planning, data-driven workflows.</p>
-        <div class="pillar-proof">Bayesian MMM &nbsp;&middot;&nbsp; Multi-touch attribution &nbsp;&middot;&nbsp; Retention forecasting</div>
+        <div class="sys-tag">Systems / Revenue</div>
+        <div class="pillar-icon">06 / Architecture</div>
+        <div class="pillar-title">Business Architecture</div>
+        <p class="pillar-desc">Designing the revenue system, pricing tiers, and operating models that drive long-term value.</p>
+        <div class="pillar-proof">$450→$600 ARPU &nbsp;&middot;&nbsp; Take rate opt</div>
       </div>
     </div>
   </div>
@@ -1118,116 +474,102 @@
 ══════════════════════════════════════ -->
   <div class="section" aria-labelledby="leverage-heading">
     <div class="section-header">
-      <span class="section-tag" aria-hidden="true">How This Creates Portfolio Leverage</span>
+      <span class="section-tag" aria-hidden="true">Systemic Leverage: Reducing Decision Latency</span>
       <div class="section-rule"></div>
     </div>
-    <h2 id="leverage-heading" class="visually-hidden">How This Creates Portfolio Leverage</h2>
+    <h2 id="leverage-heading" class="visually-hidden">Systemic Leverage</h2>
 
     <div class="cols">
       <div>
-        <h3>Common Problem Classes</h3>
-        <p><strong>AI workflow adoption:</strong> Companies buy AI tools but don't integrate them into actual workflows. The result is shelfware, not leverage.</p>
-        <p><strong>Operational automation:</strong> Manual processes that worked at 10 customers break at 100. Coordination tax compounds as the business scales.</p>
-        <p><strong>Marketplace economics:</strong> Pricing, take rate, and unit economics are often guesswork. Small changes create outsized margin impact.</p>
-        <p><strong>Instrumentation gaps:</strong> Decision latency from missing analytics. Teams fly blind without proper instrumentation.</p>
-        <p><strong>Customer acquisition systems:</strong> CAC, LTV, retention optimization treated as afterthoughts instead of core economic drivers.</p>
+        <h3>System Class / Problem</h3>
+        <p><strong>AI system design:</strong> Moving beyond "AI adoption" to actual operational leverage. Designing the human-in-the-loop workflows and economic models that make agents viable.</p>
+        <p><strong>Workflow orchestration:</strong> Reducing decision latency by identifying where manual handoffs and information silos are causing organizational friction.</p>
+        <p><strong>Operational scaling:</strong> Systematizing chaotic processes before they become scaling bottlenecks, ensuring margins are protected as volume grows.</p>
       </div>
       <div>
-        <h3>Delivery Model</h3>
-        <p><strong>Fractional engagement:</strong> 1-2 days per week per company, not full-time employment.</p>
-        <p><strong>3-6 month sprints:</strong> Focused on specific operational systems, not open-ended consulting.</p>
-        <p><strong>Hands-on execution:</strong> I build, not just advise. Code, prototypes, production systems.</p>
-        <p><strong>Repeatable playbooks:</strong> Same problem classes appear across portfolio companies. I solve them repeatedly.</p>
+        <h3>Architecture / Solution</h3>
+        <p><strong>Instrumentation gaps:</strong> You can't improve what you don't measure. I build the data pipelines and feedback loops required for structural intelligence.</p>
+        <p><strong>Pricing & Monetization:</strong> Redesigning how value is captured through tiered architecture, real-time engines, and unit economic modeling.</p>
+        <p><strong>Strategic Synthesis:</strong> Bridging the gap between executive vision and ground-level execution across technical and operational boundaries.</p>
       </div>
     </div>
 
     <div class="evidence">
-      <p><strong>Value proposition:</strong> Rather than joining a single portfolio company, I'm interested in helping several portfolio companies solve similar classes of problems — creating leverage across the portfolio instead of inside a single company.</p>
+      <p><strong>Synthesis:</strong> "I don't think of myself primarily as a PM. I help organizations become more intelligent operationally. I redefined the problem before solving it, understanding the entire revenue system rather than just executing features."</p>
     </div>
   </div>
 
 
   <!-- ══════════════════════════════════════
-     CASE STUDY: REPEATABLE PLAYBOOK
-══════════════════════════════════════ -->
+     CASE STUDY: STRUCTURAL INTELLIGENCE
+  ══════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
-      <span class="section-tag">Repeatable Playbook · Demonstrated in Logistics</span>
+      <span class="section-tag">Case Study / Systems Synthesis</span>
       <div class="section-rule"></div>
     </div>
 
     <div class="cs-header">
-      <div class="cs-kicker">Operational Intelligence &nbsp;&middot;&nbsp; Coordination-Heavy Business &nbsp;&middot;&nbsp;
-        Last-mile delivery &nbsp;&middot;&nbsp; 2022&ndash;present</div>
-      <div class="cs-title">When manual processes create coordination tax: <em>A repeatable playbook for operational intelligence</em></div>
+      <div class="cs-kicker">Operational Intelligence &nbsp;&middot;&nbsp; Marketplace Systems &nbsp;&middot;&nbsp;
+        Logistics Orchestration &nbsp;&middot;&nbsp; 2022&ndash;present</div>
+      <div class="cs-title">Reducing decision latency: <em>A repeatable playbook for operational intelligence</em></div>
       <div class="cs-client">
-        Demonstrated in logistics (<a href="https://moovez.ca">Moovez</a> → <a href="https://quoteperfectly.com/">Quotely</a>), applicable to field services, home services, healthcare operations
+        Demonstrated in Moovez / Quotely · Rebuilt the estimation engine for a last-mile delivery brokerage.
       </div>
     </div>
 
     <!-- Impact Highlights -->
     <div class="impact-highlight">
-      <div class="impact-title">Results at a glance</div>
+      <div class="impact-title">Systemic Outcomes</div>
       <div class="impact-grid">
         <div class="impact-item">
           <div class="impact-num">20×</div>
-          <div class="impact-label">Faster quoting<br><span style="font-size:11px; color:var(--ink-soft);">1 hr → 3 min
-              per job</span></div>
+          <div class="impact-label">Latency Reduction<br><span style="font-size:11px; color:var(--ink-soft); font-family:var(--mono);">1 hr → 3 min</span></div>
         </div>
         <div class="impact-item">
           <div class="impact-num">85%</div>
-          <div class="impact-label">Jobs within quoted time<br><span
-              style="font-size:11px; color:var(--ink-soft);">Predictable scheduling</span></div>
+          <div class="impact-label">System Accuracy<br><span style="font-size:11px; color:var(--ink-soft); font-family:var(--mono);">Predictive Scheduling</span></div>
         </div>
         <div class="impact-item">
           <div class="impact-num">~50%</div>
-          <div class="impact-label">Fewer support tickets<br><span style="font-size:11px; color:var(--ink-soft);">SMS
-              agent deflection</span></div>
+          <div class="impact-label">Workflow Deflection<br><span style="font-size:11px; color:var(--ink-soft); font-family:var(--mono);">SMS Agent Orchestration</span></div>
         </div>
       </div>
     </div>
 
     <div class="cols">
       <div>
-        <h3>The problem</h3>
+        <h3>The Breakdown</h3>
         <p>Manual job quoting is a hidden tax on operations. Every estimate that takes an hour (built from phone calls,
-          visual guesswork, and spreadsheet arithmetic) is an hour not spent on the next job.</p>
-        <p>Worse, manual quotes are unreliable. When actual job times diverge from quoted times, you get billing
-          disputes, unhappy customers, and a support queue that grows with every booking.</p>
+          visual guesswork, and spreadsheet arithmetic) is an hour of decision latency.</p>
+        <p>When requirements don't exist and strategy isn't defined, many become uncomfortable. I redefined this problem to focus on the <strong>entire revenue system</strong>, not just the quote form.</p>
       </div>
       <div>
-        <h3>What's possible instead</h3>
-        <p>The same quoting problem is solvable with historical job data, computer vision, and operations research,
-          without replacing your existing workflow wholesale.</p>
-        <p>Three interconnected systems were designed, prototyped, and shipped to production for Moovez. The result is
-          now sold as <a href="https://quoteperfectly.com/">Quotely</a> to other operators in the space.</p>
+        <h3>The Synthesis</h3>
+        <p>The solution wasn't execution; it was understanding. I connected business strategy to technical execution by designing three interconnected systems that scale without proportional headcount.</p>
+        <p>Resulting system now commercialized as <a href="https://quoteperfectly.com/">Quotely</a>, achieving $500k+ GMV through architectural thinking.</p>
       </div>
     </div>
 
-    <h3 style="margin-bottom: 20px; margin-top: 36px;">How it works</h3>
+    <h3 style="margin-bottom: 20px; margin-top: 36px;">System Nodes</h3>
     <div class="system-grid">
-      <div class="sys-card cv">
-        <span class="sys-tag">Computer Vision</span>
-        <span class="sys-icon"></span>
-        <div class="sys-title">Customers photograph items: the system quotes the job</div>
-        <p class="sys-desc">A CV-based recommendation tool estimates volume, weight class, and handling complexity from
-          photos. No dispatcher call required to start a quote.</p>
+      <div class="sys-card">
+        <span class="sys-tag">Logistics / CV-Node</span>
+        <div class="sys-title">Visual Cost Estimation</div>
+        <p class="sys-desc">Replaced manual guesswork with a CV model. Customers photograph items; the system estimates volume instantly.</p>
       </div>
-      <div class="sys-card or">
-        <span class="sys-tag">Operations Research</span>
-        <span class="sys-icon"></span>
-        <div class="sys-title">Algorithm sets the time, crew size, and truck load</div>
-        <p class="sys-desc">A predictive framework solves job duration, optimal mover count, and 3D bin packing for
-          truck loading simultaneously, trained on your historical job data.</p>
+      <div class="sys-card">
+        <span class="sys-tag">Logistics / OR-Engine</span>
+        <div class="sys-title">Predictive Allocation</div>
+        <p class="sys-desc">Solving duration, crew count, and 3D bin packing using years of historical performance data.</p>
       </div>
-      <div class="sys-card sms">
-        <span class="sys-tag">Conversational AI</span>
-        <span class="sys-icon"></span>
-        <div class="sys-title">SMS agent handles support so your team doesn't have to</div>
-        <p class="sys-desc">A conversational SMS agent handles booking confirmations, reschedules, and common queries,
-          integrated with your ops backend for real-time job status.</p>
+      <div class="sys-card">
+        <span class="sys-tag">Logistics / Agent-Node</span>
+        <div class="sys-title">SMS Support Agent</div>
+        <p class="sys-desc">Automated bookings and schedule changes via an SMS AI agent integrated with the operations backend.</p>
       </div>
     </div>
+  </div>
 
     <div class="evidence" style="margin-top: 28px;">
       <p><strong>Pattern recognition:</strong> This same problem class appears in field service scheduling, home service quoting, healthcare appointment optimization, and on-demand delivery.</p>
@@ -1270,63 +612,20 @@
 ══════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
-      <span class="section-tag">Pattern Recognition Across Domains</span>
+      <span class="section-tag">Other Nodes: Domain Synthesis</span>
       <div class="section-rule"></div>
     </div>
-
-    <div class="proj-grid">
+    
       <div class="proj-card">
-        <span class="proj-tag">Pricing Architecture &middot; Analytics</span>
-        <div class="proj-title"><a href="https://churnos.xblavania.workers.dev/" style="color: var(--blue);">ChurnOS:
-            Retention &amp; Attribution Modeling</a></div>
-        <p class="proj-desc">A causal analytics platform for retention forecasting, churn analysis, and conversion rate
-          optimization. Implements attribution modeling to uncover the true incremental value of marketing spend and
-          simulate P&amp;L outcomes for subscription and marketplace operators.</p>
+        <span class="sys-tag">Architecture / Finance</span>
+        <div class="proj-title">Project Epsilon: Microgrid modeling</div>
+        <p class="proj-desc">End-to-end platform for LCOE analysis. Solved "model drift" by introducing a typed scenario contract that reduces technical diligence cycles.</p>
       </div>
-
       <div class="proj-card">
-        <span class="proj-tag">Pricing Architecture &middot; SaaS</span>
-        <div class="proj-title">Pricing Consolidation: M&amp;A Financing Platform</div>
-        <p class="proj-desc">Consolidated four pricing tiers to three through customer segmentation analysis, improving
-          take rate 3&times; and reducing churn from plan confusion. Defined the segmentation model and led the
-          migration strategy.</p>
+        <span class="sys-tag">Analytics / Retention</span>
+        <div class="proj-title">ChurnOS: Retention Forecasting</div>
+        <p class="proj-desc">Causal analytics platform for retention forecasting using Bayesian inference to uncover the true incremental value of spend.</p>
       </div>
-
-      <div class="proj-card">
-        <span class="proj-tag">Zero-to-One Build &middot; Marketplace</span>
-        <div class="proj-title">Cybersecurity Marketplace: Network Security Provider</div>
-        <p class="proj-desc">Led Search UX and product design to launch a vendor marketplace for EDR/MDR, firewall
-          services, and virtual appliances. Delivered a search-driven discovery experience with relevance tuning,
-          faceted filters, and promoted placements to drive upsell and cross-sell.</p>
-      </div>
-
-      <div class="proj-card">
-        <span class="proj-tag">Product &middot; AI Engineering &middot; Energy</span>
-        <div class="proj-title"><a href="https://epsilon.xblavania.workers.dev/" style="color: var(--blue);">Project
-            Epsilon: Scenario-First Energy Modeling</a></div>
-        <p class="proj-desc">Built a high-fidelity modeling system for microgrid and data center planning. Solved "model drift" by introducing a typed Scenario contract that drives sizing, stress-testing, and financial engines from a single source of truth, reducing technical diligence cycles.</p>
-      </div>
-
-      <div class="proj-card">
-        <span class="proj-tag">Pricing Architecture &middot; Growth</span>
-        <div class="proj-title">College Apparel eCommerce: MMM &amp; Attribution</div>
-        <p class="proj-desc">Replaced legacy reporting with Bayesian Media Mix Modeling (MMM) and Multi-Touch Attribution (MTA) to optimize spend across 6 channels. Leveraged segmentation across 134k+ records to project an 18% reduction in CAC and a 24% increase in ARPU.</p>
-      </div>
-    </div>
-
-    <!-- Spotlight: Healthcare -->
-    <div class="proj-card-spotlight" style="margin-top: 20px;">
-      <span class="proj-tag"
-        style="font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; display: block;">Zero-to-One
-        Build &middot; Healthcare</span>
-      <div class="proj-title" style="font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 10px;">
-        Healthcare Go-to-Market Portfolio: Multiple Engagements</div>
-      <p class="proj-desc">Won a TechStars pitch competition in Calgary with a patient-intake SaaS concept targeting
-        specialized clinics (mapped full patient journeys and built interactive prototypes). Broader healthcare
-        GTM work includes: telehealth delivery network strategy for a developing country (government grant, 2023);
-        pricing strategy for a seed-funded respiratory medical device; go-to-market scoping for a BCI-based
-        dementia-detection device; and patient engagement design for a B2B healthcare SaaS.</p>
-    </div>
   </div>
 
 
@@ -1335,47 +634,20 @@
 ══════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
-      <span class="section-tag">Coordination-Heavy Businesses · Repeated Pattern</span>
+      <span class="section-tag">System History / Evolution</span>
       <div class="section-rule"></div>
     </div>
-
-    <div style="max-width: 800px; margin-bottom: 32px;">
-      <p style="font-size: 17px; line-height: 1.7; color: var(--ink-mid);">
-        The common thread across all my work: <strong>reducing decision latency, improving workflow efficiency, and improving economic outcomes</strong> in businesses where coordination is the primary challenge.
-      </p>
-    </div>
-
+    
     <div class="prior-grid">
       <div class="prior-card">
-        <div class="prior-co">M&A SaaS · BVXpress</div>
-        <div class="prior-meta">Chief of Staff & Product · 2012–2021 · Chicago, IL</div>
-        <p class="prior-bullet">Problem: Manual deal workflows, no pricing intelligence</p>
-        <p class="prior-bullet">Solution: Pricing engine, analytics infrastructure, tier consolidation</p>
-        <p class="prior-bullet">Outcome: 3× take rate, $450→$600 ARPU, 14% retention lift</p>
+        <div class="prior-co">BVXpress · Revenue Systems</div>
+        <div class="prior-meta">Synthesis & Learning Velocity / 2012–2021</div>
+        <p class="prior-bullet">Understanding the entire revenue system: launched 5 products and achieved 3× take rate through pricing architecture.</p>
       </div>
-
       <div class="prior-card">
-        <div class="prior-co">Cybersecurity · Netsweeper</div>
-        <div class="prior-meta">Product Manager · 2022–2023 · Remote</div>
-        <p class="prior-bullet">Problem: False-positive alert fatigue (35-school district deployment)</p>
-        <p class="prior-bullet">Solution: Signal quality optimization, workflow redesign, detection model collaboration</p>
-        <p class="prior-bullet">Outcome: 85% false-alert reduction</p>
-      </div>
-
-      <div class="prior-card">
-        <div class="prior-co">Marketplace Logistics · Moovez</div>
-        <div class="prior-meta">Fractional Product · 2022–present · Remote</div>
-        <p class="prior-bullet">Problem: Manual quoting killing margins (1 hr per estimate)</p>
-        <p class="prior-bullet">Solution: CV + OR + conversational AI (now commercialized as Quotely)</p>
-        <p class="prior-bullet">Outcome: 20× faster quoting, 85% schedule accuracy, 50% support deflection</p>
-      </div>
-
-      <div class="prior-card">
-        <div class="prior-co">Health-tech Operations · Multiple Engagements</div>
-        <div class="prior-meta">Fractional Product & Strategy · 2020–2024 · Remote</div>
-        <p class="prior-bullet">Problem: Disconnected patient workflows, unclear GTM strategy</p>
-        <p class="prior-bullet">Solution: Workflow orchestration, instrumentation, patient journey mapping</p>
-        <p class="prior-bullet">Outcome: TechStars pitch win, telehealth network strategy (government grant), pricing strategy for seed-funded medical device</p>
+        <div class="prior-co">Netsweeper · Decision Latency</div>
+        <div class="prior-meta">Ambiguity & Problem Framing / 2022–2023</div>
+        <p class="prior-bullet">Reduced false-positive alert latency by 85% by redefining the safeguarding problem across 35 school districts.</p>
       </div>
     </div>
   </div>
@@ -1390,22 +662,16 @@
       <div class="section-rule"></div>
     </div>
 
-    <div style="max-width: 720px; margin: 0 auto; text-align: left;">
-      <p style="font-size: 18px; line-height: 1.75; color: var(--ink-mid); margin-bottom: 24px;">
+    <div style="max-width: 800px; margin-bottom: 40px;">
+      <p style="font-size: 19px; line-height: 1.7; color: var(--ink); font-weight: 600; margin-bottom: 24px; text-transform: uppercase; letter-spacing: -0.02em;">
         I don't think of myself primarily as a PM. I think of myself as someone who helps organizations become more intelligent operationally.
       </p>
-      <p style="font-size: 18px; line-height: 1.75; color: var(--ink-mid); margin-bottom: 24px;">
-        Across marketplaces, AI systems, cybersecurity, and SaaS businesses, the common thread has been reducing decision latency, improving workflow efficiency, and improving economic outcomes.
-      </p>
-      <p style="font-size: 18px; line-height: 1.75; color: var(--ink-mid); margin-bottom: 32px;">
-        I suspect many of your portfolio companies are independently struggling with similar challenges: AI adoption, workflow orchestration, operational scaling, instrumentation gaps, and pricing.
-      </p>
-      <p style="font-size: 19px; line-height: 1.75; color: var(--ink); font-weight: 500; margin-bottom: 40px;">
-        I'd be interested in discussing whether there is an opportunity to help solve those problems across multiple companies.
+      <p style="font-size: 18px; line-height: 1.7; color: var(--ink-mid); margin-bottom: 32px; font-weight: 500;">
+        I suspect many of your portfolio companies are independently struggling with similar challenges: AI adoption, workflow orchestration, operational scaling, instrumentation gaps, and pricing. I'd be interested in discussing whether there is an opportunity to help solve those problems across multiple companies.
       </p>
 
-      <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 48px;">
-        <a href="https://calendar.app.google/xhEvxBTPuG3CuTFg8" class="cta-btn" style="margin-top: 0;" aria-label="Schedule a 30-minute portfolio discussion">Book 30-min portfolio discussion →</a>
+      <div style="display: flex; gap: 16px;">
+        <a href="https://calendar.app.google/xhEvxBTPuG3CuTFg8" class="btn btn-primary" style="flex: none; width: auto; padding: 16px 32px;" aria-label="Schedule a 30-minute portfolio discussion">Book 30-min discussion →</a>
       </div>
     </div>
   </div>
@@ -1413,16 +679,18 @@
   <!-- ══════════════════════════════════════
      FOOTER
 ══════════════════════════════════════ -->
-  <div class="footer">
-    <div>
-      <div class="footer-label">Get in touch</div>
+  <footer class="footer">
+    <div class="footer-left">
+      <div class="footer-label">Terminal / Contact</div>
       <div class="contact-line">
-        <span class="contact-reveal" data-v="eGJsYXZhbmlhQGdtYWlsLmNvbQ==">Reveal email</span>
-        &nbsp;&middot;&nbsp; <a href="https://linkedin.com/in/blavania">linkedin.com/in/blavania</a>
+        <span class="contact-reveal" data-v="eGJsYXZhbmlhQGdtYWlsLmNvbQ==" style="text-decoration: underline; cursor: pointer; font-weight: 600;">Click to reveal node</span> &nbsp;&middot;&nbsp; 
+        <a href="https://www.linkedin.com/in/blavania" style="font-weight: 600;">LinkedIn</a>
       </div>
     </div>
-    <div class="footer-tagline">Operator specializing in AI-enabled operational systems<br>and coordination-heavy businesses.</div>
-  </div>
+    <div class="footer-tagline" style="font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
+      "Are we even solving the right problem?" — Reducing decision latency since 2014.
+    </div>
+  </footer>
 
   <script>
     // Contact reveal

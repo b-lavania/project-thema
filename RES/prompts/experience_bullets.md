@@ -15,6 +15,7 @@ NON-NEGOTIABLE RULES
 - Every bullet MUST cite a specific system, number, tool, user signal, or named outcome from the role block — no exceptions.
 - Tools allowed ONLY if they appear in the input.
 - Company description line: 170-200 characters including spaces. Factual only, no hype or marketing language.
+- If the role block includes **Company descriptor (resume)**, **Employee #N**, **first product hire**, or **only product hire**, include that compact startup context in the company description line (e.g. "Employee #6 (first product hire)" or "only product hire on the team"). Never write "PM hire" — use **product hire**.
 - Role summary line: 170-200 characters including spaces. Must state the core responsibility and the business or operational need it supported.
 - Keep bullets between 150-180 characters including spaces.
 - Write exactly 4 bullets. Select the 4 most relevant to the target job description.

@@ -13,6 +13,48 @@ _QUICK_TAKE_TOOL_NAMES = (
 )
 
 
+def recommended_page_limit(export_mode: str = "standard") -> int:
+    """Return the recommended page limit for an export mode."""
+    return 3 if export_mode == "digital" else MAX_PDF_PAGES
+
+
+def _count_bulletish_lines(text: str) -> int:
+    count = 0
+    for line in (text or "").split("\n"):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if stripped.startswith(("-", "•")) or re.match(r"^\d+[\.)]\s+", stripped):
+            count += 1
+    return count
+
+
+def _extract_bullet_bodies(experience_blocks: list[str]) -> list[str]:
+    bullets: list[str] = []
+    for block in experience_blocks or []:
+        for line in block.split("\n"):
+            stripped = line.strip()
+            if not stripped:
+                continue
+            if stripped.startswith("-"):
+                bullets.append(re.sub(r"^-\s*", "", stripped))
+            elif re.match(r"^\d+[\.)]\s+", stripped):
+                bullets.append(re.sub(r"^\d+[\.)]\s*", "", stripped))
+    return bullets
+
+
+def _count_condensed_roles(experience_blocks: list[str]) -> int:
+    return sum(
+        1
+        for block in experience_blocks or []
+        if bool(re.match(r"^.+\s+@\s+.+\s+\(.+\)$", (block or "").strip()))
+    )
+
+
+def _count_full_roles(experience_blocks: list[str]) -> int:
+    return sum(1 for block in experience_blocks or [] if block and "\n" in block.strip())
+
+
 def ats_readiness_checks(
     mission: str,
     skills: str,
@@ -20,10 +62,14 @@ def ats_readiness_checks(
     kw_coverage: float,
     pdf_page_count: int | None,
     *,
+    experience_blocks: list[str] | None = None,
+    export_mode: str = "standard",
+    pdf_page_size: str = "letter",
     coaching_notes_in_output: bool = False,
 ) -> list[dict[str, Any]]:
     """Return checklist items: {label, ok, detail}."""
     checks: list[dict[str, Any]] = []
+    page_limit = recommended_page_limit(export_mode)
 
     # Keyword coverage
     pct = int(kw_coverage * 100) if kw_coverage is not None else 0
@@ -48,6 +94,14 @@ def ats_readiness_checks(
         "detail": "Numbers belong in The Work, not Quick Take",
     })
 
+    quick_take_words = len(paragraph.split()) if paragraph else 0
+    qt_limit = 75 if export_mode == "digital" else 60
+    checks.append({
+        "label": f"Quick Take stays within {qt_limit} words",
+        "ok": quick_take_words <= qt_limit,
+        "detail": f"{quick_take_words} words",
+    })
+
     # Quick Take tools
     lower = paragraph.lower()
     tools_found = [t for t in _QUICK_TAKE_TOOL_NAMES if t in lower]
@@ -64,16 +118,48 @@ def ats_readiness_checks(
         "detail": "COACHING NOTE lines must be removed before send",
     })
 
+    skill_bullets = _count_bulletish_lines(skills)
+    skill_limit = 7 if export_mode == "digital" else 6
+    checks.append({
+        "label": f"How I Work stays within {skill_limit} bullets",
+        "ok": 0 < skill_bullets <= skill_limit,
+        "detail": f"{skill_bullets} bullet(s)",
+    })
+
+    full_roles = _count_full_roles(experience_blocks or [])
+    condensed_roles = _count_condensed_roles(experience_blocks or [])
+    condensed_limit = 4 if export_mode == "digital" else 2
+    checks.append({
+        "label": f"Condensed roles kept ≤ {condensed_limit}",
+        "ok": condensed_roles <= condensed_limit,
+        "detail": f"{full_roles} full / {condensed_roles} condensed",
+    })
+
+    bullets = _extract_bullet_bodies(experience_blocks or [])
+    long_bullets = [b for b in bullets if len(b.split()) > 34]
+    checks.append({
+        "label": "Bullets stay scannable",
+        "ok": len(long_bullets) <= 2,
+        "detail": f"{len(long_bullets)} bullet(s) over 34 words",
+    })
+
+    page_size_ok = export_mode == "digital" or pdf_page_size == "letter"
+    checks.append({
+        "label": "Page size matches export mode",
+        "ok": page_size_ok,
+        "detail": f"{pdf_page_size.title()} in {export_mode} mode",
+    })
+
     # Page count
     if pdf_page_count is not None:
         checks.append({
-            "label": f"PDF ≤ {MAX_PDF_PAGES} pages",
-            "ok": pdf_page_count <= MAX_PDF_PAGES,
+            "label": f"PDF ≤ {page_limit} pages",
+            "ok": pdf_page_count <= page_limit,
             "detail": f"{pdf_page_count} page(s)",
         })
     else:
         checks.append({
-            "label": f"PDF ≤ {MAX_PDF_PAGES} pages",
+            "label": f"PDF ≤ {page_limit} pages",
             "ok": False,
             "detail": "Not rendered yet",
         })
@@ -119,17 +205,19 @@ def trim_role_block_bullets(role_text: str, max_bullets: int = 3) -> str:
 def compact_resume_sections(
     sections: dict,
     *,
-    max_bullets_per_role: int = 3,
+    max_bullets_per_role: int | None = None,
     omit_projects: bool = False,
+    export_mode: str = "standard",
 ) -> dict:
     """Return a copy of resume sections with tighter budgets."""
     out = dict(sections)
+    bullet_cap = max_bullets_per_role if max_bullets_per_role is not None else (4 if export_mode == "digital" else 3)
     if omit_projects:
         out["projects"] = ""
     exp = out.get("experience") or []
     if isinstance(exp, list):
         out["experience"] = [
-            trim_role_block_bullets(block, max_bullets=max_bullets_per_role)
+            trim_role_block_bullets(block, max_bullets=bullet_cap)
             for block in exp
         ]
     return out
@@ -184,6 +272,7 @@ def apply_two_page_compact(
     res: dict,
     role_selections: dict[str, str],
     max_full: int = 2,
+    export_mode: str = "standard",
 ) -> tuple[dict, dict[str, str], list[tuple]]:
     """
     Deterministic compaction: demote extra full roles, trim bullets, drop Side Builds.
@@ -205,7 +294,8 @@ def apply_two_page_compact(
             "experience": experience,
             "projects": res.get("projects", ""),
         },
-        max_bullets_per_role=3,
+        max_bullets_per_role=None,
         omit_projects=True,
+        export_mode=export_mode,
     )
     return sections, new_selections, updated_selected

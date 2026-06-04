@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HRIS for M&amp;A Transactions | Product Notes | Bob Lavania</title>
-<meta name="description" content="Product case study: HRIS for M&amp;A transaction readiness, built at BVXpress. API-first workforce integration, normalized people data, and diligence dashboards.">
-<meta property="og:title" content="HRIS for M&amp;A Transactions | BVXpress">
-<meta property="og:description" content="Internal HRIS product at BVXpress for merger and acquisition workflows: connect acquired entities, normalize workforce data, and answer diligence questions without months-long migrations.">
+<meta name="description" content="HRIS for M&amp;A: a BVXpress product for ICI clients and acquired companies, not internal-only tooling. People analytics, ingestion, diligence reporting, transaction compliance.">
+<meta property="og:title" content="HRIS for M&amp;A Transactions | BVXpress / ICI">
+<meta property="og:description" content="The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling. People analytics, ingestion, normalization, and diligence reporting for M&amp;A workforce teams.">
 <meta property="og:type" content="article">
 <style>
   :root {
@@ -465,11 +465,11 @@
   <header>
     <p class="back-link"><a href="index.html">← Portfolio</a></p>
     <h1>HRIS built for M&amp;A transaction readiness</h1>
-    <p class="subhead">At <strong>BVXpress</strong> (2012–2021), I led product for an internal HRIS built for our own M&amp;A program: connect acquired companies quickly, normalize workforce data across systems, and give deal teams diligence-ready answers without six-month migration projects.</p>
+    <p class="subhead"><strong>BVXpress</strong> was the SaaS business unit within <strong>ICI</strong> (M&amp;A advisory). From 2012–2021 I owned the complete HRIS end-to-end. <strong>The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling.</strong> Scope: HRIS ingestion, normalization, people analytics, diligence reporting, and transaction compliance, shaped by post-merger integration teams on live deals.</p>
 
     <div class="cred-strip">
-      <span>Product Manager · BVXpress</span>
-      <span>M&amp;A · HR Tech</span>
+      <span>Product Manager · BVXpress / ICI</span>
+      <span>M&amp;A · HR Tech · People Analytics</span>
       <span>2012–2021</span>
     </div>
 
@@ -487,11 +487,22 @@
         <div class="proof-label">Job families, comp views, hierarchy mapping, employment types</div>
       </div>
       <div class="proof-card purple">
-        <div class="proof-number">Diligence-ready</div>
-        <div class="proof-label">Headcount, comp burden, retention risk, without custom reports</div>
+        <div class="proof-number">People analytics</div>
+        <div class="proof-label">Payroll and contract risk surfaced on diligence dashboards</div>
       </div>
     </div>
   </header>
+
+  <section>
+    <h2>Who it was for</h2>
+    <p class="metric-highlight" style="margin-bottom:1rem;"><strong>ICI clients and acquired companies</strong> on the BVXpress product suite: M&amp;A workforce due diligence and integration teams, plus post-merger entities themselves.</p>
+    <ul class="pain-list">
+      <li><strong>HR operations</strong> on acquired and combined entities</li>
+      <li><strong>Deal-team and diligence stakeholders</strong> during live transactions</li>
+      <li><strong>HR leads in post-close integration</strong> running PMI workflows</li>
+    </ul>
+    <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);max-width:720px;">Day-one users were integration and diligence teams; the product goal was a <strong style="color:var(--text-main);">sticky system that would expand to management and HR business partners</strong> in the new company once workforce truth was trustworthy.</p>
+  </section>
 
   <section>
     <h2>Why we needed this</h2>
@@ -533,27 +544,32 @@
   </section>
 
   <section>
-    <h2>Key product requirements</h2>
+    <h2>What we built</h2>
+    <p style="margin-bottom:1.25rem;font-size:0.95rem;color:var(--text-muted);max-width:720px;">Beyond a typical employee roster, reporting structure, pay data, and employment types, the platform connected upstream HR tooling and delivered diligence-ready analytics and reporting for transaction teams.</p>
     <div class="capabilities-grid">
       <div class="cap-card">
-        <h4>1. Universal adapter pattern</h4>
-        <p>Integration layer is system-agnostic. Frappe HRMS is the reference implementation; adapters extend to Workday, SuccessFactors, ADP, and regional payroll.</p>
+        <h4>1. HRIS ingestion &amp; adapters</h4>
+        <p>Pull workforce data from acquired entities&rsquo; HRIS and payroll tooling. System-agnostic integration layer; Frappe HRMS as reference implementation; extend to Workday, SuccessFactors, ADP, and regional payroll.</p>
       </div>
       <div class="cap-card">
-        <h4>2. Normalized data model</h4>
-        <p>Map job titles to families, compensation to currency-neutral views, org hierarchy flexibly, and employment types to consistent categories.</p>
+        <h4>2. Normalized workforce model</h4>
+        <p>Job titles to families, compensation to currency-neutral views, org hierarchy mapping, and employment types in one schema so combined-entity metrics are comparable.</p>
       </div>
       <div class="cap-card">
-        <h4>3. Transaction-ready dashboards</h4>
-        <p>Headcount by country, total comp burden, key performers to retain, attrition risk: instant answers for diligence, not ad-hoc reports.</p>
+        <h4>3. People analytics &amp; diligence dashboards</h4>
+        <p>Transaction-ready views: headcount by geography, total comp burden, retention and key-performer risk. Teams could <strong>quickly flag payroll anomalies and employee-contract concerns</strong> without ad-hoc report projects.</p>
       </div>
       <div class="cap-card">
-        <h4>4. Audit &amp; compliance</h4>
-        <p>Historical preservation, full audit trails, GDPR-aware handling, and document retention built in from the start.</p>
+        <h4>4. Diligence reporting</h4>
+        <p>API-first outputs for deal rooms and data rooms: combined workforce answers PMI and diligence stakeholders needed in real time, not after migration.</p>
       </div>
       <div class="cap-card">
-        <h4>5. Separation of concerns</h4>
-        <p>Payroll stays with specialists. We pull, normalize, and analyze; Frappe handles payroll complexity so we focus on M&amp;A-specific analytics.</p>
+        <h4>5. Compliance &amp; audit (transactions)</h4>
+        <p>Requirements driven by post-merger integration teams across acquisitions: historical preservation, audit trails, GDPR-aware handling, and document retention from the start.</p>
+      </div>
+      <div class="cap-card">
+        <h4>6. Separation of concerns</h4>
+        <p>Source HRIS and payroll stay system of record. We pull, normalize, and analyze on top; Frappe handles payroll depth so we focus on M&amp;A-specific analytics and integration.</p>
       </div>
     </div>
   </section>
@@ -577,7 +593,7 @@
           </div>
           <div class="learn-card">
             <h4>Adoption had to survive deal crunch</h4>
-            <p>HR leads in post-close integration said they would not learn a new tool mid-transaction unless paths were obvious under pressure. Prototype walkthroughs and tree tests on core diligence flows informed a minimal dashboard set and plain-language labels, so change management was not blocked by navigation.</p>
+            <p>HR leads in post-close integration said they would not learn a new tool mid-transaction unless paths were obvious under pressure. Prototype walkthroughs and tree tests on core diligence flows informed a minimal dashboard set and plain-language labels. Winning integration teams first was the path to <strong>management and HR business partners</strong> in the combined entity.</p>
           </div>
         </div>
       </div>

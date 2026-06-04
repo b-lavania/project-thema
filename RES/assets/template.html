@@ -21,6 +21,9 @@
             orphans: 2;
             widows: 2;
         }
+        body.digital-mode {
+            line-height: 1.36;
+        }
         body.compact-pdf {
             font-size: 10pt;
             line-height: 1.24;
@@ -44,6 +47,10 @@
             font-weight: 700;
             letter-spacing: -0.02em;
         }
+        body.digital-mode h1.resume-name {
+            font-size: 18pt;
+            margin-bottom: 6px;
+        }
         h2 {
             font-size: 10.5pt;
             margin: 12px 0 5px 0;
@@ -52,6 +59,10 @@
             padding-bottom: 2px;
             font-weight: 600;
             page-break-after: avoid;
+        }
+        body.digital-mode h2 {
+            margin: 14px 0 6px 0;
+            font-size: 10.75pt;
         }
         .page-break-before {
             page-break-before: always;
@@ -70,9 +81,15 @@
         .role-block + .role-block {
             margin-top: 6px;
         }
+        body.digital-mode .role-block + .role-block {
+            margin-top: 8px;
+        }
         .header {
             text-align: center;
             margin-bottom: 10px;
+        }
+        body.digital-mode .header {
+            margin-bottom: 14px;
         }
         .contact-info {
             font-size: 9pt;
@@ -82,8 +99,15 @@
             font-weight: bold;
             margin-bottom: 5px;
         }
+        body.digital-mode .tagline {
+            font-size: 11pt;
+            margin-bottom: 6px;
+        }
         .section-content {
             margin-bottom: 8px;
+        }
+        body.digital-mode .section-content {
+            margin-bottom: 10px;
         }
         .section-content.keep-together {
             page-break-inside: avoid;
@@ -91,6 +115,9 @@
         }
         .experience-section {
             margin-bottom: 8px;
+        }
+        body.digital-mode .experience-section {
+            margin-bottom: 10px;
         }
         .experience-section > h2 {
             page-break-after: avoid;
@@ -100,8 +127,14 @@
             margin: 5px 0 7px 0;
             padding-left: 20px;
         }
+        body.digital-mode ul {
+            margin: 6px 0 8px 0;
+        }
         li {
             margin-bottom: 5px;
+        }
+        body.digital-mode li {
+            margin-bottom: 6px;
         }
         .role-header {
             display: flex;
@@ -111,6 +144,10 @@
             margin-bottom: 2px;
             page-break-inside: avoid;
             break-inside: avoid-page;
+        }
+        body.digital-mode .role-header {
+            margin-top: 11px;
+            margin-bottom: 3px;
         }
         .role-title-company {
             font-weight: bold;
@@ -126,12 +163,22 @@
         .role-summary {
             margin-bottom: 7px;
         }
+        .role-block.condensed-role .role-title-company {
+            font-weight: 600;
+        }
+        .role-block.condensed-role .role-dates {
+            color: #444;
+        }
+        body.digital-mode .role-block.condensed-role {
+            padding-left: 8px;
+            border-left: 1px solid #d8d8d8;
+        }
         .skill-label {
             font-weight: 600;
         }
     </style>
 </head>
-<body class="{% if compact_pdf %}compact-pdf{% endif %}">
+<body class="{{ export_mode }}-mode {{ pdf_page_size }}-page{% if compact_pdf %} compact-pdf{% endif %}">
     <div class="header">
         <h1 class="resume-name">Bharat "Bob" Lavania</h1>
         <div class="tagline">{{ tagline }}</div>
@@ -162,7 +209,7 @@
     <div class="experience-section{% if 'experience' in break_sections %} page-break-before{% endif %}">
     <h2>The Work</h2>
         {% for role in experience %}
-        <div class="role-block{% if role.page_break_before %} page-break-before{% endif %}">
+        <div class="role-block{% if role.page_break_before %} page-break-before{% endif %}{% if role.is_condensed %} condensed-role{% endif %}">
         {% if role.is_condensed %}
         {# Condensed role: flex header matching full role style #}
         <div class="role-header">

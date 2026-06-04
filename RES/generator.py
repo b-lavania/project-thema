@@ -166,6 +166,13 @@ TRACK_EMPHASIS = {
         "organizational design, board reporting, M&A, due diligence, cross-functional coordination, "
         "operating model, change management, executive communication, special projects."
     ),
+    "HR/HRIS": (
+        "Emphasize HRIS/HCM for M&A diligence and PMI, people analytics, workforce integration, payroll/contract risk dashboards, "
+        "compliance/audit for transactions, and adoption with integration teams. "
+        "Weave in naturally where grounded: HRIS, HCM, people analytics, workforce systems, M&A HR integration, "
+        "due diligence, post-merger integration, HRIS ingestion, normalization, adapters, Frappe HRMS, Workday, "
+        "SuccessFactors, ADP, transaction readiness, diligence reporting, 0-to-1 product ownership."
+    ),
 }
 
 
@@ -790,3 +797,27 @@ def review_resume_quality(
         temperature=0.2,
         step="Resume quality review",
     )
+
+
+def perform_gap_analysis(
+    llm,
+    jd_extract,
+    master_context,
+    resume_text,
+):
+    """Ruthless gap analysis: identifying hard gaps, scale risks, and narrative stretches."""
+    system_prompt, user_prompt = load_prompt(
+        "gap_analysis.md",
+        jd_extract=jd_extract or "(none)",
+        master_context=master_context[:4000],
+        resume_text=resume_text[:4000],
+    )
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=1000,
+        temperature=0.4,  # Slightly higher for critical "thinking"
+        step="Resume gap analysis",
+    )
+

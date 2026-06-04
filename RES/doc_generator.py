@@ -26,6 +26,34 @@ SECTION_SIDE_BUILDS = "Side Builds"
 SECTION_CREDENTIALS = "Credentials"
 
 
+def _doc_style_tokens(export_mode: str = "standard") -> dict:
+    if export_mode == "digital":
+        return {
+            "name_size": 18,
+            "tagline_size": 11,
+            "contact_size": 9,
+            "heading_space_before": 14,
+            "heading_space_after": 6,
+            "body_space_after": 9,
+            "bullet_space_after": 6,
+            "role_space_before": 11,
+            "role_summary_space_after": 8,
+            "company_desc_space_after": 5,
+        }
+    return {
+        "name_size": 17,
+        "tagline_size": 10.5,
+        "contact_size": 9,
+        "heading_space_before": 12,
+        "heading_space_after": 5,
+        "body_space_after": 8,
+        "bullet_space_after": 5,
+        "role_space_before": 10,
+        "role_summary_space_after": 7,
+        "company_desc_space_after": 4,
+    }
+
+
 def extract_coaching_notes(text):
     """Extract only COACHING NOTE lines from text for UI display."""
     notes = []
@@ -98,13 +126,14 @@ def _add_para(
     return p
 
 
-def _add_section_heading(doc, title: str, page_break_before: bool = False):
+def _add_section_heading(doc, title: str, page_break_before: bool = False, tokens: dict | None = None):
     """Match template.html h2: uppercase, 10.5pt, bottom rule."""
+    tokens = tokens or _doc_style_tokens()
     p = doc.add_paragraph(style="Normal")
     if page_break_before:
         p.paragraph_format.page_break_before = True
-    p.paragraph_format.space_before = Pt(12)
-    p.paragraph_format.space_after = Pt(5)
+    p.paragraph_format.space_before = Pt(tokens["heading_space_before"])
+    p.paragraph_format.space_after = Pt(tokens["heading_space_after"])
     p.paragraph_format.keep_with_next = True
     run = p.add_run(title)
     run.bold = True
@@ -138,8 +167,9 @@ def _add_runs_with_metric_bold(paragraph, text: str, italic=False):
             run.italic = True
 
 
-def _add_list_bullet(doc, line: str):
+def _add_list_bullet(doc, line: str, tokens: dict | None = None):
     """Bulleted line with optional bold label and first metric (How I Work / role bullets)."""
+    tokens = tokens or _doc_style_tokens()
     stripped = line.strip()
     if stripped.startswith(("-", "•")):
         stripped = stripped[1:].strip()
@@ -147,7 +177,7 @@ def _add_list_bullet(doc, line: str):
     p = doc.add_paragraph(style="Normal")
     p.paragraph_format.left_indent = Inches(0.2)
     p.paragraph_format.first_line_indent = Inches(-0.15)
-    p.paragraph_format.space_after = Pt(5)
+    p.paragraph_format.space_after = Pt(tokens["bullet_space_after"])
     p.add_run("• ")
     if ": " in stripped:
         label, _, body = stripped.partition(":")
@@ -159,10 +189,11 @@ def _add_list_bullet(doc, line: str):
     _add_runs_with_metric_bold(p, stripped)
 
 
-def _add_role_header(doc, title_company: str, dates_location: str = ""):
+def _add_role_header(doc, title_company: str, dates_location: str = "", tokens: dict | None = None):
     """Title bold left, dates 9pt right — matches PDF role-header."""
+    tokens = tokens or _doc_style_tokens()
     p = doc.add_paragraph(style="Normal")
-    p.paragraph_format.space_before = Pt(10)
+    p.paragraph_format.space_before = Pt(tokens["role_space_before"])
     p.paragraph_format.space_after = Pt(2)
     p.paragraph_format.keep_with_next = True
     tab_stops = p.paragraph_format.tab_stops
@@ -175,11 +206,12 @@ def _add_role_header(doc, title_company: str, dates_location: str = ""):
         run_dates.font.size = Pt(9)
 
 
-def _add_company_desc_para(doc, text: str):
+def _add_company_desc_para(doc, text: str, tokens: dict | None = None):
+    tokens = tokens or _doc_style_tokens()
     plain = _strip_html_tags(text)
     words = plain.split()
     p = doc.add_paragraph(style="Normal")
-    p.paragraph_format.space_after = Pt(4)
+    p.paragraph_format.space_after = Pt(tokens["company_desc_space_after"])
     n = min(4, len(words))
     if not words:
         return
@@ -200,21 +232,22 @@ def _add_company_desc_para(doc, text: str):
     run_tail.font.size = Pt(9)
 
 
-def _add_role_block_doc(doc, role: dict):
+def _add_role_block_doc(doc, role: dict, tokens: dict | None = None):
+    tokens = tokens or _doc_style_tokens()
     if role.get("page_break_before"):
         _add_para(doc, "", style="Normal", page_break_before=True)
 
     if role.get("is_condensed"):
-        _add_role_header(doc, role["title_company"], role.get("dates_location", ""))
+        _add_role_header(doc, role["title_company"], role.get("dates_location", ""), tokens=tokens)
         return
 
-    _add_role_header(doc, role["title_company"], role.get("dates_location", ""))
+    _add_role_header(doc, role["title_company"], role.get("dates_location", ""), tokens=tokens)
     if role.get("company_desc"):
-        _add_company_desc_para(doc, role["company_desc"])
+        _add_company_desc_para(doc, role["company_desc"], tokens=tokens)
     if role.get("summary"):
-        _add_para(doc, role["summary"], style="Normal", space_after_pt=7)
+        _add_para(doc, role["summary"], style="Normal", space_after_pt=tokens["role_summary_space_after"])
     for bullet_html in role.get("bullets") or []:
-        _add_list_bullet(doc, _strip_html_tags(bullet_html))
+        _add_list_bullet(doc, _strip_html_tags(bullet_html), tokens=tokens)
 
 
 def _parse_skills_lines(skills_raw: str) -> list[str]:
@@ -298,6 +331,7 @@ def create_formatted_doc(
     location="Sunnyvale, CA",
     include_scrum=False,
     pdf_breaks=None,
+    export_mode="standard",
 ):
     """
     Build resume DOCX using assets/template.docx styles; structure matches template.html (PDF).
@@ -305,6 +339,7 @@ def create_formatted_doc(
     breaks = normalize_pdf_breaks(pdf_breaks)
     break_sections = breaks["before_sections"]
     break_role_index = breaks["before_role_index"]
+    tokens = _doc_style_tokens(export_mode)
 
     doc = Document(str(TEMPLATE_PATH))
     _clear_body(doc)
@@ -314,7 +349,7 @@ def create_formatted_doc(
     p_name.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run_name = p_name.add_run('Bharat "Bob" Lavania')
     run_name.font.name = NAME_FONT
-    run_name.font.size = Pt(17)
+    run_name.font.size = Pt(tokens["name_size"])
     run_name.bold = True
 
     mission_text = normalize_quick_take_text(resume_sections.get("mission", ""))
@@ -329,19 +364,19 @@ def create_formatted_doc(
         p_tag.alignment = WD_ALIGN_PARAGRAPH.CENTER
         run_tag = p_tag.add_run(tagline)
         run_tag.bold = True
-        run_tag.font.size = Pt(10.5)
+        run_tag.font.size = Pt(tokens["tagline_size"])
 
     p_contact = doc.add_paragraph(style="Normal")
     p_contact.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run_contact = p_contact.add_run(
         f"(312) 772-7962 | xblavania@gmail.com | linkedin.com/in/blavania | {location}"
     )
-    run_contact.font.size = Pt(9)
+    run_contact.font.size = Pt(tokens["contact_size"])
 
     # Quick Take
     if mission_body:
-        _add_section_heading(doc, SECTION_QUICK_TAKE)
-        _add_para(doc, mission_body, style="Normal", space_after_pt=8)
+        _add_section_heading(doc, SECTION_QUICK_TAKE, tokens=tokens)
+        _add_para(doc, mission_body, style="Normal", space_after_pt=tokens["body_space_after"])
 
     # How I Work
     if resume_sections.get("skills"):
@@ -349,17 +384,18 @@ def create_formatted_doc(
             doc,
             SECTION_HOW_I_WORK,
             page_break_before="skills" in break_sections,
+            tokens=tokens,
         )
         for skill_line in _parse_skills_lines(resume_sections["skills"]):
-            _add_list_bullet(doc, skill_line)
+            _add_list_bullet(doc, skill_line, tokens=tokens)
 
     # The Work
     experience_raw = resume_sections.get("experience") or []
     if experience_raw:
         exp_page_break = "experience" in break_sections
-        _add_section_heading(doc, SECTION_THE_WORK, page_break_before=exp_page_break)
+        _add_section_heading(doc, SECTION_THE_WORK, page_break_before=exp_page_break, tokens=tokens)
         for role in _parse_experience_blocks(experience_raw, break_role_index):
-            _add_role_block_doc(doc, role)
+            _add_role_block_doc(doc, role, tokens=tokens)
 
     # Side Builds
     projects_raw = resume_sections.get("projects", "")
@@ -368,19 +404,21 @@ def create_formatted_doc(
             doc,
             SECTION_SIDE_BUILDS,
             page_break_before="projects" in break_sections,
+            tokens=tokens,
         )
         for proj in _parse_projects_blocks(projects_raw):
             if proj.get("page_break_before"):
                 _add_para(doc, "", style="Normal", page_break_before=True)
-            _add_role_header(doc, proj["title"], "")
+            _add_role_header(doc, proj["title"], "", tokens=tokens)
             for bullet in proj["bullets"]:
-                _add_list_bullet(doc, bullet)
+                _add_list_bullet(doc, bullet, tokens=tokens)
 
     # Credentials
     _add_section_heading(
         doc,
         SECTION_CREDENTIALS,
         page_break_before="credentials" in break_sections,
+        tokens=tokens,
     )
     p_mba = doc.add_paragraph(style="Normal")
     r1 = p_mba.add_run("MBA, Energy Economics and Product Leadership")
