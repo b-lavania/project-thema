@@ -66,6 +66,8 @@ RULES
 - Do NOT include generic positioning. Every sentence must be specific to THIS candidate + THIS role.
 - If the JD emphasizes something the candidate lacks, note it honestly: "[GAP]: Candidate context does not include [X]. Downstream prompts should not fabricate this."
 - Conservative framing: use the candidate's actual numbers, not inflated versions.
+- When the JD uses industry-specific terminology (e.g., "consumer health", "patient engagement", "virtual care"), TRANSLATE the candidate's experience into that language if truthful. Example: "telehealth platform with patient intake/discharge workflows" → "consumer-facing digital health product with end-to-end patient experience design."
+- If the candidate has analogous experience with different framing, explicitly note: "[FRAMING]: Candidate's [X] experience maps to JD's [Y] requirement — downstream prompts should use JD terminology."
 ---USER---
 Target Role: {target_role}
 Company: {company_name}

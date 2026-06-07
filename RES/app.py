@@ -47,7 +47,6 @@ from export_guardrails import (
     recommended_page_limit,
 )
 from outcomes import append_application_record, render_outcomes_tab
-from jobs_ui import render_jobs_tab
 
 # ---------------------------------------------------------------------------
 # Path resolution (P0-PATH)
@@ -839,9 +838,8 @@ if not st.session_state.master_context:
 # ---------------------------------------------------------------------------
 # TABS
 # ---------------------------------------------------------------------------
-tab_jobs, tab_job, tab_questions, tab_generate, tab_outcomes = st.tabs(
+tab_job, tab_questions, tab_generate, tab_outcomes = st.tabs(
     [
-        "🎯 Jobs",
         "📋 Job Details",
         "❓ Application Questions",
         "🚀 Generate & Output",
@@ -849,16 +847,12 @@ tab_jobs, tab_job, tab_questions, tab_generate, tab_outcomes = st.tabs(
     ]
 )
 
-# --- TAB 0: Jobs Watcher ---
-with tab_jobs:
-    render_jobs_tab(st.session_state.master_context)
-
 # --- TAB 1: Job Details ---
 with tab_job:
     st.markdown("### Company & Role Information")
     col1, col2 = st.columns(2)
     with col1:
-        company_name = st.text_input("Company Name", key="company_name", placeholder="e.g., Acme Corp")
+        company_name = st.text_input("Company Name (optional)", key="company_name", placeholder="e.g., Acme Corp")
         target_role = st.text_input("Target Role Title", key="target_role", placeholder="e.g., Senior Product Manager")
     with col2:
         selected_track = st.selectbox("Target Track", TRACK_OPTIONS, key="selected_track")
@@ -993,7 +987,6 @@ with tab_generate:
     
     checks = {
         "API Key": bool(get_api_key()),
-        "Company Name": bool(st.session_state.get("company_name", "").strip()),
         "Target Role": bool(st.session_state.get("target_role", "").strip()),
         "Job Description": len(st.session_state.get("jd_text", "")) >= MIN_JD_LENGTH,
         "Master Context": bool(st.session_state.master_context),
@@ -1024,6 +1017,8 @@ with tab_generate:
         api_key = get_api_key()
         provider = get_provider()
         company = st.session_state.company_name.strip()
+        # For prompts, use a generic placeholder when company is not provided
+        company_for_prompt = company if company else "(not specified)"
         role = st.session_state.target_role.strip()
         track = st.session_state.selected_track
         voice = st.session_state.selected_voice
@@ -1081,7 +1076,7 @@ with tab_generate:
                 # Step 3: Narrative brief
                 st.write("Synthesizing narrative brief...")
                 narrative_brief, usage = generate_narrative_brief(
-                    llm, jd, master_ctx, role, company, track, voice=voice
+                    llm, jd, master_ctx, role, company_for_prompt, track, voice=voice
                 )
                 usage_log.append(usage)
 
@@ -1104,7 +1099,7 @@ with tab_generate:
                     llm,
                     jd_paragraphs,
                     role,
-                    company,
+                    company_for_prompt,
                     track,
                     voice=voice,
                     narrative_brief=narrative_brief,
@@ -1219,7 +1214,9 @@ with tab_generate:
                 cover_letter = ""
                 if not st.session_state.get("skip_cover_letter"):
                     st.write("Generating cover letter...")
-                    cover_letter, usage = generate_cover_letter(llm, jd, master_ctx, role, company, track, voice=voice, narrative_brief=narrative_brief)
+                    cover_letter, usage = generate_cover_letter(
+                        llm, jd, master_ctx, role, company_for_prompt, track, voice=voice, narrative_brief=narrative_brief
+                    )
                     usage_log.append(usage)
 
                 # Step 8: Custom Q&A
@@ -1240,7 +1237,11 @@ with tab_generate:
                     "projects": projects,
                 }
                 export_slug = f"{export_mode}_{pdf_page_size}"
-                doc_filename = f"Application_{company.replace(' ', '_')}_{datetime.date.today().isoformat()}_{export_slug}.docx"
+                # Build safe filename base: prefer company, else role, else 'Resume'
+                _company_seg = re.sub(r"\s+", "_", company) if company else ""
+                _role_seg = re.sub(r"\s+", "_", role) if role else ""
+                _base_seg = _company_seg or _role_seg or "Resume"
+                doc_filename = f"Application_{_base_seg}_{datetime.date.today().isoformat()}_{export_slug}.docx"
                 pdf_breaks = build_pdf_breaks_from_session()
                 doc_path = str(OUTPUT_DIR / doc_filename)
                 create_formatted_doc(
@@ -1252,7 +1253,7 @@ with tab_generate:
                     export_mode=export_mode,
                 )
 
-                pdf_filename = f"Application_{company.replace(' ', '_')}_{datetime.date.today().isoformat()}_{export_slug}.pdf"
+                pdf_filename = f"Application_{_base_seg}_{datetime.date.today().isoformat()}_{export_slug}.pdf"
                 pdf_path = str(OUTPUT_DIR / pdf_filename)
                 compact_pdf = bool(st.session_state.get("compact_pdf"))
                 _pdf_path, pdf_page_count = render_resume_pdf(

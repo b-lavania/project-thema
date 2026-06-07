@@ -48,7 +48,7 @@ These are explicit de-scopes/cuts to include as examples in generated bullets (w
 - **Killed / cut**: Village Wellth pricing simplification — **consolidated 4 tiers → 3** by killing the **two lowest-adoption plans** (explicit tradeoff: reduced short-term upsell optionality).
 - **Experimentation / analytics**: conversion lift and attribution clarity (MMM + telemetry-driven decisions) across engagements, framed as decisions and outcomes—not tool laundry lists.
 
-### ROLE 4 — Netsweeper (AI Vision PM)
+### ROLE 3 — Netsweeper (AI Vision PM)
 
 - **Killed / cut**: deprioritized **all new feature development for a full quarter**; rejected proposal to add new detection categories until false-positive rate and trust were fixed.
 

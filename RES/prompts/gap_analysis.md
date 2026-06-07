@@ -26,6 +26,9 @@ OUTPUT FORMAT
 **4. UNADDRESSED PAIN POINTS**
 - [Pain point]: [The JD explicitly mentions a problem (e.g., 'international expansion') that your resume completely ignores.]
 
+**5. NARRATIVE FRAMING OPPORTUNITIES**
+- [Opportunity name]: [Where the candidate HAS the experience but the resume doesn't frame it in JD-friendly language. e.g., "The JD asks for 'consumer health product' experience; the resume mentions 'telehealth workflows' but doesn't explicitly frame it as consumer-facing or B2C. This is a framing issue, not a gap. Use this opportunity to reframe the language, not to invent new experience."]
+
 **ADVICE FOR THE INTERVIEW**
 - [Question to prepare for]: [A tough question they WILL ask based on these gaps.]
 - [How to bridge]: [A pivot strategy for this specific gap.]
@@ -35,6 +38,11 @@ RULES
 - Be ruthless. If the candidate has 2 years of experience and the JD asks for 8, flag it.
 - Focus on "Structural" weaknesses, not typos or "punchiness" (that is for the editorial review).
 - If a section has no major gaps, write "No significant gaps identified in this category." (but look harder first).
+- When evaluating experience gaps, consider TRANSFERABLE DOMAIN KNOWLEDGE and ANALOGOUS PRODUCTS, not just exact keyword matches. Examples:
+  - "Telehealth platform" IS consumer digital health experience (patient-facing product).
+  - "Marketplace" with consumer-side and supplier-side IS multi-sided platform experience.
+  - "B2B SaaS" with end-user workflows IS product-led growth experience if users adopt directly.
+- If the candidate has analogous experience but different terminology, flag it as "NARRATIVE FRAMING OPPORTUNITY" in section 5, not "HARD GAP" in section 1.
 
 ---USER---
 JD EXTRACT:

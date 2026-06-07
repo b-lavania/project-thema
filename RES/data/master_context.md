@@ -77,9 +77,9 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 4. **Measure** — A/B tests and controlled rollouts (traffic redirects, null-hypothesis tests), Segment, Mixpanel, Pendo, Heap, Microsoft Clarity, Hotjar, cohort analysis, Bayesian media mix modeling (R, SQL), attribution and funnel instrumentation, in-house telemetry (BVXpress). Outcome: what to kill, keep, or scale after launch; conversion and attribution clarity for fractional clients.
 5. **Commercialize** — Real-time quoting engines, Stripe/Square payment flows, GTM automation (HubSpot, ActiveCampaign), lifecycle messaging, ARPU and take-rate levers. Outcome: unit economics and cash flow tied to product changes.
 
-**Industries (map JD industry terms here when truthful):** Transport and last-mile logistics, warehousing and fulfillment, construction materials marketplaces, finance and insurance, M&A and deal-structuring, healthcare and digital health, marketing attribution and e-commerce growth, energy and infrastructure planning, HR technology and workforce systems (M&A transaction readiness).
+**Industries (map JD industry terms here when truthful):** Transport and last-mile logistics, warehousing and fulfillment, construction materials marketplaces, finance and insurance, M&A and deal-structuring, consumer health and digital health (B2C telehealth, patient experience, virtual care), marketing attribution and e-commerce growth, energy and infrastructure planning, HR technology and workforce systems (M&A transaction readiness).
 
-**Product categories (map JD product scope here when truthful):** TMS/WMS integration and marketplace ops (ROLE 2 construction materials), CRM and marketing automation (HubSpot, ActiveCampaign, Zoho), pricing and real-time quote engines, MMM and attribution platforms, content-compliance and trust/safety AI, B2B SaaS workflow suites, HRIS / HCM / people analytics (ROLE 5 BVXpress HRIS), payroll integration layers, workforce diligence dashboards.
+**Product categories (map JD product scope here when truthful):** TMS/WMS integration and marketplace ops (ROLE 2 construction materials), CRM and marketing automation (HubSpot, ActiveCampaign, Zoho), pricing and real-time quote engines, MMM and attribution platforms, content-compliance and trust/safety AI, B2B SaaS workflow suites, B2C digital health and telehealth platforms (patient experience, virtual care, white-label SaaS — ROLE 2 regional govt), HRIS / HCM / people analytics (ROLE 5 BVXpress HRIS), payroll integration layers, workforce diligence dashboards.
 
 **Tools palette (one per statement max; mirror JD tool names when listed):** Heap, Microsoft Clarity, Hotjar, Segment, Mixpanel, Aha!, Pendo, Notion, Figma, Amplitude, Productboard, Google Analytics, R, SQL, Cursor, Windsurf, Lovable, n8n, Zapier, Stripe/Square, HubSpot, ActiveCampaign, Jira, Confluence.
 
@@ -95,7 +95,7 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 
 - **2012–2021 (9 yrs)**: Built the product function from scratch at BVXpress — **employee #3 (first product hire)**; launched 5 products, 1,400+ users; also owned **HRIS for M&A transaction readiness** in the BVXpress suite. **The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling.**
 - **2022–2023**: Full-time PM at Netsweeper, shipping an AI content-compliance product for K-12.
-- **2022–2025 (concurrent)**: Fractional Product Lead across AI, logistics, FinTech, and healthcare startups.
+- **2022–2025 (concurrent)**: Fractional Product Lead across AI, logistics, FinTech, consumer health/telehealth (B2C patient experience), and marketplace startups; won 2024 TechStars Pitch Competition (Calgary) with consumer-facing telehealth platform concept.
 - **2024–Present**: Founding PM at Moovez/Quotely — logistics AI platform commercialized as a standalone SaaS.
 
 ---
@@ -130,10 +130,10 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 
 ### ROLE 2: Fractional Product Consultant
 - **Company**: Various startups (Village Wellth, Liohan, e-commerce, insurance/finance, construction)
-- **Company descriptor (resume)**: Fractional product lead for early-stage startups; **often the only product hire**, turning operational complexity into scalable systems through experimentation, conversion lift, and attribution clarity (telemetry-driven decisions), plus hands-on data science and ops execution when needed.
+- **Company descriptor (resume)**: Fractional product lead for early-stage startups; **often the only product hire**, turning operational complexity into scalable systems through experimentation, conversion lift, and attribution clarity (telemetry-driven decisions), plus hands-on data science and ops execution when needed; also delivered healthcare/telehealth workflow design and prototyping for a regional government engagement.
 - **Dates**: Feb 2022 - May 2024 (includes short Liohan engagement, Jan–May 2024)
 - **Location**: Remote / Calgary, AB
-- **Tags**: `[Fractional]`, `[eCommerce]`, `[Risk/Insurance]`, `[Marketplace]`, `[User Research]`, `[Experimentation]`, `[Attribution]`
+- **Tags**: `[Fractional]`, `[eCommerce]`, `[Risk/Insurance]`, `[Marketplace]`, `[User Research]`, `[Experimentation]`, `[Attribution]`, `[Healthcare]`, `[Digital Health]`
 - **Research tooling (confirmed)**: Focus groups, tree testing, opportunity maps (across fractional engagements — pricing, funnel, onboarding, positioning, **conversion experiments**, and **attribution** work)
 - **Experimentation & analytics scope**: Product analytics, funnel diagnostics, A/B-style tests and controlled rollouts where applicable; attribution modeling (including Bayesian MMM); conversion-lift work tied to pricing, onboarding, and GTM changes — not tool-led reporting.
 - **Liohan (Jan–May 2024, small engagement)**: Opportunity maps clarified problem spaces and sequenced bets before build; informed roadmap priorities and scope cuts.
@@ -161,28 +161,20 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 #### Marketplace in Building & Construction Materials
 - Architected TMS/WMS integration hooks and monetization strategy for a construction materials marketplace.
 
----
-
-### ROLE 3: Product Consultant: Health-Tech
-- **Company**: Various health-tech, digital health, and medical device startups
-- **Dates**: 2022 – 2025
-- **Location**: Remote / Calgary, AB
-- **Tags**: `[Healthcare]`, `[GTM]`, `[Pricing]`, `[User Research]`, `[0-to-1]`
-- **Scope**: 0-to-1 product management across health-tech, medical device, and digital health startups — spanning user research, clinical prototyping, GTM strategy, and pricing.
-
-#### Patient Healthcare Journey SaaS (2024)
-- Architected clinical intake patient journeys and built clickable prototypes for knowledge-based patient intake with targeted interventions for specialized clinics.
-- Won the 2024 TechStars Calgary Hackathon; spearheaded user research and MVP prototyping for a telehealth network targeting 100k-user national intake.
-
-#### Telehealth Delivery Network (2023)
-- Orchestrated comprehensive go-to-market and regulatory strategy for a developing-country telehealth network, securing a national government grant.
-
-#### Medical Device GTM & Pricing (2023)
-- Designed value-based pricing strategy for a seed-funded respiratory therapeutics device.
+#### Digital Health / Telehealth (Regional Government)
+- **Client**: Regional government (name confidential); project cancelled by government before launch
+- **Product positioning**: Consumer-facing (patient-side) and provider-facing (clinician-side) telehealth platform; designed for white-label deployment to healthcare providers and regional health systems.
+- **Problem**: Regional healthcare system needed integrated telehealth workflows covering patient intake, discharge, follow-ups, medication scheduling, and virtual care appointments — no unified digital system existed for end-to-end patient experience and care delivery.
+- **Scope**: End-to-end patient experience design; user research with patients and clinicians; workflow definition for consumer-facing (patient) and provider-facing (clinician) journeys; high-fidelity screen design with UX Designer; clickable prototypes.
+- **Patient-facing workflows**: In-patient intake, out-patient discharge, appointment scheduling, medication reminders, follow-up care, virtual visit interface.
+- **Provider-facing workflows**: Patient roster, care plan management, telehealth session management, clinical notes, discharge coordination.
+- **Outcomes**: Delivered high-fidelity clickable prototypes validated through user research with patients and clinicians; workflow definitions for dual-sided (patient + provider) telehealth experience; designed for multi-tenant white-label deployment.
+- **Product category**: B2C digital health platform; patient engagement and virtual care delivery; telehealth SaaS.
+- **Post-project**: Leveraged domain knowledge and pitch clarity to win 2024 TechStars Pitch Competition (Calgary) with the same telehealth concept.
 
 ---
 
-### ROLE 4: Product Manager (AI Vision)
+### ROLE 3: Product Manager (AI Vision)
 - **Company**: Netsweeper — web filtering & content intelligence platform (Waterloo, ON; ~40 employees; est. 1999 — not a startup)
 - **Company descriptor (resume)**: K-12 web filtering and content-intelligence platform (~40 employees); **only product hire on the team at the time**.
 - **Title**: Product Manager
@@ -300,12 +292,14 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 
 ## Resume generation notes
 - **Company descriptor line**: If the role block includes **Company descriptor (resume)**, **Employee #N**, **first product hire**, or **only product hire**, weave into the company description line using compact form: e.g. `Employee #6 (first product hire)` or `Employee #3 (first product hire)`. Do not say "PM hire."
+- **Role header format (compressed)**: Use format `Title @ Company    City, State/Province, Month Year - Month Year` for all roles. Examples: `Product Manager & Chief of Staff @ BVXpress    Lincolnshire, IL, Sep 2012 - Dec 2021`, `Founding Product Manager @ Moovez    Calgary, AB, Jan 2024 - Present`.
 - **Voice (research & analytics)**: Never write "used Hotjar/Pendo/Heap" as the outcome. Write the **decision or change**: tier consolidation, funnel fix, alert workflow redesign, scope cut, checkout step removed, A/B or controlled-test outcome. Tools may appear only as evidence for that decision, inside the relevant ROLE block.
 - **Experimentation JDs**: Surface Moovez automated-vs-manual quote test, BVXpress telemetry-driven feature decisions, fractional conversion/attribution work (MMM, take rate, funnel) when JD mentions A/B testing, experimentation, product analytics, or attribution.
-- **UX / research-heavy JDs**: Prioritize ROLE 1, ROLE 5, ROLE 4, ROLE 2 fractional (Village Wellth, Liohan line, etc.), ROLE 3.
+- **UX / research-heavy JDs**: Prioritize ROLE 1, ROLE 5, ROLE 3 (Netsweeper), ROLE 2 fractional (Village Wellth, Liohan line, etc.).
 - **Growth / analytics JDs**: Prioritize ROLE 2 (MMM, R, SQL, attribution, STP), Segment/Moovez funnel work, ChurnOS, BVXpress GTM metrics.
 - **Marketplace / ops JDs**: Prioritize ROLE 1, construction marketplace (ROLE 2), Moovez/Quotely outcomes.
 - **HR / HRIS / people-analytics JDs**: Prioritize **Persona D**; ROLE 5 **HRIS for M&A Transactions** subsection (discovery → adapter pattern → normalized model → diligence dashboards). Mirror JD terms: HCM, HRIS, workforce integration, M&A diligence, payroll integration, Workday/SuccessFactors/ADP when JD lists them. Emphasize user research outcomes (focus groups, opportunity maps, tree tests, workflow shadowing) over stack laundry lists. Tie M&A deal-room context from BVXpress core SaaS only when JD mentions M&A or transactions.
+- **Healthcare / digital health / telehealth / consumer health JDs**: Surface ROLE 2 regional govt telehealth project when JD mentions: consumer health, B2C health, patient experience, patient engagement, virtual care, remote care, care delivery, digital health, telehealth, healthcare workflows, clinical systems, or health tech. Emphasize dual-sided (patient-facing + provider-facing) product design, white-label SaaS positioning, and end-to-end patient journey (intake, virtual visits, discharge, follow-ups, medication management). Include TechStars Calgary 2024 win as third-party validation.
 - **Only cite tools listed under a ROLE block or in Skills above** — do not invent tools per engagement.
 
 ---
