@@ -35,10 +35,10 @@ def _doc_style_tokens(export_mode: str = "standard") -> dict:
             "heading_space_before": 14,
             "heading_space_after": 6,
             "body_space_after": 9,
-            "bullet_space_after": 6,
+            "bullet_space_after": 7,
             "role_space_before": 11,
-            "role_summary_space_after": 8,
-            "company_desc_space_after": 5,
+            "role_summary_space_after": 10,
+            "company_desc_space_after": 6,
         }
     return {
         "name_size": 17,
@@ -47,10 +47,10 @@ def _doc_style_tokens(export_mode: str = "standard") -> dict:
         "heading_space_before": 12,
         "heading_space_after": 5,
         "body_space_after": 8,
-        "bullet_space_after": 5,
+        "bullet_space_after": 6,
         "role_space_before": 10,
-        "role_summary_space_after": 7,
-        "company_desc_space_after": 4,
+        "role_summary_space_after": 9,
+        "company_desc_space_after": 5,
     }
 
 

@@ -38,6 +38,7 @@ class TestHowIWorkSourcePalettes(unittest.TestCase):
             narrative_brief="",
             how_i_work_source="Discover lane",
             master_context="",
+            required_tools="",
         )
         self.assertIn("Logistics TMS", usr_p)
         self.assertIn("jd context mirroring", sys_p.lower())

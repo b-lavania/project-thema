@@ -137,6 +137,30 @@ def compute_rates(rows: list[dict[str, str]]) -> dict[str, float | int]:
     }
 
 
+def compute_group_stats(rows: list[dict[str, str]], group_col: str) -> list[dict[str, str | float | int]]:
+    groups = {}
+    for r in rows:
+        val = r.get(group_col) or "Unknown"
+        if val not in groups:
+            groups[val] = []
+        groups[val].append(r)
+        
+    results = []
+    for val, group_rows in groups.items():
+        rates = compute_rates(group_rows)
+        total_weight = sum(STAGE_WEIGHTS.get((r.get("stage") or "sent").lower(), 0.0) for r in group_rows)
+        avg_score = total_weight / len(group_rows) if group_rows else 0.0
+        results.append({
+            group_col.capitalize(): val,
+            "Count": len(group_rows),
+            "Reply Rate": f"{rates['reply_rate'] * 100:.0f}%",
+            "Screen Rate": f"{rates['screen_rate'] * 100:.0f}%",
+            "Avg Funnel Score": f"{avg_score:.2f}",
+        })
+    results.sort(key=lambda x: x["Count"], reverse=True)
+    return results
+
+
 def render_outcomes_tab() -> None:
     """Streamlit shell for the Outcomes tab (Phase C)."""
     st.markdown("### Application outcomes")
@@ -152,12 +176,17 @@ def render_outcomes_tab() -> None:
 
     rates = compute_rates(rows)
     funnel = compute_funnel(rows)
+    
+    # Calculate overall average funnel score
+    total_weight = sum(STAGE_WEIGHTS.get((r.get("stage") or "sent").lower(), 0.0) for r in rows)
+    avg_score = total_weight / len(rows) if rows else 0.0
 
-    c1, c2, c3, c4 = st.columns(4)
+    c1, c2, c3, c4, c5 = st.columns(5)
     c1.metric("Applications", rates["total"])
     c2.metric("Reply rate", f"{rates['reply_rate'] * 100:.0f}%")
     c3.metric("Screen rate", f"{rates['screen_rate'] * 100:.0f}%")
     c4.metric("Offers", rates["offer_count"])
+    c5.metric("Avg Funnel Score", f"{avg_score:.2f}")
 
     st.markdown("#### Funnel (stage counts)")
     funnel_active = [
@@ -176,12 +205,36 @@ def render_outcomes_tab() -> None:
     if terminal:
         st.caption(f"Terminal: {funnel.get('rejected', 0)} rejected, {funnel.get('ghosted', 0)} ghosted")
 
+    st.markdown("---")
+    st.markdown("#### Performance Breakdown")
+    col_track, col_voice = st.columns(2)
+    with col_track:
+        st.markdown("**By Target Track**")
+        track_stats = compute_group_stats(rows, "track")
+        st.table(track_stats)
+    with col_voice:
+        st.markdown("**By Resume Voice**")
+        voice_stats = compute_group_stats(rows, "voice")
+        st.table(voice_stats)
+
+    st.markdown("---")
     st.markdown("#### Applications")
     st.caption("Descriptive stats only — small sample; not A/B significance.")
 
+    # Header Row
+    hdr = st.columns([1.2, 1.5, 1.8, 1.5, 1.0, 1.8, 1.2])
+    hdr[0].markdown("**Date**")
+    hdr[1].markdown("**Company**")
+    hdr[2].markdown("**Role**")
+    hdr[3].markdown("**Track**")
+    hdr[4].markdown("**ATS %**")
+    hdr[5].markdown("**Stage**")
+    hdr[6].markdown("**App ID**")
+    st.divider()
+
     for i, row in enumerate(rows):
         app_id = row.get("app_id", "")
-        cols = st.columns([2, 2, 2, 1.5, 1.5, 1, 2])
+        cols = st.columns([1.2, 1.5, 1.8, 1.5, 1.0, 1.8, 1.2])
         cols[0].write(row.get("date", ""))
         cols[1].write(row.get("company", ""))
         cols[2].write(row.get("role", ""))

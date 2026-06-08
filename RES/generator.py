@@ -9,7 +9,7 @@ PAGE_BREAK_MARKER = "---PAGEBREAK---"
 
 # First quantified token in a bullet (shared by PDF + DOCX renderers)
 METRIC_PATTERN = re.compile(
-    r"\d+%|\d+\s*[xX]|[$]\d+[kKmM]?|\d+\s*(?:min|mins|minutes|hours|hour|days|day)\b",
+    r"\d+(?:\.\d+)?%|\d+(?:\.\d+)?\s*[xX]|[$]\d+(?:\.\d+)?[kKmM]?(?:\+)?|\d+(?:\.\d+)?\s*(?:min|mins|minutes|hours|hour|days|day)\b",
     re.IGNORECASE,
 )
 
