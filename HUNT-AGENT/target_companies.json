@@ -1,0 +1,20 @@
+{
+  "greenhouse": [
+    "stripe",
+    "gitlab",
+    "airtable",
+    "vercel",
+    "elastic",
+    "plaid",
+    "gusto",
+    "deel",
+    "rippling",
+    "brex",
+    "zillow",
+    "doordash"
+  ],
+  "lever": [],
+  "ashby": [],
+  "smartrecruiters": [],
+  "career_pages": []
+}

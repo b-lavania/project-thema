@@ -1,0 +1,42 @@
+{
+  "roles": [
+    "Product Manager",
+    "Technical Product Manager",
+    "Technical Program Manager",
+    "Platform Product Manager",
+    "Chief of Staff",
+    "BizOps"
+  ],
+  "locations": [
+    "Remote US Canada",
+    "San Francisco",
+    "Calgary",
+    "United States",
+    "Canada"
+  ],
+  "keywords": [
+    "product",
+    "ai",
+    "ml",
+    "platform",
+    "growth",
+    "program",
+    "operation",
+    "monetization",
+    "marketplace",
+    "hris",
+    "b2b",
+    "saas",
+    "pricing",
+    "logistics"
+  ],
+  "exclude_titles": [
+    "senior", "sr", "lead", "staff", "principal",
+    "head of", "director", "vp", "vice president",
+    "group product", "chief product", "chief ai",
+    "chief technology", "chief revenue"
+  ],
+  "exclude_industries": [
+    "gambling", "crypto", "defense"
+  ]
+}

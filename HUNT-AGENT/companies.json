@@ -1,0 +1,47 @@
+{
+  "sources": {
+    "greenhouse": {
+      "enabled": true,
+      "boards": [
+        "stripe",
+        "gitlab",
+        "airtable",
+        "vercel",
+        "elastic",
+        "plaid",
+        "gusto",
+        "deel",
+        "rippling",
+        "brex",
+        "zillow",
+        "doordash"
+      ]
+    },
+    "lever": {
+      "enabled": false,
+      "companies": []
+    },
+    "ashby": {
+      "enabled": false,
+      "boards": []
+    },
+    "smartrecruiters": {
+      "enabled": false,
+      "companies": []
+    }
+  },
+  "career_pages": {
+    "enabled": false,
+    "sites": []
+  },
+  "search": {
+    "enabled": true,
+    "queries": [
+      "Product Manager AI platform remote US Canada",
+      "Product Manager marketplace logistics remote",
+      "Product Manager HR tech HRIS remote US Canada",
+      "Product Manager pricing monetization platform remote",
+      "Product Manager platform technical remote Canada United States"
+    ]
+  }
+}

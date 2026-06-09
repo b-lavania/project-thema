@@ -1,0 +1,67 @@
+[
+  {
+    "title": "Product Manager, AI Platform",
+    "company": "Intercom",
+    "url": "https://boards.greenhouse.io/intercom/jobs/7890123",
+    "source": "greenhouse",
+    "date_found": "2026-06-08",
+    "location": "Remote - US/Canada",
+    "description_snippet": "",
+    "match_reason": "AI product company; B2B SaaS; SF HQ, remote-friendly; fits Product/AI track",
+    "stage": "sent",
+    "notes": "Customer service AI platform. Strong product-market fit. Series D.",
+    "id": "4c179079362d"
+  },
+  {
+    "title": "Product Manager, Developer Platform",
+    "company": "Figma",
+    "url": "https://boards.greenhouse.io/figma/jobs/7890124",
+    "source": "greenhouse",
+    "date_found": "2026-06-08",
+    "location": "San Francisco, CA / Remote - US/Canada",
+    "description_snippet": "",
+    "match_reason": "B2B SaaS; collaborative platform; fits Platform PM track",
+    "stage": "sent",
+    "notes": "Developer platform team. High-visibility APIs and plugin ecosystem.",
+    "id": "4e4a9019ec9c"
+  },
+  {
+    "title": "Product Manager, Growth",
+    "company": "Lattice",
+    "url": "https://boards.greenhouse.io/lattice/jobs/7890125",
+    "source": "greenhouse",
+    "date_found": "2026-06-08",
+    "location": "Remote - US/Canada",
+    "description_snippet": "",
+    "match_reason": "HR tech / people management; fits HR/HRIS track; growth focus matches Growth PM interest",
+    "stage": "sent",
+    "notes": "People management platform. Growth team owns activation and expansion. Remote-first.",
+    "id": "8727f4a63a8e"
+  },
+  {
+    "title": "Product Manager, AI/ML",
+    "company": "Grafana Labs",
+    "url": "https://boards.greenhouse.io/grafana/jobs/7890126",
+    "source": "greenhouse",
+    "date_found": "2026-06-08",
+    "location": "Remote - Global (US/Canada timezones)",
+    "description_snippet": "",
+    "match_reason": "B2B SaaS; AI + observability; remote-first; fits Product/AI track",
+    "stage": "sent",
+    "notes": "Open-source observability platform. AI/ML product team building intelligent alerting and insights.",
+    "id": "4485a27e5cf6"
+  },
+  {
+    "title": "Product Manager, Platform",
+    "company": "PostHog",
+    "url": "https://boards.greenhouse.io/posthog/jobs/7890127",
+    "source": "greenhouse",
+    "date_found": "2026-06-08",
+    "location": "Remote - Global",
+    "description_snippet": "",
+    "match_reason": "B2B SaaS; product analytics; open-source; fits Product/AI track",
+    "stage": "sent",
+    "notes": "All-remote, open-source product analytics. Platform team owns SDKs and data pipeline.",
+    "id": "b9bbfd1229ea"
+  }
+]

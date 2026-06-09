@@ -1,0 +1,9 @@
+# Job Leads
+
+| Source | Role | Company | Location | Link | MatchReason | Notes | OutreachStatus |
+|--------|------|---------|----------|------|-------------|-------|----------------|
+| greenhouse | Product Manager, AI Platform | Intercom | Remote - US/Canada | [https://boards.greenhouse.io/intercom/jobs/7890123](https://boards.greenhouse.io/intercom/jobs/7890123) | AI product company; B2B SaaS; SF HQ, remote-friendly; fits Product/AI track | Customer service AI platform. Strong product-market fit. Series D. | sent |
+| greenhouse | Product Manager, Developer Platform | Figma | San Francisco, CA / Remote - US/Canada | [https://boards.greenhouse.io/figma/jobs/7890124](https://boards.greenhouse.io/figma/jobs/7890124) | B2B SaaS; collaborative platform; fits Platform PM track | Developer platform team. High-visibility APIs and plugin ecosystem. | sent |
+| greenhouse | Product Manager, Growth | Lattice | Remote - US/Canada | [https://boards.greenhouse.io/lattice/jobs/7890125](https://boards.greenhouse.io/lattice/jobs/7890125) | HR tech / people management; fits HR/HRIS track; growth focus matches Growth ... | People management platform. Growth team owns activation and expansion. Remote... | sent |
+| greenhouse | Product Manager, AI/ML | Grafana Labs | Remote - Global (US/Canada timezones) | [https://boards.greenhouse.io/grafana/jobs/7890126](https://boards.greenhouse.io/grafana/jobs/7890126) | B2B SaaS; AI + observability; remote-first; fits Product/AI track | Open-source observability platform. AI/ML product team building intelligent a... | sent |
+| greenhouse | Product Manager, Platform | PostHog | Remote - Global | [https://boards.greenhouse.io/posthog/jobs/7890127](https://boards.greenhouse.io/posthog/jobs/7890127) | B2B SaaS; product analytics; open-source; fits Product/AI track | All-remote, open-source product analytics. Platform team owns SDKs and data p... | sent |
