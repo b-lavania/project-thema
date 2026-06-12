@@ -7,7 +7,8 @@ Two parallel paths:
 Usage:
     python -m scraper.run                            # all enabled sources
     python -m scraper.run --source greenhouse         # single source
-    python -m scraper.run --discover                  # search + discover new boards
+    python -m scraper.run --discover                  # search + discover new boards from results
+    python -m scraper.run --discover-boards           # Google-search for ALL company boards, add to target_companies.json
     python -m scraper.run --dry-run                   # print, don't save
     python -m scraper.run --mode scrape               # direct browser scrape (experimental)
     python -m scraper.run --mode api --max-results 30 # SerpAPI only, 30 results
@@ -26,11 +27,17 @@ from .board_apis import (
 )
 from .company_pages import scrape_career_pages
 from .config import load_profile, load_target_companies, generate_search_queries
+from .board_discovery import discover_boards, merge_into_targets
 from .discover import extract_board_tokens, scrape_discovered_boards
 from .env import validate_api_keys
 from .filter import filter_leads
 from .leads import append_leads
 from .search import run_search_queries
+
+
+def _make_args(max_results: int = 10, mode: str = "auto", discover: bool = False):
+    """Build a simple namespace object for run_google_jobs."""
+    return argparse.Namespace(max_results=max_results, mode=mode, discover=discover)
 
 
 def run_google_jobs(profile: dict, args) -> list:
@@ -81,10 +88,18 @@ def main():
     parser.add_argument("--max-results", "-n", type=int, default=10, help="Max results per search query (default: 10)")
     parser.add_argument("--mode", choices=["api", "scrape", "auto"], default="auto",
                         help="Search mode: api (SerpAPI/SearchAPI), scrape (direct HTTP), auto (api→scrape)")
+    parser.add_argument("--discover-boards", action="store_true",
+                        help="Search Google for all company board tokens (Greenhouse, Lever, Ashby, SmartRecruiters) and add them to target_companies.json")
     args = parser.parse_args()
 
     if args.mode != "scrape":
         validate_api_keys()
+
+    if args.discover_boards:
+        print("  [discover] Searching for board tokens across ATS platforms...")
+        discovered = discover_boards()
+        merge_into_targets(discovered)
+        return
 
     profile = load_profile()
     companies = load_target_companies()

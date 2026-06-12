@@ -6,8 +6,8 @@ Single-user Streamlit resume/cover letter generator. Career truth lives in Markd
 
 | Path | Role |
 |------|------|
-| `RES/` | Streamlit app + career data + prompts — **this is the active code** |
-| `RES/app.py` | Streamlit entrypoint (run from `RES/`) |
+| `RES/` | Streamlit modules + career data + prompts — **this is the active code** |
+| `app.py` | Streamlit entrypoint (run from project root) |
 | `RES/generator.py` | LLM orchestration (calls `llm_client.py`, loads `prompts/*.md`) |
 | `RES/llm_client.py` | Unified OpenAI + Gemini client |
 | `RES/data/master_context.md` | **Single source of truth** for generation — edit this to change career facts |
@@ -24,7 +24,7 @@ Single-user Streamlit resume/cover letter generator. Career truth lives in Markd
 ## Run
 
 ```bash
-cd RES
+# app.py lives at project root; modules stay in RES/
 pip install -r requirements.txt
 # API keys in RES/.env (gitignored) or sidebar:
 #   OPENAI_API_KEY="..."

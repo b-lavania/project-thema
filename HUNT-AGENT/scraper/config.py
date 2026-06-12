@@ -46,6 +46,13 @@ def load_target_companies() -> dict:
         return json.load(f)
 
 
+def save_target_companies(companies: dict):
+    """Write updated target companies back to JSON."""
+    with open(COMPANIES_PATH, "w") as f:
+        json.dump(companies, f, indent=2)
+        f.write("\n")
+
+
 def generate_search_queries(profile: dict) -> list[str]:
     """Generate one query per role × location combo."""
     roles = profile.get("roles", DEFAULT_PROFILE["roles"])

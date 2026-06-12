@@ -60,6 +60,25 @@ def save_leads(leads: list[Lead]):
     _regenerate_markdown(leads)
 
 
+def get_lead(lead_id: str) -> Lead | None:
+    """Look up a single lead by its id."""
+    for l in load_leads():
+        if l.id == lead_id:
+            return l
+    return None
+
+
+def update_lead_stage(lead_id: str, new_stage: str) -> bool:
+    """Update the stage of a lead. Returns True if found and updated."""
+    leads = load_leads()
+    for l in leads:
+        if l.id == lead_id:
+            l.stage = new_stage
+            save_leads(leads)
+            return True
+    return False
+
+
 def append_leads(new_leads: list[Lead]) -> int:
     existing = load_leads()
     existing_urls = {l.url for l in existing if l.url}

@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import datetime
 from pathlib import Path
 import json
@@ -47,11 +48,16 @@ from export_guardrails import (
     recommended_page_limit,
 )
 from outcomes import append_application_record, render_outcomes_tab
+from hunt_tab import render_hunt_tab
 
 # ---------------------------------------------------------------------------
 # Path resolution (P0-PATH)
 # ---------------------------------------------------------------------------
 RES_ROOT = Path(__file__).resolve().parent
+HUNT_ROOT = RES_ROOT.parent / "HUNT-AGENT"
+if str(HUNT_ROOT) not in sys.path:
+    sys.path.insert(0, str(HUNT_ROOT))
+
 OUTPUT_DIR = RES_ROOT / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 MASTER_CONTEXT_PATH = RES_ROOT / "data" / "master_context.md"
@@ -838,12 +844,13 @@ if not st.session_state.master_context:
 # ---------------------------------------------------------------------------
 # TABS
 # ---------------------------------------------------------------------------
-tab_job, tab_questions, tab_generate, tab_outcomes = st.tabs(
+tab_job, tab_questions, tab_generate, tab_outcomes, tab_hunt = st.tabs(
     [
         "📋 Job Details",
         "❓ Application Questions",
         "🚀 Generate & Output",
         "📊 Outcomes",
+        "🔍 Job Search",
     ]
 )
 
@@ -1815,3 +1822,7 @@ with tab_generate:
 # --- TAB 4: Outcomes ---
 with tab_outcomes:
     render_outcomes_tab()
+
+# --- TAB 5: Job Search ---
+with tab_hunt:
+    render_hunt_tab()

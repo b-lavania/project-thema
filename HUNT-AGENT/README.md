@@ -26,11 +26,11 @@ Results merge → dedup → filter pipeline (keywords → senior exclusion → p
 | File | Purpose |
 |------|---------|
 | `search_profile.json` | Roles × locations + keywords + exclusion rules (drives Google Jobs queries) |
-| `target_companies.json` | Company board tokens for direct ATS scraping |
-| `scraper/` | Python scraping package |
+| `target_companies.json` | Company board tokens for direct ATS scraping (auto-populated via `--discover-boards`) |
 | `leads.json` | Structured lead storage (auto-appended) |
 | `job_leads.md` | Human-readable lead table (auto-regenerated from JSON) |
 | `.env` | API keys for SerpAPI + SearchAPI.io (gitignored) |
+| `scraper/` | Python scraping package (board APIs, search, filter, discovery, leads) |
 | `docs/optimization_plan.md` | Planned dedup & token-economy improvements |
 | `job_search_profile.md` | Human-readable profile reference |
 | `weekly_job_hunt_workflow.md` | Step-by-step weekly workflow |
@@ -205,14 +205,105 @@ pip install playwright && python -m playwright install chromium
 
 Already in `RES/requirements.txt` if using that venv.
 
-## Discovery mode
+## Board discovery
 
-`--discover` runs after Google Jobs search. It:
-1. Parses every search result URL for board tokens (Greenhouse, Lever, Ashby patterns)
-2. Skips tokens already in `target_companies.json`
-3. Scrapes newly discovered boards
+Two discovery modes find new companies to scrape:
 
-Useful for finding companies you haven't configured yet.
+### `--discover-boards` (ATS token discovery)
+
+Searches Google via SerpAPI for ATS URL patterns, extracts board tokens, and
+merges them into `target_companies.json`:
+
+| ATS | Search query |
+|-----|-------------|
+| Greenhouse | `site:boards.greenhouse.io "jobs"` |
+| Lever | `site:jobs.lever.co` |
+| Ashby | `site:jobs.ashbyhq.com` |
+| SmartRecruiters | `site:careers.smartrecruiters.com "Careers"` |
+
+Fetches 3 pages per ATS (30 results, 12 SerpAPI calls total). New tokens are
+added alongside existing ones — duplicates are skipped automatically.
+
+```bash
+python -m scraper.run --discover-boards
+```
+
+Current coverage: **120 companies** across 4 ATS platforms (37 Greenhouse,
+29 Lever, 29 Ashby, 25 SmartRecruiters).
+
+### `--discover` (search-result discovery)
+
+Runs after Google Jobs search. Parses every search result URL for board tokens
+(Greenhouse, Lever, Ashby patterns), skips tokens already in
+`target_companies.json`, and scrapes newly discovered boards.
+
+```bash
+python -m scraper.run --discover
+```
+
+## Lead management
+
+Leads are stored in `leads.json` as a list of `Lead` objects with fields:
+`title`, `company`, `url`, `source`, `date_found`, `location`,
+`description_snippet`, `match_reason`, `stage`, `notes`, `id`.
+
+### Stage tracking
+
+Each lead has a `stage` field for pipeline tracking:
+
+`sent → replied → screen → interview → final → offer → accepted`
+
+Or dead-end states: `rejected`, `ghosted`.
+
+Manage stages programmatically:
+
+```python
+from scraper.leads import load_leads, update_lead_stage
+
+leads = load_leads()
+update_lead_stage("4c179079362d", "interview")
+```
+
+## Streamlit UI (in `../RES/`)
+
+The job scraper is integrated as the **"🔍 Job Search"** tab in the RES
+Streamlit app. Run it:
+
+```bash
+cd ../RES
+streamlit run app.py
+```
+
+The tab provides four sections:
+
+| Section | What it does |
+|---------|-------------|
+| **Run Controls** | Full scrape / Google Jobs only / ATS only with configurable max-results, mode, and dry-run. Output streams live into a status widget. |
+| **Board Discovery** | One-click `--discover-boards` with results shown inline. |
+| **Leads Browser** | Filterable table (by source, stage, text search). Click a lead to update its stage. **"Use for Gen"** pre-fills the Job Details tab with company, role, and JD URL — then generate the resume directly. |
+| **Configuration** | Inline editors for `search_profile.json` and `target_companies.json`. |
+
+### UI import chain
+
+The HUNT-AGENT package is added to `sys.path` in `RES/app.py` so the tab can
+import directly:
+
+```python
+from scraper.leads import load_leads, update_lead_stage
+from scraper.run import run_google_jobs, run_direct_ats
+from scraper.board_discovery import discover_boards
+```
+
+### Workflow
+
+```
+1. Click "📋 Job Search" tab
+2. Board Discovery → find new companies (one-time)
+3. Run Controls → scrape (Full or ATS)
+4. Leads Browser → review, set stages
+5. Click "Use for Gen" on a lead → switches to "📋 Job Details" tab
+6. Generate resume → done
+```
 
 ## Optimizations
 
@@ -222,15 +313,3 @@ See `docs/optimization_plan.md` for planned improvements including:
 - ETag-based staleness for Greenhouse
 - Adaptive query width
 - Budget caps via `--budget N`
-
-## Integration with RES
-
-After scraping, use the RES pipeline (`../RES/`) to generate tailored resumes and
-cover letters for high-priority leads:
-
-```bash
-cd ../RES
-streamlit run app.py
-```
-
-Paste a JD, select the lead, and generate.
