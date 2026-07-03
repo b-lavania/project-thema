@@ -1,0 +1,61 @@
+# Giants and out-of-lane companies — ops-AI screen-out list
+netflix
+amazon
+meta
+facebook
+google
+alphabet
+microsoft
+apple
+salesforce
+oracle
+sap
+workday
+uber
+lyft
+stripe
+shopify
+flexport
+waymo
+tesla
+nvidia
+adobe
+ibm
+cisco
+intel
+twitter
+x corp
+palantir
+snowflake
+databricks
+servicenow
+atlassian
+hubspot
+zendesk
+twilio
+coinbase
+robinhood
+doordash
+instacart
+airbnb
+booking
+expedia
+walmart
+target
+costco
+fedex
+ups
+dhl
+maersk
+# Recruiting / staffing noise
+insight global
+jobgether
+randstad
+adecco
+robert half
+hays
+teksystems
+kforce
+# Late-stage / out of lane (ops-AI)
+fourkites
+project44

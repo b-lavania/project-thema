@@ -7,17 +7,29 @@ from typing import Sequence
 
 from .leads import Lead
 
-# Titles to exclude — these indicate senior/leadership IC or management
-SENIOR_KEYWORDS = re.compile(
-    r"\b(senior|sr\.?|lead|staff|principal|head\s+of|director|vp\s*\.?|"
-    r"vice\s+president|manager\s+of|group\s+product)\b",
+# Lane-target titles — always pass senior exclusion (too-greedy ops-AI PM lane)
+LANE_ALLOWED = re.compile(
+    r"\b(founding|principal|head\s+of\s+(ai\s+)?product|lead\s+product)\b",
+    re.I,
+)
+
+# Generic senior IC signals (after lane allowlist)
+GENERIC_SENIOR = re.compile(
+    r"\b(senior|sr\.?|staff)\b",
+    re.I,
+)
+
+# Leadership / management titles
+LEADERSHIP = re.compile(
+    r"\b(director|vp\s*\.?|vice\s+president|manager\s+of|group\s+product)\b",
     re.I,
 )
 
 # Product-adjacent keyword signals — at least one must match
 PRODUCT_KEYWORDS = re.compile(
     r"\b(product|program|growth|platform|operations?|"
-    r"monetization|ai|ml|hris|marketplace|pricing)\b",
+    r"monetization|ai|ml|hris|marketplace|pricing|"
+    r"logistics|freight|dispatch|field\s+service|supply\s+chain|quoting|tms)\b",
     re.I,
 )
 
@@ -28,15 +40,30 @@ ALLOWED_NON_PRODUCT = re.compile(
 )
 
 CHIEF_PRODUCT = re.compile(
-    r"\bchief\b.*\b(product|ai|ml|growth|platform|technology|digital|revenue|data|operating)", re.I,
+    r"\bchief\b.*\b(product|ai|ml|growth|platform|technology|digital|revenue|data|operating)",
+    re.I,
+)
+
+PM_LANE_TITLE = re.compile(
+    r"\b(founding|principal|head\s+of\s+(ai\s+)?product|lead\s+product|product\s+manager)\b",
+    re.I,
 )
 
 
-def is_senior_title(title: str) -> bool:
+def is_senior_title(title: str, exclude_titles: Sequence[str] | None = None) -> bool:
+    """Return True if title should be excluded as too senior / out of lane."""
     title_lower = title.lower()
     if "chief of staff" in title_lower:
         return False
-    if bool(SENIOR_KEYWORDS.search(title)):
+    if LANE_ALLOWED.search(title):
+        return False
+    if exclude_titles:
+        for ex in exclude_titles:
+            if ex.strip().lower() in title_lower:
+                return True
+    if bool(GENERIC_SENIOR.search(title)):
+        return True
+    if bool(LEADERSHIP.search(title)):
         return True
     if bool(CHIEF_PRODUCT.search(title)):
         return True
@@ -63,13 +90,14 @@ def filter_leads(
     leads: list[Lead],
     exclude_senior: bool = True,
     profile_keywords: Sequence[str] | None = None,
+    exclude_titles: Sequence[str] | None = None,
     require_product_adjacent: bool = True,
 ) -> list[Lead]:
     """Filter leads through up to three stages:
 
     1. Profile-keyword pre-filter (cheap pass over title+description).
     2. Product-adjacent requirement.
-    3. Senior-title exclusion.
+    3. Senior-title exclusion (reads exclude_titles from search_profile when provided).
     """
     keyword_re = _build_keyword_regex(profile_keywords or [])
 
@@ -81,7 +109,7 @@ def filter_leads(
                 continue
         if require_product_adjacent and not is_product_adjacent(l.title):
             continue
-        if exclude_senior and is_senior_title(l.title):
+        if exclude_senior and is_senior_title(l.title, exclude_titles=exclude_titles):
             continue
         filtered.append(l)
     return filtered

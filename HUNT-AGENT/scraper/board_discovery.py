@@ -1,12 +1,7 @@
 """Discover board tokens by searching Google for ATS URL patterns.
 
-Uses SerpAPI to run Google searches like:
-  site:boards.greenhouse.io jobs
-  site:jobs.lever.co
-  site:jobs.ashbyhq.com
-
-Then extracts board tokens from the organic result URLs and merges them
-into target_companies.json."""
+Uses SerpAPI with domain-scoped queries for ops-AI lane discovery.
+"""
 
 from __future__ import annotations
 
@@ -15,6 +10,7 @@ from urllib.parse import urlparse
 
 import requests
 
+from .company_fit import load_denylist
 from .env import SERPAPI_KEY
 from .config import load_target_companies, save_target_companies
 
@@ -22,7 +18,8 @@ SERPAPI_BASE = "https://serpapi.com/search.json"
 PAGES_PER_ATS = 3
 RESULTS_PER_PAGE = 10
 
-ATS_PATTERNS = [
+# Generic discovery (legacy)
+ATS_PATTERNS_GENERIC = [
     {
         "name": "greenhouse",
         "query": 'site:boards.greenhouse.io "jobs"',
@@ -44,6 +41,32 @@ ATS_PATTERNS = [
         "regex": re.compile(r"careers\.smartrecruiters\.com/([^/]+)"),
     },
 ]
+
+# Ops-AI scoped discovery (too-greedy lane)
+ATS_PATTERNS_SCOPED = [
+    {
+        "name": "greenhouse",
+        "query": "site:boards.greenhouse.io logistics AI freight product",
+        "regex": re.compile(r"boards\.greenhouse\.io/([^/]+)"),
+    },
+    {
+        "name": "lever",
+        "query": 'site:jobs.lever.co dispatch "product manager" AI',
+        "regex": re.compile(r"jobs\.lever\.co/([^/]+)"),
+    },
+    {
+        "name": "ashby",
+        "query": 'site:jobs.ashbyhq.com freight dispatch "product manager"',
+        "regex": re.compile(r"jobs\.ashbyhq\.com/([^/]+)"),
+    },
+    {
+        "name": "smartrecruiters",
+        "query": 'site:careers.smartrecruiters.com logistics freight AI',
+        "regex": re.compile(r"careers\.smartrecruiters\.com/([^/]+)"),
+    },
+]
+
+SKIP_TOKENS = frozenset({"jobs", "assets", "api", "v1", "_next", "careers"})
 
 
 def _search_serpapi(query: str, page: int = 0) -> list[dict]:
@@ -74,24 +97,30 @@ def _search_serpapi(query: str, page: int = 0) -> list[dict]:
 def _extract_tokens(results: list[dict], pattern: re.Pattern) -> set[str]:
     """Extract board tokens from organic result URLs matching the regex."""
     tokens: set[str] = set()
+    denylist = load_denylist()
     for r in results:
         link = r.get("link", "") or ""
+        title_snippet = f"{r.get('title', '')} {r.get('snippet', '')}".lower()
         m = pattern.search(link)
         if m:
             token = m.group(1).strip().lower().split("?")[0].split("#")[0]
-            if token and token not in ("jobs", "assets", "api", "v1", "_next", "careers"):
-                tokens.add(token)
+            if not token or token in SKIP_TOKENS:
+                continue
+            if token in denylist:
+                continue
+            # Reject giant company tokens appearing in title
+            if any(d in title_snippet for d in denylist if len(d) > 4):
+                continue
+            tokens.add(token)
     return tokens
 
 
-def discover_boards() -> dict[str, set[str]]:
-    """Search Google for each ATS pattern and return discovered board tokens.
-
-    Returns: {source_name: {set of board_tokens}}
-    """
+def discover_boards(*, scoped: bool = True) -> dict[str, set[str]]:
+    """Search Google for each ATS pattern and return discovered board tokens."""
+    patterns = ATS_PATTERNS_SCOPED if scoped else ATS_PATTERNS_GENERIC
     discovered: dict[str, set[str]] = {}
 
-    for ats in ATS_PATTERNS:
+    for ats in patterns:
         name = ats["name"]
         q = ats["query"]
         regex = ats["regex"]
@@ -108,7 +137,7 @@ def discover_boards() -> dict[str, set[str]]:
             before = len(all_tokens)
             all_tokens.update(tokens)
             if len(all_tokens) == before:
-                break  # no new tokens on this page, stop
+                break
         discovered[name] = all_tokens
         print(f"    [discover] {name}: {len(all_tokens)} tokens")
 
@@ -116,16 +145,14 @@ def discover_boards() -> dict[str, set[str]]:
 
 
 def merge_into_targets(discovered: dict[str, set[str]], show_new_only: bool = True):
-    """Merge discovered tokens into target_companies.json, skipping existing ones.
-
-    Prints newly found tokens. Writes updated file.
-    """
+    """Merge discovered tokens into target_companies.json, skipping denylist + existing."""
     existing = load_target_companies()
+    denylist = load_denylist()
     added_any = False
 
     for source, new_tokens in discovered.items():
         known = set(existing.get(source, []))
-        fresh = new_tokens - known
+        fresh = {t for t in new_tokens - known if t.lower() not in denylist}
         if not fresh:
             continue
         added_any = True
@@ -135,6 +162,6 @@ def merge_into_targets(discovered: dict[str, set[str]], show_new_only: bool = Tr
 
     if added_any:
         save_target_companies(existing)
-        print(f"  [discover] Updated target_companies.json")
+        print("  [discover] Updated target_companies.json")
     else:
-        print(f"  [discover] No new tokens — already up to date")
+        print("  [discover] No new tokens — already up to date")

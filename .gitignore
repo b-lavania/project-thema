@@ -8,3 +8,6 @@ __pycache__/
 
 # Outputs
 RES/outputs/
+
+# Tempus
+CRM/crm.db

@@ -1,0 +1,303 @@
+# Ops-AI lane — seed list for Series-A/B logistics / field-service / supply-chain companies.
+# Segment: dream | realistic | consulting (consulting = reach / stretch only)
+# Re-seed: delete CRM tempus.db once after major YAML edits, or add new names only (dedupes by name).
+
+# --- Freight / trucking / brokerage AI (dream) ---
+- name: Greenscreens.ai
+  url: https://www.greenscreens.ai
+  industry: freight pricing / AI
+  segment: dream
+  hypothesis: Brokers price on gut feel; real bottleneck is lane-level margin decision latency, not missing dashboards.
+  notes: Dynamic freight pricing. Series-A target.
+
+- name: Optimal Dynamics
+  url: https://www.optimaldynamics.com
+  industry: trucking OR / decisions
+  segment: dream
+  hypothesis: Network optimization decks don't move until dispatchers trust daily recommendations over tribal knowledge.
+  notes: OR/decision automation for trucking.
+
+- name: Parade
+  url: https://www.parade.co
+  industry: capacity / carrier matching
+  segment: dream
+  hypothesis: Digitizing carrier relationships fails when onboarding friction exceeds phone-call habit.
+  notes: Capacity management for brokers.
+
+- name: BuildOps
+  url: https://www.buildops.com
+  industry: commercial field service
+  segment: dream
+  hypothesis: Dispatch + invoicing fragmentation; AI must compress quote-to-schedule, not add chatbots.
+  notes: Commercial contractor field service platform.
+
+# --- Freight / trucking (realistic) ---
+- name: Vooma
+  url: https://www.vooma.com
+  industry: freight AI agents
+  segment: realistic
+  hypothesis: Email/call triage volume hides unstructured load data never reaching TMS in time to book.
+  notes: Freight AI agents for brokers.
+
+- name: HappyRobot
+  url: https://www.happyrobot.ai
+  industry: voice AI / logistics
+  segment: realistic
+  hypothesis: Voice automation fails when handoffs lack structured context; bottleneck is operational trust in the signal.
+  notes: Voice AI for logistics operations.
+
+- name: FleetWorks
+  url: https://www.fleetworks.ai
+  industry: freight / voice AI
+  segment: realistic
+  hypothesis: Covering loads is parallel-calling problem; speed-to-book beats more carrier lists.
+  notes: YC S23. AI marketplace + voice for freight.
+
+- name: Drumkit
+  url: https://www.drumkit.ai
+  industry: freight workflow AI
+  segment: realistic
+  hypothesis: Brokers buy AI email but stall on exception handling; gap is workflow state across TMS + inbox.
+  notes: Freight workflow automation.
+
+- name: Loadsmart
+  url: https://www.loadsmart.com
+  industry: freight tech
+  segment: realistic
+  hypothesis: Instant quote UX masks margin leakage on multi-stop loads; bottleneck is pricing confidence.
+  notes: Automated quoting and load matching. Verify stage.
+
+- name: Transfix
+  url: https://www.transfix.io
+  industry: digital trucking
+  segment: realistic
+  hypothesis: Marketplace liquidity is quoting-trust problem before supply problem.
+  notes: Digital trucking platform.
+
+- name: Turvo
+  url: https://www.turvo.com
+  industry: logistics / TMS
+  segment: realistic
+  hypothesis: TMS wins on workflow adoption; AI must reduce dispatcher cognitive load, not add screens.
+  notes: TMS for brokers and 3PLs.
+
+- name: Tai Software
+  url: https://www.tai-software.com
+  industry: brokerage automation
+  segment: realistic
+  hypothesis: Back-office automation stalls when document extraction isn't tied to billing reconciliation.
+  notes: Freight brokerage automation.
+
+- name: Burt
+  url: https://www.burt.ai
+  industry: freight AI teammates
+  segment: realistic
+  hypothesis: Automation breaks on unstructured PDFs; need operators-in-the-loop with structured handoffs.
+  notes: YC W26. AI teammates for brokers.
+
+- name: Cartage
+  url: https://www.cartage.ai
+  industry: freight coordination
+  segment: realistic
+  hypothesis: Replacing brokers requires shippers to trust exception routing, not just cheaper rates.
+  notes: YC S24. Autonomous freight coordination.
+
+- name: Lanesurf
+  url: https://www.lanesurf.com
+  industry: voice AI / freight booking
+  segment: realistic
+  hypothesis: Parallel carrier negotiation is the product; bottleneck is rate discipline under inbound call floods.
+  notes: YC S25. Voice AI for load booking.
+
+- name: Shipwell
+  url: https://www.shipwell.com
+  industry: TMS / supply chain
+  segment: realistic
+  hypothesis: TMS AI must connect quoting → tender → track; siloed modules don't reduce ops headcount.
+  notes: Transportation management platform.
+
+- name: Rose Rocket
+  url: https://www.roserocket.com
+  industry: trucking TMS / ERP
+  segment: realistic
+  hypothesis: Carrier onboarding and quoting still manual at scale; bottleneck is data normalization across fleets.
+  notes: Trucking ERP. YC S16 alumni team at Cartage.
+
+- name: Alvys
+  url: https://www.alvys.com
+  industry: trucking TMS
+  segment: realistic
+  hypothesis: Small fleets need quoting + dispatch in one flow; separate tools recreate phone-tag.
+  notes: TMS for trucking companies.
+
+- name: Highway
+  url: https://www.highway.com
+  industry: carrier compliance
+  segment: realistic
+  hypothesis: Compliance checks are pre-booking friction; automate trust signals before load award.
+  notes: Carrier onboarding and compliance.
+
+- name: Emerge
+  url: https://www.emergemarket.com
+  industry: freight procurement
+  segment: realistic
+  hypothesis: Shipper RFP process is decision-architecture problem; more bids ≠ better awards.
+  notes: Digital freight procurement.
+
+- name: Numeo
+  url: https://www.numeo.ai
+  industry: trucking ops
+  segment: realistic
+  hypothesis: Owner-operators need instant quote-to-dispatch; manual dispatch is the margin killer.
+  notes: Trucking operations software.
+
+- name: Axle
+  url: https://www.axlepayments.com
+  industry: freight payments
+  segment: realistic
+  hypothesis: Payment speed is downstream of document accuracy; bottleneck is POD/rate-con extraction.
+  notes: Freight payments platform.
+
+# --- Field service / dispatch ---
+- name: Avoca AI
+  url: https://www.avoca.ai
+  industry: home services / voice AI
+  segment: realistic
+  hypothesis: Call deflection fails without job-cost context; need structured intake before handoff.
+  notes: HVAC/home services voice AI.
+
+- name: Workiz
+  url: https://www.workiz.com
+  industry: field service
+  segment: realistic
+  hypothesis: SMB pros abandon software when quoting takes longer than pen-and-paper.
+  notes: Scheduling, quoting, CRM for field pros.
+
+- name: Hatch
+  url: https://www.usehatch.ai
+  industry: home services
+  segment: realistic
+  hypothesis: Lead-to-booking conversion is speed-to-quote problem across channels.
+  notes: Home services growth platform.
+
+- name: Kojo
+  url: https://www.usekojo.com
+  industry: construction materials
+  segment: realistic
+  hypothesis: Field ordering errors are catalog + pricing trust problems, not more SKUs.
+  notes: Materials ordering for construction.
+
+- name: Sameday AI
+  url: https://www.sameday.ai
+  industry: field service AI
+  segment: realistic
+  hypothesis: Voice without job scope data creates rework for dispatchers.
+  notes: Field service AI automation.
+
+- name: FieldPulse
+  url: https://www.fieldpulse.com
+  industry: field service
+  segment: realistic
+  hypothesis: Technician utilization blocked by manual scheduling, not missing features.
+  notes: Field service management.
+
+- name: ServiceFusion
+  url: https://www.servicefusion.com
+  industry: field service
+  segment: consulting
+  hypothesis: SMB needs one quoting + dispatch path; module sprawl kills adoption.
+  notes: All-in-one field service. Reach segment.
+
+- name: CompanyCam
+  url: https://www.companycam.com
+  industry: field documentation
+  segment: consulting
+  hypothesis: Photo capture useless without tying to job costing and change orders.
+  notes: Field photo documentation. Adjacent reach.
+
+# --- Supply chain visibility ---
+- name: Tive
+  url: https://www.tive.com
+  industry: shipment tracking
+  segment: realistic
+  hypothesis: Tracking alerts fail when exception playbooks aren't operationalized for receivers.
+  notes: Real-time shipment tracking.
+
+- name: Altana AI
+  url: https://www.altana.ai
+  industry: supply chain intelligence
+  segment: realistic
+  hypothesis: Graph intelligence doesn't move until buyers trust supplier risk in procurement workflow.
+  notes: Supply chain knowledge graph.
+
+- name: Pando
+  url: https://www.pando.ai
+  industry: supply chain network
+  segment: realistic
+  hypothesis: Network effects need standardized lane + cost data; bottleneck is ingestion not visualization.
+  notes: Supply chain network platform.
+
+- name: Vizion
+  url: https://www.vizionapi.com
+  industry: container tracking
+  segment: realistic
+  hypothesis: ETA prediction worthless without dock appointment and drayage handoff automation.
+  notes: Container tracking API.
+
+- name: Nuvocargo
+  url: https://www.nuvocargo.com
+  industry: cross-border freight
+  segment: realistic
+  hypothesis: Border delays are document + compliance latency, not carrier capacity.
+  notes: US-Mexico freight platform.
+
+# --- Pricing / ops analytics (adjacent) ---
+- name: Zilliant
+  url: https://www.zilliant.com
+  industry: B2B pricing
+  segment: consulting
+  hypothesis: Pricing AI stalls when sales doesn't trust recommended floors vs gut discounting.
+  notes: B2B pricing guidance. Reach.
+
+- name: Pricefx
+  url: https://www.pricefx.com
+  industry: pricing / CPQ
+  segment: consulting
+  hypothesis: CPQ wins when quote configuration mirrors how reps actually negotiate.
+  notes: Cloud pricing platform. Reach.
+
+- name: Verusen
+  url: https://www.verusen.com
+  industry: materials / inventory AI
+  segment: consulting
+  hypothesis: Inventory optimization fails without plant-floor exception feedback loops.
+  notes: Materials intelligence. Reach.
+
+# --- Moving / last-mile adjacent ---
+- name: Supermove
+  url: https://www.supermove.com
+  industry: moving software
+  segment: realistic
+  hypothesis: Moving ops still quote-by-phone; CV + OR quoting is the wedge.
+  notes: Direct Quotely proof mapping.
+
+- name: Dolly
+  url: https://www.dolly.com
+  industry: on-demand moving
+  segment: consulting
+  hypothesis: Marketplace fill rate is quoting speed + crew matching, not price.
+  notes: On-demand moving. Reach.
+
+- name: Lula
+  url: https://www.lula.com
+  industry: delivery / logistics
+  segment: realistic
+  hypothesis: Last-mile routing fails when job costing is wrong before dispatch.
+  notes: Delivery logistics platform.
+
+- name: Jobber
+  url: https://getjobber.com
+  industry: field service
+  segment: consulting
+  hypothesis: Home service pros need sub-2-minute quotes; scheduling software must lead with quoting speed.
+  notes: Large reach target. Verify fit.

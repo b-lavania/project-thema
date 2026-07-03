@@ -20,6 +20,7 @@ Single-user Streamlit resume/cover letter generator. Career truth lives in Markd
 | `PORTFOLIO/` | Static HTML case studies |
 | `ENGiNEERING/` | Essays / notes |
 | `HUNT-AGENT/` | Job scraper package: board APIs + SerpAPI search + discovery pipeline + lead storage |
+| `CRM/` | Pipeline CRM — Outreach mode by default (memo + draft + log); Full OS optional |
 
 ## Run
 
@@ -67,6 +68,21 @@ Override via sidebar Advanced or `GEMINI_*_MODEL` / `PAIN_POINT_MODEL` env vars.
 1. Update `RES/data/master_context.md` with latest career facts.
 2. Run app → paste JD → select track/voice → generate.
 3. Outcome tracking written to `RES/data/applications.csv` automatically per generation.
+
+## App tabs (Option A — default)
+
+| Tab | Purpose |
+|-----|---------|
+| 📋 Job Details | Paste JD, select track/voice, run LLM suggestion |
+| ❓ Application Questions | Optional portal-specific Q&A |
+| 🚀 Generate & Output | Resume + cover letter generation, preview, download |
+| 📊 Outcomes | **Application tracker** (`applications.csv`; auto-updated on generate) |
+| 🔍 Job Search | HUNT-AGENT scraper: Google Jobs + ATS boards |
+| 🎯 Pipeline | **Ops-AI job-hunt OS** (on by default, Outreach mode): pipeline board, memos, draft outreach, log. Full OS (scoreboard, content, review) via sidebar. |
+
+**Workflow:** Job Search → Job Details → Generate → Outcomes. See `RES/docs/option_a_workflow.md`.
+
+**BOOTCAMP:** Separate app (`streamlit run BOOTCAMP/app.py`) — PM skill sprint only, not part of default apply flow.
 
 ## Notable absences
 

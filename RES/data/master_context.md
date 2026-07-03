@@ -1,14 +1,27 @@
 # Master Resume Context — Bob Lavania
 
-This file consolidates all resume variants and portfolio metrics into a single source of truth for generation. It is optimized for LLM context windows using metadata tags and structured formatting.
+## Positioning thesis (lead with this everywhere)
+
+> **I find the real operational bottleneck, reduce ambiguity, and build the system that makes the fix permanent.**
+
+**Primary identity:** Founding Product Lead for operational AI in logistics, freight, dispatch, and field service.
+
+**Live credential (present tense):** I run Moovez's marketplace operations platform and Quotely's AI layer in production — end-to-end **quote-to-dispatch**: customer booking and order tracking, dispatcher workflows, crew assignment and availability, plus CV/OR job costing and conversational intake. Lead with system metrics (**60 min→3 min** job costing, **~50%** support deflection, **~93%** fill rate), not $500K GMV.
+
+**Range (supporting evidence only — not co-equal targets):** HRIS/M&A (BVXpress), growth/attribution (fractional), platform/pricing — cite only when JD-relevant.
 
 ---
 
-## Target Personas (For LLM Context)
-- **Persona A (AI/Technical PM)**: Lead AI Product Manager, Technical Product Manager, PM - AI, PM - Prompting
-- **Persona B (Platform/Ops PM)**: Product Manager - Marketplaces, Product Operations Manager
-- **Persona C (Growth PM)**: PM - Growth/Monetization
-- **Persona D (HR / HRIS PM)**: Product Manager - HR Tech, HRIS, People Analytics, Workforce Systems, M&A HR integration, HCM platforms
+## Target Personas (demoted to range tags — Persona A is the headline)
+
+- **Persona A (Founding / Ops-AI Product Lead)** — **HEADLINE**: Founding PM, Principal Product, Head of AI Product at Series-A/B ops-AI companies. First product hire who ships production AI in logistics/field-service workflows.
+- **Persona B (Platform/Ops PM)** — *range*: marketplaces, product operations, quoting/pricing systems
+- **Persona C (Growth PM)** — *range*: experimentation, attribution, conversion lifts (fractional)
+- **Persona D (HR / HRIS PM)** — *range*: M&A workforce integration, people analytics (BVXpress HRIS shipped to ICI clients and acquired companies)
+
+---
+
+This file consolidates all resume variants and portfolio metrics into a single source of truth for generation. It is optimized for LLM context windows using metadata tags and structured formatting.
 
 ---
 
@@ -38,7 +51,7 @@ This file consolidates all resume variants and portfolio metrics into a single s
 - **Pricing**: "Pricing problems are often decision architecture problems, not just monetization problems. Simplifying choices can be more valuable than optimizing price points." (Village Wellth) → Led me to consolidate 4 pricing tiers into 3, resulting in a 3x increase in take rate by eliminating plan confusion.
 - **Detection**: "Detection systems fail when users stop trusting the signal. Accuracy metrics alone are insufficient. Operational reliability matters more than theoretical performance." (Netsweeper) → Led me to freeze feature additions and aggressively prune high false-alert vectors, reducing alerts by 85% and restoring district trust.
 - **Energy/Infrastructure**: "Each workflow step surfaces a risk class the others cannot see. Deployability is a coupling problem — the product's job is to make those couplings explicit, comparable, and reviewable." (Project Epsilon) → Drove the architecture of the Scenario contract interface, eliminating model drift.
-- **HR / M&A integration**: "Legacy HRIS optimizes for payroll and ESS; M&A optimizes for rapid ingestion, normalized workforce truth, and diligence-ready answers. Integration beats replacement — source systems stay authoritative, the product connects and reports." (BVXpress HRIS — **shipped as a BVXpress product for ICI clients and acquired companies, not internal-only tooling**) → Led adapter-first architecture, ingestion validation, and transaction dashboards instead of rip-and-replace migrations.
+- **HR / M&A integration**: "Legacy HRIS optimizes for payroll and ESS; M&A optimizes for rapid ingestion, normalized workforce truth, and diligence-ready answers. Integration beats replacement — source systems stay authoritative, the product connects and reports." (BVXpress HRIS — shipped as a BVXpress product for ICI clients and acquired companies) → Led adapter-first architecture, ingestion validation, and transaction dashboards instead of rip-and-replace migrations.
 
 ---
 
@@ -79,11 +92,11 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 
 **Industries (map JD industry terms here when truthful):** Transport and last-mile logistics, warehousing and fulfillment, construction materials marketplaces, finance and insurance, M&A and deal-structuring, consumer health and digital health (B2C telehealth, patient experience, virtual care), marketing attribution and e-commerce growth, energy and infrastructure planning, HR technology and workforce systems (M&A transaction readiness).
 
-**Product categories (map JD product scope here when truthful):** TMS/WMS integration and marketplace ops (ROLE 2 construction materials), CRM and marketing automation (HubSpot, ActiveCampaign, Zoho), pricing and real-time quote engines, MMM and attribution platforms, content-compliance and trust/safety AI, B2B SaaS workflow suites, B2C digital health and telehealth platforms (patient experience, virtual care, white-label SaaS — ROLE 2 regional govt), HRIS / HCM / people analytics (ROLE 5 BVXpress HRIS), payroll integration layers, workforce diligence dashboards.
+**Product categories (map JD product scope here when truthful):** **Moovez (ROLE 1):** marketplace ops / lightweight TMS — quote-to-dispatch, crew management, booking, order status, dispatch assignment (last-mile moving). TMS/WMS integration and marketplace ops (ROLE 2 construction materials), CRM and marketing automation (HubSpot, ActiveCampaign, Zoho), pricing and real-time quote engines, MMM and attribution platforms, content-compliance and trust/safety AI, B2B SaaS workflow suites, B2C digital health and telehealth platforms (patient experience, virtual care, white-label SaaS — ROLE 2 regional govt), HRIS / HCM / people analytics (ROLE 5 BVXpress HRIS), payroll integration layers, workforce diligence dashboards.
 
 **Tools palette (one per statement max; mirror JD tool names when listed):** Heap, Microsoft Clarity, Hotjar, Segment, Mixpanel, Aha!, Pendo, Notion, Figma, Amplitude, Productboard, Google Analytics, R, SQL, Cursor, Windsurf, Lovable, n8n, Zapier, Stripe/Square, HubSpot, ActiveCampaign, Jira, Confluence.
 
-**Skills-only familiarity (not a shipped deployment unless a ROLE block says so):** n8n, Zapier, CRM as a category, and TMS/WMS outside the ROLE 2 integration engagement. Phrase as comfortable working in / integrates with, never as "built and deployed X for production at scale" unless ROLE-backed.
+**Skills-only familiarity (not a shipped deployment unless a ROLE block says so):** n8n, Zapier, CRM as a category, and TMS/WMS **integration** patterns outside the Moovez ops platform and ROLE 2 construction marketplace engagement. At Moovez, TMS-class workflows (dispatch, crews, orders, booking) are **ROLE 1 shipped scope**, not familiarity-only. Phrase external TMS/WMS as comfortable working in / integrates with unless ROLE-backed.
 
 **Do not invent:** Only cite tools/methods from this block, Skills & Core Domains, or a specific ROLE block.
 
@@ -93,10 +106,10 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 
 8+ years in product management across B2B SaaS, AI, marketplaces, logistics, healthcare, and FinTech.
 
-- **2012–2021 (9 yrs)**: Built the product function from scratch at BVXpress — **employee #3 (first product hire)**; launched 5 products, 1,400+ users; also owned **HRIS for M&A transaction readiness** in the BVXpress suite. **The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling.**
+- **2012–2021 (9 yrs)**: Built the product function from scratch at BVXpress — **employee #3 (first product hire)**; launched 5 products, 1,400+ users; also owned **HRIS for M&A transaction readiness** in the BVXpress suite (shipped to ICI clients and acquired companies).
 - **2022–2023**: Full-time PM at Netsweeper, shipping an AI content-compliance product for K-12.
 - **2022–2025 (concurrent)**: Fractional Product Lead across AI, logistics, FinTech, consumer health/telehealth (B2C patient experience), and marketplace startups; won 2024 TechStars Pitch Competition (Calgary) with consumer-facing telehealth platform concept.
-- **2024–Present**: Founding PM at Moovez/Quotely — logistics AI platform commercialized as a standalone SaaS.
+- **2024–Present**: Founding PM at Moovez/Quotely — marketplace ops platform (quote-to-dispatch TMS) plus AI layer commercialized as Quotely SaaS.
 
 ---
 
@@ -108,11 +121,32 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 - **Title**: Founding Product Manager
 - **Dates**: Jan 2024 - Present
 - **Location**: Remote / Calgary, AB
-- **Tags**: `[0-to-1]`, `[Marketplace]`, `[AI/CV]`, `[Pricing]`, `[Operations]`, `[User Research]`, `[eCommerce-adjacent logistics]`, `[Experimentation]`
+- **Tags**: `[0-to-1]`, `[Marketplace]`, `[TMS]`, `[AI/CV]`, `[Pricing]`, `[Operations]`, `[User Research]`, `[eCommerce-adjacent logistics]`, `[Experimentation]`
 - **Research & analytics tooling (confirmed)**: Heap, Microsoft Clarity, Hotjar, Segment, focus groups, tree testing, opportunity maps
 - **Environment**: Reported directly to CEO. **Employee #6 (first product hire).** Product lead owning user research, conversions, retention, and experimentation. Oversaw a team of 4 developers (1 direct report).
 - **Problem**: Dispatchers were manually estimating job costs over the phone (60+ min per quote), causing margin erosion from inaccurate pricing and losing customers to faster competitors.
 - **Key Outcomes**: GMV $500k+; CAC ~$100; LTV $1,000+; Retention 12+ months; Fill rate ~93% (vs. ~70% industry avg). Time-to-quote reduced from ~1 hour to 3 minutes (20x faster).
+
+#### Platform scope (Moovez ops + Quotely intelligence)
+
+**What I built and operate (present tense):** The operational backbone for a last-mile moving marketplace — functionally a **lightweight TMS** for quote-to-dispatch, not a broker-facing enterprise TMS.
+
+| Module | What it does | Why it matters |
+|--------|----------------|----------------|
+| **Intake & quoting** | CV photo intake + OR job costing → priced job in ~3 min (was ~60 min dispatcher phone quotes) | Removes the bottleneck before anything hits dispatch |
+| **Booking** | Customer books a priced job, pays (Stripe/Square), receives confirmations | Quote-to-cash in one flow; no callback loop |
+| **Orders** | Order record: scope, price, location, time window, payment state, job metadata | Single source of truth for ops and support |
+| **Order status** | Customer-visible status (booked → scheduled → in progress → complete); ops-facing state for exceptions | Cuts "where's my crew?" calls; feeds support deflection |
+| **Dispatch** | Assign jobs to crews/trucks; manage day-of execution and exceptions | Directly tied to **~93% fill rate** vs ~70% industry |
+| **Crew management** | Crew availability, capacity, assignment; weekend supply gaps surfaced in data | Informed crew-forecasting roadmap bets |
+
+**Quotely (commercialized SaaS):** The **pricing + intake intelligence** layer (CV, OR, multi-model eval, agents) — sold to other logistics operators. Moovez marketplace is the **production proving ground**; the ops platform is what turns quotes into completed jobs.
+
+**Explicit cuts (V1):** Real-time dispatcher chat overlay, customer subscription model, full route optimization — deferred to protect quote-flow and dispatch reliability first.
+
+**JD mapping:** Use for logistics, freight, dispatch, field-service, marketplace ops, TMS/WMS, and ops-AI roles — emphasize **workflow state + structured handoffs**, not chatbot novelty.
+
+**Quick Take angle (metric-free):** Build the operational workflow first — booking, dispatch, and status — then automate ambiguous steps (quoting, intake, exceptions) with AI that hands off structured state.
 
 #### PM Story
 - **Market context**: Last-mile moving and delivery was still quote-by-phone. Customers called 3–5 movers and booked whoever called back first with a price — speed-to-quote was the primary booking driver, not price. Digital-first competitors (TaskRabbit-style platforms) were taking share not because they were cheaper but because they were instant. The opportunity was to out-quote, not out-price.
@@ -126,6 +160,10 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 - Built real-time pricing and payment flows (Stripe, Square) based on distance and volume, eliminating the major checkout bottleneck and reducing quote-to-payment drop-off.
 - Built opportunity maps for quote-to-booking; focus groups and tree tests plus session replay (Heap, Clarity, Hotjar) and event instrumentation (Segment) drove checkout simplification and intake prioritization — not tool-led discovery.
 - Ran a **controlled experiment** redirecting traffic to **automated quoting vs. manual quoting**, testing against the null hypothesis before scaling the automated quote path.
+- Owned end-to-end **marketplace operations platform**: customer booking, order lifecycle and status, dispatcher workflows, and crew assignment — the operational system that converts priced quotes into completed jobs at **~93% fill rate**.
+- Designed **order state model** and customer-facing status so bookers self-serve (reducing status/support calls); paired with SMS/voice agent for intake, confirmations, and reschedules (**~50%** ticket deflection).
+- Ran **dispatch and crew capacity** against demand; Segment/fill-rate data exposed weekend supply bottlenecks and informed crew-availability forecasting on the roadmap.
+- Separated **ops platform** (Moovez) from **pricing/intake SaaS** (Quotely): intelligence layer commercialized after OR accuracy drew inbound operator interest.
 - System successfully commercialized as Quotely (quoteperfectly.com), a standalone SaaS now sold to other logistics operators.
 
 ### ROLE 2: Fractional Product Consultant

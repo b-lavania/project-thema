@@ -149,10 +149,11 @@ TRACK_EMPHASIS = {
         "media mix modeling, GTM strategy, landing page optimization."
     ),
     "Logistics/Marketplace": (
-        "Emphasize supply/demand matching, operational efficiency, marketplace dynamics, fill rates, and logistics automation. "
-        "Weave in naturally where grounded: marketplace design, supply-demand balance, fill rate, GMV, take rate, "
-        "last-mile delivery, TMS, WMS, dispatch optimization, operations research, bin packing, route optimization, "
-        "carrier management, fulfillment."
+        "Emphasize production AI in operational logistics: CV quoting, OR dispatch/routing, conversational-agent "
+        "deflection, fill rate, and speed-to-quote in last-mile, freight, dispatch, and field-service contexts. "
+        "Lead with Quotely/Moovez system outcomes (60 min→3 min costing, ~50% support deflection, ~93% fill rate) "
+        "before GMV. Weave in naturally where grounded: marketplace design, supply-demand balance, TMS integration, "
+        "operations research, bin packing, route optimization, carrier management, dispatch automation, unit economics."
     ),
     "BizOps": (
         "Emphasize cross-functional execution, decision systems, narrative clarity, and measurable business lift. "
@@ -185,6 +186,12 @@ def _track_instruction(track: str) -> str:
 # Voice-specific prompt fragments
 # ---------------------------------------------------------------------------
 VOICE_EMPHASIS = {
+    "Founding Product Lead": (
+        "Lead with diagnostic reframing: find the real operational bottleneck behind the stated problem, then show "
+        "the system you built to make the fix permanent. Balance technical-commercial bilingualism — CV, OR, LLM eval, "
+        "analytics — with measured outcomes (speed-to-quote, deflection, fill rate, take rate). "
+        "Sound like the first product hire who ships 0-to-1 in messy-stage ops, not a generic PM."
+    ),
     "Sharp Product PM": (
         "Lead with market/user insight, product decisions, tradeoffs, and measured behavior change. "
         "Every bullet must show product judgment before implementation."

@@ -16,7 +16,8 @@ from dotenv import load_dotenv
 PROJECT_ROOT = Path(__file__).resolve().parent
 RES_ROOT = PROJECT_ROOT / "RES"
 HUNT_ROOT = PROJECT_ROOT / "HUNT-AGENT"
-for p in (RES_ROOT, HUNT_ROOT):
+CRM_ROOT = PROJECT_ROOT / "CRM"
+for p in (RES_ROOT, HUNT_ROOT, CRM_ROOT):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
@@ -74,15 +75,21 @@ load_dotenv(ENV_PATH)
 # Constants
 # ---------------------------------------------------------------------------
 TRACK_OPTIONS = [
+    "Logistics/Marketplace",
     "Product/AI",
     "Pricing/Ops",
     "Growth",
-    "Logistics/Marketplace",
     "BizOps",
     "Chief of Staff",
     "HR/HRIS",
 ]
-VOICE_OPTIONS = ["Sharp Product PM", "Technical Product PM", "Growth / GTM PM", "Chief of Staff / BizOps"]
+VOICE_OPTIONS = [
+    "Founding Product Lead",
+    "Sharp Product PM",
+    "Technical Product PM",
+    "Growth / GTM PM",
+    "Chief of Staff / BizOps",
+]
 EXPORT_MODE_OPTIONS = ["standard", "digital"]
 EXPORT_MODE_LABELS = {
     "standard": "ATS / Standard",
@@ -614,67 +621,80 @@ st.set_page_config(page_title="Project Thema", layout="wide", page_icon="📄")
 inject_sf_professional_theme()
 st.title("Project Thema")
 
-# Sidebar
+# Sidebar — collapsed into Settings / Workflow / Tools
 st.sidebar.title("Configuration")
 st.sidebar.divider()
 
 init_provider_defaults()
-
-st.sidebar.subheader("LLM Provider")
-st.sidebar.radio(
-    "Provider",
-    PROVIDER_OPTIONS,
-    key="llm_provider",
-    help="One provider per generation run (OpenAI or Google AI Studio)",
-)
-
 _active_provider = get_provider()
-st.sidebar.subheader("API Key")
-if _active_provider == "gemini":
-    st.sidebar.text_input(
-        "Gemini API Key",
-        type="password",
-        key="sidebar_gemini_key",
-        help="From aistudio.google.com — saved to GEMINI_API_KEY in .env",
-    )
-    _env_var = "GEMINI_API_KEY"
-else:
-    st.sidebar.text_input(
-        "OpenAI API Key",
-        type="password",
-        key="sidebar_openai_key",
-        help="Saved to OPENAI_API_KEY in .env",
-    )
-    _env_var = "OPENAI_API_KEY"
-
-if st.sidebar.button("Save Key to .env", key="save_key_btn", use_container_width=True):
-    key_to_save = get_api_key()
-    if key_to_save:
-        update_env_file({_env_var: key_to_save})
-        os.environ[_env_var] = key_to_save
-        st.sidebar.success("Key saved to .env")
-    else:
-        st.sidebar.warning("No key to save")
-
 _key_ok = bool(get_api_key())
-st.sidebar.caption(f"Status: {'Set' if _key_ok else 'Not set'} ({_active_provider})")
-if _active_provider == "gemini":
-    st.sidebar.caption(
-        "Gemini: profile defaults to **2.5 Flash** (thinking off, higher token caps). "
-        "Avoid **2.5 Pro** on free tier (quota / empty output). Use OpenAI for highest quality."
-    )
+st.sidebar.caption(f"API key: {'set' if _key_ok else 'not set'} ({_active_provider})")
 
-with st.sidebar.expander("Advanced: models", expanded=False):
+_dow = datetime.date.today().weekday()
+_day_names = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+_cadence_hints = {
+    0: "Pipeline review — Batch-1 priorities",
+    1: "HUNT ATS scrape + outreach",
+    2: "Outreach — 5 touches",
+    3: "Outreach — follow-ups",
+    4: "Publish artifact + weekly review (enable Full OS)",
+}
+_cadence = _cadence_hints.get(_dow, "")
+if _cadence:
+    st.sidebar.caption(f"**{_day_names[_dow]}:** {_cadence}")
+
+with st.sidebar.expander("Settings", expanded=False):
+    st.subheader("LLM Provider")
+    st.radio(
+        "Provider",
+        PROVIDER_OPTIONS,
+        key="llm_provider",
+        help="One provider per generation run (OpenAI or Google AI Studio)",
+    )
+    _active_provider = get_provider()
+    st.subheader("API Key")
+    if _active_provider == "gemini":
+        st.text_input(
+            "Gemini API Key",
+            type="password",
+            key="sidebar_gemini_key",
+            help="From aistudio.google.com — saved to GEMINI_API_KEY in .env",
+        )
+        _env_var = "GEMINI_API_KEY"
+    else:
+        st.text_input(
+            "OpenAI API Key",
+            type="password",
+            key="sidebar_openai_key",
+            help="Saved to OPENAI_API_KEY in .env",
+        )
+        _env_var = "OPENAI_API_KEY"
+
+    if st.button("Save Key to .env", key="save_key_btn", use_container_width=True):
+        key_to_save = get_api_key()
+        if key_to_save:
+            update_env_file({_env_var: key_to_save})
+            os.environ[_env_var] = key_to_save
+            st.success("Key saved to .env")
+        else:
+            st.warning("No key to save")
+
+    if _active_provider == "gemini":
+        st.caption(
+            "Gemini: profile defaults to **2.5 Flash**. Avoid **2.5 Pro** on free tier (quota). "
+            "Use OpenAI for highest quality."
+        )
+
+    st.divider()
+    st.caption("Model IDs per pipeline tier")
     _prefix = "gemini" if _active_provider == "gemini" else "openai"
-    _label = "Gemini" if _active_provider == "gemini" else "OpenAI"
-    st.caption(f"{_label} model IDs per pipeline tier")
     st.selectbox(
-        "Bulk sections (keywords, narrative, skills, bullets, cover)",
+        "Bulk sections",
         model_choices(_active_provider, "default"),
         key=f"{_prefix}_model_default",
     )
     st.selectbox(
-        "Profile + lint (The Quick Take)",
+        "Profile + lint",
         model_choices(_active_provider, "profile"),
         key=f"{_prefix}_model_profile",
     )
@@ -684,108 +704,111 @@ with st.sidebar.expander("Advanced: models", expanded=False):
         key=f"{_prefix}_model_pain",
     )
 
-st.sidebar.divider()
-st.sidebar.subheader("📍 Location")
-selected_location_label = st.sidebar.radio(
-    "I am applying from:",
-    list(LOCATION_OPTIONS.keys()),
-    key="location_label",
-)
-candidate_location = LOCATION_OPTIONS[selected_location_label]
+    st.divider()
+    st.subheader("Location")
+    selected_location_label = st.radio(
+        "I am applying from:",
+        list(LOCATION_OPTIONS.keys()),
+        key="location_label",
+    )
 
-st.sidebar.divider()
-st.sidebar.subheader("Export mode")
-st.sidebar.radio(
-    "Resume output policy",
-    EXPORT_MODE_OPTIONS,
-    key="export_mode",
-    format_func=lambda x: EXPORT_MODE_LABELS[x],
-    help="Use ATS / Standard for recruiter-safe Letter PDF + plain DOCX. Use Digital / Presentation for a richer PDF, with optional Legal size.",
-)
-st.sidebar.selectbox(
-    "PDF page size",
-    PDF_PAGE_SIZE_OPTIONS,
-    key="pdf_page_size",
-    format_func=lambda x: PDF_PAGE_SIZE_LABELS[x],
-    help="Legal size is only applied for Digital / Presentation mode. ATS / Standard always renders as Letter.",
-)
+    st.divider()
+    st.subheader("Export")
+    st.radio(
+        "Resume output policy",
+        EXPORT_MODE_OPTIONS,
+        key="export_mode",
+        format_func=lambda x: EXPORT_MODE_LABELS[x],
+    )
+    st.selectbox(
+        "PDF page size",
+        PDF_PAGE_SIZE_OPTIONS,
+        key="pdf_page_size",
+        format_func=lambda x: PDF_PAGE_SIZE_LABELS[x],
+    )
+
+    st.divider()
+    st.subheader("PDF layout")
+    st.checkbox("Break before How I Work", key="break_before_skills")
+    st.checkbox("Break before The Work", key="break_before_experience")
+    st.checkbox("Break before Side Builds", key="break_before_projects")
+    st.checkbox("Break before Credentials", key="break_before_credentials")
+    st.checkbox("Compact PDF typography", key="compact_pdf")
+    st.number_input(
+        "Break before role # (0 = none)",
+        min_value=0,
+        max_value=8,
+        value=0,
+        step=1,
+        key="break_before_role_index",
+    )
+
+    st.divider()
+    st.subheader("Cost controls")
+    st.checkbox("Skip quality review", key="skip_quality_review")
+    st.checkbox("Run gap analysis", key="run_gap_analysis", value=True)
+    st.checkbox("Skip cover letter", key="skip_cover_letter")
+    st.checkbox("Skip custom Q&A", key="skip_custom_qa")
+
+candidate_location = LOCATION_OPTIONS[st.session_state.get("location_label", list(LOCATION_OPTIONS.keys())[0])]
 selected_export_mode, selected_pdf_page_size = build_export_settings_from_session()
-st.sidebar.caption(
-    f"Active export: {EXPORT_MODE_LABELS[selected_export_mode]} · {PDF_PAGE_SIZE_LABELS[selected_pdf_page_size]} PDF"
-)
 
-st.sidebar.divider()
-st.sidebar.subheader("PDF layout")
-st.sidebar.caption(
-    f"Optional page breaks ({PDF_PAGE_SIZE_LABELS[selected_pdf_page_size]} PDF, target ≤{recommended_page_limit(selected_export_mode)} pages)"
-)
-st.sidebar.checkbox("Break before How I Work", key="break_before_skills")
-st.sidebar.checkbox("Break before The Work", key="break_before_experience")
-st.sidebar.checkbox("Break before Side Builds", key="break_before_projects")
-st.sidebar.checkbox("Break before Credentials", key="break_before_credentials")
-st.sidebar.checkbox(
-    "Compact PDF typography (tighter spacing)",
-    key="compact_pdf",
-    help="Ultra-dense layout: 10pt font, 1.24 line-height, minimal margins. Use if default spacing still exceeds 1 page.",
-)
-st.sidebar.number_input(
-    "Break before role # (0 = none)",
-    min_value=0,
-    max_value=8,
-    value=0,
-    step=1,
-    key="break_before_role_index",
-    help="1 = first role in The Work. Also supported in experience text: "
-    f"a line containing only `{PAGE_BREAK_MARKER}`.",
-)
+if "show_pipeline_crm" not in st.session_state:
+    st.session_state.show_pipeline_crm = True
+if "crm_full_os" not in st.session_state:
+    st.session_state.crm_full_os = False
+if "crm_batch1_filter" not in st.session_state:
+    st.session_state.crm_batch1_filter = True
 
-st.sidebar.divider()
-st.sidebar.subheader("⚡ Cost Controls")
-st.sidebar.caption("Skip expensive steps to reduce API cost")
-st.sidebar.checkbox("Skip quality review", key="skip_quality_review")
-st.sidebar.checkbox("Run gap analysis", key="run_gap_analysis", value=True)
-st.sidebar.checkbox("Skip cover letter", key="skip_cover_letter")
-st.sidebar.checkbox("Skip custom Q&A", key="skip_custom_qa")
+with st.sidebar.expander("Workflow", expanded=False):
+    st.caption(
+        "CRM Pipeline (outreach) · Job Search (posted roles) · Generate → Outcomes."
+    )
+    st.checkbox(
+        "Show Pipeline tab",
+        key="show_pipeline_crm",
+    )
+    st.checkbox(
+        "Full CRM OS (scoreboard, content, review, evidence)",
+        key="crm_full_os",
+    )
 
-st.sidebar.divider()
-st.sidebar.subheader("🔗 Browser Integration")
-st.sidebar.caption("Drag a link below to your Firefox bookmarks bar. Click it on any JD page.")
+with st.sidebar.expander("Tools", expanded=False):
+    st.caption("Drag a bookmarklet to your browser bar to send JD pages to this app.")
+    base_url = "http://localhost:8501"
 
-base_url = "http://localhost:8501"
+    bookmarklet_full = (
+        "javascript:(function(){try{"
+        "var t=document.title||'';"
+        "var u=location.href;"
+        "var sel=(window.getSelection?(''+window.getSelection()):'');"
+        "var body=(document.querySelector('article,main')||document.body).innerText;"
+        "var jd=(sel&&sel.length>200?sel:body).slice(0,45000);"
+        "var guessRole=t.split(' - ')[0]||'';"
+        "var guessCompany=(t.split(' - ')[1]||'').split(' | ')[0]||'';"
+        "var data={jd_text:jd,jd_url:u,company:guessCompany,role:guessRole};"
+        "var btoa_utf8=function(s){return btoa(unescape(encodeURIComponent(s)))};"
+        "var p=encodeURIComponent(btoa_utf8(JSON.stringify(data)));"
+        "location.href='" + base_url + "?p='+p;"
+        "}catch(e){alert('Bookmarklet error: '+e);}})()"
+    )
 
-bookmarklet_full = (
-    "javascript:(function(){try{"
-    "var t=document.title||'';"
-    "var u=location.href;"
-    "var sel=(window.getSelection?(''+window.getSelection()):'');"
-    "var body=(document.querySelector('article,main')||document.body).innerText;"
-    "var jd=(sel&&sel.length>200?sel:body).slice(0,45000);"
-    "var guessRole=t.split(' - ')[0]||'';"
-    "var guessCompany=(t.split(' - ')[1]||'').split(' | ')[0]||'';"
-    "var data={jd_text:jd,jd_url:u,company:guessCompany,role:guessRole};"
-    "var btoa_utf8=function(s){return btoa(unescape(encodeURIComponent(s)))};"
-    "var p=encodeURIComponent(btoa_utf8(JSON.stringify(data)));"
-    "location.href='" + base_url + "?p='+p;"
-    "}catch(e){alert('Bookmarklet error: '+e);}})()"
-)
+    bookmarklet_url = (
+        "javascript:(function(){try{"
+        "var u=location.href;"
+        "location.href='" + base_url + "?jd_url='+encodeURIComponent(u);"
+        "}catch(e){alert('Bookmarklet error: '+e);}})()"
+    )
 
-bookmarklet_url = (
-    "javascript:(function(){try{"
-    "var u=location.href;"
-    "location.href='" + base_url + "?jd_url='+encodeURIComponent(u);"
-    "}catch(e){alert('Bookmarklet error: '+e);}})()"
-)
+    st.markdown(f"[Send full page → app]({bookmarklet_full})", unsafe_allow_html=True)
+    st.markdown(f"[Send URL only → app]({bookmarklet_url})", unsafe_allow_html=True)
 
-st.sidebar.markdown(f"[📌 Send Full Page → App]({bookmarklet_full})", unsafe_allow_html=True)
-st.sidebar.markdown(f"[🔗 Send URL Only → App]({bookmarklet_url})", unsafe_allow_html=True)
-
-st.sidebar.divider()
-st.sidebar.markdown("<p style='color: #dc3545; font-weight: 600; margin-bottom: 4px;'>Danger Zone</p>", unsafe_allow_html=True)
-if st.sidebar.button("Kill App", key="kill_app_btn", use_container_width=True):
-    import sys
-    st.sidebar.error("Shutting down...")
-    sys.stdout.flush()
-    os._exit(0)
+    st.divider()
+    if st.button("Kill App", key="kill_app_btn", use_container_width=True):
+        import sys
+        st.error("Shutting down...")
+        sys.stdout.flush()
+        os._exit(0)
 
 # Query param ingestion (one-time)
 def _get_query_params():
@@ -840,25 +863,47 @@ if "_qp_init" not in st.session_state:
 if "master_context" not in st.session_state:
     st.session_state.master_context = load_master_context()
 
+if "selected_track" not in st.session_state:
+    st.session_state.selected_track = "Logistics/Marketplace"
+if "selected_voice" not in st.session_state:
+    st.session_state.selected_voice = "Founding Product Lead"
+
 if not st.session_state.master_context:
     st.error(f"Master context not found at {MASTER_CONTEXT_PATH}. Please create it first.")
     st.stop()
 
 # ---------------------------------------------------------------------------
-# TABS
+# TABS (Option A: 5 tabs default; Pipeline CRM optional via sidebar)
 # ---------------------------------------------------------------------------
-tab_job, tab_questions, tab_generate, tab_outcomes, tab_hunt = st.tabs(
-    [
-        "📋 Job Details",
-        "❓ Application Questions",
-        "🚀 Generate & Output",
-        "📊 Outcomes",
-        "🔍 Job Search",
-    ]
-)
+_show_pipeline = st.session_state.get("show_pipeline_crm", True)
+_tab_labels = [
+    "Job Details",
+    "Application Questions",
+    "Generate & Output",
+    "Outcomes",
+    "Job Search",
+]
+if _show_pipeline:
+    _tab_labels.append("Pipeline")
+
+_tabs = st.tabs(_tab_labels)
+tab_job = _tabs[0]
+tab_questions = _tabs[1]
+tab_generate = _tabs[2]
+tab_outcomes = _tabs[3]
+tab_hunt = _tabs[4]
+tab_pipeline = _tabs[5] if _show_pipeline else None
 
 # --- TAB 1: Job Details ---
 with tab_job:
+    if st.session_state.pop("_prefill_from_hunt", False):
+        st.caption("Lead copied from Job Search — confirm JD, then generate.")
+    if st.session_state.pop("_prefill_from_crm", False):
+        st.caption("Company pre-filled from Pipeline — confirm JD, then generate.")
+    if st.session_state.get("company_name") and st.session_state.get("target_role"):
+        st.caption(
+            f"Targeting **{st.session_state.target_role}** @ **{st.session_state.company_name}**"
+        )
     st.markdown("### Company & Role Information")
     col1, col2 = st.columns(2)
     with col1:
@@ -1302,6 +1347,21 @@ with tab_generate:
                     company, role, track, voice, kw_coverage
                 )
 
+                # CRM auto-advance on generate (if company in pipeline)
+                if company.strip():
+                    try:
+                        import sys
+                        from pathlib import Path
+                        _crm_root = Path(__file__).resolve().parent / "CRM"
+                        if str(_crm_root) not in sys.path:
+                            sys.path.insert(0, str(_crm_root))
+                        from crm.services.companies import advance_on_application
+                        _crm_co = advance_on_application(company.strip())
+                        if _crm_co:
+                            st.session_state["_crm_auto_advanced"] = _crm_co["name"]
+                    except Exception:
+                        pass
+
                 status.update(label="Generation complete!", state="complete", expanded=False)
 
             st.session_state.gen_results = {
@@ -1367,79 +1427,68 @@ with tab_generate:
         # Display results
         _prov = res.get("provider", "openai")
         _cost_note = " (Gemini Flash estimate; Pro profile steps may cost more)" if _prov == "gemini" else ""
-        st.success(
-            f"Generation complete! {res['total_tokens']:,} tokens used "
-            f"(~${res['total_cost']:.3f}{_cost_note}) — {_prov}"
+        coverage_pct = int(res["kw_coverage"] * 100)
+        st.caption(
+            f"Generation complete · {res['total_tokens']:,} tokens (~${res['total_cost']:.3f}{_cost_note}) · "
+            f"ATS coverage {coverage_pct}% · {_prov}"
         )
         if res.get("app_id"):
             st.caption(
                 f"Logged application `{res['app_id']}` → data/applications.csv (stage: sent). "
                 "Update stage on the **Outcomes** tab."
             )
+        if st.session_state.get("_crm_auto_advanced"):
+            st.caption(
+                f"CRM Pipeline: **{st.session_state['_crm_auto_advanced']}** → stage `applied` + outreach logged."
+            )
+            del st.session_state["_crm_auto_advanced"]
 
-        # ATS Keyword Coverage Report
-        coverage_pct = int(res['kw_coverage'] * 100)
-        coverage_color = "green" if coverage_pct >= 80 else ("orange" if coverage_pct >= 60 else "red")
-        
-        st.markdown(f"""
-        <div class="ats-card" style='background: linear-gradient(135deg, {'rgba(52, 199, 89, 0.05)' if coverage_pct >= 80 else ('rgba(255, 149, 0, 0.05)' if coverage_pct >= 60 else 'rgba(255, 59, 48, 0.05)')} 0%, white 100%); 
+        with st.expander(f"ATS keyword coverage ({coverage_pct}%)", expanded=False):
+            st.markdown(f"""
+        <div class="ats-card" style='background: linear-gradient(135deg, {'rgba(52, 199, 89, 0.05)' if coverage_pct >= 80 else ('rgba(255, 149, 0, 0.05)' if coverage_pct >= 60 else 'rgba(255, 59, 48, 0.05)')} 0%, white 100%);
                     border-color: {'#34C759' if coverage_pct >= 80 else ('#FF9500' if coverage_pct >= 60 else '#FF3B30')};'>
             <h3 style='margin: 0 0 8px 0;'>ATS Keyword Coverage</h3>
-            <div style='font-size: 3.5rem; font-weight: 700; color: {'#34C759' if coverage_pct >= 80 else ('#FF9500' if coverage_pct >= 60 else '#FF3B30')}; letter-spacing: -0.05em;'>{coverage_pct}%</div>
+            <div style='font-size: 2rem; font-weight: 700; color: {'#34C759' if coverage_pct >= 80 else ('#FF9500' if coverage_pct >= 60 else '#FF3B30')}; letter-spacing: -0.05em;'>{coverage_pct}%</div>
             <p style='margin: 8px 0 0 0; color: #6B7280; font-weight: 500;'>
-                {'Excellent coverage' if coverage_pct >= 80 else ('Good coverage' if coverage_pct >= 60 else 'Needs improvement')} — 
+                {'Excellent coverage' if coverage_pct >= 80 else ('Good coverage' if coverage_pct >= 60 else 'Needs improvement')} —
                 {len(res['kw_found'])} of {len(res['kw_found']) + len(res['kw_missing'])} keywords found
             </p>
         </div>
         """, unsafe_allow_html=True)
-        
-        col_found, col_missing = st.columns(2)
-        with col_found:
-            st.markdown("**✅ Found Keywords**")
-            if res['kw_found']:
-                for t in res['kw_found']:
-                    st.markdown(f"<div style='padding: 6px 12px; margin: 4px 0; background-color: rgba(52, 199, 89, 0.1); border-radius: 6px; font-size: 0.9rem;'>• {t}</div>", unsafe_allow_html=True)
-            else:
-                st.caption("No keywords extracted")
-        with col_missing:
-            st.markdown("**⚠️ Missing Keywords**")
-            if res['kw_missing']:
-                for t in res['kw_missing']:
-                    st.markdown(f"<div style='padding: 6px 12px; margin: 4px 0; background-color: rgba(255, 149, 0, 0.1); border-radius: 6px; font-size: 0.9rem;'>• {t}</div>", unsafe_allow_html=True)
-            else:
-                st.caption("All keywords covered!")
-        if res.get("kw_tools_found"):
-            st.caption(
-                "Tools matched in resume: "
-                + ", ".join(res["kw_tools_found"][:12])
-                + (" …" if len(res["kw_tools_found"]) > 12 else "")
-            )
-        
-        # Actionable keyword suggestions
-        if res['kw_missing']:
-            st.markdown("### 🎯 Quick Wins")
-            st.caption("Add these keywords to improve ATS score:")
-            
-            # Show top 3 missing keywords with suggestions
-            for kw in res['kw_missing'][:3]:
-                # Suggest location based on keyword type
-                kw_lower = kw.lower()
-                if any(tool in kw_lower for tool in ['sql', 'python', 'figma', 'jira', 'tableau', 'aws', 'gcp', 'azure']):
-                    location = "Skills section (How I Work)"
-                    icon = "🎯"
-                elif any(domain in kw_lower for domain in ['saas', 'b2b', 'marketplace', 'pricing', 'trust', 'safety']):
-                    location = "Quick Take or experience bullets"
-                    icon = "✨"
+
+            col_found, col_missing = st.columns(2)
+            with col_found:
+                st.markdown("**Found keywords**")
+                if res["kw_found"]:
+                    for t in res["kw_found"]:
+                        st.markdown(f"- {t}")
                 else:
-                    location = "Experience bullets"
-                    icon = "💼"
-                
-                st.markdown(f"""
-                <div style='padding: 10px 14px; margin: 8px 0; background: #FEF3C7; border-left: 4px solid #F59E0B; border-radius: 6px;'>
-                    <strong style='color: #92400E;'>{icon} {kw}</strong><br>
-                    <span style='font-size: 0.85rem; color: #78350F;'>💡 Suggestion: Add to {location}</span>
-                </div>
-                """, unsafe_allow_html=True)
+                    st.caption("No keywords extracted")
+            with col_missing:
+                st.markdown("**Missing keywords**")
+                if res["kw_missing"]:
+                    for t in res["kw_missing"]:
+                        st.markdown(f"- {t}")
+                else:
+                    st.caption("All keywords covered")
+            if res.get("kw_tools_found"):
+                st.caption(
+                    "Tools matched in resume: "
+                    + ", ".join(res["kw_tools_found"][:12])
+                    + (" …" if len(res["kw_tools_found"]) > 12 else "")
+                )
+
+            if res["kw_missing"]:
+                st.markdown("**Quick wins**")
+                for kw in res["kw_missing"][:3]:
+                    kw_lower = kw.lower()
+                    if any(tool in kw_lower for tool in ["sql", "python", "figma", "jira", "tableau", "aws", "gcp", "azure"]):
+                        location = "Skills section (How I Work)"
+                    elif any(domain in kw_lower for domain in ["saas", "b2b", "marketplace", "pricing", "trust", "safety"]):
+                        location = "Quick Take or experience bullets"
+                    else:
+                        location = "Experience bullets"
+                    st.caption(f"{kw} → consider adding in {location}")
 
         with st.expander("JD Keywords Extracted", expanded=False):
             st.text(res['extracted_keywords'])
@@ -1501,7 +1550,7 @@ with tab_generate:
         )
         if pdf_pages is not None:
             if pdf_pages <= page_limit:
-                st.success(f"PDF: {pdf_pages} page{'s' if pdf_pages != 1 else ''}")
+                st.caption(f"PDF: {pdf_pages} page{'s' if pdf_pages != 1 else ''}")
             else:
                 st.warning(
                     f"PDF: {pdf_pages} pages — recommended max {page_limit} for "
@@ -1808,7 +1857,7 @@ with tab_generate:
             )
 
         # Cost breakdown
-        with st.expander("💰 Token Usage & Cost Breakdown"):
+        with st.expander("Token usage & cost breakdown", expanded=False):
             st.markdown(f"""
 <div style='background-color: white; padding: 16px; border-radius: 10px; border: 1px solid #E5E7EB; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'>
 
@@ -1829,3 +1878,17 @@ with tab_outcomes:
 # --- TAB 5: Job Search ---
 with tab_hunt:
     render_hunt_tab()
+
+# --- TAB 6: Pipeline (optional) ---
+if tab_pipeline is not None:
+    with tab_pipeline:
+        if "gen_results" in st.session_state:
+            _api_key = get_api_key()
+            _provider = get_provider()
+            if _api_key:
+                st.session_state["_llm_client"] = get_llm_client(
+                    _provider, _api_key, build_model_overrides()
+                )
+        from crm.ui.crm_tab import render_crm_tab
+
+        render_crm_tab(mode="full" if st.session_state.get("crm_full_os") else "outreach")

@@ -1,44 +1,91 @@
-# Weekly Job Hunt Workflow
+# Weekly Job Hunt Workflow — Ops-AI Lane
 
-## 1. Scrape new leads
+**Dual-path model:** CRM direct outreach is primary. HUNT-AGENT catches posted roles at target companies.
 
-Run the scraper against all configured sources:
+## Three trackers
+
+| Tracker | Location | Purpose |
+|---------|----------|---------|
+| CRM Scoreboard | `CRM/tempus.db` | Outbound touches, conversations, artifacts |
+| HUNT leads | `HUNT-AGENT/leads.json` | Scraped role pipeline |
+| Outcomes | `RES/data/applications.csv` | Post-generation application funnel |
+
+---
+
+## Weekly cadence
+
+| Day | Action |
+|-----|--------|
+| **Monday** | CRM Pipeline review — Batch-1 filter, SLA breaches |
+| **Tuesday** | **HUNT ATS Only** — check PM roles at verified board slugs |
+| **Wed–Thu** | CRM outreach — 5 touches/day, log every action |
+| **Friday** | Optional artifact + weekly review (enable Full CRM OS) |
+| **Monthly** | Scoped board discovery + `scripts/discover_candidates.py` |
+
+---
+
+## Tuesday: ATS scrape (secondary motion)
+
+From project root:
 
 ```bash
-python -m scraper.run
+cd HUNT-AGENT
+python3 -m scraper.run --lane ops_ai --allowlist-only --dry-run
+python3 -m scraper.run --lane ops_ai --allowlist-only
 ```
 
-Or target a single source:
+Or in Streamlit: **Job Search** tab → **ATS Only** (primary button).
+
+- **Ops-AI lane only** toggle ON (default) — only verified `company_candidates.json` companies
+- Review leads with fit score ≥ 70 (high priority)
+- **+ CRM** to add company to Pipeline with hypothesis
+- **Gen** → Job Details → Generate → Outcomes
+
+---
+
+## Monthly: discovery mode
+
+Google Jobs + domain queries (higher SerpAPI cost):
 
 ```bash
-python -m scraper.run --source greenhouse
+python3 -m scraper.run --lane ops_ai --source search --max-results 8
 ```
 
-Dry-run to preview without saving:
+Scoped board discovery:
 
 ```bash
-python -m scraper.run --dry-run
+python3 -m scraper.run --discover-boards
 ```
 
-New leads are appended to `job_leads.md` and `leads.json` automatically.
+Grow candidate list:
 
-## 2. Review & prioritize
+```bash
+python3 scripts/discover_candidates.py --yc yc_export.csv --crunch crunch_export.csv
+# Review candidates_review.md → merge verified into company_candidates.json
+# Sync target_companies.json slugs from verified candidates only
+```
 
-- Read new entries in `job_leads.md`
-- Check fit against `job_search_profile.md`
-- Update stage for existing leads
+---
 
-## 3. Tailor materials
+## End-to-end flow
 
-- Use the RES pipeline to generate tailored resume + cover letter per high-priority lead
+```
+CRM Pipeline → memo + draft outreach → send → log → stage contacted
+     ↓
+HUNT finds posted role → + CRM or Gen → Outcomes
+     ↓
+Generate resume → CRM auto-advances to applied (if company in pipeline)
+```
 
-## 4. Track outcomes
+---
 
-- Update stage (`sent`, `replied`, `screen`, etc.) in `job_leads.md` and `leads.json`
-- Note interview prep, rejections, follow-ups
+## Configuration files
 
-## 5. Weekly review
+| File | Role |
+|------|------|
+| `search_profile.json` | Roles, domain_queries, exclude_titles, lane=ops_ai |
+| `company_candidates.json` | Master company registry (verified = scrape allowlist) |
+| `target_companies.json` | ATS board slugs (derived from verified candidates) |
+| `denylist_companies.txt` | Giants + recruiters to screen out |
 
-- Funnel summary: how many sent, replied, screened, interviewed
-- What worked this week? What didn't?
-- Update `job_search_profile.md` if targeting changes
+**Rule:** Never edit `target_companies.json` independently — flow from verified candidates → slugs.

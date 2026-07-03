@@ -1,0 +1,819 @@
+[
+  {
+    "name": "Greenscreens.ai",
+    "domain_tags": [
+      "freight",
+      "pricing",
+      "ai"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 85,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Brokers price on gut feel; real bottleneck is lane-level margin decision latency, not missing dashboards."
+  },
+  {
+    "name": "Optimal Dynamics",
+    "domain_tags": [
+      "trucking",
+      "or",
+      "decisions"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "optimaldynamics"
+    },
+    "fit_score": 85,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Network optimization decks don't move until dispatchers trust daily recommendations over tribal knowledge."
+  },
+  {
+    "name": "Parade",
+    "domain_tags": [
+      "capacity",
+      "carrier",
+      "matching"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 85,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Digitizing carrier relationships fails when onboarding friction exceeds phone-call habit."
+  },
+  {
+    "name": "BuildOps",
+    "domain_tags": [
+      "commercial",
+      "field",
+      "service"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "buildops"
+    },
+    "fit_score": 85,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Dispatch + invoicing fragmentation; AI must compress quote-to-schedule, not add chatbots."
+  },
+  {
+    "name": "Vooma",
+    "domain_tags": [
+      "freight",
+      "ai",
+      "agents"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Email/call triage volume hides unstructured load data never reaching TMS in time to book."
+  },
+  {
+    "name": "HappyRobot",
+    "domain_tags": [
+      "voice",
+      "ai",
+      "logistics"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Voice automation fails when handoffs lack structured context; bottleneck is operational trust in the signal."
+  },
+  {
+    "name": "FleetWorks",
+    "domain_tags": [
+      "freight",
+      "voice",
+      "ai"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "ashby": "fleetworks"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Covering loads is parallel-calling problem; speed-to-book beats more carrier lists."
+  },
+  {
+    "name": "Drumkit",
+    "domain_tags": [
+      "freight",
+      "workflow",
+      "ai"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Brokers buy AI email but stall on exception handling; gap is workflow state across TMS + inbox."
+  },
+  {
+    "name": "Loadsmart",
+    "domain_tags": [
+      "freight",
+      "tech"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "loadsmart"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Instant quote UX masks margin leakage on multi-stop loads; bottleneck is pricing confidence."
+  },
+  {
+    "name": "Transfix",
+    "domain_tags": [
+      "digital",
+      "trucking"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "transfix"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Marketplace liquidity is quoting-trust problem before supply problem."
+  },
+  {
+    "name": "Turvo",
+    "domain_tags": [
+      "logistics",
+      "tms"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "turvo"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "TMS wins on workflow adoption; AI must reduce dispatcher cognitive load, not add screens."
+  },
+  {
+    "name": "Tai Software",
+    "domain_tags": [
+      "brokerage",
+      "automation"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Back-office automation stalls when document extraction isn't tied to billing reconciliation."
+  },
+  {
+    "name": "Burt",
+    "domain_tags": [
+      "freight",
+      "ai",
+      "teammates"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "ashby": "burt"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Automation breaks on unstructured PDFs; need operators-in-the-loop with structured handoffs."
+  },
+  {
+    "name": "Cartage",
+    "domain_tags": [
+      "freight",
+      "coordination"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "ashby": "cartage"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Replacing brokers requires shippers to trust exception routing, not just cheaper rates."
+  },
+  {
+    "name": "Lanesurf",
+    "domain_tags": [
+      "voice",
+      "ai",
+      "freight",
+      "booking"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "ashby": "lanesurf"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Parallel carrier negotiation is the product; bottleneck is rate discipline under inbound call floods."
+  },
+  {
+    "name": "Shipwell",
+    "domain_tags": [
+      "tms",
+      "supply",
+      "chain"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "shipwell"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "TMS AI must connect quoting \u2192 tender \u2192 track; siloed modules don't reduce ops headcount."
+  },
+  {
+    "name": "Rose Rocket",
+    "domain_tags": [
+      "trucking",
+      "tms",
+      "erp"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "roserocket"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Carrier onboarding and quoting still manual at scale; bottleneck is data normalization across fleets."
+  },
+  {
+    "name": "Alvys",
+    "domain_tags": [
+      "trucking",
+      "tms"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Small fleets need quoting + dispatch in one flow; separate tools recreate phone-tag."
+  },
+  {
+    "name": "Highway",
+    "domain_tags": [
+      "carrier",
+      "compliance"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "highway"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Compliance checks are pre-booking friction; automate trust signals before load award."
+  },
+  {
+    "name": "Emerge",
+    "domain_tags": [
+      "freight",
+      "procurement"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "emerge"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Shipper RFP process is decision-architecture problem; more bids \u2260 better awards."
+  },
+  {
+    "name": "Numeo",
+    "domain_tags": [
+      "trucking",
+      "ops"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Owner-operators need instant quote-to-dispatch; manual dispatch is the margin killer."
+  },
+  {
+    "name": "Axle",
+    "domain_tags": [
+      "freight",
+      "payments"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Payment speed is downstream of document accuracy; bottleneck is POD/rate-con extraction."
+  },
+  {
+    "name": "Avoca AI",
+    "domain_tags": [
+      "home",
+      "services",
+      "voice",
+      "ai"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Call deflection fails without job-cost context; need structured intake before handoff."
+  },
+  {
+    "name": "Workiz",
+    "domain_tags": [
+      "field",
+      "service"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "workiz"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "SMB pros abandon software when quoting takes longer than pen-and-paper."
+  },
+  {
+    "name": "Hatch",
+    "domain_tags": [
+      "home",
+      "services"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Lead-to-booking conversion is speed-to-quote problem across channels."
+  },
+  {
+    "name": "Kojo",
+    "domain_tags": [
+      "construction",
+      "materials"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Field ordering errors are catalog + pricing trust problems, not more SKUs."
+  },
+  {
+    "name": "Sameday AI",
+    "domain_tags": [
+      "field",
+      "service",
+      "ai"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Voice without job scope data creates rework for dispatchers."
+  },
+  {
+    "name": "FieldPulse",
+    "domain_tags": [
+      "field",
+      "service"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Technician utilization blocked by manual scheduling, not missing features."
+  },
+  {
+    "name": "ServiceFusion",
+    "domain_tags": [
+      "field",
+      "service"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 50,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": false,
+    "source": "companies.yaml",
+    "hypothesis": "SMB needs one quoting + dispatch path; module sprawl kills adoption."
+  },
+  {
+    "name": "CompanyCam",
+    "domain_tags": [
+      "field",
+      "documentation"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 50,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": false,
+    "source": "companies.yaml",
+    "hypothesis": "Photo capture useless without tying to job costing and change orders."
+  },
+  {
+    "name": "Tive",
+    "domain_tags": [
+      "shipment",
+      "tracking"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "tive"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Tracking alerts fail when exception playbooks aren't operationalized for receivers."
+  },
+  {
+    "name": "Altana AI",
+    "domain_tags": [
+      "supply",
+      "chain",
+      "intelligence"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Graph intelligence doesn't move until buyers trust supplier risk in procurement workflow."
+  },
+  {
+    "name": "Pando",
+    "domain_tags": [
+      "supply",
+      "chain",
+      "network"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "lever": "pando"
+    },
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Network effects need standardized lane + cost data; bottleneck is ingestion not visualization."
+  },
+  {
+    "name": "Vizion",
+    "domain_tags": [
+      "container",
+      "tracking"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "ETA prediction worthless without dock appointment and drayage handoff automation."
+  },
+  {
+    "name": "Nuvocargo",
+    "domain_tags": [
+      "cross",
+      "border",
+      "freight"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Border delays are document + compliance latency, not carrier capacity."
+  },
+  {
+    "name": "Zilliant",
+    "domain_tags": [
+      "b2b",
+      "pricing"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "zilliant"
+    },
+    "fit_score": 50,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": false,
+    "source": "companies.yaml",
+    "hypothesis": "Pricing AI stalls when sales doesn't trust recommended floors vs gut discounting."
+  },
+  {
+    "name": "Pricefx",
+    "domain_tags": [
+      "pricing",
+      "cpq"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "pricefx"
+    },
+    "fit_score": 50,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": false,
+    "source": "companies.yaml",
+    "hypothesis": "CPQ wins when quote configuration mirrors how reps actually negotiate."
+  },
+  {
+    "name": "Verusen",
+    "domain_tags": [
+      "materials",
+      "inventory",
+      "ai"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "lever": "verusen"
+    },
+    "fit_score": 50,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": false,
+    "source": "companies.yaml",
+    "hypothesis": "Inventory optimization fails without plant-floor exception feedback loops."
+  },
+  {
+    "name": "Supermove",
+    "domain_tags": [
+      "moving",
+      "software"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Moving ops still quote-by-phone; CV + OR quoting is the wedge."
+  },
+  {
+    "name": "Dolly",
+    "domain_tags": [
+      "on",
+      "demand",
+      "moving"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 50,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": false,
+    "source": "companies.yaml",
+    "hypothesis": "Marketplace fill rate is quoting speed + crew matching, not price."
+  },
+  {
+    "name": "Lula",
+    "domain_tags": [
+      "delivery",
+      "logistics"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {},
+    "fit_score": 70,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": true,
+    "source": "companies.yaml",
+    "hypothesis": "Last-mile routing fails when job costing is wrong before dispatch."
+  },
+  {
+    "name": "Jobber",
+    "domain_tags": [
+      "field",
+      "service"
+    ],
+    "stage": "series_a",
+    "founded": null,
+    "eng_estimate": null,
+    "ats": {
+      "greenhouse": "jobber"
+    },
+    "fit_score": 50,
+    "lane_flags": [
+      "ops_domain"
+    ],
+    "verified": false,
+    "source": "companies.yaml",
+    "hypothesis": "Home service pros need sub-2-minute quotes; scheduling software must lead with quoting speed."
+  }
+]

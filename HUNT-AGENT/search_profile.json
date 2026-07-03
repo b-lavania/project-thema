@@ -1,42 +1,60 @@
 {
   "roles": [
+    "Founding Product Manager",
+    "Principal Product Manager",
+    "Head of AI Product",
     "Product Manager",
     "Technical Product Manager",
-    "Technical Program Manager",
-    "Platform Product Manager",
-    "Chief of Staff",
-    "BizOps"
+    "Lead Product Manager"
   ],
   "locations": [
     "Remote US Canada",
-    "San Francisco",
-    "Calgary",
     "United States",
-    "Canada"
+    "Canada",
+    "San Francisco",
+    "Calgary"
   ],
   "keywords": [
-    "product",
-    "ai",
-    "ml",
-    "platform",
-    "growth",
-    "program",
-    "operation",
-    "monetization",
-    "marketplace",
-    "hris",
-    "b2b",
-    "saas",
+    "logistics",
+    "freight",
+    "trucking",
+    "dispatch",
+    "field service",
+    "supply chain",
+    "quoting",
     "pricing",
-    "logistics"
+    "operations",
+    "marketplace",
+    "ai",
+    "voice ai",
+    "tms",
+    "last mile",
+    "brokerage"
   ],
   "exclude_titles": [
-    "senior", "sr", "lead", "staff", "principal",
-    "head of", "director", "vp", "vice president",
-    "group product", "chief product", "chief ai",
-    "chief technology", "chief revenue"
+    "director",
+    "vp",
+    "vice president",
+    "group product",
+    "chief product",
+    "chief technology",
+    "chief revenue",
+    "chief ai"
   ],
   "exclude_industries": [
-    "gambling", "crypto", "defense"
+    "gambling",
+    "crypto",
+    "defense"
+  ],
+  "lane": "ops_ai",
+  "domain_queries": [
+    "Founding Product Manager freight AI logistics remote",
+    "Head of AI Product dispatch field service",
+    "Principal Product Manager trucking brokerage automation",
+    "Product Manager voice AI logistics quoting",
+    "Lead Product Manager TMS supply chain remote",
+    "Technical Product Manager freight operations AI",
+    "Founding PM logistics marketplace remote US",
+    "Principal PM field service dispatch automation"
   ]
 }

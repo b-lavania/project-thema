@@ -1,16 +1,14 @@
 """Streamlit tab: Job Search (HUNT-AGENT integration).
 
-Four sections:
-  1. Run Controls — full scrape, search-only, ATS-only, discover boards
-  2. Board Discovery — find and add new board tokens
-  3. Leads Browser — filter/sort/manage scraped leads
-  4. Configuration — view/edit search_profile + target_companies
+Secondary motion for posted roles at target companies.
+Primary outreach is CRM direct (Pipeline tab).
 """
 
 from __future__ import annotations
 
 import contextlib
 import io
+import json
 import sys
 from pathlib import Path
 
@@ -23,11 +21,16 @@ HUNT_ROOT = Path(__file__).resolve().parents[1] / "HUNT-AGENT"
 if str(HUNT_ROOT) not in sys.path:
     sys.path.insert(0, str(HUNT_ROOT))
 
-from scraper.leads import load_leads, get_lead, update_lead_stage
+CRM_ROOT = Path(__file__).resolve().parents[1] / "CRM"
+if str(CRM_ROOT) not in sys.path:
+    sys.path.insert(0, str(CRM_ROOT))
+
+from scraper.leads import load_leads, update_lead_stage
 from scraper.config import load_profile, load_target_companies, save_target_companies
 from scraper.board_discovery import discover_boards, merge_into_targets
 from scraper.run import run_google_jobs, run_direct_ats, _make_args
 from scraper.env import SERPAPI_KEY
+from scraper.company_fit import score_lead, hypothesis_for_company, HIGH_PRIORITY
 
 STAGE_OPTIONS = ["sent", "replied", "screen", "interview", "final", "offer", "accepted", "rejected", "ghosted"]
 
@@ -49,6 +52,17 @@ def _run_with_status(label: str, fn, **kwargs):
 
 def render_hunt_tab():
     """Main render function for the Job Search tab."""
+    profile = load_profile()
+    is_ops_lane = profile.get("lane") == "ops_ai"
+
+    st.caption(
+        "**Secondary motion** — catches posted roles at target companies. "
+        "**Primary outreach** is CRM Pipeline (direct founder messages)."
+    )
+
+    if "hunt_allowlist_only" not in st.session_state:
+        st.session_state.hunt_allowlist_only = is_ops_lane
+
     # ------------------------------------------------------------------
     # Section 1: Run Controls
     # ------------------------------------------------------------------
@@ -62,45 +76,35 @@ def render_hunt_tab():
     with col3:
         dry_run = st.checkbox("Dry run (preview only)", value=False, key="hunt_dry_run")
     with col4:
-        st.caption("")
-        st.caption("")
         st.caption(f"SerpAPI key: {'✅ set' if SERPAPI_KEY else '❌ missing'}")
+
+    st.checkbox(
+        "Ops-AI lane only (verified target list)",
+        key="hunt_allowlist_only",
+        help="Only save leads from verified companies in company_candidates.json",
+    )
 
     col_a, col_b, col_c = st.columns(3)
     args = _make_args(max_results=max_results, mode=mode)
 
-    leads_bucket: list = []
-
     def _full_scrape():
-        nonlocal leads_bucket
-        profile = load_profile()
         companies = load_target_companies()
         all_leads = []
-        gj = run_google_jobs(profile, args)
-        all_leads.extend(gj)
-        ats = run_direct_ats(companies)
-        all_leads.extend(ats)
-        leads_bucket.extend(all_leads)
+        if not st.session_state.hunt_allowlist_only:
+            all_leads.extend(run_google_jobs(profile, args))
+        all_leads.extend(run_direct_ats(companies))
         return all_leads
 
     def _search_only():
-        nonlocal leads_bucket
-        profile = load_profile()
-        gj = run_google_jobs(profile, args)
-        leads_bucket.extend(gj)
-        return gj
+        return run_google_jobs(profile, args)
 
     def _ats_only():
-        nonlocal leads_bucket
-        companies = load_target_companies()
-        ats = run_direct_ats(companies)
-        leads_bucket.extend(ats)
-        return ats
+        return run_direct_ats(load_target_companies())
 
-    with col_a:
-        if st.button("🔄 Full Scrape", use_container_width=True, type="primary"):
-            raw = _run_with_status("Running full scrape…", _full_scrape)
-            if raw:
+    with col_c:
+        if st.button("🏢 ATS Only", use_container_width=True, type="primary"):
+            raw = _run_with_status("Scraping ATS boards…", _ats_only)
+            if raw is not None:
                 filtered = _filter_and_save(raw, dry_run)
                 _show_result(filtered, raw, dry_run)
             if not dry_run:
@@ -109,16 +113,16 @@ def render_hunt_tab():
     with col_b:
         if st.button("🔍 Google Jobs Only", use_container_width=True):
             raw = _run_with_status("Searching Google Jobs…", _search_only)
-            if raw:
+            if raw is not None:
                 filtered = _filter_and_save(raw, dry_run)
                 _show_result(filtered, raw, dry_run)
             if not dry_run:
                 st.rerun()
 
-    with col_c:
-        if st.button("🏢 ATS Only", use_container_width=True):
-            raw = _run_with_status("Scraping ATS boards…", _ats_only)
-            if raw:
+    with col_a:
+        if st.button("🔄 Full Scrape", use_container_width=True):
+            raw = _run_with_status("Running full scrape…", _full_scrape)
+            if raw is not None:
                 filtered = _filter_and_save(raw, dry_run)
                 _show_result(filtered, raw, dry_run)
             if not dry_run:
@@ -129,9 +133,9 @@ def render_hunt_tab():
     # ------------------------------------------------------------------
     st.divider()
     st.markdown("### 🌐 Board Discovery")
-    st.caption("Search Google for new company board tokens (Greenhouse, Lever, Ashby, SmartRecruiters).")
-    if st.button("🔍 Discover New Boards", use_container_width=True):
-        discovered = _run_with_status("Discovering board tokens…", discover_boards)
+    st.caption("Scoped ops-AI discovery (logistics/freight/dispatch). Monthly cadence.")
+    if st.button("🔍 Discover New Boards (scoped)", use_container_width=True):
+        discovered = _run_with_status("Discovering board tokens…", lambda: discover_boards(scoped=True))
         if discovered:
             merge_into_targets(discovered)
             st.success("✅ target_companies.json updated")
@@ -139,7 +143,6 @@ def render_hunt_tab():
         else:
             st.warning("No new tokens discovered.")
 
-    # Show last scrape result if stored
     if "hunt_last_result" in st.session_state:
         r = st.session_state.hunt_last_result
         st.info(f"Last scrape: {r.get('saved', 0)} saved, {r.get('skipped', 0)} skipped")
@@ -155,7 +158,7 @@ def render_hunt_tab():
     leads = load_leads()
 
     if not leads:
-        st.info("No leads yet — run a scrape above.")
+        st.info("No leads yet — run **ATS Only** above (Tuesday weekly cadence).")
     else:
         _render_leads_table(leads)
 
@@ -167,18 +170,23 @@ def render_hunt_tab():
         _render_config()
 
 
-# ------------------------------------------------------------------ helpers
-
-
 def _filter_and_save(raw_leads: list, dry_run: bool):
     """Filter + optionally save leads. Returns filtered list."""
     from scraper.filter import filter_leads
+    from scraper.company_fit import filter_by_fit
+
     profile = load_profile()
-    filtered = filter_leads(
+    title_filtered = filter_leads(
         raw_leads,
         exclude_senior=True,
         profile_keywords=profile.get("keywords"),
+        exclude_titles=profile.get("exclude_titles"),
         require_product_adjacent=True,
+    )
+    allowlist = st.session_state.get("hunt_allowlist_only", False)
+    filtered, fit_rejected = filter_by_fit(
+        title_filtered,
+        allowlist_only=allowlist,
     )
     skipped = len(raw_leads) - len(filtered)
 
@@ -197,19 +205,33 @@ def _filter_and_save(raw_leads: list, dry_run: bool):
 
 
 def _show_result(filtered: list, raw: list, dry_run: bool):
-    """Show a compact table of results inline."""
     skipped = len(raw) - len(filtered)
     st.caption(f"{len(filtered)} filtered, {skipped} skipped")
     if filtered:
         for l in filtered[:20]:
-            st.markdown(f"- **{l.title}** @ {l.company} — `{l.source}`")
+            fit = score_lead(l)
+            badge = "🔥" if fit >= HIGH_PRIORITY else ""
+            st.markdown(f"- {badge} **{l.title}** @ {l.company} (fit {fit}) — `{l.source}`")
         if len(filtered) > 20:
             st.caption(f"… and {len(filtered) - 20} more")
 
 
+def _promote_to_crm(lead):
+    from crm.services.companies import import_from_leads, find_company_by_name
+
+    existing = find_company_by_name(lead.company)
+    if existing:
+        st.warning("Already in pipeline")
+        return
+    hyp = hypothesis_for_company(lead.company)
+    result = import_from_leads(lead, hypothesis=hyp)
+    if result:
+        st.success(f"Added **{lead.company}** to Pipeline")
+    else:
+        st.warning("Could not add — may already exist")
+
+
 def _render_leads_table(leads):
-    """Filterable, sortable leads table with stage management."""
-    # Filters
     col_src, col_stage, col_q = st.columns(3)
     with col_src:
         sources = sorted({l.source for l in leads})
@@ -228,7 +250,6 @@ def _render_leads_table(leads):
         q = query.lower()
         filtered = [l for l in filtered if q in l.company.lower() or q in l.title.lower()]
 
-    # Summary stats
     col_n, col_s = st.columns(2)
     with col_n:
         st.caption(f"**{len(filtered)}** leads (of {len(leads)} total)")
@@ -239,10 +260,12 @@ def _render_leads_table(leads):
     st.divider()
 
     for l in filtered:
+        fit = score_lead(l)
         with st.container(border=True):
-            cols = st.columns([4, 1, 1])
+            cols = st.columns([4, 1, 1, 1])
             with cols[0]:
-                st.markdown(f"**{l.title}** @ **{l.company}**")
+                priority = " 🔥 high fit" if fit >= HIGH_PRIORITY else ""
+                st.markdown(f"**{l.title}** @ **{l.company}** · fit **{fit}**{priority}")
                 st.caption(f"`{l.source}` · {l.location} · {l.date_found}")
                 if l.description_snippet:
                     st.text(l.description_snippet[:200])
@@ -257,22 +280,25 @@ def _render_leads_table(leads):
                     label_visibility="collapsed",
                 )
                 if new_stage != l.stage and update_lead_stage(l.id, new_stage):
-                    st.success("✓", icon="✅")
                     st.rerun()
             with cols[2]:
-                if st.button("📝 Use for Gen", key=f"hunt_use_{l.id}", help="Pre-fill Job Details tab"):
+                if st.button("📝 Gen", key=f"hunt_use_{l.id}", help="Pre-fill Job Details"):
                     st.session_state.company_name = l.company
                     st.session_state.target_role = l.title
                     if l.url:
                         st.session_state.jd_url = l.url
                         st.session_state._auto_scrape_from_url = True
-                    st.success("Copied to Job Details → generate resume")
+                    st.session_state["_prefill_from_hunt"] = True
+                    st.success("→ **Job Details** → **Generate**")
+                    st.rerun()
+            with cols[3]:
+                if st.button("+ CRM", key=f"hunt_crm_{l.id}", help="Add to Pipeline"):
+                    _promote_to_crm(l)
                     st.rerun()
 
 
 def _render_config():
-    """Editable view of search_profile.json and target_companies.json."""
-    tab_p, tab_c = st.tabs(["Search Profile", "Target Companies"])
+    tab_p, tab_c, tab_d = st.tabs(["Search Profile", "Target Companies", "Candidate Review"])
 
     with tab_p:
         profile = load_profile()
@@ -280,15 +306,26 @@ def _render_config():
             "roles": st.text_area("Roles (one per line)", "\n".join(profile["roles"]), key="hunt_profile_roles"),
             "locations": st.text_area("Locations (one per line)", "\n".join(profile["locations"]), key="hunt_profile_locs"),
             "keywords": st.text_input("Keywords (comma-separated)", ", ".join(profile["keywords"]), key="hunt_profile_kw"),
+            "exclude_titles": st.text_area(
+                "Exclude titles (one per line)",
+                "\n".join(profile.get("exclude_titles", [])),
+                key="hunt_profile_exclude",
+            ),
+            "domain_queries": st.text_area(
+                "Domain queries (one per line, ops_ai lane)",
+                "\n".join(profile.get("domain_queries", [])),
+                key="hunt_profile_domain",
+            ),
         }
         if st.button("💾 Save Profile", key="hunt_save_profile"):
-            import json
             updated = {
                 "roles": [r.strip() for r in edited["roles"].strip().split("\n") if r.strip()],
                 "locations": [l.strip() for l in edited["locations"].strip().split("\n") if l.strip()],
                 "keywords": [k.strip() for k in edited["keywords"].split(",") if k.strip()],
-                "exclude_titles": profile.get("exclude_titles", []),
+                "exclude_titles": [t.strip() for t in edited["exclude_titles"].strip().split("\n") if t.strip()],
                 "exclude_industries": profile.get("exclude_industries", []),
+                "lane": profile.get("lane", "ops_ai"),
+                "domain_queries": [q.strip() for q in edited["domain_queries"].strip().split("\n") if q.strip()],
             }
             with open(HUNT_ROOT / "search_profile.json", "w") as f:
                 json.dump(updated, f, indent=2)
@@ -310,3 +347,45 @@ def _render_config():
             save_target_companies(companies)
             st.success("Companies saved")
             st.rerun()
+
+    with tab_d:
+        candidates_path = HUNT_ROOT / "company_candidates.json"
+        if candidates_path.exists():
+            candidates = json.loads(candidates_path.read_text())
+            unverified = [c for c in candidates if not c.get("verified")]
+            st.caption(f"{len(unverified)} unverified candidates (of {len(candidates)} total)")
+            if unverified and st.session_state.get("_llm_client"):
+                if st.button("🤖 Score unverified with LLM", key="hunt_llm_score"):
+                    _llm_score_candidates(unverified[:10])
+            for c in unverified[:15]:
+                st.markdown(f"- **{c['name']}** — fit {c.get('fit_score', '?')} — {c.get('hypothesis', '')[:80]}")
+        else:
+            st.info("No company_candidates.json yet.")
+
+
+def _llm_score_candidates(candidates: list):
+    """Optional LLM batch scorer for candidate review."""
+    llm = st.session_state.get("_llm_client")
+    if not llm:
+        st.warning("Generate a resume first to initialize LLM client.")
+        return
+    from llm_client import call_llm
+    names = ", ".join(c["name"] for c in candidates)
+    prompt = (
+        f"Rate these ops-AI logistics/freight companies for a Founding PM candidate "
+        f"(Series-A, AI-native ops): {names}. "
+        "For each, reply one line: NAME | score 0-100 | one-line reason."
+    )
+    with st.spinner("Scoring candidates…"):
+        result = call_llm(
+            llm,
+            system_prompt="You score company fit for ops-AI PM roles.",
+            user_prompt=prompt,
+            max_tokens=800,
+            temperature=0.2,
+            tier="default",
+            require_nonempty=True,
+            step_label="Company fit scoring",
+        )
+        text, _ = result if isinstance(result, tuple) else (result, {})
+        st.text_area("LLM scores", text, height=200)
