@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity Marketplace | Product Notes | Bob Lavania</title>
+<meta name="description" content="Conceptual cybersecurity marketplace for physical appliances, virtual appliances, and service add-ons. Search-first discovery UX, faceted catalog, comparison workflows, and Mixpanel + Pendo instrumentation model.">
+<meta property="og:title" content="Cybersecurity Marketplace | Search-First Discovery">
+<meta property="og:description" content="Marketplace concept for cyber appliances and service add-ons: a new search and discovery model with explicit Mixpanel telemetry and Pendo in-product guidance.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --bg-color: #ffffff;
+    --text-main: #111111;
+    --text-muted: #555555;
+    --text-light: #777777;
+    --border-color: #000000;
+    --border-light: #cccccc;
+    --accent: #000000;
+    --teal: #0f6e56;
+    --teal-light: #e1f5ee;
+    --amber: #ba7517;
+    --amber-light: #fef3e6;
+    --blue: #185fa5;
+    --blue-light: #e6f2ff;
+    --purple: #6b46c1;
+    --purple-light: #f3f4ff;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    padding: 1.25rem;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    padding: 0 2rem;
+  }
+
+  header, section {
+    border-bottom: 1px solid var(--border-color);
+    padding: 2rem 0;
+  }
+
+  header { padding-top: 1.25rem; }
+
+  .back-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+  }
+
+  .back-link a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .back-link a:hover { color: var(--text-main); }
+
+  h1 {
+    font-size: 2.35rem;
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .subhead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .cred-strip {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    color: var(--text-main);
+    margin-top: 1.25rem;
+  }
+
+  .proof-points {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+  }
+
+  .proof-card {
+    border: 2px solid var(--border-color);
+    padding: 1rem;
+    background: var(--bg-color);
+  }
+
+  .proof-card.teal { border-color: var(--teal); background: var(--teal-light); }
+  .proof-card.amber { border-color: var(--amber); background: var(--amber-light); }
+  .proof-card.blue { border-color: var(--blue); background: var(--blue-light); }
+  .proof-card.purple { border-color: var(--purple); background: var(--purple-light); }
+
+  .proof-number {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-mono);
+  }
+
+  .proof-card.teal .proof-number { color: var(--teal); }
+  .proof-card.amber .proof-number { color: var(--amber); }
+  .proof-card.blue .proof-number { color: var(--blue); }
+  .proof-card.purple .proof-number { color: var(--purple); }
+
+  .proof-label {
+    font-size: 0.82rem;
+    color: var(--text-main);
+    line-height: 1.3;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .pain-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .pain-list li { margin-bottom: 0.35rem; }
+
+  .metric-highlight {
+    background: #fffbea;
+    border-left: 3px solid var(--amber);
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-weight: 500;
+    color: var(--text-main);
+    font-size: 0.95rem;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .compare-card {
+    border: 2px solid var(--border-color);
+    padding: 1.15rem;
+  }
+
+  .compare-card.legacy {
+    border-color: var(--border-light);
+    background: #fafafa;
+  }
+
+  .compare-card.modern {
+    border-color: var(--teal);
+    background: var(--teal-light);
+  }
+
+  .compare-card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.65rem;
+  }
+
+  .flow-block {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--text-main);
+    padding: 0.65rem 0.75rem;
+    border: 1px dashed var(--border-light);
+    background: var(--bg-color);
+    margin-bottom: 0.65rem;
+  }
+
+  .compare-card ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .compare-card ul li { margin-bottom: 0.3rem; }
+
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .cap-card {
+    border: 1px solid var(--border-color);
+    padding: 1.15rem;
+    transition: all 0.2s ease;
+  }
+
+  .cap-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .cap-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.45rem;
+    font-weight: 600;
+  }
+
+  .cap-card p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .learn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .learn-card {
+    border: 1px solid var(--border-light);
+    padding: 1rem 1.15rem;
+    background: #fafafa;
+  }
+
+  .learn-card h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .learn-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .cs-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+  }
+
+  .cs-grid:last-child { border-bottom: 1px solid var(--border-color); }
+
+  .cs-label {
+    padding: 0.85rem 1rem;
+    border-right: 1px solid var(--border-color);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    background: #fafafa;
+  }
+
+  .cs-content {
+    padding: 0.85rem 1rem;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .cs-content strong { color: var(--text-main); }
+
+  .principles-list {
+    list-style: none;
+    counter-reset: principle;
+  }
+
+  .principles-list li {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .principles-list li::before {
+    counter-increment: principle;
+    content: "0" counter(principle);
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .systems-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .systems-tags span {
+    border: 1px solid var(--border-color);
+    padding: 0.45rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .two-col-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .quote-block {
+    font-size: 1.05rem;
+    line-height: 1.45;
+    font-weight: 500;
+    color: var(--text-muted);
+    font-style: italic;
+    max-width: 640px;
+    margin-top: 0.5rem;
+  }
+
+  .workflow-summary {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .workflow-summary li { margin-bottom: 0.75rem; }
+  .workflow-summary strong { color: var(--text-main); }
+
+  /* Search UX mock panels */
+  .mockup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .mockup-panel {
+    border: 2px solid var(--border-color);
+    overflow: hidden;
+    background: #fafafa;
+  }
+
+  .mockup-panel-header {
+    background: var(--text-main);
+    color: var(--bg-color);
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .mockup-search-bar {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--bg-color);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .mockup-search-input {
+    flex: 1;
+    border: 1px solid var(--border-light);
+    padding: 0.45rem 0.65rem;
+    font-size: 0.82rem;
+    font-family: var(--font-sans);
+    background: #fafafa;
+    color: var(--text-muted);
+  }
+
+  .mockup-search-btn {
+    background: var(--teal);
+    color: white;
+    border: none;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+  }
+
+  .mockup-body {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    min-height: 180px;
+  }
+
+  .mockup-facets {
+    border-right: 1px solid var(--border-light);
+    padding: 0.65rem;
+    background: #f5f5f5;
+    font-size: 0.68rem;
+  }
+
+  .mockup-facet-group {
+    margin-bottom: 0.65rem;
+  }
+
+  .mockup-facet-label {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .mockup-facet-chip {
+    display: block;
+    padding: 0.15rem 0;
+    color: var(--text-main);
+  }
+
+  .mockup-facet-chip.active {
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .mockup-results {
+    padding: 0.65rem;
+  }
+
+  .mockup-result {
+    border: 1px solid var(--border-light);
+    padding: 0.55rem 0.65rem;
+    margin-bottom: 0.45rem;
+    background: var(--bg-color);
+    font-size: 0.75rem;
+  }
+
+  .mockup-result-title {
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+
+  .mockup-result-meta {
+    color: var(--text-muted);
+    font-size: 0.68rem;
+  }
+
+  .mockup-trust {
+    display: inline-block;
+    background: var(--teal-light);
+    color: var(--teal);
+    font-size: 0.6rem;
+    padding: 0.1rem 0.35rem;
+    margin-top: 0.2rem;
+    font-family: var(--font-mono);
+  }
+
+  .mockup-caption {
+    padding: 0.6rem 0.85rem;
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-light);
+    background: var(--bg-color);
+  }
+
+  .mockup-compare {
+    padding: 0.75rem;
+    background: var(--bg-color);
+  }
+
+  .mockup-compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.68rem;
+  }
+
+  .mockup-compare-table th,
+  .mockup-compare-table td {
+    border: 1px solid var(--border-light);
+    padding: 0.35rem 0.45rem;
+    text-align: left;
+  }
+
+  .mockup-compare-table th {
+    background: #f5f5f5;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+  }
+
+  /* Telemetry / funnel */
+  .funnel-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 1rem 0;
+    align-items: center;
+  }
+
+  .funnel-step {
+    border: 2px solid var(--border-color);
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    background: var(--bg-color);
+  }
+
+  .funnel-step.active {
+    border-color: var(--teal);
+    background: var(--teal-light);
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .funnel-arrow {
+    color: var(--text-light);
+    font-size: 0.85rem;
+  }
+
+  .event-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.82rem;
+  }
+
+  .event-table th,
+  .event-table td {
+    border: 1px solid var(--border-color);
+    padding: 0.55rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .event-table th {
+    background: #fafafa;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .event-table td { color: var(--text-muted); }
+  .event-table td strong { color: var(--text-main); }
+
+  .telemetry-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .telemetry-card {
+    border: 2px solid var(--border-color);
+    padding: 1rem 1.15rem;
+  }
+
+  .telemetry-card.mixpanel { border-color: var(--blue); background: var(--blue-light); }
+  .telemetry-card.pendo { border-color: var(--purple); background: var(--purple-light); }
+
+  .telemetry-card h4 {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .telemetry-card.mixpanel h4 { color: var(--blue); }
+  .telemetry-card.pendo h4 { color: var(--purple); }
+
+  .telemetry-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+    margin-bottom: 0.5rem;
+  }
+
+  .telemetry-card ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .pendo-nudge-map {
+    margin-top: 1rem;
+    border: 1px dashed var(--border-light);
+    padding: 0.85rem;
+    background: #fafafa;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .pendo-nudge-map strong { color: var(--purple); }
+
+  .contact-section {
+    background: var(--text-main);
+    color: var(--bg-color);
+    padding: 2.5rem;
+    margin: 0 -2rem -1.25rem -2rem;
+  }
+
+  .contact-intro {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+    margin: 0;
+  }
+
+  .contact-section h2 {
+    color: var(--bg-color);
+    margin-bottom: 1.25rem;
+    text-transform: none;
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .contact-info {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .contact-info a {
+    color: var(--bg-color);
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .contact-info a:hover { opacity: 0.8; }
+
+  .contact-section .contact-reveal {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    color: var(--bg-color);
+    font-size: 1rem;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .contact-section .contact-reveal:hover { opacity: 0.85; }
+
+  .contact-section .contact-reveal.revealed {
+    cursor: default;
+    opacity: 0.95;
+    text-decoration: none;
+  }
+
+  .contact-location {
+    margin-top: 0.85rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .contact-cta { margin: 0; }
+
+  @media (max-width: 900px) {
+    .proof-points { grid-template-columns: 1fr 1fr; }
+    .compare-grid, .learn-grid, .two-col-section, .telemetry-split { grid-template-columns: 1fr; }
+    .mockup-body { grid-template-columns: 1fr; }
+    .mockup-facets { border-right: none; border-bottom: 1px solid var(--border-light); }
+  }
+
+  @media (max-width: 768px) {
+    .container { border: none; padding: 0 1rem; }
+    body { padding: 1rem; }
+    h1 { font-size: 1.85rem; }
+    .proof-points { grid-template-columns: 1fr; }
+    .cs-grid { grid-template-columns: 1fr; }
+    .cs-label { border-right: none; border-bottom: 1px dashed var(--border-color); }
+    .contact-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+    .contact-section { margin: 0 -1rem -1rem -1rem; padding: 1.75rem 1rem; }
+    .mockup-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <p class="back-link"><a href="index.html">&larr; Portfolio</a></p>
+    <h1>Cybersecurity marketplace with search-first discovery</h1>
+    <p class="subhead">Conceptual marketplace for <strong>physical appliances</strong>, <strong>virtual appliances</strong>, and <strong>service add-ons</strong> in a single catalog. The portfolio centerpiece is a new search and discovery model: faceted refinement, trust signals, comparison workflows, and an explicit instrumentation layer (Mixpanel + Pendo) designed to validate whether buyers reach confident shortlists.</p>
+
+    <div class="cred-strip">
+      <span>Product Manager &middot; Concept design</span>
+      <span>Cybersecurity &middot; Marketplace &middot; Search UX</span>
+      <span>Mixpanel &middot; Pendo instrumentation</span>
+    </div>
+
+    <div class="proof-points">
+      <div class="proof-card teal">
+        <div class="proof-number">3 catalog types</div>
+        <div class="proof-label">Physical appliances, virtual appliances, and service add-ons in one taxonomy</div>
+      </div>
+      <div class="proof-card amber">
+        <div class="proof-number">Search-first</div>
+        <div class="proof-label">Faceted discovery, query refinement, and comparison built into the core flow</div>
+      </div>
+      <div class="proof-card blue">
+        <div class="proof-number">Mixpanel</div>
+        <div class="proof-label">Behavioral funnels, cohort segments, and drop-off diagnosis across discovery</div>
+      </div>
+      <div class="proof-card purple">
+        <div class="proof-number">Pendo</div>
+        <div class="proof-label">In-product guidance for first-time buyers navigating complex catalog structure</div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>Who it was for</h2>
+    <p class="metric-highlight" style="margin-bottom:1rem;"><strong>IT admins, security architects, and procurement buyers</strong> evaluating cyber infrastructure across hardware, virtualized deployments, and managed service bundles.</p>
+    <ul class="pain-list">
+      <li><strong>IT administrators</strong> replacing or scaling on-prem security appliances</li>
+      <li><strong>Security architects</strong> comparing virtual appliance options across cloud and hybrid environments</li>
+      <li><strong>Procurement and vendor management</strong> bundling appliances with support, monitoring, and compliance add-ons</li>
+    </ul>
+    <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);max-width:720px;">The marketplace had to serve buyers with <strong style="color:var(--text-main);">different evaluation mental models</strong> in the same catalog: hardware throughput specs, virtual deployment constraints, and recurring service entitlements.</p>
+  </section>
+
+  <section>
+    <h2>Why discovery was the bottleneck</h2>
+    <p class="metric-highlight"><strong>Cyber buyers don&rsquo;t fail because options are scarce.</strong> They fail because the catalog is dense, vendor claims overlap, and add-on compatibility is opaque until late in the evaluation cycle.</p>
+    <ul class="pain-list">
+      <li>Physical and virtual appliances listed as if they were interchangeable products</li>
+      <li>Service add-ons buried on detail pages instead of surfaced during search</li>
+      <li>Filters that reflect vendor taxonomy, not buyer intent (throughput, deployment model, compliance)</li>
+      <li>Comparison views that omit the dimensions buyers actually decide on</li>
+      <li>No signal for which results are certified, compatible, or commonly bundled together</li>
+    </ul>
+    <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);max-width:720px;">The product thesis: <strong style="color:var(--text-main);">make search the primary navigation model</strong>, not category browsing with filters bolted on afterward.</p>
+  </section>
+
+  <section>
+    <h2>Before vs after search experience</h2>
+    <div class="compare-grid">
+      <div class="compare-card legacy">
+        <h3>Legacy catalog pattern</h3>
+        <div class="flow-block">Browse categories &rarr; Open product page &rarr; Read specs &rarr; Check add-ons manually &rarr; Start over if wrong fit</div>
+        <ul>
+          <li>Category-first navigation with shallow filters</li>
+          <li>Appliance types mixed without deployment context</li>
+          <li>Add-ons discovered only after deep page visits</li>
+          <li>Comparison requires opening multiple tabs</li>
+          <li>No instrumentation on where buyers stall</li>
+        </ul>
+      </div>
+      <div class="compare-card modern">
+        <h3>Search-first marketplace</h3>
+        <div class="flow-block">Query or intent chip &rarr; Refine with facets &rarr; Compare shortlist &rarr; Surface compatible add-ons &rarr; Save evaluation set</div>
+        <ul>
+          <li>Intent-aware search with progressive refinement</li>
+          <li>Deployment model as a first-class facet</li>
+          <li>Trust signals inline on results (certified, bundled, compatible)</li>
+          <li>Side-by-side comparison on buyer decision dimensions</li>
+          <li>Mixpanel funnels + Pendo guidance mapped to each stage</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Search UX principles</h2>
+    <p style="margin-bottom:1.25rem;font-size:0.95rem;color:var(--text-muted);max-width:720px;">The discovery model drew on established search UX patterns (progressive disclosure, scannable results, forgiving entry points) and translated them into a cyber marketplace context where buyers arrive with partial intent and need help narrowing without losing context.</p>
+    <div class="capabilities-grid">
+      <div class="cap-card">
+        <h4>1. Forgiving entry</h4>
+        <p>Accept broad queries (&ldquo;next-gen firewall branch office&rdquo;) and map to intent chips before forcing facet selection. Zero-results states suggest alternate facets instead of dead ends.</p>
+      </div>
+      <div class="cap-card">
+        <h4>2. Facets reflect buyer decisions</h4>
+        <p>Deployment model, throughput tier, compliance certifications, and support tier, not vendor-internal product families. Facet counts update live so buyers see the effect of each refinement.</p>
+      </div>
+      <div class="cap-card">
+        <h4>3. Trust signals on results</h4>
+        <p>Certified compatible, commonly bundled, and deployment-validated badges inline on result cards so buyers don&rsquo;t have to open every detail page to assess fit.</p>
+      </div>
+      <div class="cap-card">
+        <h4>4. Comparison on decision dimensions</h4>
+        <p>Compare up to four items on the attributes buyers actually weigh: deployment model, throughput, licensing model, add-on compatibility, and support SLA, not marketing feature lists.</p>
+      </div>
+      <div class="cap-card">
+        <h4>5. Add-ons in the discovery path</h4>
+        <p>Service add-ons surface during search and comparison, not only on product detail pages. Bundle configuration is a step in evaluation, not a post-purchase surprise.</p>
+      </div>
+      <div class="cap-card">
+        <h4>6. Shortlist as the success state</h4>
+        <p>Saving a shortlist is the primary conversion milestone in discovery, not page views. The UX optimizes for confident evaluation sets, not catalog browsing time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Catalog taxonomy</h2>
+    <div class="cs-grid">
+      <div class="cs-label">Physical</div>
+      <div class="cs-content"><strong>On-prem appliances</strong>: NGFW, secure web gateway, IDS/IPS hardware. Facets: throughput (Gbps), form factor, port count, HA support, rack units.</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">Virtual</div>
+      <div class="cs-content"><strong>Virtual appliances</strong>: deployable on VMware, Hyper-V, cloud marketplace images. Facets: hypervisor compatibility, vCPU/RAM requirements, license model (perpetual vs subscription).</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">Services</div>
+      <div class="cs-content"><strong>Service add-ons</strong>: managed monitoring, threat intel feeds, compliance reporting, premium support tiers. Facets: compatible appliance families, SLA level, deployment assistance scope.</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">Trust meta</div>
+      <div class="cs-content"><strong>Cross-cutting metadata</strong>: certification badges (FedRAMP, Common Criteria), vendor-verified compatibility, bundle frequency signals, deployment validation status.</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">Compare dims</div>
+      <div class="cs-content"><strong>Comparison attributes</strong>: deployment model, throughput/licensing, compliance coverage, add-on compatibility matrix, support SLA, total cost framing.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Two buyer scenarios</h2>
+    <ol class="workflow-summary">
+      <li><strong>Scenario A (IT admin, physical appliance):</strong> Query: &ldquo;branch office firewall 2Gbps HA.&rdquo; Refines with deployment=on-prem, throughput=2 to 5 Gbps, HA=required. Compares three NGFW appliances on throughput, port density, and support tier. Saves shortlist and views compatible monitoring add-ons before requesting a quote.</li>
+      <li><strong>Scenario B (Security architect, virtual + services):</strong> Starts from intent chip &ldquo;Virtual appliance &middot; hybrid cloud.&rdquo; Filters by hypervisor (VMware), license model (subscription), and compliance (SOC 2). Compares two virtual appliances, then configures a bundle with threat intel feed and 24/7 managed monitoring. Shortlist includes appliance + service bundle as a single evaluation unit.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Search UX</h2>
+    <p style="margin-bottom:0.5rem;font-size:0.95rem;color:var(--text-muted);max-width:720px;">HTML-native reconstructions of the core discovery surfaces. Annotated to show where facets, trust signals, and comparison dimensions appear in the flow.</p>
+    <div class="mockup-grid">
+      <div class="mockup-panel">
+        <div class="mockup-panel-header">Search results with facets</div>
+        <div class="mockup-search-bar">
+          <div class="mockup-search-input">branch office firewall 2Gbps HA</div>
+          <button class="mockup-search-btn" type="button">Search</button>
+        </div>
+        <div class="mockup-body">
+          <div class="mockup-facets">
+            <div class="mockup-facet-group">
+              <div class="mockup-facet-label">Deployment</div>
+              <span class="mockup-facet-chip active">On-prem (12)</span>
+              <span class="mockup-facet-chip">Virtual (8)</span>
+            </div>
+            <div class="mockup-facet-group">
+              <div class="mockup-facet-label">Throughput</div>
+              <span class="mockup-facet-chip active">2 to 5 Gbps (6)</span>
+              <span class="mockup-facet-chip">5 to 10 Gbps (4)</span>
+            </div>
+            <div class="mockup-facet-group">
+              <div class="mockup-facet-label">HA</div>
+              <span class="mockup-facet-chip active">Required (5)</span>
+            </div>
+          </div>
+          <div class="mockup-results">
+            <div class="mockup-result">
+              <div class="mockup-result-title">SecureEdge NGFW-2400</div>
+              <div class="mockup-result-meta">Physical &middot; 3.2 Gbps &middot; 8&times; GE ports &middot; HA pair</div>
+              <span class="mockup-trust">Commonly bundled</span>
+            </div>
+            <div class="mockup-result">
+              <div class="mockup-result-title">FortiBranch X200</div>
+              <div class="mockup-result-meta">Physical &middot; 2.8 Gbps &middot; 6&times; GE ports &middot; HA ready</div>
+              <span class="mockup-trust">Certified compatible</span>
+            </div>
+            <div class="mockup-result">
+              <div class="mockup-result-title">Palo Alto PA-410</div>
+              <div class="mockup-result-meta">Physical &middot; 2.5 Gbps &middot; 4&times; GE ports</div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-caption">Facets update counts live; trust badges visible without opening detail pages</div>
+      </div>
+
+      <div class="mockup-panel">
+        <div class="mockup-panel-header">Comparison view</div>
+        <div class="mockup-compare">
+          <table class="mockup-compare-table">
+            <thead>
+              <tr>
+                <th>Dimension</th>
+                <th>NGFW-2400</th>
+                <th>FortiBranch X200</th>
+                <th>PA-410</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Throughput</td><td>3.2 Gbps</td><td>2.8 Gbps</td><td>2.5 Gbps</td></tr>
+              <tr><td>HA support</td><td>Active/Active</td><td>Active/Passive</td><td>Add-on</td></tr>
+              <tr><td>Compliance</td><td>Common Criteria</td><td>FedRAMP</td><td>SOC 2</td></tr>
+              <tr><td>Monitoring add-on</td><td>Compatible</td><td>Compatible</td><td>Bundle only</td></tr>
+              <tr><td>Support SLA</td><td>24/7 Premium</td><td>Business hours</td><td>24/7 Standard</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mockup-caption">Compare on buyer decision dimensions, not marketing feature lists</div>
+      </div>
+
+      <div class="mockup-panel">
+        <div class="mockup-panel-header">Bundle configuration</div>
+        <div class="mockup-compare" style="font-size:0.78rem;line-height:1.55;">
+          <p style="margin-bottom:0.5rem;"><strong>Shortlist item:</strong> SecureEdge NGFW-2400</p>
+          <p style="color:var(--text-muted);margin-bottom:0.65rem;">Compatible service add-ons:</p>
+          <div style="border:1px solid var(--border-light);padding:0.5rem;margin-bottom:0.35rem;background:#fafafa;">
+            <strong>Managed Threat Monitoring:</strong> 24/7 SOC, incident escalation<br>
+            <span style="font-size:0.68rem;color:var(--teal);">Certified compatible &middot; Commonly bundled</span>
+          </div>
+          <div style="border:1px solid var(--border-light);padding:0.5rem;margin-bottom:0.35rem;background:#fafafa;">
+            <strong>Compliance Reporting Pack:</strong> Automated audit logs, retention policy<br>
+            <span style="font-size:0.68rem;color:var(--text-muted);">Optional add-on</span>
+          </div>
+          <div style="border:1px dashed var(--teal);padding:0.5rem;background:var(--teal-light);margin-top:0.5rem;">
+            <strong>Evaluation bundle saved:</strong> appliance + monitoring add-on
+          </div>
+        </div>
+        <div class="mockup-caption">Add-ons surface during evaluation, not after purchase commitment</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Key design decisions</h2>
+    <div class="two-col-section">
+      <div>
+        <div class="learn-grid">
+          <div class="learn-card">
+            <h4>Search over browse</h4>
+            <p>Category browsing remains available but secondary. Primary navigation assumes buyers arrive with partial intent and need refinement, not a taxonomy tour.</p>
+          </div>
+          <div class="learn-card">
+            <h4>Deployment model as primary facet</h4>
+            <p>Physical vs virtual is the highest-friction confusion point in cyber catalogs. Making it the first facet prevents mismatched results early.</p>
+          </div>
+          <div class="learn-card">
+            <h4>Shortlist, not cart</h4>
+            <p>Enterprise cyber evaluation is a research phase, not impulse purchase. The success metric is a saved evaluation set, not checkout conversion.</p>
+          </div>
+          <div class="learn-card">
+            <h4>Instrumentation from day one</h4>
+            <p>Every discovery stage has mapped Mixpanel events and Pendo guidance triggers. The UX was designed to be measurable before it was designed to be pretty.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="cs-grid">
+          <div class="cs-label">Rejected</div>
+          <div class="cs-content">Vendor-brand-first navigation; buyers don&rsquo;t search by OEM, they search by capability and deployment context.</div>
+        </div>
+        <div class="cs-grid">
+          <div class="cs-label">Rejected</div>
+          <div class="cs-content">Infinite scroll results; comparison and shortlist require stable positions. Paginated results with persistent compare tray.</div>
+        </div>
+        <div class="cs-grid">
+          <div class="cs-label">Rejected</div>
+          <div class="cs-content">Add-ons as post-detail upsell only; bundle discovery must happen during evaluation, not after commitment.</div>
+        </div>
+        <div class="cs-grid">
+          <div class="cs-label">Stack</div>
+          <div class="cs-content"><strong>Mixpanel</strong> for behavioral funnels and cohort analysis; <strong>Pendo</strong> for in-product guidance and feature adoption</div>
+        </div>
+        <div class="cs-grid">
+          <div class="cs-label">Status</div>
+          <div class="cs-content"><strong>Conceptual design</strong> with instrumentation model defined for validation and iteration</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Measurement model</h2>
+    <p style="margin-bottom:0.75rem;font-size:0.95rem;color:var(--text-muted);max-width:720px;">The discovery UX was laid out with an explicit instrumentation model. Mixpanel handles <strong style="color:var(--text-main);">what buyers do</strong>; Pendo handles <strong style="color:var(--text-main);">whether they understand how to do it</strong>. This split mirrors how I structured analytics at BVXpress: behavioral telemetry for diagnosis, in-product guidance for activation.</p>
+
+    <div class="funnel-strip" aria-label="Discovery funnel stages">
+      <span class="funnel-step active">Search</span>
+      <span class="funnel-arrow">&rarr;</span>
+      <span class="funnel-step">Refine</span>
+      <span class="funnel-arrow">&rarr;</span>
+      <span class="funnel-step">Compare</span>
+      <span class="funnel-arrow">&rarr;</span>
+      <span class="funnel-step">Shortlist</span>
+      <span class="funnel-arrow">&rarr;</span>
+      <span class="funnel-step">Evaluate add-ons</span>
+    </div>
+
+    <div class="telemetry-split">
+      <div class="telemetry-card mixpanel">
+        <h4>Mixpanel: behavioral layer</h4>
+        <p>Event tracking, funnels, cohort segments, and drop-off diagnosis across the discovery flow.</p>
+        <ul>
+          <li>Funnel: search &rarr; refine &rarr; compare &rarr; shortlist &rarr; add-on config</li>
+          <li>Segments: first-time vs repeat evaluator; appliance-first vs virtual-first path</li>
+          <li>Drop-off diagnosis: zero-results, facet abandonment, compare stall, shortlist without add-ons</li>
+          <li>Cohort retention: do guided users return and complete evaluation faster?</li>
+        </ul>
+      </div>
+      <div class="telemetry-card pendo">
+        <h4>Pendo: guidance layer</h4>
+        <p>Onboarding, contextual tooltips, and feature adoption support for complex marketplace behaviors.</p>
+        <ul>
+          <li>First-visit walkthrough: catalog structure (physical / virtual / services)</li>
+          <li>Contextual tooltip on facet panel: what each deployment filter means</li>
+          <li>Compare tray introduction: how to add items and read decision dimensions</li>
+          <li>Bundle builder nudge: when compatible add-ons are available for shortlist items</li>
+        </ul>
+      </div>
+    </div>
+
+    <table class="event-table" aria-label="Event taxonomy">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Events tracked</th>
+          <th>Question it answers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Discovery</strong></td>
+          <td>query_submitted, zero_results_shown, facet_applied, facet_removed, sort_changed, intent_chip_clicked</td>
+          <td>Are buyers finding a viable path from broad search to narrowed results?</td>
+        </tr>
+        <tr>
+          <td><strong>Evaluation</strong></td>
+          <td>result_clicked, detail_viewed, compare_started, compare_completed, shortlist_saved, add_on_viewed, bundle_configured</td>
+          <td>Which results convert to confident evaluation sets? Where do buyers stall?</td>
+        </tr>
+        <tr>
+          <td><strong>Guidance</strong></td>
+          <td>walkthrough_started, tooltip_dismissed, checklist_completed, return_after_guidance</td>
+          <td>Does in-product education improve activation of search, compare, and bundle behaviors?</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pendo-nudge-map">
+      <strong>Pendo nudge placement map:</strong> Walkthrough on first catalog visit &rarr; facet tooltip on first filter interaction &rarr; compare tray tooltip when 2+ items selected &rarr; bundle builder prompt when shortlist item has compatible add-ons &rarr; checklist completion tracked as adoption milestone in Mixpanel.
+    </div>
+  </section>
+
+  <section>
+    <h2>PM takeaways</h2>
+    <ul class="principles-list">
+      <li>Search is a product surface, not a utility widget bolted onto a catalog</li>
+      <li>Design facets for buyer decisions, not vendor taxonomies</li>
+      <li>Instrument discovery before polishing visuals; you need to know where buyers stall</li>
+      <li>Split behavioral measurement (Mixpanel) from in-product education (Pendo)</li>
+      <li>Shortlist is the discovery conversion event in enterprise evaluation workflows</li>
+    </ul>
+    <div class="systems-tags" style="margin-top:1.25rem;">
+      <span>Marketplace IA</span>
+      <span>Search UX design</span>
+      <span>Faceted discovery</span>
+      <span>Comparison workflows</span>
+      <span>Mixpanel funnels</span>
+      <span>Pendo guidance</span>
+      <span>Event taxonomy</span>
+      <span>Cohort segmentation</span>
+      <span>Bundle configuration</span>
+      <span>Trust signal design</span>
+    </div>
+    <p class="quote-block">&ldquo;The best marketplace search doesn&rsquo;t show more results; it gets buyers to a confident shortlist faster.&rdquo;</p>
+  </section>
+
+  <section style="border-bottom: none; padding-bottom: 0;">
+    <div class="contact-section">
+      <h2>Contact</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div><span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span></div>
+          <div><a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">linkedin.com/in/blavania</a></div>
+          <div class="contact-location">Calgary, AB<br>Remote across US and Canada</div>
+        </div>
+        <div class="contact-cta">
+          <p class="contact-intro">If your team is navigating the gap between product decisions and business outcomes, such as pricing that&rsquo;s leaking, ops that don&rsquo;t scale, or AI investments with unclear ROI, let&rsquo;s talk. I&rsquo;ve worked through those problems across logistics, M&amp;A SaaS, edtech, and healthcare.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('.contact-reveal').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (this.classList.contains('revealed')) return;
+      var decoded = atob(this.dataset.v);
+      var link = document.createElement('a');
+      link.href = 'mailto:' + decoded;
+      link.textContent = decoded;
+      link.style.color = 'inherit';
+      link.style.fontWeight = '500';
+      this.classList.add('revealed');
+      this.replaceWith(link);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
