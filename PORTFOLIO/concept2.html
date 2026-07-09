@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bob Lavania — Operational Systems Architect · Advisory</title>
-  <meta name="description" content="Fractional product and systems advisory for portfolio companies stuck in the messy stage. Reduce decision latency and align revenue systems.">
+  <title>Bob Lavania | AI Systems Builder</title>
+  <meta name="description" content="Product manager who builds and evaluates production AI systems end-to-end: computer vision, conversational agents, operations research, model eval testbenches, and PyPSA energy modeling.">
+  <meta property="og:title" content="Bob Lavania | AI Systems Builder">
+  <meta property="og:description" content="I build the AI systems most PMs only write specs for. CV quoting, SMS agents, OR engines, multi-model evals, and scenario-first energy modeling, engineered solo with measurable production outcomes.">
   <style>
     :root {
       --bg: #0a0a0a;
@@ -44,7 +46,6 @@
     }
     a:hover { border-bottom-color: var(--accent); }
 
-    /* ── Hero ── */
     .hero { margin-bottom: 72px; }
     .hero-kicker {
       color: var(--accent);
@@ -72,7 +73,6 @@
       max-width: 580px;
     }
 
-    /* ── Divider ── */
     .rule {
       border: none;
       height: 1px;
@@ -80,7 +80,6 @@
       margin: 56px 0;
     }
 
-    /* ── Section labels ── */
     .section-label {
       color: var(--text-muted);
       font-size: 12px;
@@ -90,103 +89,14 @@
       margin-bottom: 16px;
     }
 
-    /* ── Warning / Not-this box ── */
-    .warning-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      padding: 24px 28px;
-      margin: 24px 0 32px;
-      border-radius: 8px;
-    }
-    .warning-box p {
+    .section-lede {
       color: var(--text-dim);
-      font-size: 15px;
-      line-height: 1.6;
-    }
-    .warning-box strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    /* ── Calculator ── */
-    .calc-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 32px;
-      margin: 28px 0 40px;
-    }
-    .calc-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    .calc-desc {
-      color: var(--text-dim);
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-    .calc-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-    .calc-input {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      font-family: var(--font);
       font-size: 16px;
-      width: 100px;
-      padding: 10px 14px;
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    .calc-input:focus { border-color: var(--accent); }
-    .calc-unit {
-      color: var(--text-muted);
-      font-size: 14px;
-    }
-    .calc-btn {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 20px;
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-    .calc-btn:hover { opacity: 0.9; }
-    .calc-results {
-      display: none;
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-    }
-    .calc-results.visible { display: block; }
-    .calc-result-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 8px 0;
-    }
-    .calc-result-label { color: var(--text-dim); font-size: 14px; }
-    .calc-result-value {
-      color: var(--accent);
-      font-family: var(--font-mono);
-      font-size: 18px;
-      font-weight: 600;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      max-width: 600px;
     }
 
-    /* ── Capabilities grid ── */
     .cap-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -222,128 +132,100 @@
       opacity: 0.85;
     }
 
-    /* ── Service cards ── */
-    .service-card {
+    .eval-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 28px;
-      margin-bottom: 16px;
-      transition: border-color 0.15s;
+      margin: 20px 0 32px;
     }
-    .service-card:hover { border-color: var(--border-hover); }
-    .service-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .service-name {
-      font-weight: 700;
+    .eval-card h3 {
       font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
       color: var(--text);
     }
-    .service-tag {
-      color: var(--accent);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 500;
-    }
-    .service-meta {
-      color: var(--text-muted);
-      font-size: 13px;
+    .eval-card p {
+      color: var(--text-dim);
+      font-size: 15px;
+      line-height: 1.6;
       margin-bottom: 12px;
     }
-    .service-desc {
+    .eval-card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--text-dim);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .eval-card li { margin-bottom: 0.4rem; }
+    .eval-card strong { color: var(--text); }
+
+    .stack-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0 8px;
+    }
+    .stack-chip {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-dim);
+      background: var(--surface);
+    }
+
+    .artifact-list {
+      margin: 16px 0 32px;
+    }
+    .artifact-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 12px;
+      transition: border-color 0.15s;
+    }
+    .artifact-item:hover { border-color: var(--border-hover); }
+    .artifact-name {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+    .artifact-name a { border-bottom: none; }
+    .artifact-name a:hover { color: var(--accent); }
+    .artifact-desc {
+      color: var(--text-dim);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .insight-box {
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .insight-box p {
       color: var(--text-dim);
       font-size: 15px;
       line-height: 1.6;
     }
+    .insight-box strong { color: var(--text); }
 
-    /* ── Metrics table ── */
-    .metrics { margin: 20px 0 32px; }
-    .metric-row {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-    }
-    .metric-row:first-child { border-radius: 8px 8px 0 0; overflow: hidden; }
-    .metric-row:last-child { border-radius: 0 0 8px 8px; overflow: hidden; }
-    .metric-cell {
-      background: var(--surface);
-      padding: 12px 16px;
-      font-size: 14px;
-    }
-    .metric-row.head .metric-cell {
-      color: var(--text-muted);
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 10px 16px;
-    }
-    .metric-cell.before { color: var(--text-dim); }
-    .metric-cell.after { color: var(--accent); font-weight: 600; }
-
-    /* ── Quote ── */
-    .quote {
-      border-left: 2px solid var(--accent);
-      padding-left: 24px;
-      margin: 32px 0;
-      color: var(--text-dim);
-      font-size: 17px;
-      line-height: 1.6;
-      font-style: italic;
-    }
-    .quote-source {
-      margin-top: 10px;
-      color: var(--text-muted);
-      font-size: 13px;
-      font-style: normal;
-    }
-
-    /* ── Provocative line ── */
     .provocation {
       color: var(--text);
       font-size: 22px;
       font-weight: 600;
       line-height: 1.4;
-      margin: 48px 0;
+      margin: 32px 0;
       letter-spacing: -0.01em;
     }
 
-    /* ── CTA ── */
-    .cta-wrap {
-      text-align: center;
-      margin: 48px 0 32px;
-    }
-    .cta-btn {
-      display: inline-block;
-      background: var(--accent);
-      color: #fff;
-      font-size: 16px;
-      font-weight: 600;
-      padding: 16px 32px;
-      border-radius: 8px;
-      text-decoration: none;
-      border: none;
-      transition: transform 0.15s, opacity 0.15s;
-    }
-    .cta-btn:hover {
-      opacity: 0.92;
-      transform: translateY(-1px);
-      border: none;
-    }
-    .cta-caption {
-      color: var(--text-muted);
-      font-size: 13px;
-      margin-top: 12px;
-    }
-
-    /* ── Footer ── */
     .footer {
       margin-top: 80px;
       padding-top: 32px;
@@ -367,267 +249,167 @@
       body { padding: 40px 20px 60px; font-size: 16px; }
       .hero-headline { font-size: 32px; }
       .cap-grid { grid-template-columns: 1fr; }
-      .metric-row { grid-template-columns: 1fr; }
-      .metric-row.head { display: none; }
-      .metric-cell { padding: 10px 14px; }
-      .calc-row { flex-direction: column; align-items: stretch; }
-      .calc-input { width: 100%; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ════════════════════════════════════════
-       HERO
-  ════════════════════════════════════════ -->
   <div class="hero">
-    <div class="hero-kicker">Operational Systems Architect · Fractional Advisory</div>
+    <div class="hero-kicker">Product Manager · AI Systems Builder</div>
     <div class="hero-headline">
-      Most organizations don't have product problems. <em>They have structural intelligence problems.</em>
+      I build the AI systems <em>most PMs only write specs for.</em>
     </div>
     <div class="hero-body">
-      For portfolio companies stuck in the messy stage. I reduce decision latency and align revenue systems — not by shipping more features, but by finding the real problem first.
+      Production computer vision, conversational agents, operations research engines, and model evaluation pipelines, engineered end-to-end by a single contributor and measured in business outcomes, not demo metrics.
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════
-       DECISION LATENCY CALCULATOR
-  ════════════════════════════════════════ -->
-  <div class="section-label">Decision Latency Calculator</div>
-  <div class="calc-card">
-    <div class="calc-title">What's your quoting or scheduling time costing you?</div>
-    <div class="calc-desc">Enter how long a typical quote or schedule decision takes. See the annual cost and competitive loss.</div>
-    <div class="calc-row">
-      <input type="text" class="calc-input" id="calcTime" placeholder="60" maxlength="4">
-      <span class="calc-unit">minutes per decision</span>
-      <button class="calc-btn" id="calcBtn">Calculate</button>
-    </div>
-    <div class="calc-results" id="calcResult">
-      <div class="calc-result-row">
-        <span class="calc-result-label">Annual cost of decision latency</span>
-        <span class="calc-result-value">$<span id="annualCost">--</span></span>
-      </div>
-      <div class="calc-result-row">
-        <span class="calc-result-label">Jobs lost to faster competitors / month</span>
-        <span class="calc-result-value"><span id="jobsLost">--</span></span>
-      </div>
-    </div>
-  </div>
+  <div class="section-label">The Systems Shelf</div>
+  <p class="section-lede">Six production or live systems I personally built. Each one started as an ambiguous ops problem, not a feature request.</p>
 
-  <!-- ════════════════════════════════════════
-       WHAT I DON'T DO
-  ════════════════════════════════════════ -->
-  <div class="warning-box">
-    <p><strong>This is advisory, not a PM hire.</strong> I don't operate day-to-day, run sprints, or manage Jira backlogs. I reframe the problem, design the system, and hand off a working architecture — then I leave or shift to board-level checks.</p>
-  </div>
-
-  <hr class="rule">
-
-  <!-- ════════════════════════════════════════
-       CAPABILITIES
-  ════════════════════════════════════════ -->
-  <div class="section-label">Capabilities</div>
   <div class="cap-grid">
     <div class="cap-item">
-      <div class="cap-name">Systems Thinking</div>
-      <div class="cap-desc">Identifying incentives, dependencies, and second-order effects that others miss by seeing components.</div>
-      <div class="cap-proof">3× take rate · 20× faster quoting</div>
+      <div class="cap-name">Computer vision quoting</div>
+      <div class="cap-desc">Customers photograph items; CV estimates volume, weight class, and handling complexity. No dispatcher call required. Chosen over structured forms after session replay showed dimension entry was the primary checkout abandonment driver.</div>
+      <div class="cap-proof">~60 min &rarr; ~3 min per quote</div>
     </div>
     <div class="cap-item">
-      <div class="cap-name">Cross-Boundary Synthesis</div>
-      <div class="cap-desc">Connecting business strategy to technical execution and customer behavior without boundary friction.</div>
-      <div class="cap-proof">85% schedule accuracy · 50% deflection</div>
+      <div class="cap-name">SMS / voice AI agent</div>
+      <div class="cap-desc">Automated intake, booking confirmations, and reschedules paired with a customer-facing order status model so bookers self-serve instead of opening support tickets.</div>
+      <div class="cap-proof">~50% support ticket deflection</div>
     </div>
     <div class="cap-item">
-      <div class="cap-name">Learning Velocity</div>
-      <div class="cap-desc">Rapid abstraction across finance, logistics, and AI without spending years in each domain.</div>
-      <div class="cap-proof">7 domains · 8+ yrs experience</div>
+      <div class="cap-name">Operations research engine</div>
+      <div class="cap-desc">3D bin-packing linear program solving job duration, crew count, and truck loading simultaneously. Replaced lookup-table pricing that had 40%+ margin error on multi-item jobs.</div>
+      <div class="cap-proof">95% costing latency cut · 85% volume accuracy</div>
     </div>
     <div class="cap-item">
-      <div class="cap-name">Ambiguity Tolerance</div>
-      <div class="cap-desc">Thriving when requirements don't exist and strategy isn't defined; moving from zero to one.</div>
-      <div class="cap-proof">5 products launched · $500k+ GMV</div>
+      <div class="cap-name">Multi-model eval testbench</div>
+      <div class="cap-desc">Side-by-side scoring of Gemini Flash vs GPT-4.1 on accuracy, latency, and cost for the CV quoting pipeline. Built before committing to a production model, not after a vendor pitch.</div>
+      <div class="cap-proof">Accuracy · latency · cost tradeoffs</div>
     </div>
     <div class="cap-item">
-      <div class="cap-name">Problem Framing</div>
-      <div class="cap-desc">Questioning if we are solving the right problem before optimizing for the wrong metric.</div>
-      <div class="cap-proof">14% retention lift · 18% lower CAC</div>
+      <div class="cap-name">Project Epsilon (energy modeling)</div>
+      <div class="cap-desc">Scenario-first PyPSA linear programs for microgrid, data center, and RTO-style planning. Typed Scenario contract drives all engines from one source of truth, eliminating copy-paste model drift.</div>
+      <div class="cap-proof">Live at epsilon.xblavania.workers.dev</div>
     </div>
     <div class="cap-item">
-      <div class="cap-name">Business Architecture</div>
-      <div class="cap-desc">Designing the revenue system, pricing tiers, and operating models that drive long-term value.</div>
-      <div class="cap-proof">$450 → $600 ARPU · Take rate optimization</div>
+      <div class="cap-name">Bayesian media mix model</div>
+      <div class="cap-desc">Replaced last-click attribution with Bayesian MMM in R: 134,900 records across 6 spend channels merged with GA4 and HubSpot. Adstock, Hill-function saturation, ridge regression.</div>
+      <div class="cap-proof">Projected 18% CAC reduction</div>
     </div>
   </div>
 
   <hr class="rule">
 
-  <!-- ════════════════════════════════════════
-       SERVICE MODELS
-  ════════════════════════════════════════ -->
-  <div class="section-label">Engagement Models</div>
+  <div class="section-label">How I Evaluate Models</div>
+  <p class="section-lede">Model choice is a product decision. I treat eval design the same way I treat feature design: fixed inputs, explicit graders, and tradeoffs stated before anyone ships.</p>
 
-  <div class="service-card">
-    <div class="service-header">
-      <div class="service-name">Diagnostic Sprint</div>
-      <div class="service-tag">2 weeks</div>
-    </div>
-    <div class="service-meta">One problem space reframed + 90-day roadmap</div>
-    <div class="service-desc">I enter, find the real problem behind the stated one, and deliver a written diagnosis with a sequenced roadmap. You get clarity on whether you're solving the right thing before committing engineering.</div>
+  <div class="eval-card">
+    <h3>The CV quoting testbench</h3>
+    <p>Before scaling automated quoting at Moovez, I built a testbench that scored <strong>Gemini Flash</strong> and <strong>GPT-4.1</strong> on three dimensions that mattered in production:</p>
+    <ul>
+      <li><strong>Accuracy</strong>: did volume and weight-class estimates match dispatcher ground truth on held-out jobs?</li>
+      <li><strong>Latency</strong>: could the model return a usable estimate within the checkout window customers expected (under 2 minutes)?</li>
+      <li><strong>Cost</strong>: what did each inference cost at expected booking volume?</li>
+    </ul>
+    <p style="margin-top:12px;margin-bottom:0;">The testbench ran on fixed job exhibits, not ad-hoc prompts. Same photos, same expected outputs, same scoring rubric every run. That let me compare models on product-relevant tradeoffs instead of benchmark leaderboard scores.</p>
   </div>
 
-  <div class="service-card">
-    <div class="service-header">
-      <div class="service-name">Fractional Product Lead</div>
-      <div class="service-tag">3–6 months</div>
-    </div>
-    <div class="service-meta">Systems design + team alignment + measurable outcome</div>
-    <div class="service-desc">I own the structural design of one revenue or operational system, align the team around it, and drive it to a verifiable metric. Not feature shipping — system building. I leave when the system runs without me.</div>
-  </div>
-
-  <div class="service-card">
-    <div class="service-header">
-      <div class="service-name">Systems Audit</div>
-      <div class="service-tag">1 week</div>
-    </div>
-    <div class="service-meta">Map of decision latency + cost + fix priority</div>
-    <div class="service-desc">A rapid diagnostic of where your org loses time, money, and alignment to operational ambiguity. Deliverable: a ranked list of structural fixes with ROI estimates.</div>
+  <div class="eval-card">
+    <h3>Eval design principles I apply</h3>
+    <ul>
+      <li><strong>Fixed exhibits, not free-form chat.</strong> Production users hit the same job types repeatedly. Evals should too.</li>
+      <li><strong>Graders before models.</strong> Define what "correct" means for each dimension before picking a winner.</li>
+      <li><strong>Three-way tradeoff framing.</strong> Accuracy, latency, and cost rarely align. Make the tradeoff explicit so the roadmap conversation is about product constraints, not model religion.</li>
+      <li><strong>Instrumentation at build time.</strong> Segment, Heap, and Mixpanel events wired into the prototype so post-launch iteration has baseline data, not guesswork.</li>
+    </ul>
   </div>
 
   <hr class="rule">
 
-  <!-- ════════════════════════════════════════
-       CASE STUDY
-  ════════════════════════════════════════ -->
-  <div class="section-label">Case Study — Moovez / Quotely</div>
+  <div class="section-label">MVP Validation Stack</div>
+  <p class="section-lede">Tools I reach for to prototype, instrument, and ship without waiting on an engineering team. Familiarity with n8n and Zapier for workflow glue; not claimed as production deployments.</p>
 
-  <p style="color: var(--text-dim); margin-bottom: 20px; font-size: 15px;">
-    Operational Intelligence · Marketplace Systems · Logistics Orchestration · 2022–present
-  </p>
-  <p style="margin-bottom: 20px; font-size: 18px; font-weight: 600; line-height: 1.4;">
-    Reducing decision latency: A repeatable playbook for operational intelligence
-  </p>
-  <p style="color: var(--text-dim); margin-bottom: 24px; font-size: 15px;">
-    Rebuilt the estimation engine for a last-mile delivery brokerage. Three interconnected systems — computer vision for estimation, operations research for optimization, conversational AI for customer interaction.
-  </p>
-
-  <div class="metrics">
-    <div class="metric-row head">
-      <div class="metric-cell">Metric</div>
-      <div class="metric-cell">Before</div>
-      <div class="metric-cell">After</div>
-    </div>
-    <div class="metric-row">
-      <div class="metric-cell">Time to generate a job estimate</div>
-      <div class="metric-cell before">~1 hour</div>
-      <div class="metric-cell after">3 minutes</div>
-    </div>
-    <div class="metric-row">
-      <div class="metric-cell">Jobs completing within quoted window</div>
-      <div class="metric-cell before">Unmeasured / high variance</div>
-      <div class="metric-cell after">85% within range</div>
-    </div>
-    <div class="metric-row">
-      <div class="metric-cell">Support tickets requiring human response</div>
-      <div class="metric-cell before">~100% of volume</div>
-      <div class="metric-cell after">~50% deflected</div>
-    </div>
-    <div class="metric-row">
-      <div class="metric-cell">Customer-facing cost accuracy</div>
-      <div class="metric-cell before">Manual guess</div>
-      <div class="metric-cell after">Algorithm-grounded</div>
-    </div>
-  </div>
-
-  <p style="color: var(--text-dim); font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
-    This same problem class appears in field service scheduling, home service quoting, healthcare appointment optimization, and on-demand delivery. The same three-system architecture applies: <strong style="color: var(--text);">Computer vision + OR optimization + conversational AI</strong>.
-  </p>
-  <p style="color: var(--text-muted); font-size: 13px;">
-    Engineered end-to-end by a single contributor. Commercialized as <a href="https://quoteperfectly.com/">Quotely</a>, sold as standalone SaaS.
-  </p>
-
-  <hr class="rule">
-
-  <!-- ════════════════════════════════════════
-       SOCIAL PROOF
-  ════════════════════════════════════════ -->
-  <div class="section-label">Validation</div>
-
-  <div class="quote">
-    The clarity with which Bob reframed our telehealth concept from a feature list to a patient-journey system was the reason we won. He doesn't optimize the brief — he dissolves it.
-    <div class="quote-source">— TechStars Calgary 2024, Pitch Competition</div>
+  <div class="stack-strip">
+    <span class="stack-chip">Cursor</span>
+    <span class="stack-chip">Windsurf</span>
+    <span class="stack-chip">Lovable</span>
+    <span class="stack-chip">Python</span>
+    <span class="stack-chip">R</span>
+    <span class="stack-chip">SQL</span>
+    <span class="stack-chip">PyPSA</span>
+    <span class="stack-chip">Segment</span>
+    <span class="stack-chip">Heap</span>
+    <span class="stack-chip">Mixpanel</span>
+    <span class="stack-chip">Stripe / Square APIs</span>
+    <span class="stack-chip">.NET / Azure</span>
+    <span class="stack-chip">n8n</span>
+    <span class="stack-chip">Zapier</span>
   </div>
 
   <hr class="rule">
 
-  <!-- ════════════════════════════════════════
-       PROVOCATION
-  ════════════════════════════════════════ -->
+  <div class="section-label">Why a PM Who Builds</div>
+
+  <div class="insight-box">
+    <p><strong>Prototypes kill bad roadmap bets faster than decks.</strong> When I shadowed dispatcher reconciliation at BVXpress, telemetry showed fewer than 20% weekly active users despite strong demo feedback. Building the instrumentation surfaced the real friction point before another quarter of wrong features shipped.</p>
+  </div>
+
+  <p class="section-lede" style="margin-top:20px;">
+    I default to building because it closes the loop between product judgment and production reality. A working CV pipeline answers "will customers trust this?" faster than a PRD. A testbench answers "which model?" faster than a vendor demo. Instrumentation designed at build time means post-launch iteration is evidence-driven from day one.
+  </p>
+
   <div class="provocation">
-    If your product team is shipping features faster than the business can absorb them, you don't need more PMs. You need someone to ask what problem you're actually solving.
+    The question is never "can we use AI here?" It is "what does correct look like, and how will we know when we have it?"
   </div>
 
   <hr class="rule">
 
-  <!-- ════════════════════════════════════════
-       CTA
-  ════════════════════════════════════════ -->
-  <div class="section-label">Next Step</div>
-  <p style="color: var(--text-dim); margin-bottom: 24px; font-size: 16px; line-height: 1.6;">
-    I suspect many of your portfolio companies are independently struggling with similar challenges: AI adoption, workflow orchestration, operational scaling, instrumentation gaps, and pricing. I'd be interested in discussing whether there is an opportunity to help solve those problems across multiple companies.
-  </p>
+  <div class="section-label">Live Artifacts</div>
+  <p class="section-lede">Production systems and case studies you can inspect directly.</p>
 
-  <div class="cta-wrap">
-    <a href="https://calendar.app.google/xhEvxBTPuG3CuTFg8" class="cta-btn">Book a 30-minute diagnostic</a>
-    <div class="cta-caption">No pitch. Just a conversation about where decision latency is hiding.</div>
+  <div class="artifact-list">
+    <div class="artifact-item">
+      <div class="artifact-name"><a href="https://moovez.ca" target="_blank" rel="noopener noreferrer">Moovez</a></div>
+      <div class="artifact-desc">Last-mile moving marketplace. Production proving ground for CV quoting, OR dispatch, SMS agent, and quote-to-dispatch TMS (~93% fill rate).</div>
+    </div>
+    <div class="artifact-item">
+      <div class="artifact-name"><a href="https://quoteperfectly.com" target="_blank" rel="noopener noreferrer">Quotely</a></div>
+      <div class="artifact-desc">Commercialized SaaS spin-off: pricing and intake intelligence layer (CV, OR, multi-model eval, agents) sold to other logistics operators.</div>
+    </div>
+    <div class="artifact-item">
+      <div class="artifact-name"><a href="https://epsilon.xblavania.workers.dev" target="_blank" rel="noopener noreferrer">Project Epsilon</a></div>
+      <div class="artifact-desc">Scenario-first energy modeling platform. PyPSA linear programs with typed Scenario contract driving sizing, stress-testing, and finance engines.</div>
+    </div>
+    <div class="artifact-item">
+      <div class="artifact-name"><a href="CONCEPT3/cybersecurity-marketplace.html">Cybersecurity Marketplace</a></div>
+      <div class="artifact-desc">Search-first discovery concept with explicit Mixpanel + Pendo instrumentation model. Faceted catalog, comparison workflows, bundle configuration.</div>
+    </div>
   </div>
 
-  <!-- ════════════════════════════════════════
-       FOOTER
-  ════════════════════════════════════════ -->
   <footer class="footer">
     <div style="margin-bottom: 8px;">
       <span class="contact-reveal" data-v="eGJsYXZhbmlhQGdtYWlsLmNvbQ==">Click to reveal email</span>
+      &nbsp;&middot;&nbsp;
+      <a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">linkedin.com/in/blavania</a>
     </div>
-    <div>"Are we even solving the right problem?" — Reducing decision latency since 2014.</div>
+    <div>Calgary, AB &middot; Remote across US and Canada</div>
   </footer>
 
   <script>
-    // Contact reveal
     document.querySelectorAll('.contact-reveal').forEach(el => {
       el.addEventListener('click', () => {
+        if (el.classList.contains('revealed')) return;
         const val = atob(el.getAttribute('data-v'));
-        el.textContent = val;
+        const link = document.createElement('a');
+        link.href = 'mailto:' + val;
+        link.textContent = val;
+        link.style.color = 'inherit';
         el.classList.add('revealed');
+        el.replaceWith(link);
       });
-    });
-
-    // Decision latency calculator
-    const calcTime = document.getElementById('calcTime');
-    const calcBtn = document.getElementById('calcBtn');
-    const calcResult = document.getElementById('calcResult');
-    const annualCost = document.getElementById('annualCost');
-    const jobsLost = document.getElementById('jobsLost');
-
-    function runCalc() {
-      const minutes = parseFloat(calcTime.value);
-      if (!isNaN(minutes) && minutes > 0) {
-        const hourlyRate = 150;
-        const quotesPerDay = 8;
-        const daysPerYear = 250;
-        const annualMinutes = minutes * quotesPerDay * daysPerYear;
-        const cost = Math.round((annualMinutes / 60) * hourlyRate);
-        const lost = Math.round(minutes / 60 * quotesPerDay * 30 * 0.15);
-        annualCost.textContent = cost.toLocaleString();
-        jobsLost.textContent = lost;
-        calcResult.classList.add('visible');
-      }
-    }
-
-    calcBtn.addEventListener('click', runCalc);
-    calcTime.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') runCalc();
     });
   </script>
 

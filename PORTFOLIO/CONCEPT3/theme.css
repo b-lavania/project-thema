@@ -1,0 +1,241 @@
+/*
+ * PORTFOLIO/CONCEPT3 — Shared theme overrides
+ * Loaded after each page's <style> block.
+ * Overrides CSS variables and a few targeted layout rules.
+ * Do not add page-specific rules here.
+ */
+
+:root {
+  /* Warm off-white canvas — replaces clinical #ffffff */
+  --bg-color:     #faf8f6;
+
+  /* Deep charcoal — replaces #1a1a1a, slightly warmer */
+  --text-main:    #1c1d1f;
+
+  /* High-contrast muted — replaces #5c5c5c (~3.8:1) with ~7.5:1 */
+  --text-muted:   #4a4d50;
+
+  /* Light helper text */
+  --text-light:   #6e7173;
+
+  /* Soft mid-gray borders — replaces pure #2b2b2b */
+  --border-color: #d8d4cf;
+
+  /* Featherweight section dividers */
+  --border-light: #ede9e4;
+
+  /* Accent colours: slightly deepened for legibility on their tint blocks */
+  --teal:         #0c5c47;
+  --teal-light:   #e6f6f1;
+  --amber:        #a96214;
+  --amber-light:  #fff6e8;
+  --blue:         #14508a;
+  --blue-light:   #ecf3fb;
+  --purple:       #52339a;
+  --purple-light: #f4f3fc;
+}
+
+/* ─── Breathing room ─────────────────────────────────── */
+
+body {
+  line-height: 1.7;
+  background-color: var(--bg-color);
+}
+
+/* ─── Kill the vertical divider inside case-study rows ── */
+/*
+ * The original .cs-label has border-right: 1px solid --border-color.
+ * Now that border-color is a soft gray the line is less aggressive,
+ * but removing it entirely gives the cleaner look from the plan.
+ */
+.cs-label {
+  border-right: none;
+  background: transparent;        /* was #fafafa on some pages */
+}
+
+/* Slightly more air in each row */
+.cs-label,
+.cs-content {
+  padding-top:    1.1rem;
+  padding-bottom: 1.1rem;
+}
+
+/* ─── Tags / chips: borderless pills instead of outlined boxes ── */
+.systems-tags span,
+.tech-chip {
+  border: none;
+  background: #edeae4;
+  border-radius: 3px;
+}
+
+/* ─── Cards: swap thick black border for a lighter stroke + radius ── */
+.cap-card,
+.case-study,
+.proof-card {
+  border-color:  var(--border-color);
+  border-radius: 6px;
+}
+
+/* ─── List items: a touch more space between lines ───── */
+.pain-list li,
+.fit-list li,
+.cs-content li {
+  margin-bottom: 0.55rem;
+}
+
+/* ─── Product & BizOps Toolkit — scale up tiny text ──── */
+
+/* Section heading "PRODUCT & BIZOPS TOOLKIT" */
+.tech-stack-label {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Sub-group headings e.g. "FINANCIAL & OPERATIONS MODELING" */
+.tech-stack-sub {
+  font-size: 0.72rem;
+  margin-bottom: 0.35rem;
+}
+
+/* Individual chips e.g. "NPV / IRR / CF Modeling" */
+.tech-chip {
+  font-size: 0.82rem;
+  padding: 0.28rem 0.6rem;
+}
+
+/* More vertical air between groups */
+.tech-stack-group {
+  margin-bottom: 0.65rem;
+}
+
+/* ─── Site footer (two-tier) ─────────────────────────── */
+
+.container > section:last-of-type {
+  border-bottom: none;
+}
+
+.site-footer {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: 0;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.footer-contact {
+  background: var(--text-main);
+  color: #f5f3f0;
+  padding: 2rem 0;
+}
+
+.footer-cta {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: rgba(245, 243, 240, 0.92);
+  margin: 0 0 1.25rem;
+  max-width: 52rem;
+}
+
+.footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.footer-actions a,
+.footer-actions .contact-reveal {
+  color: #f5f3f0;
+  font-weight: 500;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.footer-actions a:hover,
+.footer-actions .contact-reveal:hover {
+  opacity: 0.85;
+}
+
+.footer-actions .contact-reveal.revealed {
+  cursor: default;
+  text-decoration: none;
+  opacity: 0.95;
+}
+
+.footer-utility {
+  background: var(--bg-color);
+  border-top: 1px solid var(--border-light);
+  padding: 1.25rem 0 2rem;
+}
+
+.footer-utility .footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
+
+.footer-nav a {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.footer-nav a:hover {
+  text-decoration: underline;
+}
+
+.footer-nav a[aria-current="page"] {
+  color: var(--text-muted);
+  text-decoration: underline;
+}
+
+.footer-location,
+.footer-copy {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .footer-inner {
+    padding: 0 1rem;
+  }
+
+  .footer-contact {
+    padding: 1.5rem 0;
+  }
+
+  .footer-cta {
+    font-size: 0.98rem;
+  }
+
+  .footer-utility .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-utility {
+    padding-bottom: 1.5rem;
+  }
+}
+

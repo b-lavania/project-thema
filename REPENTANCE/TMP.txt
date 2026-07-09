@@ -1,0 +1,195 @@
+Target Market Profile
+
+Purpose:
+This worksheet helps you clearly define who will value the problems you solve (Important Pain Points / IP), where they exist, and how to market yourself directly to them. Be specific — try to avoid guessing or generalities.
+
+
+Step 1
+Identify the Pain You Solve
+1. Important Pain Points (IP):
+What key challenges or problems do you want to be paid to solve?
+
+Answer:
+Operational ambiguity in quote-to-dispatch workflows — where manual intake, pricing, scheduling, crew assignment, and customer status create margin leakage, slow decisions, and support load. Specifically:
+- Quote-to-dispatch latency (brokers/dispatchers spending 30–60+ min per job on costing, intake, or load building when it should take minutes)
+- AI/voice/automation that fails at the handoff because structured job context never reaches the ops system (TMS, CRM, dispatch board)
+- Pricing and margin decisions made on gut feel instead of lane-level or job-level confidence
+- Workflow fragmentation across inbox, phone, spreadsheets, and legacy TMS — exception handling breaks, not feature gaps
+- Product analytics blind spots: teams ship AI features without instrumentation to know what moves conversion, fill rate, or retention
+
+Prompt: Think of the recurring problems you fix, the gaps others notice, or frustrations people bring to you.
+
+
+Step 2
+Where Your Value Fits
+
+2. Industry(ies):
+Which industries appeal to you that experience these pain points most acutely?
+
+Answer:
+- Freight / trucking / brokerage (3PL, last-mile, TMS)
+- Field service and home services (HVAC, moving, commercial contractors)
+- Supply chain visibility and cross-border logistics (adjacent)
+- Moving / last-mile adjacent (direct Quotely proof)
+
+Primary lane per REPENTANCE target list: AI-native logistics, dispatch, and field-service ops companies (Series-A to early Series-B).
+
+3. Sector/Division:
+Are there specific sectors, business units, or functions within these industries where these challenges are most common?
+
+Answer:
+- Brokerage ops / carrier sales (load building, covering loads, parallel calling)
+- Dispatch and workforce orchestration (crews, drivers, technicians)
+- Quoting and pricing (spot rates, job costing, margin discipline)
+- Customer intake and conversational AI (voice, SMS, email → structured ops data)
+- Product / engineering at companies where AI is core to the workflow product (not bolt-on chatbots)
+- Back-office workflow automation (order entry, document extraction, billing reconciliation)
+
+4. Company Size:
+What company size best aligns with these problems? Consider revenue, #employees, budget, or scale of operations.
+
+Answer:
+- Stage: Seed to Series-B (occasionally early Series-C if still product-led and 5+ engineers)
+- Headcount: ~10–150 employees (sweet spot: 15–80)
+- Engineering: 5+ engineers in place (you need a team that can ship against your product decisions)
+- Revenue / funding: Series-A raise in last 18–36 months; actively scaling GTM and product, not maintenance mode
+- Avoid: late-stage / enterprise (Motive, FourKites, project44) — logo screen risk, too large for founding PM hire
+
+5. Company Examples:
+Name at least 3 companies where these pain points exist and where you could provide value.
+
+Answer:
+1. Vooma — freight AI agents; unstructured load data not reaching TMS in time to book
+2. FleetWorks — parallel-calling / speed-to-book for covering loads (YC S23; ex-Uber Freight PM founder)
+3. Alvys — small fleets need quoting + dispatch in one flow; phone-tag from fragmented tools
+4. Supermove — moving ops still quote-by-phone; CV + OR quoting is the wedge (closest to Quotely story)
+5. Avoca AI — inbound call deflection fails without job-cost context before dispatcher handoff
+
+(Batch 1 full list: Greenscreens.ai, Vooma, HappyRobot, FleetWorks, Drumkit, Burt, Cartage, Lanesurf, Avoca AI, BuildOps, Alvys, Numeo, Supermove, Pando, Vizion — see REPENTANCE/target-list.md)
+
+
+Step 3
+Company Needs & Culture
+
+6. Key Projects / Initiatives:
+Are there specific projects or goals that would excite you to contribute to?
+
+Answer:
+- Production AI for quote-to-dispatch (CV job costing, OR pricing, conversational intake)
+- Reducing decision latency on operational workflows (60 min → 3 min class outcomes)
+- Instrumenting funnels and ops metrics before scaling GTM (Mixpanel, Pendo, event taxonomy)
+- Pricing architecture and tier consolidation where margin leakage hides in discounting
+- First product hire / founding PM work: 0-to-1 workflow product in messy ops vertical
+- Integration-first patterns (adapter over rip-and-replace) for TMS, CRM, and legacy ops stacks
+
+7. Strategy / Vision Preference:
+Would you prefer companies focused on scaling, transformation, innovation, restructuring, learning, or other strategic objectives?
+
+Answer:
+Scaling + innovation in a chosen domain — specifically:
+- Post-PMF companies scaling GTM while hardening the ops workflow product
+- AI-native product bets where workflow complexity is the moat, not the obstacle
+- NOT: passive cash-flow assets, generic local services, or return to finance/M&A services cage
+- Bounded 12-month commitment: one domain (ops-AI / logistics), one identity (Founding Product Lead), one defended number
+
+8. Culture:
+What type of company culture brings out the best in you and/or your best work?
+
+Answer:
+- Entrepreneurial and product-led (founders who want operators who ship, not slide decks)
+- Small teams with real engineering capacity (5+ engineers who execute)
+- Bottleneck-first culture: willing to reframe the problem, not just optimize the handed frame
+- Remote-tolerant across US/Canada (you work best with async written updates + focused deep work)
+- NOT ideal: heavy GM/labor-management shops, politics-heavy orgs, indefinite grind without product leverage
+- Best when: insight is rewarded AND tied to a number (ARR, fill rate, conversion) — not insight for its own sake
+
+9. Department / Function:
+Which level of seniority is most likely responsible for solving this IP?
+
+Answer:
+- Series A / Seed: CEO / Co-founder (primary outreach target)
+- Series B: Head of Product or VP Engineering
+- Influencers: first PM hire, Head of Ops, CTO (technical co-founder)
+- Your target role: Founding PM, Principal Product, Head of AI Product — reporting to founder or CPO
+
+10. Geography / Employment Model:
+Are you best situated to work locally, hybrid, remote? Is the position likely at head office, a regional office or in the field?
+
+Answer:
+- Remote across US and Canada (Calgary AB + San Francisco CA bases)
+- Best situated for: HQ or remote-first product/engineering teams — NOT field/dispatcher roles
+- You solve problems best when embedded with product + eng, with access to customers and ops data — not from a truck cab or dispatch floor
+- Employer value: you understand field/dispatch pain from shipping Quotely/Moovez, but your leverage is building systems, not being the operator
+
+11. Specific Roles / Titles / People:
+
+a. Who would you need to meet to discuss and learn more about this IP? Identify decision-makers, influencers, or information sources who experience the pain you solve.
+
+Answer:
+- CEO / Co-founder (Series A) — owns product vision, hiring first PM, feels ops pain daily
+- Head of Product (Series B) — owns roadmap, needs someone who can ship AI in workflow context
+- VP Engineering / CTO — cares about structured handoffs, data quality, integration with TMS/CRM
+- Head of Ops / COO (influencer) — experiences dispatch/quoting pain; validates whether product fixes real workflow
+- Investors / angels in logistics (warm intro path) — 8VC, Trucks VC, Initialized, a16z logistics bets
+
+Outreach rule: lead with bottleneck hypothesis + one Quotely proof (60 min→3 min costing, ~50% support deflection, ~93% fill rate). No resume in first message.
+
+b. Name 5 individuals that you might include on this shortlist
+
+Answer:
+1. Jesse Buckingham — CEO & Co-founder, Vooma (freight AI agents; closest to your broker/TMS automation lane)
+2. Paul Singer — CEO & Co-founder, FleetWorks (ex-Uber Freight PM; voice + marketplace for covering loads)
+3. Nick Darman — CEO & Co-founder, Alvys (trucking TMS; quote-to-dispatch in one flow; operator-founder)
+4. Wonjun Jeong — CEO & Co-founder, Supermove (moving company software; direct Quotely proof map)
+5. Tyson Chen — Co-CEO & Co-founder, Avoca AI (home-services voice AI; structured intake before handoff)
+
+(Verify titles and LinkedIn before sending; Greenscreens.ai acquired May 2025 — deprioritize for new outreach.)
+
+12. Character Traits:
+What character traits or working styles would bring out the best in you?
+
+Answer:
+- Direct, hypothesis-led communication (skip fluff; name the bottleneck first)
+- Autonomy with a clear number to own (ARR, fill rate, conversion — not vague "impact")
+- Technical peers who ship (you think by building; need eng partners, not blockers)
+- Founders/operators who value reframe-then-build over incremental patch culture
+- Written async updates + weekly alignment (stakeholder management as scheduled reps, not ad-hoc politics)
+- Patience for boring distribution reps when tied to compounding — boredom is not a pivot signal
+
+13. Their Pain Points (IP):
+What specific challenges or problems are they facing that your skills can address?
+
+Answer:
+- Manual order entry / load building eating rep capacity (Vooma, Drumkit, Burt)
+- Voice AI that deflects calls but creates dispatcher rework without job scope (Avoca, HappyRobot, FleetWorks)
+- Quoting too slow vs phone-and-paper habit (Alvys, Supermove, Workiz)
+- Margin leakage on multi-stop or complex loads despite "instant quote" UX (Loadsmart, Greenscreens lane)
+- TMS module sprawl — quoting, dispatch, billing not connected (Rose Rocket, Turvo, Shipwell)
+- AI features shipped without telemetry to know what moves ops metrics (common across Batch 1)
+- Founder-operator bottleneck: they are the dispatcher/seller and can't scale without systems
+
+14. Your Solution Fit:
+
+a. What solutions would you like to propose for their possible IPs?
+
+Answer:
+- Structured intake → quote → dispatch pipeline with CV/OR costing and reliable handoffs (Quotely pattern)
+- Event taxonomy + funnel instrumentation (Mixpanel/Pendo) before scaling AI GTM
+- Pricing architecture: tier consolidation, real-time quote engines, margin discipline by job type
+- Integration-first adapters to TMS/CRM instead of rip-and-replace migrations
+- Operator-in-the-loop AI: automation where ambiguity is high, hard handoffs where trust is required
+- Bottleneck memo per company: one specific hypothesis + one proof metric + 15-min conversation ask
+
+b. Can you think of anyone else who might benefit from your proposed solution?
+
+Answer:
+- Batch 1 remainder: HappyRobot, Drumkit, Burt, Cartage, Lanesurf, BuildOps, Numeo, Pando, Vizion
+- Field service lane: Hatch, Sameday AI, FieldPulse, ServiceFusion
+- Supply chain: Tive, Pando, Vizion, Nuvocargo
+- Warm intro targets: logistics angels from Vooma/FleetWorks cap tables; YC batch mates in freight (S23–S25)
+- NOT primary: HR/HRIS, generic growth PM, large-company funnels (Flexport, ServiceTitan) — parked this cycle
+
+Tips for use:
+• Think specific, actionable, and measurable rather than vague.
+• List real examples (companies, roles, projects) to make targeting easier.
+• The clearer you are about who experiences the pain and how you solve it, the more effective your networking, positioning, and outreach will be.

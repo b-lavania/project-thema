@@ -76,18 +76,6 @@
   .principles-list li { position: relative; padding-left: 2.5rem; margin-bottom: 1rem; font-size: 0.98rem; font-weight: 500; line-height: 1.4; }
   .principles-list li::before { counter-increment: principle; content: "0" counter(principle); position: absolute; left: 0; top: 0.1rem; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
   .quote-block { font-size: 1.05rem; line-height: 1.45; font-weight: 500; color: var(--text-muted); font-style: italic; max-width: 640px; margin-top: 0.5rem; }
-  .contact-section { background: var(--text-main); color: var(--bg-color); padding: 2.5rem; margin: 0 -2rem -1.25rem -2rem; }
-  .contact-intro { font-size: 1.05rem; line-height: 1.5; font-weight: 500; color: rgba(255, 255, 255, 0.88); margin: 0; }
-  .contact-section h2 { color: var(--bg-color); margin-bottom: 1.25rem; text-transform: none; font-family: var(--font-sans); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-  .contact-info { font-size: 1rem; line-height: 1.7; }
-  .contact-info a { color: var(--bg-color); text-decoration: underline; font-weight: 500; }
-  .contact-info a:hover { opacity: 0.8; }
-  .contact-section .contact-reveal { display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--bg-color); font-size: 1rem; text-decoration: underline; font-weight: 500; }
-  .contact-section .contact-reveal:hover { opacity: 0.85; }
-  .contact-section .contact-reveal.revealed { cursor: default; opacity: 0.95; text-decoration: none; }
-  .contact-location { margin-top: 0.85rem; font-size: 0.9rem; opacity: 0.8; }
-  .contact-cta { margin: 0; }
   .mockup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem; }
   .mockup-item { border: 1px solid var(--border-light); overflow: hidden; }
   .mockup-item iframe { width: 100%; height: 220px; border: none; display: block; }
@@ -106,7 +94,7 @@
   .cs-content strong { color: var(--text-main); }
   @media (max-width: 900px) {
     .proof-points { grid-template-columns: 1fr 1fr; }
-    .compare-grid, .two-col-section, .learn-grid, .contact-grid { grid-template-columns: 1fr; }
+    .compare-grid, .two-col-section, .learn-grid { grid-template-columns: 1fr; }
     .mockup-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 768px) {
@@ -116,9 +104,10 @@
     .proof-points { grid-template-columns: 1fr; }
     .cs-grid { grid-template-columns: 1fr; }
     .cs-label { border-right: none; border-bottom: 1px dashed var(--border-color); }
-    .contact-section { margin: 0 -1rem -1rem -1rem; padding: 1.75rem 1rem; }
   }
 </style>
+  <link rel="stylesheet" href="theme.css">
+
 </head>
 <body>
 
@@ -334,40 +323,33 @@
     <p class="quote-block">&ldquo;The best telehealth platform is one where the patient and the clinician both feel like they&rsquo;re looking at the same care journey, not two disconnected tools.&rdquo;</p>
   </section>
 
-  <section style="border-bottom: none; padding-bottom: 0;">
-    <div class="contact-section">
-      <h2>Contact</h2>
-      <div class="contact-grid">
-        <div class="contact-info">
-          <div><span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span></div>
-          <div><a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">linkedin.com/in/blavania</a></div>
-          <div class="contact-location">Calgary, AB<br>Remote across US and Canada</div>
-        </div>
-        <div class="contact-cta">
-          <p class="contact-intro">If your team is navigating the gap between product decisions and business outcomes, such as pricing that&rsquo;s leaking, ops that don&rsquo;t scale, or AI investments with unclear ROI, let&rsquo;s talk. I&rsquo;ve worked through those problems across logistics, M&amp;A SaaS, edtech, and healthcare.</p>
-        </div>
-      </div>
-    </div>
   </section>
 </div>
 
-<script>
-(function () {
-  document.querySelectorAll('.contact-reveal').forEach(function (el) {
-    el.addEventListener('click', function () {
-      if (this.classList.contains('revealed')) return;
-      var decoded = atob(this.dataset.v);
-      var link = document.createElement('a');
-      link.href = 'mailto:' + decoded;
-      link.textContent = decoded;
-      link.style.color = 'inherit';
-      link.style.fontWeight = '500';
-      this.classList.add('revealed');
-      this.replaceWith(link);
-    });
-  });
-})();
-</script>
+<footer class="site-footer">
+  <div class="footer-contact">
+    <div class="footer-inner">
+      <p class="footer-cta">I find the bottleneck and turn messy workflows into reliable systems.</p>
+      <div class="footer-actions">
+        <span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span>
+        <a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-utility">
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="Portfolio">
+        <a href="index.html">Home</a>
+        <a href="hris-ma.html">HRIS / M&amp;A</a>
+        <a href="telehealth.html" aria-current="page">Telehealth</a>
+        <a href="cybersecurity-marketplace.html">Cyber marketplace</a>
+      </nav>
+      <span class="footer-location">Calgary, AB · Remote US &amp; Canada</span>
+      <span class="footer-copy">© 2026 Bob Lavania</span>
+    </div>
+  </div>
+</footer>
 
+<script src="footer.js"></script>
 </body>
 </html>
