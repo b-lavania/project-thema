@@ -292,25 +292,31 @@
     }
 
     .cs-header {
-      background-color: var(--text-main);
+      background-color: #111111;
       color: var(--bg-color);
       padding: 1.5rem;
+      border-left: 4px solid #111111;
+      position: relative;
     }
 
     .cs-header.teal {
-      background-color: var(--teal);
+      background-color: #111111;
+      border-left-color: var(--teal);
     }
 
     .cs-header.amber {
-      background-color: var(--amber);
+      background-color: #2d2d2d;
+      border-left-color: var(--amber);
     }
 
     .cs-header.blue {
-      background-color: var(--blue);
+      background-color: #2d2d2d;
+      border-left-color: var(--blue);
     }
 
     .cs-header.energy {
-      background-color: var(--energy);
+      background-color: #404040;
+      border-left-color: var(--energy);
     }
 
     .cs-header h3 {
@@ -535,7 +541,7 @@
 
     .logos-grid {
       display: flex;
-      gap: 2.5rem;
+      gap: 1.25rem;
       align-items: center;
       flex-wrap: wrap;
     }
@@ -1401,6 +1407,8 @@
       <div class="footer-inner">
         <nav class="footer-nav" aria-label="Portfolio">
           <a href="index.html" aria-current="page">Home</a>
+          <span class="footer-nav-divider">·</span>
+          <span class="footer-nav-label">Deep-dives:</span>
           <a href="hris-ma.html">HRIS / M&amp;A</a>
           <a href="telehealth.html">Telehealth</a>
           <a href="cybersecurity-marketplace.html">Cyber marketplace</a>
