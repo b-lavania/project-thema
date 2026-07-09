@@ -1,6 +1,6 @@
 # 12-Month Path Comparison
 
-Compare three paths on the same axes. Do not evaluate acquisition in isolation — your writings (`fatalism.md`, `too-greedy.md`) warn this is how relapse starts.
+Compare three paths on the same axes. Do not evaluate acquisition in isolation — your writings ([`fatalism.md`](../../REPENTANCE/fatalism.md), [`too-greedy.md`](../../REPENTANCE/too-greedy.md)) warn this is how relapse starts.
 
 ---
 

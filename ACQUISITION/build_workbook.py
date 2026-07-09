@@ -13,7 +13,6 @@ from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.datavalidation import DataValidation
 
 ROOT = Path(__file__).resolve().parent
-SRC = ROOT / "Acqusition planning.xlsx"
 OUT = ROOT / "Acquisition planning.xlsx"
 EXPORTS = ROOT / "exports"
 
@@ -154,6 +153,7 @@ def sheet_readme(wb: openpyxl.Workbook) -> None:
         ("07_Diligence_Memo — one-page memo template per deal", False),
         ("08_Time_Budget — weekly hours across Path A, Path B, acquisition", False),
         ("09_Decision_Log — dated pass/kill decisions", False),
+        ("10_Ownership_Stress — financial stress + profile litmus before Pursue", False),
         ("", False),
         ("THREE GATES (all required)", True),
         ("1. Business you could improve", False),
@@ -182,7 +182,7 @@ def sheet_readme(wb: openpyxl.Workbook) -> None:
         ("• LOI without financing pre-approval", False),
         ("• Deal fails all three gates", False),
         ("", False),
-        ("See ACQUISITION/README.md and REPENTANCE/acquisition-decision/ for full rules.", False),
+        ("See ACQUISITION/README.md and ownership-challenges.md for full rules.", False),
     ]
     for i, (text, bold) in enumerate(lines, 1):
         c = ws.cell(row=i, column=1, value=text)
@@ -640,6 +640,97 @@ def sheet_decision_log(wb: openpyxl.Workbook) -> None:
     freeze_header(ws)
 
 
+def sheet_ownership_stress(wb: openpyxl.Workbook) -> None:
+    ws = wb.create_sheet("10_Ownership_Stress")
+    ws.cell(row=1, column=1, value="OWNERSHIP STRESS — financial + profile litmus (complete ownership-challenges.md §9 before Pursue)")
+    ws.cell(row=1, column=1).font = FONT_HEADER
+
+    labels = [
+        (2, "Deal ID", None),
+        (3, "Deal name", None),
+        (5, "FINANCIAL STRESS", None),
+        (6, "Purchase price / EV ($)", None),
+        (7, "Equity in ($)", None),
+        (8, "Annual debt service ($)", None),
+        (9, "Expected normalized SDE year 1 ($)", None),
+        (10, "SDE stress haircut (%)", -20),
+        (11, "Additional haircut — key customer / seller early (%)", 0),
+        (12, "Hours/week operator (planned)", None),
+        (13, "Hours/week operator (actual stress case)", None),
+        (14, "Path B income forgone ($/yr)", None),
+        (15, "Minimum income floor ($/yr)", None),
+        (17, "Stressed SDE ($)", "=IF(B9=\"\",\"\",B9*(1+B10/100)*(1+B11/100))"),
+        (18, "Post-debt owner cash ($)", "=IF(OR(B17=\"\",B8=\"\"),\"\",B17-B8)"),
+        (19, "DSCR (x)", "=IF(B8=0,\"\",B17/B8)"),
+        (20, "Post-debt cash >= floor?", '=IF(B18=\"\",\"\",IF(B18>=B15,\"YES\",\"NO\"))'),
+        (21, "DSCR >= 1.25x?", '=IF(B19=\"\",\"\",IF(B19>=1.25,\"YES\",\"NO\"))'),
+        (22, "Hours overrun?", '=IF(AND(B12<>\"\",B13<>\"\"),IF(B13>B12,\"YES\",\"NO\"),\"\")'),
+        (24, "PROFILE LITMUS", None),
+        (25, "Path retired for this deal?", "Neither"),
+        (26, "Domain still ops-AI / logistics / field service?", "YES"),
+        (27, "Role in year 1", "Product-led improver"),
+        (28, "Primary motive", "Ownership"),
+        (29, "Path B outbound hrs (this week)", None),
+        (30, "Acquisition hrs (this week)", None),
+        (31, "Argue-both-sides done? (ownership-challenges.md §9)", "NO"),
+        (33, "One-bet violation?", '=IF(B25=\"Neither\",\"YES — stop\",\"NO\")'),
+        (34, "Month-5 domain drift flag?", '=IF(B26=\"NO\",\"YES\",\"NO\")'),
+        (35, "GM trap flag?", '=IF(B27=\"Hands-on GM\",\"YES — Watch/Kill unless hire-ops-mgr plan\",\"NO\")'),
+        (36, "Escape/Prestige without Ownership?", '=IF(OR(B28=\"Escape\",B28=\"Prestige\"),\"YES — favor Path B\",\"NO\")'),
+        (37, "Kill-rule proximity?", '=IF(AND(B30>8,B29<5),\"KILL RULE RISK\",\"OK\")'),
+        (38, "Argue-both-sides required?", '=IF(B31=\"NO\",\"BLOCK Pursue until §9 complete\",\"OK\")'),
+        (40, "Overall profile litmus", '=IF(OR(B33=\"YES — stop\",B34=\"YES\",B35=\"YES — Watch/Kill unless hire-ops-mgr plan\",B36=\"YES — favor Path B\",B37=\"KILL RULE RISK\",B38=\"BLOCK Pursue until §9 complete\"),\"FAIL\",\"PASS\")'),
+        (41, "Financial stress pass?", '=IF(OR(B20=\"NO\",B21=\"NO\"),\"FAIL\",\"PASS\")'),
+        (42, "Recommend before Pursue", '=IF(OR(B40=\"FAIL\",B41=\"FAIL\"),\"Watch or Kill\",\"OK to score in 05_Deal_Scorecard\")'),
+    ]
+
+    for row, label, default in labels:
+        ws.cell(row=row, column=1, value=label)
+        if row in (5, 24):
+            ws.cell(row=row, column=1).font = FONT_HEADER
+        if default is not None:
+            c = ws.cell(row=row, column=2, value=default)
+            if isinstance(default, str) and default.startswith("="):
+                style_formula_cell(c)
+            else:
+                style_input_cell(c)
+        elif row in (2, 3, 6, 7, 8, 9, 12, 13, 14, 15, 29, 30):
+            style_input_cell(ws.cell(row=row, column=2))
+
+    for row in (17, 18, 19, 20, 21, 22, 33, 34, 35, 36, 37, 38, 40, 41, 42):
+        style_formula_cell(ws.cell(row=row, column=2))
+
+    dv_path = DataValidation(type="list", formula1='"Path A,Path B,Neither"', allow_blank=True)
+    ws.add_data_validation(dv_path)
+    dv_path.add("B25")
+
+    dv_yn = DataValidation(type="list", formula1='"YES,NO"', allow_blank=True)
+    ws.add_data_validation(dv_yn)
+    dv_yn.add("B26")
+    dv_yn.add("B31")
+
+    dv_role = DataValidation(type="list", formula1='"Product-led improver,Hands-on GM"', allow_blank=True)
+    ws.add_data_validation(dv_role)
+    dv_role.add("B27")
+
+    dv_motive = DataValidation(
+        type="list",
+        formula1='"Ownership,Defended number,Escape,Prestige"',
+        allow_blank=True,
+    )
+    ws.add_data_validation(dv_motive)
+    dv_motive.add("B28")
+
+    dv_stress = DataValidation(type="list", formula1='"-20,-40,0"', allow_blank=True)
+    ws.add_data_validation(dv_stress)
+    dv_stress.add("B10")
+
+    set_col_widths(ws, {1: 52, 2: 28, 3: 40})
+    ws.cell(row=43, column=1, value="Guide: ACQUISITION/ownership-challenges.md — section 9 argue-both-sides required before Pursue")
+    ws.cell(row=43, column=1).font = FONT_LINK
+    freeze_header(ws)
+
+
 def export_csvs(wb: openpyxl.Workbook) -> None:
     EXPORTS.mkdir(exist_ok=True)
 
@@ -683,6 +774,7 @@ def main() -> None:
     sheet_diligence_memo(wb)
     sheet_time_budget(wb)
     sheet_decision_log(wb)
+    sheet_ownership_stress(wb)
     if default.title == "Sheet" and default.max_row == 1 and default.max_column == 1:
         wb.remove(default)
 

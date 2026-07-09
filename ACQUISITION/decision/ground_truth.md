@@ -45,7 +45,7 @@ Extracted from REPENTANCE + [`RES/data/master_context.md`](../../RES/data/master
 
 ## Relapse risks (acquisition-specific)
 
-From `fatalism.md` + `too-greedy.md`:
+From [`fatalism.md`](../../REPENTANCE/fatalism.md) + [`too-greedy.md`](../../REPENTANCE/too-greedy.md):
 
 1. **Novelty over compounding** — acquisition research feels like insight; avoids boring distribution reps.
 2. **New domain escape** — any non-ops-AI/logistics acquisition violates 12-month anti-reframe rule.

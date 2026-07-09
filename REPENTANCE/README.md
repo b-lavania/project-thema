@@ -25,7 +25,3 @@ Each file cross-links to the others. Read in order, then return to whichever par
 
 - [`PORTFOLIO/concept1.html`](../PORTFOLIO/concept1.html): Primary identity — Founding Product Lead. The operator portfolio.
 - [`PORTFOLIO/concept2.html`](../PORTFOLIO/concept2.html): Narrow, secondary asset — Operational Systems Architect advisory page. Sent selectively to VCs and fractional clients. Not a competing identity.
-
-## Acquisition decision (optional)
-
-- [`acquisition-decision/README.md`](acquisition-decision/README.md): Should owner-operator SMB acquisition be your 12-month goal? Framework + **Not yet** default call.

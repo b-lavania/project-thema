@@ -78,7 +78,7 @@ Only archetypes scoring **≥ 4 average** on fit + enjoyment survive to listing 
 | Day-to-day | **3** | Product possible; many are services-heavy |
 | Pigeonhole trap | **2** | Returns to finance/M&A lane you **left deliberately** |
 
-**Risks:** `too-greedy.md` — distribution in finance feels like the cage you escaped.
+**Risks:** [`too-greedy.md`](../../REPENTANCE/too-greedy.md) — distribution in finance feels like the cage you escaped.
 
 **Verdict:** **Reject for 12-month goal** unless exit criteria written upfront and domain is **chosen**, not defaulted.
 

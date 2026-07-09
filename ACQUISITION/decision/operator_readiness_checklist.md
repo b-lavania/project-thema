@@ -30,7 +30,7 @@ Reality-check whether you want to **own and operate** a business — or whether 
 
 **Pass rule:** ≥ 12 months runway OR signed LOI with defined close date + financing committed.
 
-From `fatalism.md`: income pressure + blocked Quotely = acquisition must not be **pain response** ("anything better than current").
+From [`fatalism.md`](../../REPENTANCE/fatalism.md): income pressure + blocked Quotely = acquisition must not be **pain response** ("anything better than current").
 
 ---
 
@@ -50,7 +50,7 @@ Rate 1–5 (1 = would hate, 5 = energizing):
 
 **Pass rule:** Average ≥ 3.5 **or** plan to hire GM within 6 months of close (with cost in model).
 
-Your documented edge is **product-led improvement**, not multi-site GM (`too-deep.md`).
+Your documented edge is **product-led improvement**, not multi-site GM ([`too-deep.md`](../../REPENTANCE/too-deep.md)).
 
 ---
 
@@ -88,7 +88,7 @@ Check the honest primary motive:
 - [ ] **Escape** — leave Moovez/CTO situation without a plan
 - [ ] **Prestige** — "founder who bought a business"
 
-If **Escape** or **Prestige** checked without **Ownership**, favor Path B first (`too-greedy.md`).
+If **Escape** or **Prestige** checked without **Ownership**, favor Path B first ([`too-greedy.md`](../../REPENTANCE/too-greedy.md)).
 
 ---
 

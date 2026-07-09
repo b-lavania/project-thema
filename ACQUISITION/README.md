@@ -8,17 +8,45 @@ Bounded acquisition research for a small individual acquirer. This folder answer
 
 Acquisition is a gated secondary experiment only: max **5 hrs/week**, Archetype 1 (vertical ops SaaS / workflow businesses) until financing readiness is complete.
 
-Source: [`REPENTANCE/acquisition-decision/final_decision_memo.md`](../REPENTANCE/acquisition-decision/final_decision_memo.md) (2026-06-24).
+Source: [`decision/final_decision_memo.md`](decision/final_decision_memo.md) (2026-06-24).
+
+## Start here
+
+| Read first | Purpose |
+|------------|---------|
+| [`ownership-challenges.md`](ownership-challenges.md) | Deep thinking guide — OS vs ownership, argue-both-sides, relapse traps |
+| [`decision/final_decision_memo.md`](decision/final_decision_memo.md) | Final call, kill rules, 30-day reps test |
+| [`Acquisition planning.xlsx`](Acquisition%20planning.xlsx) | Workbook — scorecards, pipeline, stress test |
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| [`Acquisition planning.xlsx`](Acquisition%20planning.xlsx) | Primary workbook — archetype screen, sizing, readiness, deal pipeline, scorecards, diligence |
+| [`Acquisition planning.xlsx`](Acquisition%20planning.xlsx) | Primary workbook — archetype screen, sizing, readiness, deal pipeline, scorecards, diligence, ownership stress |
+| [`ownership-challenges.md`](ownership-challenges.md) | Profile-grounded ownership working paper (not a checklist) |
+| [`build_workbook.py`](build_workbook.py) | Regenerates xlsx + CSV exports |
 | [`exports/deal_pipeline.csv`](exports/deal_pipeline.csv) | Input-only mirror of deal pipeline tab (UTF-8) |
 | [`exports/decision_log.csv`](exports/decision_log.csv) | Input-only mirror of decision log tab (UTF-8) |
 
-Legacy file `Acqusition planning.xlsx` (typo) is superseded by `Acquisition planning.xlsx`.
+## Decision memos (`decision/`)
+
+| Document | Purpose |
+|----------|---------|
+| [`decision/final_decision_memo.md`](decision/final_decision_memo.md) | Final call + kill rules |
+| [`decision/ground_truth.md`](decision/ground_truth.md) | Constraints, strengths, relapse risks |
+| [`decision/decision_scorecard.md`](decision/decision_scorecard.md) | Weighted criteria + thresholds |
+| [`decision/operator_readiness_checklist.md`](decision/operator_readiness_checklist.md) | Financing, runway, willingness |
+| [`decision/acquisition_archetypes.md`](decision/acquisition_archetypes.md) | Archetype screen |
+| [`decision/path_comparison.md`](decision/path_comparison.md) | Paths A / B / C |
+
+## REPENTANCE context (identity + 12-month lock)
+
+| Document | Purpose |
+|----------|---------|
+| [`../REPENTANCE/too-greedy.md`](../REPENTANCE/too-greedy.md) | Locked 12-month plan + GTM & CTO blocker |
+| [`../REPENTANCE/fatalism.md`](../REPENTANCE/fatalism.md) | Relapse patterns + operating system |
+| [`../REPENTANCE/too-deep.md`](../REPENTANCE/too-deep.md) | Positioning + identity spine |
+| [`../RES/data/master_context.md`](../RES/data/master_context.md) | Operator credentials |
 
 ## Operating rules
 
@@ -29,9 +57,11 @@ Legacy file `Acqusition planning.xlsx` (typo) is superseded by `Acquisition plan
 
 2. **Time budget:** Acquisition search + diligence ≤ 5 hrs/week until `03_Operator_Readiness` financing and runway pass.
 
-3. **Archetype filter:** Pursue listings in Tier 1 verticals only until readiness passes. See workbook `01_Archetype_Scorecard` and [`acquisition_archetypes.md`](../REPENTANCE/acquisition-decision/acquisition_archetypes.md).
+3. **Archetype filter:** Pursue listings in Tier 1 verticals only until readiness passes. See workbook `01_Archetype_Scorecard` and [`decision/acquisition_archetypes.md`](decision/acquisition_archetypes.md).
 
 4. **Use normalized buyer SDE/EBITDA** for multiples and debt-service math, not seller-reported figures alone.
+
+5. **Complete [`ownership-challenges.md`](ownership-challenges.md) section 9** before labeling any deal Pursue.
 
 ## Kill rules
 
@@ -53,17 +83,6 @@ Pause all acquisition search until January 2027 review if any trigger fires:
 | Avoid | < $150K or > $750K EBITDA | > $3.0M EV |
 
 Financing hard fails: no lender path, down payment > liquid capital, DSCR < 1.25x, post-debt cash flow below minimum income, full-time operator required before Path B resolved.
-
-## REPENTANCE decision docs
-
-| Document | Purpose |
-|----------|---------|
-| [`final_decision_memo.md`](../REPENTANCE/acquisition-decision/final_decision_memo.md) | Final call + kill rules |
-| [`decision_scorecard.md`](../REPENTANCE/acquisition-decision/decision_scorecard.md) | Weighted criteria + thresholds |
-| [`operator_readiness_checklist.md`](../REPENTANCE/acquisition-decision/operator_readiness_checklist.md) | Financing, runway, willingness |
-| [`acquisition_archetypes.md`](../REPENTANCE/acquisition-decision/acquisition_archetypes.md) | Archetype screen |
-| [`path_comparison.md`](../REPENTANCE/acquisition-decision/path_comparison.md) | Paths A / B / C |
-| [`ground_truth.md`](../REPENTANCE/acquisition-decision/ground_truth.md) | Constraints, strengths, relapse risks |
 
 ## Share in Google Sheets
 
@@ -98,18 +117,16 @@ If xlsx import ever breaks, import [`exports/deal_pipeline.csv`](exports/deal_pi
 - Named ranges are workbook-scoped plain cell blocks — no structured Excel tables.
 - `PMT` is used in `02_Target_Size_Bands` wrapped in `ABS()` so debt service displays as a positive number in both Excel and Sheets.
 
-### Local verification (2026-07-05)
-
-- 10 tabs, 133 formulas, **0 errors** after LibreOffice recalc.
-- No `XLOOKUP`, macros, structured table refs, or external workbook links.
-- Google Sheets import not automated in CI; after upload, spot-check `01_Archetype_Scorecard!J3`, `02_Target_Size_Bands!B26`, `05_Deal_Scorecard!R3`, `06_Business_Risk_Diligence!V2`, and `08_Time_Budget!F2`.
-
 ## Workflow
 
-1. Screen verticals in `01_Archetype_Scorecard`.
-2. Confirm readiness in `03_Operator_Readiness` (default: Not yet).
-3. Add real listings to `04_Deal_Pipeline` only.
-4. Score each deal in `05_Deal_Scorecard` + `06_Business_Risk_Diligence`.
-5. Write one-page memo in `07_Diligence_Memo`.
-6. Track weekly hours in `08_Time_Budget` to catch avoidance.
-7. Log pass/kill decisions in `09_Decision_Log`.
+1. Read [`ownership-challenges.md`](ownership-challenges.md) when tempted to deepen on a listing.
+2. Screen verticals in `01_Archetype_Scorecard`.
+3. Confirm readiness in `03_Operator_Readiness` (default: Not yet).
+4. Add real listings to `04_Deal_Pipeline` only.
+5. Score each deal in `05_Deal_Scorecard` + `06_Business_Risk_Diligence`.
+6. Run `10_Ownership_Stress` (financial + profile litmus) before Pursue.
+7. Write one-page memo in `07_Diligence_Memo`.
+8. Track weekly hours in `08_Time_Budget` to catch avoidance.
+9. Log pass/kill decisions in `09_Decision_Log`.
+
+Regenerate workbook: `python build_workbook.py`
