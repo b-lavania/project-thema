@@ -1,7 +1,7 @@
 > **Part 1 of 3 · Outward** — Positioning audit: what you sell and to whom.  
-> See [`fatalism.md`](fatalism.md) for the inward diagnosis & training; see [`too-greedy.md`](too-greedy.md) for the 12-month plan.
+> See [`02-operating-system.md`](02-operating-system.md) for the inward diagnosis & training; see [`03-commitment-plan.md`](03-commitment-plan.md) for the 12-month plan.
 
-# Too Deep — Where the Real Value Lives
+# Positioning Audit — Where the Real Value Lives
 
 A positioning audit of `master_context.md`. The context file is rich on *what you did* (projects, problems, metrics) and thin on *why anyone should care*. This document extracts the value layer underneath the project list — the thing you actually sell to founders, hiring managers, and future teammates.
 

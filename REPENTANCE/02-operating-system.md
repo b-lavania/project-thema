@@ -1,9 +1,9 @@
 > **Part 2 of 3 · Inward** — How your thinking model works, and why it caps you.  
-> See [`too-deep.md`](too-deep.md) for positioning & brand; see [`too-greedy.md`](too-greedy.md) for the 12-month plan.
+> See [`01-positioning-audit.md`](01-positioning-audit.md) for positioning & brand; see [`03-commitment-plan.md`](03-commitment-plan.md) for the 12-month plan.
 
-# Fatalism — How Your Thinking Model Works, and Why It Caps You
+# Operating System — How Your Thinking Model Works, and Why It Caps You
 
-An honest read, built from `master_context.md`, the three portfolio identities, and the patterns in `too-deep.md`. You asked for the unvarnished version. This is it.
+An honest read, built from `master_context.md`, the three portfolio identities, and the patterns in `01-positioning-audit.md`. You asked for the unvarnished version. This is it.
 
 ---
 

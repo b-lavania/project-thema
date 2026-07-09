@@ -1,11 +1,11 @@
 > **Part 3 of 3 · Forward** — The 12-month commitment plan.  
-> See [`too-deep.md`](too-deep.md) for positioning & brand; see [`fatalism.md`](fatalism.md) for the inward diagnosis & training.
+> See [`01-positioning-audit.md`](01-positioning-audit.md) for positioning & brand; see [`02-operating-system.md`](02-operating-system.md) for the inward diagnosis & training.
 
-# Too Greedy — The 12-Month Commitment Plan
+# Commitment Plan — The 12-Month Plan
 
-The cure for `fatalism.md` is not another insight. It is a year of *not* re-rolling the dice. This plan turns the four improvement areas **compounding, distribution, outcome over insight, closing the possibility space** into one domain, one identity, one number, held for twelve months.
+The cure for `02-operating-system.md` is not another insight. It is a year of *not* re-rolling the dice. This plan turns the four improvement areas **compounding, distribution, outcome over insight, closing the possibility space** into one domain, one identity, one number, held for twelve months.
 
-The title is the point: pick *one* thing and be greedy about it instead of spreading thin.
+The commitment: pick *one* thing and be greedy about it instead of spreading thin.
 
 ---
 

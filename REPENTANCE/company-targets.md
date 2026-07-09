@@ -126,4 +126,4 @@ Re-verify quarterly; remove companies that graduate past Series-C or shrink belo
 
 ## CRM seed sync
 
-Mirror this list into `CRM/data/companies.yaml` with `hypothesis:` per row. After YAML edits, see `REPENTANCE/90-day-scoreboard.md` for re-seeding `tempus.db`.
+Mirror this list into `CRM/data/companies.yaml` with `hypothesis:` per row. After YAML edits, see [`execution-scoreboard.md`](execution-scoreboard.md) for re-seeding `tempus.db`.

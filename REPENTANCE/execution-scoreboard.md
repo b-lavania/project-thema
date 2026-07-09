@@ -16,6 +16,8 @@ This is the unified strategic and operational blueprint for landing a full-time 
 2.  **Build:** CV, OR, analytics, workflow systems, AI-assisted operational tooling.
 3.  **Commercialize:** 20x faster quoting, 3x take rate, ARPU expansion, retention/workflow adoption gains.
 
+See [`01-positioning-audit.md`](01-positioning-audit.md) for detailed positioning guidance and [`02-operating-system.md`](02-operating-system.md) for psychological guardrails.
+
 ### Portfolio Guidance
 *   **`PORTFOLIO/concept1.html` (Primary Spine):** Founding operator, messy-stage builder, technical-commercial translator.
 *   **`PORTFOLIO/concept2.html` (Tone & Voice):** Structural intelligence, decision latency, problem framing. Use for messaging.
