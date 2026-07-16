@@ -4,6 +4,12 @@ Screen **archetypes before specific deals.** Score each 1–5 on: unfair advanta
 
 Only archetypes scoring **≥ 4 average** on fit + enjoyment survive to listing search.
 
+**Operator fit map:** [`../ideal-business-fit.md`](../ideal-business-fit.md) — Buy / Conditional / Never catalogs, day-to-day litmus, what you'd actually operate.
+
+**Listing screen (use first):** [`../operator_fit.csv`](../operator_fit.csv) — paste into Google Sheets; one row per listing; `operator_fit_yesno` before workbook diligence.
+
+**Archetype vs Tier:** Archetype = deal *shape*. Workbook Tier = vertical score. Do not use Tier or archetype scores as a buy override — operator-fit Yes/No in the CSV comes first.
+
 ---
 
 ## Scoring legend
@@ -130,4 +136,9 @@ Only archetypes scoring **≥ 4 average** on fit + enjoyment survive to listing 
 
 ## Next step
 
-Complete [`operator_readiness_checklist.md`](operator_readiness_checklist.md), then run 30-day boring reps (one listing review + mini memo per week) **only** for Archetype 1 listings.
+Complete [`operator_readiness_checklist.md`](operator_readiness_checklist.md), then run 30-day boring reps (one listing per week max):
+
+1. Path B outbound first.
+2. Paste the listing into [`../operator_fit.csv`](../operator_fit.csv).
+3. Answer day-to-day litmus — **only Archetype 1 shapes with `operator_fit_yesno = Yes`** move to workbook diligence.
+4. See Buy / Conditional / Never catalogs in [`../ideal-business-fit.md`](../ideal-business-fit.md).

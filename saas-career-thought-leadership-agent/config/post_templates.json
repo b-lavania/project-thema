@@ -1,0 +1,28 @@
+{
+  "templates": {
+    "framework": {
+      "name": "Framework Post",
+      "description": "Step-by-step framework for solving a problem",
+      "structure": "Hook with counterintuitive statement → 3-5 step framework with clear headers → Why this matters → One sentence summary → CTA",
+      "prompt": "Generate a LinkedIn post using this framework structure:\n\n1. Hook: Start with a counterintuitive statement about the problem\n2. Framework: 3-5 steps with clear headers (Step 1: [Action] → [Outcome])\n3. Why it matters: Brief explanation of the value\n4. One-sentence summary\n5. CTA: Specific question to engage readers\n\nKeep it 150-250 words, no markdown formatting, line breaks between thoughts, end with 3 relevant hashtags max."
+    },
+    "case_study": {
+      "name": "Case Study Post",
+      "description": "Specific example with stated problem → real problem → solution → outcome",
+      "structure": "Hook with metric or outcome → The stated problem → The real problem found → What was built → The result → Key insight → CTA",
+      "prompt": "Generate a LinkedIn post using this case study structure:\n\n1. Hook: Start with a metric or outcome (e.g., \"We reduced X from Y to Z\")\n2. The stated problem: What people thought the issue was\n3. The real problem: What was actually blocking progress\n4. What was built: The solution implemented\n5. The result: Measurable outcome\n6. Key insight: What this teaches\n7. CTA: Question about operational problems\n\nKeep it 150-250 words, no markdown formatting, line breaks between thoughts, end with 3 relevant hashtags max."
+    },
+    "industry_analysis": {
+      "name": "Industry Analysis Post",
+      "description": "Market map or trend analysis with company examples",
+      "structure": "Hook with market observation → 3-5 companies/trends with brief analysis → The pattern observed → What's missing → CTA",
+      "prompt": "Generate a LinkedIn post using this industry analysis structure:\n\n1. Hook: Market observation or trend\n2. 3-5 companies or trends with brief analysis (what they're solving well)\n3. The pattern: What connects them\n4. What's missing: Gaps in the market\n5. CTA: Ask who else to watch\n\nKeep it 150-250 words, no markdown formatting, line breaks between thoughts, end with 3 relevant hashtags max."
+    },
+    "company_specific": {
+      "name": "Company-Specific Post",
+      "description": "Analysis of a specific target company's approach",
+      "structure": "Hook with company + problem → What they get right → Why it matters → What to build on top → Tag company → CTA",
+      "prompt": "Generate a LinkedIn post using this company-specific structure:\n\n1. Hook: Specific company + problem they're solving\n2. What they get right: Analysis of their approach\n3. Why it matters: The value they're creating\n4. What to build on top: How to extend their work\n5. Tag the company appropriately\n6. CTA: Ask for their perspective\n\nKeep it 150-250 words, no markdown formatting, line breaks between thoughts, end with 3 relevant hashtags max. Be positive and constructive, not critical."
+    }
+  }
+}

@@ -14,15 +14,19 @@ Source: [`decision/final_decision_memo.md`](decision/final_decision_memo.md) (20
 
 | Read first | Purpose |
 |------------|---------|
+| [`operator_fit.csv`](operator_fit.csv) | **Copy into Google Sheets first** — one row per listing, Yes/No operator-fit call |
+| [`ideal-business-fit.md`](ideal-business-fit.md) | Operator fit narrative — what you'd actually run day-to-day, Buy/Conditional/Never |
 | [`ownership-challenges.md`](ownership-challenges.md) | Deep thinking guide — OS vs ownership, argue-both-sides, relapse traps |
 | [`decision/final_decision_memo.md`](decision/final_decision_memo.md) | Final call, kill rules, 30-day reps test |
-| [`Acquisition planning.xlsx`](Acquisition%20planning.xlsx) | Workbook — scorecards, pipeline, stress test |
+| [`Acquisition planning.xlsx`](Acquisition%20planning.xlsx) | Later-stage diligence — only after CSV operator_fit_yesno = Yes |
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| [`Acquisition planning.xlsx`](Acquisition%20planning.xlsx) | Primary workbook — archetype screen, sizing, readiness, deal pipeline, scorecards, diligence, ownership stress |
+| [`operator_fit.csv`](operator_fit.csv) | Google Sheets-ready listing screen — operator fit Yes/No before workbook |
+| [`ideal-business-fit.md`](ideal-business-fit.md) | Operator fit narrative — what business you'd actually run day-to-day |
+| [`Acquisition planning.xlsx`](Acquisition%20planning.xlsx) | Later-stage workbook — archetype screen, sizing, readiness, deal pipeline, scorecards |
 | [`ownership-challenges.md`](ownership-challenges.md) | Profile-grounded ownership working paper (not a checklist) |
 | [`build_workbook.py`](build_workbook.py) | Regenerates xlsx + CSV exports |
 | [`exports/deal_pipeline.csv`](exports/deal_pipeline.csv) | Input-only mirror of deal pipeline tab (UTF-8) |
@@ -57,11 +61,13 @@ Source: [`decision/final_decision_memo.md`](decision/final_decision_memo.md) (20
 
 2. **Time budget:** Acquisition search + diligence ≤ 5 hrs/week until `03_Operator_Readiness` financing and runway pass.
 
-3. **Archetype filter:** Pursue listings in Tier 1 verticals only until readiness passes. See workbook `01_Archetype_Scorecard` and [`decision/acquisition_archetypes.md`](decision/acquisition_archetypes.md).
+3. **Archetype + operator-fit filter:** Pursue listings in **Archetype 1 (ops SaaS / workflow) ∩ Buy catalog** from [`ideal-business-fit.md`](ideal-business-fit.md). Log each listing in [`operator_fit.csv`](operator_fit.csv) first. Path B hours always outrank acquisition hours.
 
-4. **Use normalized buyer SDE/EBITDA** for multiples and debt-service math, not seller-reported figures alone.
+4. **Search SDE band:** **$150K–$400K** preferred (stretch to $500K only with financing documented in `03_Operator_Readiness`).
 
-5. **Complete [`ownership-challenges.md`](ownership-challenges.md) section 9** before labeling any deal Pursue.
+5. **Use normalized buyer SDE/EBITDA** for multiples and debt-service math, not seller-reported figures alone.
+
+6. **Complete [`ownership-challenges.md`](ownership-challenges.md) section 9** before labeling any deal Pursue.
 
 ## Kill rules
 
@@ -78,15 +84,17 @@ Pause all acquisition search until January 2027 review if any trigger fires:
 
 | Band | SDE / EBITDA | EV |
 |------|--------------|-----|
-| Preferred | $150K–$500K | $500K–$2.0M |
-| Stretch | $500K–$750K | $2.0M–$3.0M |
+| Preferred | $150K–$400K | $500K–$2.0M |
+| Stretch | $400K–$500K | $2.0M–$2.5M |
 | Avoid | < $150K or > $750K EBITDA | > $3.0M EV |
 
 Financing hard fails: no lender path, down payment > liquid capital, DSCR < 1.25x, post-debt cash flow below minimum income, full-time operator required before Path B resolved.
 
 ## Share in Google Sheets
 
-The workbook is built for **Google Sheets as the primary runtime**. Formulas use Sheets-safe functions only (`IF`, `SUMPRODUCT`, `INDEX`/`MATCH` — no `XLOOKUP`, macros, or structured table refs).
+**Operator fit (start here):** Upload [`operator_fit.csv`](operator_fit.csv) to Google Drive → **Open with → Google Sheets**. Paste one row per listing. Fill `day_to_day_primary_job` and `operator_fit_yesno` before any workbook diligence.
+
+**Later-stage diligence:** The workbook is built for **Google Sheets as the runtime** after a listing passes the CSV screen. Formulas use Sheets-safe functions only (`IF`, `SUMPRODUCT`, `INDEX`/`MATCH` — no `XLOOKUP`, macros, or structured table refs).
 
 ### Upload and convert
 
@@ -102,7 +110,7 @@ The repo xlsx is the **source of truth** in git. The Drive `.gsheet` copy is the
 
 ### CSV fallback
 
-If xlsx import ever breaks, import [`exports/deal_pipeline.csv`](exports/deal_pipeline.csv) and [`exports/decision_log.csv`](exports/decision_log.csv) into blank tabs and re-apply scoring formulas from the `00_Readme` formula appendix in the workbook.
+Import [`operator_fit.csv`](operator_fit.csv) for listing screening. If xlsx import ever breaks, import [`exports/deal_pipeline.csv`](exports/deal_pipeline.csv) and [`exports/decision_log.csv`](exports/decision_log.csv) into blank tabs and re-apply scoring formulas from the `00_Readme` formula appendix in the workbook.
 
 ### Before sharing externally
 
@@ -119,14 +127,13 @@ If xlsx import ever breaks, import [`exports/deal_pipeline.csv`](exports/deal_pi
 
 ## Workflow
 
-1. Read [`ownership-challenges.md`](ownership-challenges.md) when tempted to deepen on a listing.
-2. Screen verticals in `01_Archetype_Scorecard`.
-3. Confirm readiness in `03_Operator_Readiness` (default: Not yet).
-4. Add real listings to `04_Deal_Pipeline` only.
-5. Score each deal in `05_Deal_Scorecard` + `06_Business_Risk_Diligence`.
-6. Run `10_Ownership_Stress` (financial + profile litmus) before Pursue.
-7. Write one-page memo in `07_Diligence_Memo`.
-8. Track weekly hours in `08_Time_Budget` to catch avoidance.
-9. Log pass/kill decisions in `09_Decision_Log`.
+1. Path B outbound first that week.
+2. Read [`ideal-business-fit.md`](ideal-business-fit.md) if you need the narrative refresher.
+3. Paste 1–3 listings into [`operator_fit.csv`](operator_fit.csv) (Google Sheets copy) — answer day-to-day litmus and mark `operator_fit_yesno`.
+4. If **No** or `hard_exclusion_triggered = Yes`, log reason and stop.
+5. If **Yes**, read [`ownership-challenges.md`](ownership-challenges.md) before deepening.
+6. Add listing to `04_Deal_Pipeline` and run workbook diligence tabs.
+7. Track weekly hours in `08_Time_Budget` to catch avoidance.
+8. Log pass/kill decisions in `09_Decision_Log`.
 
 Regenerate workbook: `python build_workbook.py`

@@ -42,7 +42,7 @@ def check_password():
 check_password()
 
 sys.path.insert(0, str(Path(__file__).parent / "agent"))
-from generate_post import generate_posts, generate_summary
+from generate_post import generate_posts, generate_summary, generate_quick_post
 from fetch_articles import topup_queue, prune_stale, MIN_QUEUE_SIZE
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -54,7 +54,46 @@ GITHUB_TOKEN  = os.environ.get("GITHUB_TOKEN", "")
 PERSIST_ENABLED = bool(GITHUB_TOKEN and GITHUB_OWNER and GITHUB_REPO)
 
 st.set_page_config(page_title="Post Agent", page_icon="✍️",
-                   layout="centered", initial_sidebar_state="collapsed")
+                   layout="centered", initial_sidebar_state="expanded")
+
+# ── Content Calendar (Sidebar) ───────────────────────────────────────────────────
+
+with st.sidebar:
+    st.markdown("### 📅 Content Calendar")
+    st.caption("12-week ops-AI LinkedIn strategy")
+
+    calendar_data = {
+        "Weeks 1-4": "Problem Reframing Foundation",
+        "Weeks 5-8": "Depth & Credibility",
+        "Weeks 9-12": "Outreach & Conversion"
+    }
+
+    for week_range, focus in calendar_data.items():
+        st.markdown(f"**{week_range}**")
+        st.caption(focus)
+        st.divider()
+
+    st.markdown("### 📊 Post Pillars")
+    pillars = {
+        "Problem Reframing (40%)": "Find the real problem",
+        "AI in Operations (30%)": "Production AI experience",
+        "Metrics & Measurement (20%)": "Outcome-focused",
+        "Industry Analysis (10%)": "Ecosystem credibility"
+    }
+
+    for pillar, desc in pillars.items():
+        st.markdown(f"**{pillar}**")
+        st.caption(desc)
+
+    st.divider()
+    st.markdown("### 📈 Metrics")
+    if st.session_state.state and "metrics" in st.session_state.state:
+        metrics = st.session_state.state["metrics"]
+        st.metric("Posts Generated", metrics.get("posts_generated", 0))
+        st.metric("Quick Posts", metrics.get("quick_posts", 0))
+        st.metric("Article Posts", metrics.get("article_posts", 0))
+    else:
+        st.caption("No metrics yet")
 
 # ── GitHub state I/O (single source of truth) ─────────────────────────────────
 
@@ -70,7 +109,11 @@ def pull_state_with_sha():
             if r.status_code == 200:
                 data = r.json()
                 content = base64.b64decode(data["content"]).decode()
-                return json.loads(content), data["sha"]
+                state = json.loads(content)
+                # Ensure metrics exists
+                if "metrics" not in state:
+                    state["metrics"] = {"posts_generated": 0, "quick_posts": 0, "article_posts": 0}
+                return state, data["sha"]
         except Exception:
             pass
     # Fallback: raw (no sha, read-only)
@@ -78,10 +121,13 @@ def pull_state_with_sha():
         raw = f"https://raw.githubusercontent.com/{GITHUB_OWNER}/{GITHUB_REPO}/{GITHUB_BRANCH}/state.json"
         r = requests.get(raw, params={"t": os.urandom(4).hex()}, timeout=10)
         if r.status_code == 200:
-            return r.json(), None
+            state = r.json()
+            if "metrics" not in state:
+                state["metrics"] = {"posts_generated": 0, "quick_posts": 0, "article_posts": 0}
+            return state, None
     except Exception:
         pass
-    return {"queue": [], "history": [], "generated_at": None}, None
+    return {"queue": [], "history": [], "generated_at": None, "metrics": {"posts_generated": 0, "quick_posts": 0, "article_posts": 0}}, None
 
 def put_state(state, sha):
     if not PERSIST_ENABLED:
@@ -162,7 +208,8 @@ def remove_head(reason="skip"):
 for key, default in [
     ("linkedin_draft", ""), ("facebook_draft", ""), ("generated", False),
     ("ai_summary", ""), ("summary_loaded", False), ("state", None),
-    ("persist_error", False),
+    ("persist_error", False), ("mode", "article"),  # "article" or "quick"
+    ("template_type", "framework"), ("company_context", ""),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -193,6 +240,135 @@ st.markdown("""
 # ── Boot ──────────────────────────────────────────────────────────────────────
 
 st.title("✍️ Post Agent")
+
+# Mode selector
+col1, col2 = st.columns([1, 1])
+with col1:
+    mode = st.radio("Mode", ["📰 Article-based", "⚡ Quick Post"], horizontal=True, label_visibility="collapsed")
+    st.session_state.mode = "article" if mode == "📰 Article-based" else "quick"
+
+# ── Quick Post Mode ────────────────────────────────────────────────────────────
+
+if st.session_state.mode == "quick":
+    st.divider()
+    st.markdown("### ⚡ Quick Post Generator")
+    st.caption("Generate posts without an article using templates")
+
+    # Load templates
+    import json
+    templates_path = Path(__file__).parent / "config" / "post_templates.json"
+    with open(templates_path) as f:
+        templates_data = json.load(f)
+    template_options = {k: v["name"] for k, v in templates_data["templates"].items()}
+
+    # Template selection
+    st.session_state.template_type = st.selectbox(
+        "Post Type",
+        options=list(template_options.keys()),
+        format_func=lambda x: template_options[x],
+        index=0
+    )
+
+    # Load target companies
+    companies_path = Path(__file__).parent / "config" / "target_companies.json"
+    with open(companies_path) as f:
+        companies_data = json.load(f)
+    company_list = [(c["name"], f"{c['name']} - {c['sub_vertical']}") for c in companies_data["batch_1"]]
+
+    # Company selection (optional, auto-fills context)
+    selected_company = st.selectbox(
+        "Target Company (optional)",
+        options=[("", "None")] + company_list,
+        format_func=lambda x: x[1] if isinstance(x, tuple) else x,
+        index=0
+    )
+
+    # Auto-fill company context if selected
+    if selected_company:
+        company_name = selected_company[0]
+        company_info = next((c for c in companies_data["batch_1"] if c["name"] == company_name), None)
+        if company_info:
+            st.session_state.company_context = f"{company_info['name']} - {company_info['sub_vertical']}: {company_info['bottleneck_hypothesis']}"
+
+    # Manual company context override
+    st.session_state.company_context = st.text_input(
+        "Company Context (editable)",
+        placeholder="e.g., Greenscreens.ai - dynamic freight pricing",
+        value=st.session_state.company_context
+    )
+
+    st.divider()
+
+    # Raw idea input
+    st.markdown('<div class="step-label">Your Idea</div>', unsafe_allow_html=True)
+    st.caption("Bullet points or prose — what do you want to say?")
+    raw_idea = st.text_area(
+        "Your idea",
+        placeholder="- Brokers price on gut feel\n- Real bottleneck is decision latency on lane-level margin\n- Need structured decision support",
+        height=140,
+        label_visibility="collapsed",
+    )
+
+    generate_clicked = st.button("Generate Posts →", type="primary", disabled=not raw_idea.strip())
+
+    # Generation
+    if generate_clicked and raw_idea.strip():
+        with st.spinner("Writing your posts..."):
+            try:
+                posts = generate_quick_post(
+                    st.session_state.template_type,
+                    raw_idea,
+                    st.session_state.company_context
+                )
+                st.session_state.linkedin_draft = posts.get("linkedin", "")
+                st.session_state.facebook_draft = posts.get("facebook", "")
+                st.session_state.generated = True
+
+                # Update metrics
+                if PERSIST_ENABLED:
+                    def _update_metrics(s):
+                        if "metrics" not in s:
+                            s["metrics"] = {"posts_generated": 0, "quick_posts": 0, "article_posts": 0}
+                        s["metrics"]["posts_generated"] += 1
+                        s["metrics"]["quick_posts"] += 1
+                        return s
+                    commit_mutation(_update_metrics)
+            except Exception as e:
+                st.error(f"Generation failed: {e}")
+                st.stop()
+
+    # Review and edit
+    if st.session_state.generated:
+        st.divider()
+        st.markdown('<div class="step-label">Review & Edit</div>', unsafe_allow_html=True)
+        tab_li, tab_fb = st.tabs(["🔵 LinkedIn", "🔷 Facebook"])
+        with tab_li:
+            st.session_state.linkedin_draft = st.text_area(
+                "LinkedIn Post", value=st.session_state.linkedin_draft,
+                height=300, label_visibility="collapsed")
+            st.caption(f"{len(st.session_state.linkedin_draft.split())} words · "
+                       f"{len(st.session_state.linkedin_draft)} chars")
+        with tab_fb:
+            st.session_state.facebook_draft = st.text_area(
+                "Facebook Post", value=st.session_state.facebook_draft,
+                height=300, label_visibility="collapsed")
+            st.caption(f"{len(st.session_state.facebook_draft.split())} words · "
+                       f"{len(st.session_state.facebook_draft)} chars")
+
+        st.divider()
+        st.markdown('<div class="step-label">Copy & Post</div>', unsafe_allow_html=True)
+        st.caption("Copy the text above into LinkedIn/Facebook.")
+        p1, p2 = st.columns(2)
+        with p1:
+            st.link_button("🔵 LinkedIn", "https://www.linkedin.com/feed/", use_container_width=True)
+        with p2:
+            st.link_button("🔷 Facebook", "https://www.facebook.com/", use_container_width=True)
+
+        if st.button("✅ Done — Clear", use_container_width=True):
+            reset_post_state()
+            st.rerun()
+
+    st.stop()  # Don't show article queue in quick mode
 
 if not PERSIST_ENABLED:
     st.warning("⚠️ GitHub persistence is OFF (set GITHUB_TOKEN, GITHUB_OWNER, "
@@ -288,6 +464,16 @@ if generate_clicked and opinion.strip():
             st.session_state.linkedin_draft = posts.get("linkedin", "")
             st.session_state.facebook_draft = posts.get("facebook", "")
             st.session_state.generated = True
+
+            # Update metrics
+            if PERSIST_ENABLED:
+                def _update_metrics(s):
+                    if "metrics" not in s:
+                        s["metrics"] = {"posts_generated": 0, "quick_posts": 0, "article_posts": 0}
+                    s["metrics"]["posts_generated"] += 1
+                    s["metrics"]["article_posts"] += 1
+                    return s
+                commit_mutation(_update_metrics)
         except Exception as e:
             st.error(f"Generation failed: {e}")
             st.stop()

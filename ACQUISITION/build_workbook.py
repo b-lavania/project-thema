@@ -45,6 +45,23 @@ VERTICALS = [
     ("Laundromat", 1, 1, 3, 2, 1, 1, 2, 1),
 ]
 
+FIT_CLASS = {
+    "Freight Brokerage": "Conditional",
+    "Construction Estimating": "Buy",
+    "Permit Expediting": "Buy",
+    "Industrial Distribution": "Conditional",
+    "Specialty Staffing": "Never",
+    "Insurance Inspections": "Conditional",
+    "Valuation Services": "Buy",
+    "Industry Research / Data": "Buy",
+    "Vertical SaaS": "Buy",
+    "MSP": "Never",
+    "HVAC": "Never",
+    "Roofing": "Never",
+    "Self Storage": "Never",
+    "Laundromat": "Never",
+}
+
 CATEGORIES_THEMES = [
     (1, "Vertical logistics / dispatch service with software layer",
      "Direct match to quote-to-dispatch, routing, crew assignment, and pricing work.",
@@ -110,6 +127,12 @@ def set_col_widths(ws, widths: dict[int, float]) -> None:
         ws.column_dimensions[get_column_letter(col)].width = w
 
 
+def add_fit_class_validation(ws, cell_range: str) -> None:
+    dv = DataValidation(type="list", formula1='"Buy,Conditional,Never,Review"', allow_blank=True)
+    ws.add_data_validation(dv)
+    dv.add(cell_range)
+
+
 def add_yes_no_validation(ws, cell_range: str) -> None:
     dv = DataValidation(type="list", formula1='"YES,NO,Unknown"', allow_blank=True)
     ws.add_data_validation(dv)
@@ -142,13 +165,14 @@ def sheet_readme(wb: openpyxl.Workbook) -> None:
         ("ACQUISITION DECISION SYSTEM", True),
         ("", False),
         ("Current call: NOT YET — bounded secondary experiment only (max 5 hrs/week).", False),
+        ("Start here: ACQUISITION/ideal-business-fit.md — operator fit map before any listing search.", False),
         ("", False),
         ("TAB GUIDE", True),
-        ("01_Archetype_Scorecard — vertical fit with formula-driven weighted scores", False),
+        ("01_Archetype_Scorecard — vertical fit, Fit class (Buy/Conditional/Never), weighted Tier", False),
         ("02_Target_Size_Bands — SDE/EBITDA/EV bands and affordability calculator", False),
         ("03_Operator_Readiness — financing, runway, willingness gates", False),
         ("04_Deal_Pipeline — real listings only", False),
-        ("05_Deal_Scorecard — per-deal weighted score + Pursue/Watch/Kill", False),
+        ("05_Deal_Scorecard — per-deal weighted score + Day-to-day litmus gate + Pursue/Watch/Kill", False),
         ("06_Business_Risk_Diligence — personnel, ops, customer, revenue quality", False),
         ("07_Diligence_Memo — one-page memo template per deal", False),
         ("08_Time_Budget — weekly hours across Path A, Path B, acquisition", False),
@@ -159,6 +183,11 @@ def sheet_readme(wb: openpyxl.Workbook) -> None:
         ("1. Business you could improve", False),
         ("2. Business you could realistically buy", False),
         ("3. Business you would operate for 3 years", False),
+        ("", False),
+        ("ARCHETYPE VS TIER", True),
+        ("Archetype = deal shape (SaaS with ops mess, services + workflow, etc.) — see acquisition_archetypes.md", False),
+        ("Tier = workbook vertical weighted score (Tier 1/2/3). High Tier does NOT override Fit class Never or day-to-day litmus NO.", False),
+        ("Fit class = operator-fit judgment (Buy / Conditional / Never) — see ideal-business-fit.md", False),
         ("", False),
         ("DEAL SCORECARD WEIGHTS", True),
         ("Operator fit — 25%", False),
@@ -177,12 +206,14 @@ def sheet_readme(wb: openpyxl.Workbook) -> None:
         ("EV/SDE: =IF(SDE=0, \"\", askingPrice/SDE)", False),
         ("", False),
         ("KILL RULES — pause search if:", True),
-        ("• Acquisition > 8 hrs/wk for 2 weeks while Path B outbound < 5 hrs/wk", False),
-        ("• New domain listing outside ops-AI/logistics (month-5 relapse)", False),
-        ("• LOI without financing pre-approval", False),
-        ("• Deal fails all three gates", False),
+        ("1. Acquisition > 8 hrs/wk for 2 weeks while Path B outbound < 5 hrs/wk", False),
+        ("2. New domain listing outside ops-AI/logistics (month-5 relapse)", False),
+        ("3. LOI without financing pre-approval and 12-month runway model", False),
+        ("4. Deal fails all three gates (improve / buy / operate 3yr)", False),
+        ("5. Path B offer accepted — acquisition pauses 6 months minimum", False),
+        ("6. Quotely hits 5+ paying operators — re-evaluate whether acquisition dilutes Path A", False),
         ("", False),
-        ("See ACQUISITION/README.md and ownership-challenges.md for full rules.", False),
+        ("See ACQUISITION/README.md, ideal-business-fit.md, and ownership-challenges.md for full rules.", False),
     ]
     for i, (text, bold) in enumerate(lines, 1):
         c = ws.cell(row=i, column=1, value=text)
@@ -199,7 +230,7 @@ def sheet_archetype_scorecard(wb: openpyxl.Workbook) -> None:
     headers = [
         "Vertical", "Workflow", "Info Arbitrage", "Pricing", "Automation",
         "Discovery", "Marketplace", "Labor Burden (-)", "Sales Hero (-)",
-        "Weighted Score", "Tier", "Notes",
+        "Weighted Score", "Fit class", "Tier", "Notes",
     ]
     for col, h in enumerate(headers, 1):
         ws.cell(row=1, column=col, value=h)
@@ -233,11 +264,14 @@ def sheet_archetype_scorecard(wb: openpyxl.Workbook) -> None:
             ),
         )
         style_formula_cell(ws.cell(row=r, column=10))
+        ws.cell(row=r, column=11, value=FIT_CLASS.get(name, "Review"))
+        style_input_cell(ws.cell(row=r, column=11))
+        add_fit_class_validation(ws, f"K{r}")
         ws.cell(
-            row=r, column=11,
+            row=r, column=12,
             value=f'=IF(J{r}>=7.5,"Tier 1",IF(J{r}>=5.5,"Tier 2","Tier 3"))',
         )
-        style_formula_cell(ws.cell(row=r, column=11))
+        style_formula_cell(ws.cell(row=r, column=12))
 
     # Preserved category themes (below vertical table)
     base = start + len(VERTICALS) + 2
@@ -264,7 +298,7 @@ def sheet_archetype_scorecard(wb: openpyxl.Workbook) -> None:
         for j, val in enumerate(row, 1):
             ws.cell(row=r, column=j, value=val)
 
-    set_col_widths(ws, {1: 28, 2: 12, 3: 12, 4: 12, 5: 12, 6: 12, 7: 12, 8: 14, 9: 14, 10: 14, 11: 10, 12: 20})
+    set_col_widths(ws, {1: 28, 2: 12, 3: 12, 4: 12, 5: 12, 6: 12, 7: 12, 8: 14, 9: 14, 10: 14, 11: 14, 12: 10, 13: 20})
     freeze_header(ws)
 
 
@@ -484,7 +518,7 @@ def sheet_deal_scorecard(wb: openpyxl.Workbook) -> None:
         "Deal ID", "Deal name", "Operator fit (1-5)", "AI/product leverage (1-5)",
         "Financial feasibility (1-5)", "Owner dependence (1-5)", "Operating enjoyment (1-5)",
         "Strategic conflict (1-5)", "Weighted score", "Gate: improve?", "Gate: buy?",
-        "Gate: operate 3yr?", "Financing documented?", "Path B displaced?",
+        "Gate: operate 3yr?", "Day-to-day litmus?", "Financing documented?", "Path B displaced?",
         "Risk red flags (#)", "All gates pass?", "Hard fail?", "Decision",
     ]
     for col, h in enumerate(headers, 1):
@@ -506,10 +540,10 @@ def sheet_deal_scorecard(wb: openpyxl.Workbook) -> None:
 
     for r in range(3, 8):
         ws.cell(row=r, column=1, value=f"D{r-2:03d}")
-        for col in range(2, 15):
+        for col in range(2, 16):
             style_input_cell(ws.cell(row=r, column=col))
         add_score_validation(ws, f"C{r}:H{r}")
-        add_yes_no_validation(ws, f"J{r}:N{r}")
+        add_yes_no_validation(ws, f"J{r}:O{r}")
         # Weighted score
         ws.cell(
             row=r, column=9,
@@ -519,30 +553,30 @@ def sheet_deal_scorecard(wb: openpyxl.Workbook) -> None:
         # Risk red flags — link to diligence sheet row (same deal row)
         dr = r  # diligence row aligns
         ws.cell(
-            row=r, column=15,
+            row=r, column=16,
             value=f"='06_Business_Risk_Diligence'!V{dr}",
         )
-        style_formula_cell(ws.cell(row=r, column=15))
-        # All gates pass
-        ws.cell(row=r, column=16, value=f'=IF(COUNTIF(J{r}:N{r},"NO")>0,"NO","YES")')
         style_formula_cell(ws.cell(row=r, column=16))
-        # Hard fail
-        ws.cell(
-            row=r, column=17,
-            value=f'=IF(OR(N{r}="YES",O{r}>=3,M{r}="NO"),"YES","NO")',
-        )
+        # All gates pass (includes day-to-day litmus)
+        ws.cell(row=r, column=17, value=f'=IF(COUNTIF(J{r}:O{r},"NO")>0,"NO","YES")')
         style_formula_cell(ws.cell(row=r, column=17))
-        # Decision
+        # Hard fail — day-to-day litmus NO, financing NO, Path B displaced, or 3+ risk flags
         ws.cell(
             row=r, column=18,
-            value=(
-                f'=IF(AND(I{r}>=3.5,P{r}="YES",Q{r}="NO"),"Pursue",'
-                f'IF(OR(I{r}<2.5,Q{r}="YES"),"Kill","Watch"))'
-            ),
+            value=f'=IF(OR(M{r}="NO",N{r}="NO",O{r}="YES",P{r}>=3),"YES","NO")',
         )
         style_formula_cell(ws.cell(row=r, column=18))
+        # Decision
+        ws.cell(
+            row=r, column=19,
+            value=(
+                f'=IF(AND(I{r}>=3.5,Q{r}="YES",R{r}="NO"),"Pursue",'
+                f'IF(OR(I{r}<2.5,R{r}="YES"),"Kill","Watch"))'
+            ),
+        )
+        style_formula_cell(ws.cell(row=r, column=19))
 
-    set_col_widths(ws, {1: 8, 2: 22, 9: 12, 15: 12, 16: 12, 17: 10, 18: 10})
+    set_col_widths(ws, {1: 8, 2: 22, 9: 12, 13: 16, 16: 12, 17: 12, 18: 10, 19: 10})
     freeze_header(ws)
 
 

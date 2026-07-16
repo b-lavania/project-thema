@@ -1,5 +1,14 @@
 # Master Resume Context — Bob Lavania
 
+## Answering "Why would I hire you?"
+
+**One-sentence answer:** You should hire me because I find the real problem behind the stated one and build the system that makes the fix permanent.
+
+**Three-part proof:**
+1. **Diagnostic reframing** — I identify the structural bottleneck behind operational chaos (e.g., "slow quoting" was actually trust erosion; "low accuracy" was alert fatigue)
+2. **Production system building** — I ship AI and automation systems that eliminate ambiguity (CV pipelines, OR engines, conversational agents, adapter architectures)
+3. **Commercial outcome measurement** — I tie every system to business metrics (20x faster quoting → 93% fill rate; 85% false-positive reduction → contract renewal; 3x take rate → churn elimination)
+
 ## Positioning thesis (lead with this everywhere)
 
 > **I find the real operational bottleneck, reduce ambiguity, and build the system that makes the fix permanent.**

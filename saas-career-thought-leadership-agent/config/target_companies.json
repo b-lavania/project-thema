@@ -1,0 +1,119 @@
+{
+  "batch_1": [
+    {
+      "name": "Greenscreens.ai",
+      "sub_vertical": "Dynamic freight pricing",
+      "stage": "Series A",
+      "bottleneck_hypothesis": "Brokers price on gut feel; real bottleneck is decision latency on lane-level margin, not missing dashboards"
+    },
+    {
+      "name": "Vooma",
+      "sub_vertical": "Freight AI agents",
+      "stage": "Seed–A",
+      "bottleneck_hypothesis": "Email/call triage volume hides the real problem: unstructured load data never reaches TMS in time to book"
+    },
+    {
+      "name": "HappyRobot",
+      "sub_vertical": "Voice AI for logistics",
+      "stage": "Series A",
+      "bottleneck_hypothesis": "Voice automation fails when handoffs to humans lack structured context; bottleneck is operational trust in the signal"
+    },
+    {
+      "name": "FleetWorks",
+      "sub_vertical": "AI voice + marketplace",
+      "stage": "Series A (YC S23)",
+      "bottleneck_hypothesis": "Covering loads is a parallel-calling problem, not a CRM problem; speed-to-book beats more carrier lists"
+    },
+    {
+      "name": "Drumkit",
+      "sub_vertical": "Freight workflow AI",
+      "stage": "Seed–A",
+      "bottleneck_hypothesis": "Brokers buy \"AI email\" but stall on exception handling; real gap is workflow state across TMS + inbox"
+    },
+    {
+      "name": "Burt",
+      "sub_vertical": "AI teammates for brokers",
+      "stage": "Seed (YC W26)",
+      "bottleneck_hypothesis": "\"Automation\" breaks on unstructured PDFs and exceptions; need operators-in-the-loop with structured handoffs"
+    },
+    {
+      "name": "Cartage",
+      "sub_vertical": "Autonomous freight coordination",
+      "stage": "Series A (YC S24)",
+      "bottleneck_hypothesis": "Replacing brokers requires shippers to trust exception routing, not just cheaper rates"
+    },
+    {
+      "name": "Lanesurf",
+      "sub_vertical": "Voice AI load booking",
+      "stage": "Seed (YC S25)",
+      "bottleneck_hypothesis": "Parallel carrier negotiation is the product; bottleneck is rate discipline under inbound call floods"
+    },
+    {
+      "name": "Avoca AI",
+      "sub_vertical": "Home-services voice AI",
+      "stage": "Series A",
+      "bottleneck_hypothesis": "Inbound call deflection fails without job-cost context; need structured intake before handoff"
+    },
+    {
+      "name": "BuildOps",
+      "sub_vertical": "Commercial field service",
+      "stage": "Series B",
+      "bottleneck_hypothesis": "Dispatch + invoicing fragmentation; AI must compress quote-to-schedule, not add chatbots"
+    },
+    {
+      "name": "Alvys",
+      "sub_vertical": "Trucking TMS",
+      "stage": "Series A",
+      "bottleneck_hypothesis": "Small fleets need quoting + dispatch in one flow; separate tools recreate phone-tag"
+    },
+    {
+      "name": "Numeo",
+      "sub_vertical": "Trucking ops software",
+      "stage": "Seed–A",
+      "bottleneck_hypothesis": "Owner-operators need instant quote-to-dispatch; manual dispatch is the margin killer"
+    },
+    {
+      "name": "Supermove",
+      "sub_vertical": "Moving company software",
+      "stage": "Series A",
+      "bottleneck_hypothesis": "Moving ops still quote-by-phone; CV + OR quoting is the wedge"
+    },
+    {
+      "name": "Pando",
+      "sub_vertical": "Supply chain network",
+      "stage": "Series A",
+      "bottleneck_hypothesis": "Network effects need standardized lane + cost data; bottleneck is ingestion not visualization"
+    },
+    {
+      "name": "Vizion",
+      "sub_vertical": "Container tracking",
+      "stage": "Series A",
+      "bottleneck_hypothesis": "ETA prediction worthless without dock appointment and drayage handoff automation"
+    }
+  ],
+  "categories": {
+    "freight_trucking": [
+      "Greenscreens.ai",
+      "Vooma",
+      "HappyRobot",
+      "FleetWorks",
+      "Drumkit",
+      "Burt",
+      "Cartage",
+      "Lanesurf",
+      "Alvys",
+      "Numeo"
+    ],
+    "field_service": [
+      "Avoca AI",
+      "BuildOps"
+    ],
+    "supply_chain": [
+      "Pando",
+      "Vizion"
+    ],
+    "moving_last_mile": [
+      "Supermove"
+    ]
+  }
+}
