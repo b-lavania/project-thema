@@ -41,6 +41,7 @@ from generator import (
     QUICK_TAKE_TOOL_NAMES,
     quick_take_has_metric,
     generate_skills_statements,
+    generate_skills_bank,
     generate_experience_bullets,
     generate_personal_projects,
     generate_cover_letter,
@@ -189,7 +190,7 @@ ABSTRACT_NOUNS = ["systemic breakdowns", "operational trust", "measurable busine
 
 
 def lint_quick_take(mission_text: str) -> list[str]:
-    """Enhanced Quick Take linting with structure validation."""
+    """Enhanced Summary paragraph linting with structure validation."""
     import re
     flags = []
     lines = [l.strip() for l in mission_text.split("\n") if l.strip()]
@@ -217,20 +218,20 @@ def lint_quick_take(mission_text: str) -> list[str]:
     if not any(paragraph.startswith(verb) for verb in capability_verbs):
         flags.append(f"⚠️ Structure: Should start with capability verb (Fixes, Rebuilds, Streamlines, etc.)")
     
-    # Dash check (Quick Take uses periods between clauses)
+    # Dash check (Summary paragraph uses periods between clauses)
     if re.search(r"[—–]", mission_text) or re.search(r"(?<!\w)\s-\s(?!\w)", paragraph):
         flags.append("🔴 Dashes: Use periods between clauses, not em-dash or space-hyphen-space")
 
     # Metric check (should have none in tagline or paragraph)
     if quick_take_has_metric(mission_text):
-        flags.append("🔴 Critical: Contains metrics (belong in How I Work / The Work only)")
+        flags.append("🔴 Critical: Contains metrics (belong in Summary method bullets / Experience only)")
 
-    # Tool names belong in How I Work / The Work
+    # Tool names belong in Summary method bullets / Experience
     lower_all = mission_text.lower()
     tools_found = [t for t in QUICK_TAKE_TOOL_NAMES if t in lower_all]
     if tools_found:
         flags.append(
-            f"⚠️ Tools in Quick Take: {', '.join(sorted(set(tools_found)))} — move to How I Work"
+            f"⚠️ Tools in Summary paragraph: {', '.join(sorted(set(tools_found)))} — move to method bullets"
         )
     
     # Gemini banned verbs
@@ -398,7 +399,7 @@ def build_pdf_breaks_from_session():
     """Read PDF layout controls from sidebar session state."""
     sections = []
     for flag_key, section_key in (
-        ("break_before_skills", "skills"),
+        ("break_before_skills", "skill_bank"),
         ("break_before_experience", "experience"),
         ("break_before_projects", "projects"),
         ("break_before_credentials", "credentials"),
@@ -425,6 +426,7 @@ def rerender_resume_files(
     res,
     mission_text=None,
     skills_text=None,
+    skill_bank_text=None,
     experience_blocks=None,
     projects_text=None,
     pdf_breaks=None,
@@ -438,6 +440,7 @@ def rerender_resume_files(
     sections = {
         "mission": mission_text if mission_text is not None else res["mission"],
         "skills": skills_text if skills_text is not None else res["skills"],
+        "skill_bank": skill_bank_text if skill_bank_text is not None else res.get("skill_bank", ""),
         "experience": experience_blocks if experience_blocks is not None else res["experience_blocks"],
         "projects": projects_text if projects_text is not None else res.get("projects", ""),
     }
@@ -729,9 +732,9 @@ with st.sidebar.expander("Settings", expanded=False):
 
     st.divider()
     st.subheader("PDF layout")
-    st.checkbox("Break before How I Work", key="break_before_skills")
-    st.checkbox("Break before The Work", key="break_before_experience")
-    st.checkbox("Break before Side Builds", key="break_before_projects")
+    st.checkbox("Break before Skills", key="break_before_skills")
+    st.checkbox("Break before Experience", key="break_before_experience")
+    st.checkbox("Break before School Projects", key="break_before_projects")
     st.checkbox("Break before Credentials", key="break_before_credentials")
     st.checkbox("Compact PDF typography", key="compact_pdf")
     st.number_input(
@@ -1203,6 +1206,21 @@ with tab_generate:
                 )
                 usage_log.append(usage)
 
+                # Step 5.5: Skills keyword bank (ATS wall)
+                st.write("Generating Skills keyword bank...")
+                skill_bank, usage = generate_skills_bank(
+                    llm,
+                    master_ctx,
+                    role,
+                    track,
+                    voice=voice,
+                    narrative_brief=narrative_brief,
+                    jd_context=jd_context,
+                    jd_tools=jd_tools,
+                    required_tools=required_tools,
+                )
+                usage_log.append(usage)
+
                 # Step 6: Experience bullets (per role) - handle full vs condensed
                 full_count = sum(1 for _, _, sel in selected_roles if sel == "full")
                 condensed_count = sum(1 for _, _, sel in selected_roles if sel == "condensed")
@@ -1224,10 +1242,13 @@ with tab_generate:
                         condensed_line = extract_condensed_role_line(role_block)
                         experience_blocks.append(condensed_line)
 
-                # Collect coaching notes from skills too
+                # Collect coaching notes from method bullets + skill bank
                 skills_notes = extract_coaching_notes(skills)
                 if skills_notes:
-                    all_coaching_notes.insert(0, f"### Skills\n{skills_notes}")
+                    all_coaching_notes.insert(0, f"### Summary method bullets\n{skills_notes}")
+                skill_bank_notes = extract_coaching_notes(skill_bank)
+                if skill_bank_notes:
+                    all_coaching_notes.insert(0, f"### Skills\n{skill_bank_notes}")
 
                 # Step 6.5: Personal Projects
                 st.write("Generating projects section...")
@@ -1249,6 +1270,7 @@ with tab_generate:
                         skills,
                         experience_blocks,
                         projects,
+                        skill_bank=skill_bank,
                     )
                     usage_log.append(usage)
 
@@ -1256,7 +1278,11 @@ with tab_generate:
                 gap_analysis = ""
                 if st.session_state.get("run_gap_analysis"):
                     st.write("Running ruthless gap analysis...")
-                    resume_full_text = f"{mission}\n\n{skills}\n\n" + "\n\n".join(experience_blocks) + f"\n\n{projects}"
+                    resume_full_text = (
+                        f"{mission}\n\n{skills}\n\n{skill_bank}\n\n"
+                        + "\n\n".join(experience_blocks)
+                        + f"\n\n{projects}"
+                    )
                     gap_analysis, usage = perform_gap_analysis(
                         llm,
                         extracted_keywords,
@@ -1288,6 +1314,7 @@ with tab_generate:
                 resume_sections = {
                     "mission": mission,
                     "skills": skills,
+                    "skill_bank": skill_bank,
                     "experience": experience_blocks,
                     "projects": projects,
                 }
@@ -1324,7 +1351,7 @@ with tab_generate:
 
                 # Step 10: Keyword coverage check (ATS-COV)
                 combined_output = " ".join([
-                    mission, skills,
+                    mission, skills, skill_bank,
                     " ".join(experience_blocks),
                     cover_letter
                 ])
@@ -1393,6 +1420,7 @@ with tab_generate:
                 "pdf_filename": pdf_filename,
                 "mission": mission,
                 "skills": skills,
+                "skill_bank": skill_bank,
                 "experience_blocks": experience_blocks,
                 "projects": projects,
                 "jd_duties": jd_duties,
@@ -1483,9 +1511,9 @@ with tab_generate:
                 for kw in res["kw_missing"][:3]:
                     kw_lower = kw.lower()
                     if any(tool in kw_lower for tool in ["sql", "python", "figma", "jira", "tableau", "aws", "gcp", "azure"]):
-                        location = "Skills section (How I Work)"
+                        location = "Skills section"
                     elif any(domain in kw_lower for domain in ["saas", "b2b", "marketplace", "pricing", "trust", "safety"]):
-                        location = "Quick Take or experience bullets"
+                        location = "Skills, Summary, or experience bullets"
                     else:
                         location = "Experience bullets"
                     st.caption(f"{kw} → consider adding in {location}")
@@ -1494,7 +1522,12 @@ with tab_generate:
             st.text(res['extracted_keywords'])
 
         # Static lint warning chips
-        combined_text = "\n".join([res.get("mission", ""), res.get("skills", ""), "\n".join(res.get("experience_blocks", []))])
+        combined_text = "\n".join([
+            res.get("mission", ""),
+            res.get("skills", ""),
+            res.get("skill_bank", ""),
+            "\n".join(res.get("experience_blocks", [])),
+        ])
         lint_flags = lint_generated_text(combined_text)
         if lint_flags:
             st.markdown("**⚠️ Language Flags**")
@@ -1516,7 +1549,7 @@ with tab_generate:
                     st.caption("No narrative brief generated.")
             with strat_tabs[1]:
                 if res.get('jd_pain'):
-                    st.caption("Reasoning step that frames The Quick Take.")
+                    st.caption("Reasoning step that frames the Summary paragraph.")
                     st.text(res['jd_pain'])
                 else:
                     st.caption("No JD pain analysis generated.")
@@ -1560,6 +1593,7 @@ with tab_generate:
         combined_export = "\n".join([
             res.get("mission", ""),
             res.get("skills", ""),
+            res.get("skill_bank", ""),
             "\n".join(res.get("experience_blocks", [])),
             res.get("projects", ""),
         ])
@@ -1574,6 +1608,7 @@ with tab_generate:
             export_mode=export_mode,
             pdf_page_size=pdf_page_size,
             coaching_notes_in_output=coaching_in_output,
+            skill_bank=res.get("skill_bank", ""),
         )
         with st.expander("ATS readiness (in-app only — not printed on resume)", expanded=False):
             for item in readiness:
@@ -1676,9 +1711,9 @@ with tab_generate:
         st.divider()
         st.subheader("📋 Document Preview")
 
-        with st.expander("✨ Quick Take", expanded=True):
+        with st.expander("✨ Summary", expanded=True):
             edited_mission = st.text_area(
-                "Edit profile (tagline on line 1, then three sentences)",
+                "Edit Summary paragraph (tagline on line 1, then 1–2 sentences). Method bullets are edited below.",
                 value=res["mission"],
                 height=160,
                 key="profile_edit_area",
@@ -1693,24 +1728,24 @@ with tab_generate:
             
             col_apply, col_regen = st.columns(2)
             with col_apply:
-                if st.button("Apply profile edit to DOCX/PDF", use_container_width=True):
+                if st.button("Apply Summary edit to DOCX/PDF", use_container_width=True):
                     try:
                         rerender_and_update_pages(res, mission_text=edited_mission)
                         st.session_state.gen_results["mission"] = edited_mission
-                        st.success("Documents updated with your profile text.")
+                        st.success("Documents updated with your Summary text.")
                         st.rerun()
                     except Exception as e:
                         st.error(f"Update failed: {e}")
             with col_regen:
-                regen_clicked = st.button("↻ Regenerate Profile Only", use_container_width=True)
+                regen_clicked = st.button("↻ Regenerate Summary Paragraph Only", use_container_width=True)
             
-            # Quick Take lint warnings
+            # Summary paragraph lint warnings
             qt_flags = lint_quick_take(res["mission"])
             if qt_flags:
-                st.caption("⚠️ Quick Take Issues:")
+                st.caption("⚠️ Summary paragraph issues:")
                 for flag in qt_flags:
                     st.markdown(f"<span style='color: #FF9500; font-size: 0.85rem;'>• {flag}</span>", unsafe_allow_html=True)
-                st.caption("Metrics and tools belong in **How I Work** and **The Work**, not Quick Take.")
+                st.caption("Metrics and tools belong in **Summary method bullets** and **Experience**, not the paragraph.")
 
         if regen_clicked:
             api_key = get_api_key()
@@ -1776,13 +1811,34 @@ with tab_generate:
                 st.markdown("**Regenerated**")
                 st.text(res["mission"])
 
-        with st.expander("🎯 Skills Statements", expanded=False):
-            edited_skills = st.text_area("Edit How I Work", value=res["skills"], height=220, key="skills_edit_area")
-            if st.button("Apply How I Work edit to DOCX/PDF", use_container_width=True, key="skills_apply_btn"):
+        with st.expander("🎯 Summary method bullets", expanded=False):
+            edited_skills = st.text_area(
+                "Edit method bullets (rendered under Summary after the paragraph)",
+                value=res["skills"],
+                height=220,
+                key="skills_edit_area",
+            )
+            if st.button("Apply method bullets edit to DOCX/PDF", use_container_width=True, key="skills_apply_btn"):
                 try:
                     rerender_and_update_pages(res, skills_text=edited_skills)
                     st.session_state.gen_results["skills"] = edited_skills
-                    st.success("Documents updated with your skills text.")
+                    st.success("Documents updated with your method bullets.")
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Update failed: {e}")
+
+        with st.expander("🧩 Skills (ATS keyword bank)", expanded=False):
+            edited_skill_bank = st.text_area(
+                "Edit Skills rows (Product: / Tools: / Domains: / Methods:)",
+                value=res.get("skill_bank", ""),
+                height=160,
+                key="skill_bank_edit_area",
+            )
+            if st.button("Apply Skills edit to DOCX/PDF", use_container_width=True, key="skill_bank_apply_btn"):
+                try:
+                    rerender_and_update_pages(res, skill_bank_text=edited_skill_bank)
+                    st.session_state.gen_results["skill_bank"] = edited_skill_bank
+                    st.success("Documents updated with your Skills section.")
                     st.rerun()
                 except Exception as e:
                     st.error(f"Update failed: {e}")
@@ -1805,9 +1861,9 @@ with tab_generate:
                     st.error(f"Update failed: {e}")
 
         if res.get("projects"):
-            with st.expander("🔧 Side Builds", expanded=False):
-                edited_projects = st.text_area("Edit Side Builds", value=res["projects"], height=220, key="projects_edit_area")
-                if st.button("Apply Side Builds edit to DOCX/PDF", use_container_width=True, key="projects_apply_btn"):
+            with st.expander("🔧 School Projects", expanded=False):
+                edited_projects = st.text_area("Edit School Projects", value=res["projects"], height=220, key="projects_edit_area")
+                if st.button("Apply School Projects edit to DOCX/PDF", use_container_width=True, key="projects_apply_btn"):
                     try:
                         rerender_and_update_pages(res, projects_text=edited_projects)
                         st.session_state.gen_results["projects"] = edited_projects
@@ -1826,6 +1882,7 @@ with tab_generate:
         plain_text = "\n\n".join([
             res.get("mission", ""),
             res.get("skills", ""),
+            res.get("skill_bank", ""),
             *res.get("experience_blocks", []),
             res.get("projects", ""),
         ])

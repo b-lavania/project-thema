@@ -65,6 +65,15 @@ Goal: Produce a one-page, ATS-safe cover letter that can be pasted directly into
 
 ## Auto log
 
+### Retailogists - PM
+- **Date**: 2026-07-17
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 74,918
+- **Approx cost**: $0.014
+- **Outputs**: Resume, Cover Letter
+
+
 ### Dayforce - Technical Product Manager, AI Agent Platform
 - **Date**: 2026-07-11
 - **Track**: Product/AI

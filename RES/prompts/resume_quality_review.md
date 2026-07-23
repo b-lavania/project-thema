@@ -4,7 +4,7 @@ GOAL
 Editorial critique to ensure the resume is punchy, concrete, and signals "Product Manager" rather than "Project Coordinator" or "Implementation Engineer."
 
 INPUT
-1. The generated resume sections (profile, skills, experience bullets, projects)
+1. The generated resume sections (profile, method bullets, skills bank, experience bullets, projects)
 
 OUTPUT FORMAT (exact headers)
 
@@ -18,30 +18,35 @@ TOP 3 EDITORIAL FIXES:
 3. ...
 
 SECTION DIAGNOSIS:
-Quick Take: [Editorial critique only]
-How I Work: [Method/tool grounding critique]
-The Work: [Bullet structure critique]
+Summary paragraph: [Editorial critique only]
+Summary method bullets: [Method/tool grounding critique]
+Skills: [Keyword truth / density critique]
+Experience: [Bullet structure critique]
 
 RULES
 - Focus ONLY on editorial quality: punchiness, signal strength, and "fog."
 - Gap analysis and JD alignment are handled elsewhere; do not flag missing experience here.
 - Punchiness: sharp nouns, short verbs, no resume fog. Penalize "cross-functional", "stakeholder management", "alignment", "synergies", "impactful", "strategic leader", "proven track record", "dynamic environments", "holistic".
 - PM Signal: market/user insight -> decision -> shipped product -> outcome. Penalize bullets that lead with Built, Engineered, Automated, Deployed, Architected, Led implementation, Spearheaded. These signal "Builder" instead of "Product Thinker."
-- Quick Take: Penalize any digit, percentage, dollar amount, time duration, or x/× multiplier. Quick Take is positioning only.
-- How I Work: Penalize generic duty blurbs with no method or tool grounding. Flag tool laundry lists with no decision described.
+- Summary paragraph: Penalize any digit, percentage, dollar amount, time duration, or x/× multiplier. Summary paragraph is positioning only.
+- Summary method bullets: Penalize generic duty blurbs with no method or tool grounding. Flag tool laundry lists with no decision described.
+- Skills: Expect 3–4 Category: keyword rows. Penalize invented tools, full sentences, or empty fluff categories. Dense comma lists are good.
 - Suggest concrete rewrites, not vague feedback.
 
 ---USER---
 Generated resume sections:
 
-THE QUICK TAKE:
+SUMMARY PARAGRAPH:
 {mission}
 
-HOW I WORK:
+SUMMARY METHOD BULLETS:
 {skills}
 
-THE WORK:
+SKILLS (keyword bank):
+{skill_bank}
+
+EXPERIENCE:
 {experience_blocks}
 
-SIDE BUILDS:
+SCHOOL PROJECTS:
 {projects}

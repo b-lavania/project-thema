@@ -68,12 +68,19 @@
             page-break-before: always;
             break-before: page;
         }
-        /* Side Builds: keep each project block on one page */
+        .skill-bank-row {
+            margin: 0 0 3px 0;
+            line-height: 1.35;
+        }
+        body.digital-mode .skill-bank-row {
+            margin-bottom: 4px;
+        }
+        /* School Projects: keep each project block on one page */
         .section-content > .role-block {
             page-break-inside: avoid;
             break-inside: avoid-page;
         }
-        /* The Work: roles may split across pages; bullets can continue on next page */
+        /* Experience: roles may split across pages; bullets can continue on next page */
         .experience-section .role-block {
             page-break-inside: auto;
             break-inside: auto;
@@ -187,27 +194,34 @@
         </div>
     </div>
 
-    {% if mission_body %}
-    <h2>Quick Take</h2>
+    {% if mission_body or skills %}
+    <h2>Summary</h2>
     <div class="section-content keep-together">
+        {% if mission_body %}
         {{ mission_body }}
-    </div>
-    {% endif %}
-
-    {% if skills %}
-    <h2 class="{% if 'skills' in break_sections %}page-break-before{% endif %}">How I Work</h2>
-    <div class="section-content keep-together">
+        {% endif %}
+        {% if skills %}
         <ul>
         {% for skill in skills %}
             <li>{{ skill|safe }}</li>
         {% endfor %}
         </ul>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if skill_bank %}
+    <h2 class="{% if 'skill_bank' in break_sections %}page-break-before{% endif %}">Skills</h2>
+    <div class="section-content keep-together">
+        {% for row in skill_bank %}
+        <div class="skill-bank-row">{{ row|safe }}</div>
+        {% endfor %}
     </div>
     {% endif %}
 
     {% if experience %}
     <div class="experience-section{% if 'experience' in break_sections %} page-break-before{% endif %}">
-    <h2>The Work</h2>
+    <h2>Experience</h2>
         {% for role in experience %}
         <div class="role-block{% if role.page_break_before %} page-break-before{% endif %}{% if role.is_condensed %} condensed-role{% endif %}">
         {% if role.is_condensed %}
@@ -240,7 +254,7 @@
     {% endif %}
 
     {% if projects %}
-    <h2 class="{% if 'projects' in break_sections %}page-break-before{% endif %}">Side Builds</h2>
+    <h2 class="{% if 'projects' in break_sections %}page-break-before{% endif %}">School Projects</h2>
     <div class="section-content">
         {% for proj in projects %}
         <div class="role-block{% if proj.page_break_before %} page-break-before{% endif %}">

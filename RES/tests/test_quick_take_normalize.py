@@ -49,7 +49,7 @@ class TestPromptAudit(unittest.TestCase):
       self.assertNotIn("one metric max", text.lower())
       self.assertIn("ZERO METRICS", text)
       self.assertIn("PROOF_SNIPPET", text)
-      self.assertIn("Do not quote them in Quick Take", text)
+      self.assertIn("Do not quote them in the Summary paragraph", text)
 
   def test_profile_lint_no_metric_allowance(self):
       text = (self.PROMPTS / "profile_lint.md").read_text(encoding="utf-8")

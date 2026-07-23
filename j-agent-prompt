@@ -1,0 +1,52 @@
+Step 1: Prompt Claude "Create a project folder for job-hunt-agent-yourname"
+
+Step 2: create a README summarizing this project as my job-hunt-agent
+
+Step 3: This project is a personal job-hunt agent. Please create or update the project guide so you understand these files:
+- job_search_profile.md = my target roles, locations, industries, and constraints
+- weekly_job_hunt_workflow.md = the repeatable workflow you should follow
+- job_leads.md = my saved leads and notes
+- weekly_run_prompt.md = the reusable weekly command
+Keep the guide concise and practical.
+
+Create three files:job_search_profile.md, weekly_job_hunt_workflow.md, job_leads.md, and weekly_run_prompt.md. Put a short placeholder sentence in each.
+
+
+Create three files:job_search_profile.md, weekly_job_hunt_workflow.md, job_leads.md, and weekly_run_prompt.md. Put a short placeholder sentence in each.
+This project is a personal job-hunt agent. Please create or update the project guide so you understand these files:
+job_search_profile.md = my target roles: Software Engineer, locations: San Francisco Bay Area, industries: high tech, and constraints: $200k or above
+weekly_job_hunt_workflow.md = the repeatable workflow you should follow
+job_leads.md = my saved leads and notes
+weekly_run_prompt.md = the reusable weekly command Keep the guide concise and practical.
+
+
+Step 4: Create three files:job_search_profile.md, weekly_job_hunt_workflow.md, job_leads.md, and weekly_run_prompt.md. Put a short placeholder sentence in each.
+This project is a personal job-hunt agent. Please create or update the project guide so you understand these files:
+job_search_profile.md = my target roles: Enter your job title, locations: Enter locations, industries: Enter industries, and constraints: enter salaries
+weekly_job_hunt_workflow.md = the repeatable workflow you should follow
+job_leads.md = my saved leads and notes
+weekly_run_prompt.md = the reusable weekly command Keep the guide concise and practical.
+
+
+Open job_search_profile.md and ask me the minimum set of questions needed to define my target roles, locations (onsite, remote, cities, regions), industries/companies, and constraints (visa, salary bands, schedule). Then draft the file in a clean, reusable format.
+
+
+Using job_search_profile.md, create weekly_job_hunt_workflow.md as a repeatable weekly agent workflow. For each step, include purpose, inputs, outputs, and exact actions Claude should take.
+
+
+Rewrite the workflow as a numbered procedure an agent can actually follow every week. Keep it concrete and not fluffy.
+
+
+Using agent_system_prompt.md, job_search_profile.md, and weekly_job_hunt_workflow.md, propose 5 realistic job-search queries for me. Then add 5 plausible leads to job_leads.md using realistic companies and roles that fit my profile. Do not use fake-sounding company names.
+
+
+Step 6: now we’re going to create a job leads file which ranks our job leads (step 5 was creating the workflow to search for roles, step 4 was creating a profile). Create job_leads.md as a markdown table with columns: Source, Role, Company, Location, Link, MatchReason, Notes, OutreachStatus
+
+
+Step 7: say ‘Yes’ to the question to populate the weekly search
+
+
+Step 8: Using agent_system_prompt.md, job_search_profile.md, and weekly_job_hunt_workflow.md, propose 5 realistic job-search queries for me. Then add 5 plausible leads to job_leads.md using realistic companies and roles that fit my profile. Do not use fake-sounding company names.
+
+
+Step 9: (having an API key allows you to plug Claude into a larger pool of job search engines that are run by google) Prompt: Here’s my SerpAPI key, use gitignore to manage this (enter your API Key). Use the same secrets management best practices.

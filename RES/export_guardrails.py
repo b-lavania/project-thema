@@ -7,7 +7,7 @@ from typing import Any
 
 MAX_PDF_PAGES = 2
 
-# Tool names that should not appear in Quick Take (belong in How I Work / The Work)
+# Tool names that should not appear in Summary paragraph (belong in method bullets / Experience)
 _QUICK_TAKE_TOOL_NAMES = (
     "heap", "segment", "mixpanel", "pypsa", "hotjar", "clarity", "pendo", "aha",
 )
@@ -66,6 +66,7 @@ def ats_readiness_checks(
     export_mode: str = "standard",
     pdf_page_size: str = "letter",
     coaching_notes_in_output: bool = False,
+    skill_bank: str = "",
 ) -> list[dict[str, Any]]:
     """Return checklist items: {label, ok, detail}."""
     checks: list[dict[str, Any]] = []
@@ -79,7 +80,7 @@ def ats_readiness_checks(
         "detail": f"{pct}% (target ≥80%, in-app only)",
     })
 
-    # Quick Take metrics
+    # Summary paragraph metrics (positioning only; method bullets may have metrics)
     paragraph = _quick_take_paragraph(mission)
     has_metric = bool(
         re.search(
@@ -89,26 +90,26 @@ def ats_readiness_checks(
         )
     )
     checks.append({
-        "label": "Quick Take has no metrics",
+        "label": "Summary paragraph has no metrics",
         "ok": not has_metric,
-        "detail": "Numbers belong in The Work, not Quick Take",
+        "detail": "Numbers belong in Summary method bullets / Experience, not the paragraph",
     })
 
     quick_take_words = len(paragraph.split()) if paragraph else 0
     qt_limit = 75 if export_mode == "digital" else 60
     checks.append({
-        "label": f"Quick Take stays within {qt_limit} words",
+        "label": f"Summary paragraph stays within {qt_limit} words",
         "ok": quick_take_words <= qt_limit,
         "detail": f"{quick_take_words} words",
     })
 
-    # Quick Take tools
+    # Summary paragraph tools
     lower = paragraph.lower()
     tools_found = [t for t in _QUICK_TAKE_TOOL_NAMES if t in lower]
     checks.append({
-        "label": "Quick Take has no tool laundry list",
+        "label": "Summary paragraph has no tool laundry list",
         "ok": not tools_found,
-        "detail": "Move tools to How I Work" if tools_found else "OK",
+        "detail": "Move tools to Summary method bullets" if tools_found else "OK",
     })
 
     # Coaching notes
@@ -121,9 +122,26 @@ def ats_readiness_checks(
     skill_bullets = _count_bulletish_lines(skills)
     skill_limit = 7 if export_mode == "digital" else 6
     checks.append({
-        "label": f"How I Work stays within {skill_limit} bullets",
+        "label": f"Summary method bullets stay within {skill_limit}",
         "ok": 0 < skill_bullets <= skill_limit,
         "detail": f"{skill_bullets} bullet(s)",
+    })
+
+    bank_rows = []
+    for ln in (skill_bank or "").split("\n"):
+        stripped = ln.strip()
+        if not stripped:
+            continue
+        upper = stripped.upper()
+        if upper.startswith("COACHING NOTE") or upper.startswith("ALT ("):
+            continue
+        bank_rows.append(stripped)
+    category_rows = [ln for ln in bank_rows if ":" in ln]
+    row_count = len(category_rows) if category_rows else len(bank_rows)
+    checks.append({
+        "label": "Skills section has 3–4 category rows",
+        "ok": 3 <= row_count <= 5,
+        "detail": f"{row_count} row(s)" if row_count else "missing",
     })
 
     full_roles = _count_full_roles(experience_blocks or [])
@@ -275,7 +293,7 @@ def apply_two_page_compact(
     export_mode: str = "standard",
 ) -> tuple[dict, dict[str, str], list[tuple]]:
     """
-    Deterministic compaction: demote extra full roles, trim bullets, drop Side Builds.
+    Deterministic compaction: demote extra full roles, trim bullets, drop School Projects.
     Returns (resume_sections, new_role_selections, updated_selected_roles).
     """
     new_selections = apply_compact_role_selections(role_selections, max_full=max_full)
@@ -291,6 +309,7 @@ def apply_two_page_compact(
         {
             "mission": res.get("mission", ""),
             "skills": res.get("skills", ""),
+            "skill_bank": res.get("skill_bank", ""),
             "experience": experience,
             "projects": res.get("projects", ""),
         },

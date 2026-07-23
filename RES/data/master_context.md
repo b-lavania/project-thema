@@ -91,7 +91,7 @@ This file consolidates all resume variants and portfolio metrics into a single s
 
 **Story spine:** Research and opportunity maps before roadmap bets; pricing and OR where the commercial lever is; instrument funnels before scaling GTM.
 
-Use these five method lanes when writing the resume "How I Work" section. Name a tool only as evidence for a decision, never as the headline. Do not invent tools or methods not listed here or in role blocks below.
+Use these five method lanes when writing the Summary method bullets (operating statements under Summary). Name a tool only as evidence for a decision, never as the headline. Do not invent tools or methods not listed here or in role blocks below.
 
 1. **Discover** — Opportunity maps, focus groups, tree tests, user interviews, session replay (Heap, Microsoft Clarity, Hotjar), funnel diagnostics, clickable prototypes. Outcome: scope cuts and roadmap bets grounded in where users actually stall.
 2. **Decide** — STP, pricing architecture, tier consolidation, hypothesis framing, entitlement logic. Outcome: plan architecture and pricing UX that remove decision friction (not cosmetic label changes).
@@ -257,6 +257,14 @@ Use these five method lanes when writing the resume "How I Work" section. Name a
 - **Research & product tooling (confirmed)**: Aha!, **in-house analytics/telemetry suite (built at BVXpress)**, Pendo, focus groups, tree testing, opportunity maps, workflow interviews, prototype walkthroughs, build-vs-buy analysis
 - **Experimentation & analytics**: Used Mixpanel-class telemetry, Pendo, and **custom in-house analytics** to understand customer behavior, run tests on **customer profiles/segments**, and decide which features to enhance vs. deprecate; landing-page and onboarding experiments informed conversion lift (e.g. 7% message test).
 - **Problem**: The firm had no product function, no digital tooling, and all advisory work was manual and relationship-dependent — no repeatable growth engine. Through multiple M&A transactions, legacy HR systems could not deliver combined workforce visibility during diligence (months-long migrations, duplicate records, manual reconciliation).
+
+#### BVXpress product ladder (pricing / portfolio source of truth)
+- **BVXpress**: SaaS business unit of **ICI** (M&A advisory parent) — not a standalone startup.
+- **BVX**: **Upper-end** product — full valuation capability; **margin target** of the commercial system.
+- **NTV (New Terminal Value)**: **Low-end product devised as a loss-leader** — enter an **adjacent market** that would not buy BVX at entry; pull users to BVX through **deliberate feature-set differentiation** (in-product capability fences, not BVX discounting).
+- **Commercial model**: No public price book; **customized unique pricing and discounts for every customer** (NTV leg often deepest discount); **in-house telemetry suite** drove fence placement, NTV→BVX conversion cohorts, enhance/deprecate, and **automated pricing evolution** from usage patterns.
+- **Expansion motion**: NTV (loss-leader) → BVX (margin) → presentation tools + suite modules; multi-product adopters (3+) retained at 2×; ARPU $450→$600 from voluntary upgrades, not list-price hikes.
+- **Deep dive / frameworks**: [`ENGINEERING/pricing.md`](../../ENGINEERING/pricing.md) Part 0C (Loss-Leader Ladder, Telemetry-to-Price Loop, Custom Deal Architecture)
 
 #### PM Story
 - **Market context**: In 2012, M&A advisors and business brokers for sub-$50M deals were running entirely on Excel, email, and relationship memory. There was no vertical SaaS for this workflow — generic CRMs (Salesforce) didn't understand deal structure, and the few niche tools that existed were designed for investment banks, not independent advisors. The wedge was not better analysis; it was getting advisors out of Excel and looking professional to clients faster.

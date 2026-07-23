@@ -43,6 +43,30 @@ class TestHowIWorkSourcePalettes(unittest.TestCase):
         self.assertIn("Logistics TMS", usr_p)
         self.assertIn("jd context mirroring", sys_p.lower())
 
+    def test_skills_bank_prompt_shape(self):
+        text = (RES_ROOT / "prompts" / "skills_bank.md").read_text(encoding="utf-8")
+        self.assertIn("{jd_context}", text)
+        self.assertIn("{required_tools}", text)
+        self.assertIn("{how_i_work_source}", text)
+        self.assertIn("Product:", text)
+        self.assertIn("Tools:", text)
+        self.assertIn("Domains:", text)
+
+    def test_load_skills_bank_prompt(self):
+        sys_p, usr_p = load_prompt(
+            "skills_bank.md",
+            track_line="",
+            voice_line="",
+            ANTI_FLUFF="",
+            target_role="PM",
+            jd_context="TOOLS_AND_KEYWORDS:\n- Segment\n- Jira",
+            narrative_brief="",
+            how_i_work_source="Discover lane",
+            required_tools="Segment, Jira",
+        )
+        self.assertIn("Segment", usr_p)
+        self.assertIn("ATS keyword wall", sys_p)
+
 
 if __name__ == "__main__":
     unittest.main()

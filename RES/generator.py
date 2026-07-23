@@ -13,7 +13,7 @@ METRIC_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
-# Quick Take lint / sanitizer (positioning only — no tools or proof numbers)
+# Summary paragraph lint / sanitizer (positioning only — no tools or proof numbers)
 QUICK_TAKE_TOOL_NAMES = (
     "heap", "segment", "mixpanel", "pypsa", "hotjar", "clarity", "pendo", "aha",
     "amplitude", "fullstory", "looker", "tableau", "snowflake", "databricks",
@@ -57,7 +57,7 @@ def _strip_quick_take_metrics(text: str) -> str:
 
 
 def normalize_quick_take_text(text: str) -> str:
-    """ASCII dash cleanup and metric removal for tagline + Quick Take paragraph."""
+    """ASCII dash cleanup and metric removal for tagline + Summary paragraph."""
     if not text or not text.strip():
         return text or ""
     out_lines: list[str] = []
@@ -344,7 +344,7 @@ def _extract_markdown_section(master_context: str, heading: str) -> str:
 
 
 def _extract_how_i_work_source(master_context: str) -> str:
-    """Curated methods/tools block for How I Work generation."""
+    """Curated methods/tools block for Summary method-bullet generation."""
     section = _extract_markdown_section(master_context, "How I Work (generation source)")
     if section:
         return section
@@ -511,7 +511,7 @@ def extract_jd_pain_point(llm, jd_text, target_role, jd_duties=""):
 
 
 # ---------------------------------------------------------------------------
-# Profile angle (WHY framing before The Quick Take)
+# Profile angle (WHY framing before Summary paragraph)
 # ---------------------------------------------------------------------------
 def generate_profile_angle(
     llm,
@@ -589,7 +589,7 @@ def generate_mission_statement(
         max_tokens=768,
         temperature=0.3,
         tier="profile",
-        step="The Quick Take (profile)",
+        step="Summary paragraph (profile)",
     )
 
 
@@ -630,7 +630,51 @@ def generate_profile_with_lint(
 
 
 # ---------------------------------------------------------------------------
-# Skills Statements
+# Skills bank (ATS keyword wall)
+# ---------------------------------------------------------------------------
+def generate_skills_bank(
+    llm,
+    master_context,
+    target_role,
+    track="",
+    voice="",
+    narrative_brief="",
+    jd_context="",
+    jd_tools=None,
+    required_tools=None,
+):
+    """Generate 3–4 Category: keyword, keyword rows for the Skills section."""
+    track_line = f"\nTRACK EMPHASIS: {_track_instruction(track)}" if track else ""
+    voice_line = f"\nRESUME VOICE: {_voice_instruction(voice)}" if voice else ""
+    how_i_work_source = _extract_how_i_work_source(master_context)
+    if required_tools is None:
+        from ats_coverage import jd_tools_supported
+
+        required_tools = jd_tools_supported(jd_tools or [])
+    tools_line = ", ".join(required_tools) if required_tools else "(none from JD — use How I Work source tools only)"
+    system_prompt, user_prompt = load_prompt(
+        "skills_bank.md",
+        track_line=track_line,
+        voice_line=voice_line,
+        ANTI_FLUFF=get_anti_fluff(),
+        target_role=target_role,
+        jd_context=jd_context or "(No JD context provided.)",
+        narrative_brief=narrative_brief or "(none)",
+        how_i_work_source=how_i_work_source,
+        required_tools=tools_line,
+    )
+    return _llm(
+        llm,
+        system_prompt,
+        user_prompt,
+        max_tokens=700,
+        temperature=0.25,
+        step="Skills bank",
+    )
+
+
+# ---------------------------------------------------------------------------
+# Skills Statements (Summary method bullets)
 # ---------------------------------------------------------------------------
 def generate_skills_statements(
     llm,
@@ -653,7 +697,7 @@ def generate_skills_statements(
         from ats_coverage import jd_tools_supported
 
         required_tools = jd_tools_supported(jd_tools or [])
-    tools_line = ", ".join(required_tools) if required_tools else "(none — use How I Work source only)"
+    tools_line = ", ".join(required_tools) if required_tools else "(none — use How I Work generation source only)"
     system_prompt, user_prompt = load_prompt(
         "skills_statements.md",
         track_line=track_line,
@@ -784,6 +828,7 @@ def review_resume_quality(
     skills,
     experience_blocks,
     projects,
+    skill_bank="",
 ):
     """Post-generation quality review: punchiness, PM signal, JD fit, builder-heavy risk."""
     system_prompt, user_prompt = load_prompt(
@@ -793,6 +838,7 @@ def review_resume_quality(
         narrative_brief=narrative_brief or "(none)",
         mission=mission or "(none)",
         skills=skills or "(none)",
+        skill_bank=skill_bank or "(none)",
         experience_blocks="\n\n".join(experience_blocks) if experience_blocks else "(none)",
         projects=projects or "(none)",
     )

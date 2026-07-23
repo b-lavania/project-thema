@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quotely Evals | Engineering Deep-Dive | Bob Lavania</title>
+<meta name="description" content="How I designed a four-layer evaluation system for Quotely: Moovez's commercialized photo-to-quote AI for moving and logistics. Vision, catalog matching, logistics snapshots, and end-to-end quote accuracy.">
+<meta property="og:title" content="Quotely Evals | Four-Layer Eval Architecture for Blue-Collar AI">
+<meta property="og:description" content="Engineering deep-dive: building an evals harness for a vision + operations-research quoting pipeline in moving and last-mile logistics.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --bg-color: #ffffff;
+    --text-main: #111111;
+    --text-muted: #555555;
+    --text-light: #777777;
+    --border-color: #000000;
+    --border-light: #cccccc;
+    --accent: #000000;
+    --teal: #0f6e56;
+    --teal-light: #e1f5ee;
+    --amber: #ba7517;
+    --amber-light: #fef3e6;
+    --blue: #185fa5;
+    --blue-light: #e6f2ff;
+    --purple: #6b46c1;
+    --purple-light: #f3f4ff;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-sans); line-height: 1.55; font-size: 16px; -webkit-font-smoothing: antialiased; padding: 1.25rem; }
+  .container { max-width: 1100px; margin: 0 auto; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0 2rem; }
+  header, section { border-bottom: 1px solid var(--border-color); padding: 2rem 0; }
+  header { padding-top: 1.25rem; }
+  .back-link { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.25rem; }
+  .back-link a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+  .back-link a:hover { color: var(--text-main); }
+  h1 { font-size: 2.35rem; line-height: 1.15; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+  .subhead { font-size: 1.05rem; color: var(--text-muted); max-width: 760px; margin-bottom: 1.25rem; line-height: 1.5; }
+  .cred-strip { font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 0.75rem 0; display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; color: var(--text-main); margin-top: 1.25rem; }
+  .proof-points { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.85rem; margin-top: 1.25rem; }
+  .proof-card { border: 2px solid var(--border-color); padding: 1rem; background: var(--bg-color); }
+  .proof-card.teal { border-color: var(--teal); background: var(--teal-light); }
+  .proof-card.amber { border-color: var(--amber); background: var(--amber-light); }
+  .proof-card.blue { border-color: var(--blue); background: var(--blue-light); }
+  .proof-card.purple { border-color: var(--purple); background: var(--purple-light); }
+  .proof-number { font-size: 1.15rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.35rem; font-family: var(--font-mono); }
+  .proof-card.teal .proof-number { color: var(--teal); }
+  .proof-card.amber .proof-number { color: var(--amber); }
+  .proof-card.blue .proof-number { color: var(--blue); }
+  .proof-card.purple .proof-number { color: var(--purple); }
+  .proof-label { font-size: 0.82rem; color: var(--text-main); line-height: 1.3; }
+  h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-mono); color: var(--text-muted); }
+  h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.3; }
+  .pain-list { margin: 0; padding-left: 1.15rem; color: var(--text-muted); font-size: 0.95rem; line-height: 1.55; }
+  .pain-list li { margin-bottom: 0.35rem; }
+  .metric-highlight { background: #fffbea; border-left: 3px solid var(--amber); padding: 0.75rem 1rem; margin: 0.75rem 0; font-weight: 500; color: var(--text-main); font-size: 0.95rem; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
+  .compare-card { border: 2px solid var(--border-color); padding: 1.15rem; }
+  .compare-card.legacy { border-color: var(--border-light); background: #fafafa; }
+  .compare-card.modern { border-color: var(--teal); background: var(--teal-light); }
+  .compare-card h3 { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.65rem; }
+  .flow-block { font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.55; color: var(--text-main); padding: 0.65rem 0.75rem; border: 1px dashed var(--border-light); background: var(--bg-color); margin-bottom: 0.65rem; white-space: pre-wrap; }
+  .compare-card ul { margin: 0; padding-left: 1.1rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+  .compare-card ul li { margin-bottom: 0.3rem; }
+  .capabilities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .cap-card { border: 1px solid var(--border-color); padding: 1.15rem; }
+  .cap-card.layer1 { border-color: var(--teal); }
+  .cap-card.layer2 { border-color: var(--blue); }
+  .cap-card.layer3 { border-color: var(--amber); }
+  .cap-card.layer4 { border-color: var(--purple); }
+  .cap-card h4 { font-size: 0.95rem; margin-bottom: 0.45rem; font-weight: 600; font-family: var(--font-mono); }
+  .cap-card .layer-tag { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.35rem; }
+  .cap-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.45; margin-bottom: 0.5rem; }
+  .cap-card ul { margin: 0; padding-left: 1rem; font-size: 0.84rem; color: var(--text-muted); line-height: 1.45; }
+  .cap-card ul li { margin-bottom: 0.25rem; }
+  .status-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 0.5rem; }
+  .status-table th, .status-table td { border: 1px solid var(--border-light); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+  .status-table th { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; background: #fafafa; color: var(--text-muted); }
+  .status-table td { color: var(--text-muted); }
+  .systems-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .systems-tags span { border: 1px solid var(--border-color); padding: 0.45rem 0.85rem; font-family: var(--font-mono); font-size: 0.78rem; }
+  .principles-list { list-style: none; counter-reset: principle; }
+  .principles-list li { position: relative; padding-left: 2.5rem; margin-bottom: 1rem; font-size: 0.98rem; font-weight: 500; line-height: 1.4; }
+  .principles-list li::before { counter-increment: principle; content: "0" counter(principle); position: absolute; left: 0; top: 0.1rem; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+  .quote-block { font-size: 1.05rem; line-height: 1.45; font-weight: 500; color: var(--text-muted); font-style: italic; max-width: 720px; margin-top: 0.5rem; }
+  @media (max-width: 900px) {
+    .proof-points { grid-template-columns: 1fr 1fr; }
+    .compare-grid, .capabilities-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .container { border: none; padding: 0 1rem; }
+    body { padding: 1rem; }
+    h1 { font-size: 1.85rem; }
+    .proof-points { grid-template-columns: 1fr; }
+  }
+</style>
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <p class="back-link"><a href="index.html#case-moovez">&larr; Moovez / Quotely case study</a></p>
+    <h1>Building an evals system for blue-collar AI quoting</h1>
+    <p class="subhead">Engineering deep-dive on <strong>Quotely</strong>, the photo-to-quote pipeline I commercialized from Moovez. How I split a vision + operations-research system into four eval layers, designed offline/online flywheels, and planned a harness that catches margin-killing quote errors before they reach dispatchers.</p>
+
+    <div class="cred-strip">
+      <span>Founding PM &middot; Moovez / Quotely</span>
+      <span>Eval harness design &middot; ML Ops &middot; Computer vision</span>
+      <span>Moving &amp; last-mile logistics</span>
+      <span>2024 to Present</span>
+    </div>
+
+    <div class="proof-points">
+      <div class="proof-card teal">
+        <div class="proof-number">4 layers</div>
+        <div class="proof-label">Vision &rarr; catalog matching &rarr; logistics &rarr; end-to-end</div>
+      </div>
+      <div class="proof-card amber">
+        <div class="proof-number">Offline + online</div>
+        <div class="proof-label">CI regression + production quote accuracy flywheel</div>
+      </div>
+      <div class="proof-card blue">
+        <div class="proof-number">Deterministic first</div>
+        <div class="proof-label">Golden snapshots and invariants before Gemini spend</div>
+      </div>
+      <div class="proof-card purple">
+        <div class="proof-number">Honest status</div>
+        <div class="proof-label">Batch replay built; full harness package planned</div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>Why this matters</h2>
+    <p class="metric-highlight"><strong>A wrong quote in moving is not an abstract model failure.</strong> It means a crew shows up under-staffed, a truck doesn&rsquo;t fit the load, or a dispatcher loses trust and overrides the system. Quotely turns customer photos into crew size, job duration, and price in under three minutes, but only if every layer in the pipeline is correct.</p>
+    <p style="font-size:0.95rem;color:var(--text-muted);max-width:760px;margin-bottom:1rem;">The obvious eval (compare final quote to a human dispatcher) hides where the miss happened. Was it vision (wrong item detected)? Catalog matching (right name, wrong weight class)? Or the calculator (stairs, elevator, crew logic)? I designed the eval architecture to answer that question layer by layer, not as one black box.</p>
+    <ul class="pain-list">
+      <li><strong>Margin protection:</strong> 85% of jobs should finish within the quoted time window; systematic under-quoting erodes profitability</li>
+      <li><strong>Trust:</strong> Dispatchers override bad quotes; every override trains the org to distrust automation</li>
+      <li><strong>Commercialization:</strong> Quotely sells to other operators; quote accuracy is the product, not a nice-to-have metric</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>System under test</h2>
+    <p style="margin-bottom:1rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;">Quotely is a <strong style="color:var(--text-main);">two-layer pipeline</strong>. Eval it in two layers first, then compose for end-to-end.</p>
+    <div class="compare-grid">
+      <div class="compare-card legacy">
+        <h3>Layer 1 &middot; Vision (non-deterministic)</h3>
+        <div class="flow-block">Customer photos
+  &darr; Gemini VLM
+Item list: name, qty, size, location</div>
+        <ul>
+          <li>Statistical metrics: precision, recall, F1, quantity error</li>
+          <li>Cross-run consistency (N=5 runs, report mean &plusmn; spread)</li>
+          <li>Requires API spend; run on schedule or pre-release</li>
+        </ul>
+      </div>
+      <div class="compare-card modern">
+        <h3>Layers 2 and 3 &middot; Logistics (deterministic)</h3>
+        <div class="flow-block">Detected items
+  &darr; Catalog enrichment (structured retrieval)
+  &darr; MovingCalculator (OR engine)
+Time, crew, price</div>
+        <ul>
+          <li>Golden-file snapshot tests: exact diff vs committed output</li>
+          <li>Invariant assertions: crew bounds, truck sufficiency, monotonic pricing</li>
+          <li>No Gemini required; runs free on every PR</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:1.25rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;"><strong style="color:var(--text-main);">Full pipeline:</strong></p>
+    <div class="flow-block" style="margin-top:0.5rem;">Media &rarr; analyze_media() [Gemini]
+     &rarr; enrich_items() [catalog lookup]
+     &rarr; compute_logistics() [calculator]
+     &rarr; quote</div>
+  </section>
+
+  <section>
+    <h2>Four eval layers</h2>
+    <p style="margin-bottom:1.25rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;">Each layer answers a different question. Layers compose left to right; failures isolate to a single subsystem.</p>
+    <div class="capabilities-grid">
+      <div class="cap-card layer1">
+        <div class="layer-tag">Layer 1 &middot; Vision detection</div>
+        <h4>Does the model see the right items?</h4>
+        <p><strong>Status:</strong> Planned automation. Consistency runs operational today.</p>
+        <ul>
+          <li>Ground truth: human-labeled inventories per photo set</li>
+          <li>Metrics: recall, precision, F1, quantity MAE, size accuracy</li>
+          <li>Matching: exact &rarr; alias &rarr; optional LLM-as-judge fallback</li>
+        </ul>
+      </div>
+      <div class="cap-card layer2">
+        <div class="layer-tag">Layer 2 &middot; Catalog matching</div>
+        <h4>Do items map to the catalog correctly?</h4>
+        <p><strong>Status:</strong> Partially operational via batch test output.</p>
+        <ul>
+          <li>Deterministic, cheap, no Gemini</li>
+          <li>Observable via calculationDebug.matching[]</li>
+          <li><strong>Signals I track:</strong> match rate, unknown-fallback leaderboard (which items need catalog additions), size resolution accuracy, and alias vs category method mix</li>
+          <li><strong>Triple-source compare (built):</strong> batch replay runs the same frozen vision output through three catalog backends (JSON, spreadsheet, and database) side by side to catch backend drift</li>
+        </ul>
+      </div>
+      <div class="cap-card layer3">
+        <div class="layer-tag">Layer 3 &middot; Logistics snapshots</div>
+        <h4>Does the calculator produce the same output?</h4>
+        <p><strong>Status:</strong> Highest ROI; golden files planned.</p>
+        <ul>
+          <li>Frozen vision inputs replayed through enrichment + calculator</li>
+          <li>Diff vs committed golden JSON (strip debug UUIDs)</li>
+          <li>Invariants: crew bounds, truck sufficiency, phase sums</li>
+        </ul>
+      </div>
+      <div class="cap-card layer4">
+        <div class="layer-tag">Layer 4 &middot; End-to-end</div>
+        <h4>Does photo &rarr; quote match reality?</h4>
+        <p><strong>Status:</strong> Partially operational via batch CSV actuals.</p>
+        <ul>
+          <li>Ground truth: customer-reported minutes, crew, price</li>
+          <li>Metrics: minutes MAE, &plusmn;15% hit rate, crew mismatch, price-band hit</li>
+          <li>9 trusted historic jobs in headline set</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Online vs offline evals</h2>
+    <p style="margin-bottom:1rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;">Two complementary halves: do not merge, do connect.</p>
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Offline (pre-ship)</th>
+          <th>Online (production)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Question</strong></td>
+          <td>Is the system correct before we ship?</td>
+          <td>Was the quote right in the real world?</td>
+        </tr>
+        <tr>
+          <td><strong>Ground truth</strong></td>
+          <td>Labeled inventories, frozen outputs, historic job actuals</td>
+          <td>Customer-reported minutes and crew after job completion</td>
+        </tr>
+        <tr>
+          <td><strong>Speed</strong></td>
+          <td>Seconds to minutes (CI)</td>
+          <td>Weeks (job completion cycle)</td>
+        </tr>
+        <tr>
+          <td><strong>Coverage</strong></td>
+          <td>Every layer, isolated</td>
+          <td>End-to-end totals only</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="metric-highlight" style="margin-top:1.25rem;"><strong>Flywheel:</strong> production drift surfaces bad quotes &rarr; new offline test cases &rarr; regression tests &rarr; fewer production failures. The calculationDebug object is shared: assert against it offline, persist it on quote records online.</p>
+  </section>
+
+  <section>
+    <h2>Harness design</h2>
+    <p style="margin-bottom:1rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;">I specified a modular eval package: import production code, never reimplement calculator logic in test utilities.</p>
+    <ul class="pain-list">
+      <li><strong>Design rules:</strong> Import enrich_items() and MovingCalculator from production. No Gemini for Layers 2 and 3. One report format: console table + JSON + Markdown.</li>
+      <li><strong>CI gates (planned):</strong> Every PR: logistics snapshot + matching + invariants hard-fail. Nightly: full vision (N=5) + E2E with alert if regression &gt; &epsilon; vs 7-day baseline.</li>
+      <li><strong>Dataset A: Vision labels:</strong> Human-labeled inventories per photo set. Deprioritized until item-level debugging is needed for quote errors.</li>
+      <li><strong>Dataset C: Historic jobs:</strong> 14 frozen move fixtures joined to real job actuals. 9 trusted jobs in headline metrics; exclude guess, incomplete, and excluded quality tiers.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>My role</h2>
+    <p style="font-size:0.95rem;color:var(--text-muted);max-width:760px;">As Founding PM on Quotely, I owned the product decision to <strong style="color:var(--text-main);">split eval layers before scaling vision spend</strong>. I wrote the eval architecture spec, defined datasets and headline metrics aligned to dispatcher-trust and margin protection, and designed the harness package structure for the engineering team. The four-layer model came from diagnosing real quote failures, not from applying a generic ML evals template to a blue-collar domain.</p>
+    <div class="systems-tags" style="margin-top:1.25rem;">
+      <span>Eval harness design</span>
+      <span>Ground-truth strategy</span>
+      <span>CI gate specification</span>
+      <span>Metric selection</span>
+      <span>Catalog gap analysis</span>
+      <span>Offline/online flywheel</span>
+      <span>Gemini + OR pipeline</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Takeaways</h2>
+    <ul class="principles-list">
+      <li>Split non-deterministic vision from deterministic logistics before you measure end-to-end quote accuracy</li>
+      <li>Evaluate the retrieval layer you actually have: structured catalog matching, not hypothetical vector RAG</li>
+      <li>Prioritize deterministic layers (golden snapshots, invariants) for highest ROI and free CI gates</li>
+      <li>Measure what dispatchers feel as a &ldquo;wrong quote&rdquo; (minutes, crew, price band), not just model confidence</li>
+      <li>Production drift is a dataset generator; every bad quote in the field should become an offline regression case</li>
+    </ul>
+    <p class="quote-block">&ldquo;In blue-collar AI, the eval question isn&rsquo;t &lsquo;is the model accurate?&rsquo; It&rsquo;s &lsquo;will the crew show up right-sized and the dispatcher trust the number?&rsquo;&rdquo;</p>
+  </section>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-contact">
+    <div class="footer-inner">
+      <p class="footer-name"><strong>Bob Lavania:</strong> Product Manager &amp; BizOps Leader</p>
+      <p class="footer-cta">Ideal for: Seed to Series-B companies (10 to 50 people) looking to build or scale AI-driven products. Comfortable with equity compensation and excited about 0 to 1 product development.</p>
+      <div class="footer-actions">
+        <span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span>
+        <a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-utility">
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="Portfolio">
+        <a href="index.html">Home</a>
+        <span class="footer-nav-divider">&middot;</span>
+        <span class="footer-nav-label">Deep-dives:</span>
+        <a href="quotely-evals.html" aria-current="page">Quotely evals</a>
+        <a href="sms-agent-evals.html">Agent evals</a>
+        <a href="cybersecurity-marketplace.html">Cyber marketplace</a>
+        <a href="telehealth.html">Telehealth</a>
+        <a href="hris-ma.html">HRIS / M&amp;A</a>
+      </nav>
+      <span class="footer-location">San Francisco, CA &amp; Calgary, AB &middot; Remote</span>
+    </div>
+  </div>
+</footer>
+
+<script src="footer.js"></script>
+</body>
+</html>

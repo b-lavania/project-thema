@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversational Agent Evals | HITL &amp; Agreement Metrics | Bob Lavania</title>
+<meta name="description" content="Technical deep-dive on evaluating conversational agents: when Cohen's kappa applies, how to design HITL recall/precision, and task-success fixture gates. Worked example from Moovez SMS support agent.">
+<meta property="og:title" content="Evaluating Conversational Agents | HITL and Agreement Metrics">
+<meta property="og:description" content="Choosing the right eval metrics for agents with retrieval and human escalation: kappa calibration, HITL quality, and fixture pass-rate floors.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --bg-color: #ffffff;
+    --text-main: #111111;
+    --text-muted: #555555;
+    --text-light: #777777;
+    --border-color: #000000;
+    --border-light: #cccccc;
+    --accent: #000000;
+    --teal: #0f6e56;
+    --teal-light: #e1f5ee;
+    --amber: #ba7517;
+    --amber-light: #fef3e6;
+    --blue: #185fa5;
+    --blue-light: #e6f2ff;
+    --purple: #6b46c1;
+    --purple-light: #f3f4ff;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-sans); line-height: 1.55; font-size: 16px; -webkit-font-smoothing: antialiased; padding: 1.25rem; }
+  .container { max-width: 1100px; margin: 0 auto; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0 2rem; }
+  header, section { border-bottom: 1px solid var(--border-color); padding: 2rem 0; }
+  header { padding-top: 1.25rem; }
+  .back-link { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.25rem; }
+  .back-link a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+  .back-link a:hover { color: var(--text-main); }
+  h1 { font-size: 2.35rem; line-height: 1.15; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+  .subhead { font-size: 1.05rem; color: var(--text-muted); max-width: 760px; margin-bottom: 1.25rem; line-height: 1.5; }
+  .cred-strip { font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 0.75rem 0; display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; color: var(--text-main); margin-top: 1.25rem; }
+  .proof-points { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.85rem; margin-top: 1.25rem; }
+  .proof-card { border: 2px solid var(--border-color); padding: 1rem; background: var(--bg-color); }
+  .proof-card.teal { border-color: var(--teal); background: var(--teal-light); }
+  .proof-card.amber { border-color: var(--amber); background: var(--amber-light); }
+  .proof-card.blue { border-color: var(--blue); background: var(--blue-light); }
+  .proof-card.purple { border-color: var(--purple); background: var(--purple-light); }
+  .proof-number { font-size: 1.15rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.35rem; font-family: var(--font-mono); }
+  .proof-card.teal .proof-number { color: var(--teal); }
+  .proof-card.amber .proof-number { color: var(--amber); }
+  .proof-card.blue .proof-number { color: var(--blue); }
+  .proof-card.purple .proof-number { color: var(--purple); }
+  .proof-label { font-size: 0.82rem; color: var(--text-main); line-height: 1.3; }
+  h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-mono); color: var(--text-muted); }
+  .pain-list { margin: 0; padding-left: 1.15rem; color: var(--text-muted); font-size: 0.95rem; line-height: 1.55; }
+  .pain-list li { margin-bottom: 0.35rem; }
+  .metric-highlight { background: #fffbea; border-left: 3px solid var(--amber); padding: 0.75rem 1rem; margin: 0.75rem 0; font-weight: 500; color: var(--text-main); font-size: 0.95rem; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
+  .compare-card { border: 2px solid var(--border-color); padding: 1.15rem; }
+  .compare-card.legacy { border-color: var(--border-light); background: #fafafa; }
+  .compare-card.modern { border-color: var(--teal); background: var(--teal-light); }
+  .compare-card h3 { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.65rem; }
+  .flow-block { font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.55; color: var(--text-main); padding: 0.65rem 0.75rem; border: 1px dashed var(--border-light); background: var(--bg-color); margin-bottom: 0.65rem; white-space: pre-wrap; }
+  .compare-card ul { margin: 0; padding-left: 1.1rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+  .compare-card ul li { margin-bottom: 0.3rem; }
+  .systems-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .systems-tags span { border: 1px solid var(--border-color); padding: 0.45rem 0.85rem; font-family: var(--font-mono); font-size: 0.78rem; }
+  .principles-list { list-style: none; counter-reset: principle; }
+  .principles-list li { position: relative; padding-left: 2.5rem; margin-bottom: 1rem; font-size: 0.98rem; font-weight: 500; line-height: 1.4; }
+  .principles-list li::before { counter-increment: principle; content: "0" counter(principle); position: absolute; left: 0; top: 0.1rem; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+  .quote-block { font-size: 1.05rem; line-height: 1.45; font-weight: 500; color: var(--text-muted); font-style: italic; max-width: 720px; margin-top: 0.5rem; }
+  @media (max-width: 900px) {
+    .proof-points { grid-template-columns: 1fr 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .container { border: none; padding: 0 1rem; }
+    body { padding: 1rem; }
+    h1 { font-size: 1.85rem; }
+    .proof-points { grid-template-columns: 1fr; }
+  }
+</style>
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <p class="back-link"><a href="index.html#case-moovez">&larr; Moovez / Quotely case study</a></p>
+    <h1>Evaluating conversational agents: HITL and agreement metrics</h1>
+    <p class="subhead">A technical showcase on choosing eval metrics for agents with retrieval and human escalation. When Cohen&rsquo;s &kappa; belongs in the stack, how to measure HITL quality, and why V1 ship gates should be task-success floors on fixtures, not mislabeled confidence scores. Illustrated with Moovez&rsquo;s SMS support agent.</p>
+
+    <div class="cred-strip">
+      <span>Founding PM &middot; Moovez</span>
+      <span>Conversational agents &middot; Eval design &middot; HITL</span>
+      <span>Agreement metrics &middot; Fixture gates</span>
+      <span>2024 to Present</span>
+    </div>
+
+    <div class="proof-points">
+      <div class="proof-card teal">
+        <div class="proof-number">When &kappa; applies</div>
+        <div class="proof-label">Paired raters, confusion matrix, chance correction</div>
+      </div>
+      <div class="proof-card amber">
+        <div class="proof-number">HITL quality</div>
+        <div class="proof-label">Missed vs noisy escalations as separate failures</div>
+      </div>
+      <div class="proof-card blue">
+        <div class="proof-number">Task-success floors</div>
+        <div class="proof-label">Fixture pass rates as V1 ship gates</div>
+      </div>
+      <div class="proof-card purple">
+        <div class="proof-number">Worked example</div>
+        <div class="proof-label">Moovez SMS agent (intake, booking, deflection)</div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>When Cohen&rsquo;s kappa applies (and when it doesn&rsquo;t)</h2>
+    <p class="metric-highlight"><strong>Cohen&rsquo;s &kappa; measures chance-corrected agreement between two independent raters</strong> labeling the same items (two humans, or a human and an LLM judge on the same turns).</p>
+    <p style="font-size:0.95rem;color:var(--text-muted);max-width:760px;margin-bottom:1rem;">It requires paired labels, a confusion matrix, and enough cases to be stable. The right use in agent evals is often offline calibration: &ldquo;Does our LLM judge agree with humans beyond chance?&rdquo; That is a reliability study, not a product ship gate.</p>
+    <div class="compare-grid">
+      <div class="compare-card modern">
+        <h3>True &kappa; (use later)</h3>
+        <ul>
+          <li>Two raters, same turns, categorical labels</li>
+          <li>Confusion matrix + chance correction</li>
+          <li>Judge vs human calibration on a gold set</li>
+          <li>Dual-rater inter-rater reliability when you trust the judge enough to automate</li>
+        </ul>
+      </div>
+      <div class="compare-card legacy">
+        <h3>Not &kappa; (common mistake)</h3>
+        <ul>
+          <li>LLM confidence score &isin; [0, 1] used as a threshold</li>
+          <li>Single-model score with no paired second rater</li>
+          <li>Calling that threshold &ldquo;kappa&rdquo; in dashboards or specs</li>
+          <li>Using agreement stats when the gate is &ldquo;did the task succeed?&rdquo;</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;">On Moovez, the prior bot&rsquo;s &ldquo;kappa&rdquo; was really a confidence threshold. We kept the useful idea as <strong style="color:var(--text-main);">Stage 2 confidence</strong> plus policy rules and explicit-human requests, and reserved true &kappa; for a future judge-calibration pass. Standard deviation across runs can describe flaky live metrics later; we do not use SD as a primary V1 gate.</p>
+  </section>
+
+  <section>
+    <h2>Designing HITL quality metrics</h2>
+    <p style="margin-bottom:1rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;">Human-in-the-loop is not one failure mode. <strong style="color:var(--text-main);">Missed escalations</strong> and <strong style="color:var(--text-main);">noisy escalations</strong> hurt different parts of the business and need separate metrics.</p>
+    <div class="compare-grid">
+      <div class="compare-card legacy">
+        <h3>Missed escalation (recall)</h3>
+        <ul>
+          <li>Case should have reached a human; bot kept going</li>
+          <li>Customer stuck with wrong booking status or bad reply</li>
+          <li>Burns trust; hard to recover in SMS</li>
+          <li>Metric: recall on &ldquo;should escalate&rdquo; fixtures</li>
+        </ul>
+      </div>
+      <div class="compare-card modern">
+        <h3>Noisy escalation (precision)</h3>
+        <ul>
+          <li>Human pulled in when the bot could have finished</li>
+          <li>Ops capacity wasted on routine intake or reschedules</li>
+          <li>Deflection target missed; support cost scales with volume</li>
+          <li>Metric: precision on escalation decisions</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:1.25rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;margin-bottom:0.75rem;"><strong style="color:var(--text-main);">Escalation triggers</strong> should be explicit in design and in fixtures:</p>
+    <ul class="pain-list">
+      <li><strong>Confidence:</strong> Stage 2 score below tenant threshold (e.g. 0.7)</li>
+      <li><strong>Policy:</strong> hard rules (safety, compliance, unsupported intent)</li>
+      <li><strong>Explicit human:</strong> customer asks for a person</li>
+    </ul>
+    <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;">A single &ldquo;escalation rate&rdquo; hides whether you are failing open (missed) or failing closed (noisy). Track recall and precision on labeled fixtures, not one blended number.</p>
+  </section>
+
+  <section>
+    <h2>Worked example: Moovez SMS agent</h2>
+    <p style="margin-bottom:1rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;">Moovez&rsquo;s SMS agent handles intake, booking confirmations, reschedules, and routine support over text, with retrieval-backed replies and escalation to humans when needed. The product goal was meaningful <strong style="color:var(--text-main);">support deflection</strong> (~50% ticket deflection in the broader Moovez case) without inventing booking state or hiding cases that needed a dispatcher.</p>
+    <div class="flow-block">Inbound SMS
+  &darr; Retrieval (top-k chunks)
+  &darr; Reply / intake step / soft handoff
+  &darr; Stage 2 confidence + policy + explicit-human check
+  &darr; HITL queue or closed loop</div>
+    <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;margin-bottom:0.75rem;"><strong style="color:var(--text-main);">V1 ship gates</strong> on a fixed Moovez fixture suite (pass-rate floors, not agreement statistics):</p>
+    <ul class="pain-list">
+      <li><strong>Retrieval hit@4:</strong> gold chunk in top-k; ungrounded SMS if retrieval misses</li>
+      <li><strong>HITL recall / precision:</strong> missed vs noisy escalations on labeled turns</li>
+      <li><strong>Intake completion + soft-handoff accuracy:</strong> <code>intake_complete</code> without hard <code>escalated</code> when the fixture expects a soft path</li>
+      <li><strong>Live LLM judge (light):</strong> grounding, helpful SMS, HITL appropriateness; secondary to fixtures</li>
+    </ul>
+    <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);max-width:760px;">This pattern transfers to any retrieval + escalation agent: define task success per fixture, separate HITL failure modes, and use &kappa; only when you have paired labels for judge calibration.</p>
+  </section>
+
+  <section>
+    <h2>My role</h2>
+    <p style="font-size:0.95rem;color:var(--text-muted);max-width:760px;">As Founding PM, I specified which metrics belong in V1 ship gates vs later calibration work, defined the Moovez fixture suite (hit@4, HITL P/R, intake / soft-handoff), and aligned the team on Stage 2 confidence + policy escalation instead of mislabeled &ldquo;kappa.&rdquo; The framework is product-agnostic; the SMS agent is where we proved it.</p>
+    <div class="systems-tags" style="margin-top:1.25rem;">
+      <span>Agreement metrics (&kappa;)</span>
+      <span>HITL recall / precision</span>
+      <span>Fixture design</span>
+      <span>Confidence thresholds</span>
+      <span>LLM-as-judge calibration</span>
+      <span>Conversational agent evals</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Takeaways</h2>
+    <ul class="principles-list">
+      <li>Use Cohen&rsquo;s &kappa; when two raters label the same turns; do not rename a confidence threshold &ldquo;kappa&rdquo;</li>
+      <li>Measure HITL with recall (missed) and precision (noisy), not a single escalation rate</li>
+      <li>Gate V1 on task-success floors over fixtures; save judge-vs-human &kappa; for calibration</li>
+      <li>Combine confidence, policy, and explicit-human triggers; eval each path in fixtures</li>
+      <li>Retrieval quality (hit@k) is upstream of grounded SMS: measure it before debating reply fluency</li>
+    </ul>
+    <p class="quote-block">&ldquo;For conversational agents, the product question is whether the task finished safely and the right cases reached a human. Agreement statistics answer a different question, and only when you have paired labels.&rdquo;</p>
+  </section>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-contact">
+    <div class="footer-inner">
+      <p class="footer-name"><strong>Bob Lavania:</strong> Product Manager &amp; BizOps Leader</p>
+      <p class="footer-cta">Ideal for: Seed to Series-B companies (10 to 50 people) looking to build or scale AI-driven products. Comfortable with equity compensation and excited about 0 to 1 product development.</p>
+      <div class="footer-actions">
+        <span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span>
+        <a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-utility">
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="Portfolio">
+        <a href="index.html">Home</a>
+        <span class="footer-nav-divider">&middot;</span>
+        <span class="footer-nav-label">Deep-dives:</span>
+        <a href="quotely-evals.html">Quotely evals</a>
+        <a href="sms-agent-evals.html" aria-current="page">Agent evals</a>
+        <a href="cybersecurity-marketplace.html">Cyber marketplace</a>
+        <a href="telehealth.html">Telehealth</a>
+        <a href="hris-ma.html">HRIS / M&amp;A</a>
+      </nav>
+      <span class="footer-location">San Francisco, CA &amp; Calgary, AB &middot; Remote</span>
+    </div>
+  </div>
+</footer>
+
+<script src="footer.js"></script>
+</body>
+</html>

@@ -21,6 +21,7 @@ Single-user Streamlit resume/cover letter generator. Career truth lives in Markd
 | `ENGiNEERING/` | Essays / notes |
 | `HUNT-AGENT/` | Job scraper package: board APIs + SerpAPI search + discovery pipeline + lead storage |
 | `CRM/` | Pipeline CRM — Outreach mode by default (memo + draft + log); Full OS optional |
+| `PMOS/` | PM operating system — templates (BMC, roadmap, PRD, JTBD, ICE, DACI, etc.), context files, decision log |
 
 ## Run
 
@@ -45,8 +46,9 @@ Test files: `test_ats_coverage.py`, `test_quick_take_normalize.py`, `test_how_i_
 
 ## Key conventions
 
-- **Quick Take must be metric-free** — zero metrics, zero tool names, zero em/en dashes. Metrics only in How I Work / The Work / optional Key Results row.
-- **Profile lint** no longer rewrites every 2-line Quick Take (was truncating output at 400 tokens).
+- **Summary paragraph must be metric-free** — zero metrics, zero tool names, zero em/en dashes. Method bullets render under the same Summary heading; metrics belong there / Experience / optional Key Results row.
+- **Skills** is an ATS keyword wall (Product / Tools / Domains / Methods rows) — truth-filtered from How I Work source + JD tools; not narrative bullets.
+- **Profile lint** no longer rewrites every 2-line Summary (was truncating output at 400 tokens).
 - Gemini `gemini-2.0-flash` retired for new API keys — auto-remapped to `gemini-2.5-flash-lite`. Free-tier `gemini-2.5-pro` often has zero quota (use Flash or OpenAI for profile).
 - PDF compaction is 3-tier: role density → section budgets → CSS compaction. Triggered by "Compact to 2 pages" button or sidebar checkbox.
 - `COACHING NOTE:` lines are stripped from exports (truth filter against fabrication).
@@ -83,6 +85,8 @@ Override via sidebar Advanced or `GEMINI_*_MODEL` / `PAIN_POINT_MODEL` env vars.
 **Workflow:** Job Search → Job Details → Generate → Outcomes. See `RES/docs/option_a_workflow.md`.
 
 **BOOTCAMP:** Separate app (`streamlit run BOOTCAMP/app.py`) — PM skill sprint only, not part of default apply flow.
+
+**PMOS:** Markdown-first PM toolkit (`PMOS/`) — Rick Jarrell thread frameworks + first-30-days onboarding; not wired into Streamlit.
 
 ## Notable absences
 

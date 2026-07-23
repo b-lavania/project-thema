@@ -85,7 +85,7 @@ def _parse_role_block(role_text, page_break_before=False):
         if not stripped:
             continue
         if _is_page_break_line(stripped):
-            # Leading marker before any role lines would orphan "The Work" heading
+            # Leading marker before any role lines would orphan "Experience" heading
             if saw_content:
                 pending_break = True
             continue
@@ -149,7 +149,7 @@ def render_resume_pdf(
     with Jinja2 and converting to PDF with WeasyPrint. Role blocks use CSS to avoid
     splitting a job header from its bullets across pages.
 
-    pdf_breaks: optional dict with before_sections (skills|experience|projects|credentials)
+    pdf_breaks: optional dict with before_sections (skill_bank|experience|projects|credentials)
     and before_role_index (1-based int).
     """
     breaks = normalize_pdf_breaks(pdf_breaks)
@@ -178,6 +178,16 @@ def render_resume_pdf(
         stripped = re.sub(r'^\d+\)\s*', '', stripped)
         stripped = re.sub(r'^-\s*', '', stripped)
         skills_list.append(parse_bullet_line(stripped))
+
+    skill_bank_raw = resume_sections.get("skill_bank", "")
+    skill_bank_list = []
+    for line in strip_coaching_notes(skill_bank_raw).split("\n"):
+        stripped = line.strip()
+        if not stripped or _is_page_break_line(stripped):
+            continue
+        stripped = re.sub(r'^\d+\)\s*', '', stripped)
+        stripped = re.sub(r'^-\s*', '', stripped)
+        skill_bank_list.append(parse_bullet_line(stripped))
 
     experience_list = []
     if resume_sections.get("experience"):
@@ -243,6 +253,7 @@ def render_resume_pdf(
         location=location,
         mission_body=mission_body,
         skills=skills_list,
+        skill_bank=skill_bank_list,
         experience=experience_list,
         projects=projects_list,
         include_scrum=include_scrum,

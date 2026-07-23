@@ -2,7 +2,7 @@
 
 *A product manager's journey building an HR system for merger & acquisition scenarios*
 
-**Context:** BVXpress was the SaaS business unit within **ICI** (M&A advisory). I owned the complete HRIS product (2012–2021), in addition to other BVXpress products. **The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling.** Portfolio case study: `PORTFOLIO/CONCEPT3/hris-ma.html` (https://xblavania.netlify.app/hris-ma).
+**Context:** BVXpress was the SaaS business unit within **ICI** (M&A advisory). Product ladder: **NTV (New Terminal Value, loss-leader for adjacent market) → BVX (upper-end margin target)**, with feature-set differentiation pulling upgrades. I owned the complete HRIS product (2012–2021), in addition to other BVXpress products. **The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling.** Portfolio case study: `PORTFOLIO/CONCEPT3/hris-ma.html` (https://xblavania.netlify.app/hris-ma).
 
 ---
 

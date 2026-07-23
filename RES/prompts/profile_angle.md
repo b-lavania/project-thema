@@ -21,7 +21,7 @@ RULES
 - ANALOGOUS_EXPERIENCE must reference the candidate's track record, not restate THEIR_PROBLEM.
 - Do NOT invent metrics, tools, or employers.
 - PROOF_SNIPPET must come from narrative brief or candidate context only.
-- PROOF_SNIPPET must not be copied into The Quick Take / Professional Profile; it is reserved for How I Work and The Work.
+- PROOF_SNIPPET must not be copied into the Summary paragraph / Professional Profile; it is reserved for Summary method bullets and Experience.
 - Plain ASCII only.
 ---USER---
 Target role: {target_role}

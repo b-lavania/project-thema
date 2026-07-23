@@ -19,10 +19,10 @@ TEMPLATE_PATH = Path(__file__).resolve().parent / "assets" / "template.docx"
 NAME_FONT = "Helvetica Neue"
 
 # Section titles match assets/template.html (PDF) exactly
-SECTION_QUICK_TAKE = "Quick Take"
-SECTION_HOW_I_WORK = "How I Work"
-SECTION_THE_WORK = "The Work"
-SECTION_SIDE_BUILDS = "Side Builds"
+SECTION_SUMMARY = "Summary"
+SECTION_SKILLS = "Skills"
+SECTION_EXPERIENCE = "Experience"
+SECTION_SCHOOL_PROJECTS = "School Projects"
 SECTION_CREDENTIALS = "Credentials"
 
 
@@ -168,7 +168,7 @@ def _add_runs_with_metric_bold(paragraph, text: str, italic=False):
 
 
 def _add_list_bullet(doc, line: str, tokens: dict | None = None):
-    """Bulleted line with optional bold label and first metric (How I Work / role bullets)."""
+    """Bulleted line with optional bold label and first metric (Summary method bullets / role bullets)."""
     tokens = tokens or _doc_style_tokens()
     stripped = line.strip()
     if stripped.startswith(("-", "•")):
@@ -187,6 +187,25 @@ def _add_list_bullet(doc, line: str, tokens: dict | None = None):
             _add_runs_with_metric_bold(p, body.strip())
             return
     _add_runs_with_metric_bold(p, stripped)
+
+
+def _add_skill_bank_row(doc, line: str, tokens: dict | None = None):
+    """Non-bulleted Skills keyword row with bold category label."""
+    tokens = tokens or _doc_style_tokens()
+    stripped = line.strip()
+    if stripped.startswith(("-", "•")):
+        stripped = stripped[1:].strip()
+    stripped = re.sub(r"^\d+\)\s*", "", stripped)
+    p = doc.add_paragraph(style="Normal")
+    p.paragraph_format.space_after = Pt(max(2, tokens["bullet_space_after"] - 2))
+    if ": " in stripped or (":" in stripped and not stripped.startswith("http")):
+        label, _, body = stripped.partition(":")
+        if 1 <= len(label.split()) <= 5:
+            label_run = p.add_run(label.strip() + ": ")
+            label_run.bold = True
+            p.add_run(body.strip())
+            return
+    p.add_run(stripped)
 
 
 def _add_role_header(doc, title_company: str, dates_location: str = "", tokens: dict | None = None):
@@ -260,6 +279,11 @@ def _parse_skills_lines(skills_raw: str) -> list[str]:
         stripped = re.sub(r"^-\s*", "", stripped)
         lines_out.append(stripped)
     return lines_out
+
+
+def _parse_skill_bank_lines(skill_bank_raw: str) -> list[str]:
+    """Category rows for Skills (ATS keyword wall)."""
+    return _parse_skills_lines(skill_bank_raw)
 
 
 def _parse_experience_blocks(experience_list, break_role_index):
@@ -373,36 +397,41 @@ def create_formatted_doc(
     )
     run_contact.font.size = Pt(tokens["contact_size"])
 
-    # Quick Take
-    if mission_body:
-        _add_section_heading(doc, SECTION_QUICK_TAKE, tokens=tokens)
-        _add_para(doc, mission_body, style="Normal", space_after_pt=tokens["body_space_after"])
-
-    # How I Work
-    if resume_sections.get("skills"):
-        _add_section_heading(
-            doc,
-            SECTION_HOW_I_WORK,
-            page_break_before="skills" in break_sections,
-            tokens=tokens,
-        )
-        for skill_line in _parse_skills_lines(resume_sections["skills"]):
+    # Summary = positioning paragraph + former How I Work method bullets (bolstered, not replaced)
+    skills_lines = _parse_skills_lines(resume_sections.get("skills", ""))
+    if mission_body or skills_lines:
+        _add_section_heading(doc, SECTION_SUMMARY, tokens=tokens)
+        if mission_body:
+            _add_para(doc, mission_body, style="Normal", space_after_pt=tokens["body_space_after"])
+        for skill_line in skills_lines:
             _add_list_bullet(doc, skill_line, tokens=tokens)
 
-    # The Work
+    # Skills (ATS keyword wall)
+    skill_bank_lines = _parse_skill_bank_lines(resume_sections.get("skill_bank", ""))
+    if skill_bank_lines:
+        _add_section_heading(
+            doc,
+            SECTION_SKILLS,
+            page_break_before="skill_bank" in break_sections,
+            tokens=tokens,
+        )
+        for row in skill_bank_lines:
+            _add_skill_bank_row(doc, row, tokens=tokens)
+
+    # Experience
     experience_raw = resume_sections.get("experience") or []
     if experience_raw:
         exp_page_break = "experience" in break_sections
-        _add_section_heading(doc, SECTION_THE_WORK, page_break_before=exp_page_break, tokens=tokens)
+        _add_section_heading(doc, SECTION_EXPERIENCE, page_break_before=exp_page_break, tokens=tokens)
         for role in _parse_experience_blocks(experience_raw, break_role_index):
             _add_role_block_doc(doc, role, tokens=tokens)
 
-    # Side Builds
+    # School Projects
     projects_raw = resume_sections.get("projects", "")
     if projects_raw and strip_coaching_notes(projects_raw).strip():
         _add_section_heading(
             doc,
-            SECTION_SIDE_BUILDS,
+            SECTION_SCHOOL_PROJECTS,
             page_break_before="projects" in break_sections,
             tokens=tokens,
         )
