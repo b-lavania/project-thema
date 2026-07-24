@@ -12,637 +12,6 @@
     content="Why hire me? I find the real problem behind the stated one and build the system that makes the fix permanent. Proven across AI logistics (20x quoting), HR tech (M&A workforce systems), and pricing architecture (3x take rate).">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <style>
-    :root {
-      --bg-color: #ffffff;
-      --text-main: #111111;
-      --text-muted: #555555;
-      --text-light: #777777;
-      --border-color: #000000;
-      --border-light: #cccccc;
-      --accent: #000000;
-      --teal: #0f6e56;
-      --teal-light: #e1f5ee;
-      --amber: #ba7517;
-      --amber-light: #fef3e6;
-      --blue: #185fa5;
-      --blue-light: #e6f2ff;
-      --purple: #6b46c1;
-      --purple-light: #f3f4ff;
-      --energy: #2d5a4a;
-      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      line-height: 1.6;
-      font-size: 17px;
-      -webkit-font-smoothing: antialiased;
-      padding: 1.5rem;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      border-left: 1px solid var(--border-color);
-      border-right: 1px solid var(--border-color);
-      padding: 0 2.5rem;
-    }
-
-    header,
-    section {
-      border-bottom: 1px solid var(--border-color);
-      padding: 2.5rem 0;
-    }
-
-    header {
-      padding-top: 1.5rem;
-    }
-
-    h1 {
-      font-size: 2.75rem;
-      line-height: 1.15;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      letter-spacing: -0.02em;
-    }
-
-    .subhead {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      max-width: 800px;
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
-    }
-
-    .fit-block {
-      margin-top: 1.75rem;
-      padding: 1.25rem 1.5rem;
-      border: 1px solid var(--border-light);
-      background: #fafafa;
-    }
-
-    .fit-block-title {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    .fit-block-lede {
-      font-size: 0.98rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-      margin-bottom: 1rem;
-      max-width: 900px;
-    }
-
-    .fit-list {
-      margin: 0;
-      padding-left: 1.2rem;
-      color: var(--text-main);
-      font-size: 0.98rem;
-      line-height: 1.55;
-    }
-
-    .fit-list li {
-      margin-bottom: 0.45rem;
-    }
-
-    .fit-engagement {
-      margin-top: 1rem;
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      max-width: 900px;
-    }
-
-    .cred-strip {
-      font-family: var(--font-mono);
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      border-top: 1px solid var(--border-color);
-      border-bottom: 1px solid var(--border-color);
-      padding: 1rem 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      color: var(--text-main);
-      margin-top: 1.5rem;
-    }
-
-    .tech-stack {
-      margin-top: 1.25rem;
-      padding: 0.65rem 0.85rem;
-      border: 1px solid var(--border-light);
-      background: #fafafa;
-    }
-
-    .tech-stack-label {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.35rem;
-      letter-spacing: 0.06em;
-      line-height: 1.2;
-    }
-
-    .tech-stack-body {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .tech-stack-group {
-      margin: 0;
-    }
-
-    .tech-stack-sub {
-      font-family: var(--font-mono);
-      font-size: 0.58rem;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.28rem;
-      letter-spacing: 0.05em;
-      line-height: 1.2;
-    }
-
-    .tech-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-      align-items: center;
-    }
-
-    .tech-chip {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      padding: 0.18rem 0.42rem;
-      border: 1px solid var(--border-light);
-      background: var(--bg-color);
-      color: var(--text-main);
-      line-height: 1.25;
-    }
-
-    h2 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 1.35rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-family: var(--font-mono);
-      color: var(--text-muted);
-    }
-
-    h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      line-height: 1.3;
-      font-family: var(--font-sans);
-    }
-
-    .theme-lede {
-      font-size: 0.98rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-      margin-bottom: 1.35rem;
-      max-width: 900px;
-    }
-
-    .capabilities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .cap-card {
-      border: 1px solid var(--border-color);
-      padding: 1.5rem;
-    }
-
-    .cap-card h4 {
-      font-size: 1.1rem;
-      margin-bottom: 0.6rem;
-      font-weight: 600;
-    }
-
-    .cap-card .card-label {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 0.25rem;
-      margin-top: 0.65rem;
-    }
-
-    .cap-card .card-label:first-of-type {
-      margin-top: 0;
-    }
-
-    .cap-card .card-outcome,
-    .cap-card .card-how {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 0.5rem;
-    }
-
-    .cap-card .examples {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--text-main);
-      border-top: 1px dotted var(--border-color);
-      padding-top: 0.85rem;
-      margin-top: 0.5rem;
-      line-height: 1.6;
-    }
-
-    /* Selected Work */
-    .case-study,
-    .case-study-details {
-      scroll-margin-top: 1.5rem;
-    }
-
-    .case-study {
-      margin-bottom: 2.5rem;
-      border: 2px solid var(--border-color);
-      transition: all 0.2s ease;
-    }
-
-    .case-study:hover {
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-    }
-
-    .case-study:last-child {
-      margin-bottom: 0;
-    }
-
-    .cs-header {
-      background-color: #111111;
-      color: var(--bg-color);
-      padding: 1.5rem;
-      border-left: 4px solid #111111;
-      position: relative;
-    }
-
-    .cs-header.teal {
-      background-color: #111111;
-      border-left-color: var(--teal);
-    }
-
-    .cs-header.amber {
-      background-color: #2d2d2d;
-      border-left-color: var(--amber);
-    }
-
-    .cs-header.blue {
-      background-color: #2d2d2d;
-      border-left-color: var(--blue);
-    }
-
-    .cs-header.energy {
-      background-color: #404040;
-      border-left-color: var(--energy);
-    }
-
-    .cs-header h3 {
-      margin-bottom: 0.4rem;
-      font-size: 1.65rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      font-family: var(--font-sans);
-      line-height: 1.2;
-    }
-
-    .cs-meta {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      opacity: 0.9;
-      margin-top: 0.4rem;
-    }
-
-    .cs-grid {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .cs-grid:last-child {
-      border-bottom: none;
-    }
-
-    .cs-label {
-      padding: 1.25rem;
-      border-right: 1px solid var(--border-color);
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .cs-content {
-      padding: 1.25rem;
-    }
-
-    .cs-content ul {
-      margin-left: 1.25rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .cs-content ul li {
-      margin-bottom: 0.4rem;
-    }
-
-    .cs-content p {
-      color: var(--text-muted);
-      margin-bottom: 0.65rem;
-      line-height: 1.65;
-      font-size: 1rem;
-    }
-
-    .cs-content p:last-child,
-    .cs-content ul:last-child {
-      margin-bottom: 0;
-    }
-
-    .cs-content strong {
-      color: var(--text-main);
-      font-weight: 600;
-    }
-
-    .metric-highlight {
-      background: #fffbea;
-      border-left: 3px solid var(--amber);
-      padding: 0.85rem 1rem;
-      margin: 0.85rem 0;
-      font-weight: 500;
-      color: var(--text-main);
-      font-size: 1rem;
-    }
-
-    .case-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem 1.35rem;
-      margin-bottom: 1.75rem;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-    }
-
-    .case-nav a {
-      color: var(--blue);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-
-    .case-nav a:hover {
-      color: var(--text-main);
-    }
-
-    .cs-links {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.35rem 0.65rem;
-      margin-top: 0.65rem;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      line-height: 1.4;
-      color: var(--text-muted);
-    }
-
-    .cap-card .cs-links {
-      margin-top: 1rem;
-      padding-top: 0.85rem;
-      border-top: 1px dotted var(--border-light);
-    }
-
-    .cs-links-label {
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      font-size: 0.68rem;
-    }
-
-    .cs-link {
-      color: var(--blue);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-
-    .cs-link:hover {
-      color: var(--text-main);
-    }
-
-    .case-study-details {
-  margin-bottom: 2.5rem;
-  border: 2px solid var(--border-color);
-  transition: box-shadow 0.2s ease;
-  padding: 0;
-  border-radius: 6px;
-  border-color: var(--border-color);
-}
-
-    .case-study-details:hover {
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-    }
-
-    .case-study-details:last-child {
-      margin-bottom: 0;
-    }
-
-    .case-study-details summary {
-      list-style: none;
-      cursor: pointer;
-      display: block;
-      width: 100%;
-      padding: 0;
-      margin: 0;
-    }
-
-    .case-study-details summary::marker {
-      content: "";
-      display: none;
-    }
-
-    .case-study-details summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .case-study-details>div {
-      margin: 0;
-      padding: 0;
-    }
-
-    .case-expand-hint {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      opacity: 0.9;
-      margin-top: 0.65rem;
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-
-    /* How I Think */
-    .principles-list {
-      list-style: none;
-      counter-reset: principle;
-    }
-
-    .principles-list li {
-      position: relative;
-      padding-left: 3rem;
-      margin-bottom: 1.5rem;
-      font-size: 1.05rem;
-      font-weight: 500;
-      line-height: 1.4;
-    }
-
-    .principles-list li::before {
-      counter-increment: principle;
-      content: "0" counter(principle);
-      position: absolute;
-      left: 0;
-      top: 0.15rem;
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    /* Logos */
-    .logos-section {
-      margin-top: 1.75rem;
-    }
-
-    .logos-label {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.85rem;
-      letter-spacing: 0.05em;
-    }
-
-    .logos-grid {
-      display: flex;
-      gap: 1.25rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .logo-item {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    .logo-item a {
-      color: var(--blue);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      font-weight: 600;
-      transition: color 0.2s ease;
-    }
-
-    .logo-item a:visited {
-      color: var(--blue);
-    }
-
-    .logo-item a:hover,
-    .logo-item a:focus-visible {
-      color: var(--text-main);
-    }
-
-    .logo-meta {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-
-    /* Systems */
-    .systems-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-    }
-
-    .systems-tags span {
-      border: 1px solid var(--border-color);
-      padding: 0.55rem 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
-    }
-
-    .systems-tags span:hover {
-      background: var(--text-main);
-      color: var(--bg-color);
-    }
-
-    /* Closing */
-    .closing {
-      font-size: 1.15rem;
-      line-height: 1.45;
-      font-weight: 500;
-      max-width: 800px;
-    }
-
-    .closing p {
-      margin-bottom: 1.25rem;
-      color: var(--text-muted);
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        border: none;
-        padding: 0 1rem;
-      }
-
-      body {
-        padding: 1rem;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .subhead {
-        font-size: 1rem;
-      }
-
-      .capabilities-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .cs-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .cs-label {
-        border-right: none;
-        border-bottom: 1px dashed var(--border-color);
-        padding-bottom: 0.6rem;
-      }
-    }
-  </style>
   <link rel="stylesheet" href="theme.css">
 
 </head>
@@ -657,7 +26,6 @@
       </button>
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
         <a href="#about">About</a>
-        <a href="#how-i-deliver">How I work</a>
         <a href="#selected-work">Work</a>
         <a href="#career-arc">Career</a>
         <a href="#my-approach">Approach</a>
@@ -666,27 +34,23 @@
     </div>
   </header>
 
-  <aside class="page-toc" aria-label="On this page">
-    <div class="page-toc-inner">
-      <div class="page-toc-label">On this page</div>
+  <aside class="page-rail" aria-label="On this page">
+    <div class="page-rail-inner">
+      <div class="page-rail-label">On this page</div>
       <a href="#about">About</a>
-      <a href="#how-i-deliver">How I deliver</a>
-      <a href="#selected-work">Selected work</a>
-      <a class="toc-sub" href="#featured-work">Featured</a>
-      <a class="toc-sub" href="#additional-work">More projects</a>
-      <a class="toc-sub" href="#deep-dives">Deep dives</a>
-      <a href="#career-arc">Career arc</a>
-      <a href="#my-approach">My approach</a>
-      <a href="#systems">Systems</a>
+      <a href="#selected-work">Work</a>
+      <a href="#career-arc">Career</a>
+      <a href="#my-approach">Approach</a>
+      <a href="#contact">Contact</a>
     </div>
   </aside>
 
-  <div class="page-with-toc">
   <div class="container">
     <header id="about">
       <h1>Find the real problem, build the permanent fix</h1>
-      <h2>Diagnostic reframing and system building across AI logistics, HR tech, and pricing architecture</h2>
+      <p class="subhead">Diagnostic reframing and system building across AI logistics, HR tech, and pricing architecture</p>
 
+      <div class="about-main-grid">
       <div class="fit-block">
         <div class="fit-block-title">Why hire me? The answer in three parts</div>
         <p class="fit-block-lede"><strong>I identify structural bottlenecks behind operational chaos and build systems that make fixes permanent.</strong> This pattern repeats across every domain I've worked in:</p>
@@ -746,98 +110,16 @@
           </div>
         </div>
       </div>
-
-      <div class="logos-section">
-        <div class="logos-label">Built for</div>
-        <div class="logos-grid">
-          <div class="logo-item"><a href="https://moovez.ca" target="_blank" rel="noopener noreferrer">Moovez</a> <span
-              class="logo-meta">(Marketplace for last-mile delivery & moving)</span></div>
-          <div class="logo-item"><a href="https://quoteperfectly.com" target="_blank"
-              rel="noopener noreferrer">Quotely</a> <span class="logo-meta">(Moovez SaaS spin-off)</span></div>
-          <div class="logo-item"><a href="https://www.bvxpress.com" target="_blank" rel="noopener noreferrer">BVXpress</a> <span class="logo-meta">(SaaS unit, ICI M&amp;A advisory)</span></div>
-          <div class="logo-item"><a href="hris-ma.html" rel="noopener noreferrer">HRIS for M&amp;A</a> <span
-              class="logo-meta">(BVXpress product for ICI clients)</span></div>
-          <div class="logo-item"><a href="telehealth.html" rel="noopener noreferrer">Telehealth Platform</a> <span
-              class="logo-meta">(Regional government engagement)</span></div>
-          <div class="logo-item"><a href="cybersecurity-marketplace.html" rel="noopener noreferrer">Cybersecurity Marketplace</a> <span
-              class="logo-meta">(Search-first discovery concept)</span></div>
-          <div class="logo-item">Netsweeper <span class="logo-meta">(Student safeguarding)</span></div>
-        </div>
       </div>
     </header>
 
-    <section id="how-i-deliver">
-      <h2>How I deliver</h2>
-      <p class="theme-lede">Three operating themes from the work above: what you get commercially, how it is built, and
-        where to see it in the case studies below.</p>
-      <div class="capabilities-grid">
-        <div class="cap-card">
-          <h4>Pricing Architecture</h4>
-          <div class="card-label">Outcome</div>
-          <p class="card-outcome">Product bets assessed through NPV and IRR; every major decision tied to unit economics
-            and cash flow.</p>
-          <div class="card-label">How</div>
-          <p class="card-how">Redesigning how value is captured: tier consolidation, real-time quote engines, discount
-            logic, and ARPU expansion.</p>
-          <div class="examples">
-            Real-time logistics quoting<br>
-            SaaS tier consolidation<br>
-            Value-based pricing<br>
-            Take rate optimization
-          </div>
-          <div class="cs-links"><span class="cs-links-label">Proof in:</span> <a class="cs-link"
-              href="#case-pricing">Pricing redesign</a> <a class="cs-link" href="#case-bvxpress">BVXpress</a> <a
-              class="cs-link" href="#case-epsilon">Project Epsilon</a></div>
-        </div>
-
-        <div class="cap-card">
-          <h4>Operational Intelligence</h4>
-          <div class="card-label">Outcome</div>
-          <p class="card-outcome">Chaotic processes systematized to protect margins; manual workflows replaced with
-            scalable, measurable systems.</p>
-          <div class="card-label">How</div>
-          <p class="card-how">AI and operations research in production: computer vision, conversational agents, OR
-            engines, and predictive frameworks that scale throughput without proportional headcount.</p>
-          <div class="examples">
-            NP-hard routing &amp; bin packing<br>
-            Detection alert reduction<br>
-            Linear programming (PyPSA)<br>
-            Scenario-first modeling
-          </div>
-          <div class="cs-links"><span class="cs-links-label">Proof in:</span> <a class="cs-link"
-              href="#case-moovez">Moovez / Quotely</a> <a class="cs-link" href="quotely-evals.html">Quotely evals</a> <a class="cs-link" href="sms-agent-evals.html">Agent evals</a> <a class="cs-link" href="#case-netsweeper">Netsweeper</a> <a
-              class="cs-link" href="#case-epsilon">Project Epsilon</a></div>
-        </div>
-
-        <div class="cap-card">
-          <h4>Zero-to-One Build</h4>
-          <div class="card-label">Outcome</div>
-          <p class="card-outcome">Full-stack product leadership from user research and pricing architecture to technical
-            prototyping and P&amp;L management.</p>
-          <div class="card-label">How</div>
-          <p class="card-how">Commercial engines around new products: messaging, funnels, retention, and analytics that
-            diagnose conversion leakage and improve acquisition IRR.</p>
-          <div class="examples">
-            Media mix modeling (MMM)<br>
-            Funnel diagnostics<br>
-            Segmentation analysis<br>
-            Attribution modeling
-          </div>
-          <div class="cs-links"><span class="cs-links-label">Proof in:</span> <a class="cs-link"
-              href="#case-bvxpress">BVXpress</a> <a class="cs-link" href="#case-moovez">Moovez / Quotely</a> <a
-              class="cs-link" href="hris-ma.html">HRIS for M&amp;A</a> <a class="cs-link"
-              href="cybersecurity-marketplace.html">Cybersecurity Marketplace</a></div>
-        </div>
-      </div>
-    </section>
-
     <section id="selected-work">
       <h2>Selected Work</h2>
-      <p class="work-intro">Case studies, expandable summaries, and separate deep-dive pages.</p>
+      <p class="work-intro">Three operating themes run through this work: <strong>pricing architecture</strong> (NPV-linked bets, tier consolidation, ARPU expansion), <strong>operational intelligence</strong> (AI, operations research, and detection systems that protect margins), and <strong>zero-to-one builds</strong> (research through commercialization). Expandable case summaries below; separate deep-dive pages cover eval harnesses, pricing ladders, and product notes.</p>
 
       <div class="work-skills-bar" aria-label="Skills in this section">
         <div class="work-skills-bar-header">
-          <span class="work-skills-bar-label">Skills in this section</span>
+          <span class="work-skills-bar-label">Filter by skill</span>
           <button type="button" class="work-skills-clear" hidden>Show all</button>
         </div>
         <div class="work-skills-groups">
@@ -854,16 +136,10 @@
           <div class="work-skills-group">
             <span class="work-skills-group-label">LLM, VLM &amp; AI Systems</span>
             <div class="work-skills-chips">
-              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="context-engineering">Context engineering</button>
-              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="prompt-orchestration">Prompt orchestration</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="eval-harnesses">Eval harnesses</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="multi-model-evals">Multi-model evals</button>
-              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="llm-pipelines">LLM pipelines</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="vlm-computer-vision">VLM / computer vision</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="sms-voice-agents">SMS / voice agents</button>
-              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="openai-gemini">OpenAI &amp; Gemini</button>
-              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="lovable">Lovable</button>
-              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="n8n">n8n</button>
             </div>
           </div>
           <div class="work-skills-group">
@@ -874,14 +150,12 @@
               <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="value-based-pricing">Value-based pricing</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="tier-consolidation">Tier consolidation</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="arpu-optimization">ARPU optimization</button>
-              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="media-mix-models">Media Mix Models</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="attribution-modeling">Attribution modeling</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="r">R</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="sql">SQL</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="mixpanel">Mixpanel</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="segment">Segment</button>
               <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="heap">Heap</button>
-              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="hubspot">HubSpot</button>
             </div>
           </div>
         </div>
@@ -889,30 +163,18 @@
 
       <nav class="work-quick-nav" aria-label="Jump to work">
         <p class="work-quick-nav-label">Jump to work</p>
-        <div class="work-quick-grid">
-          <div class="work-quick-col">
-            <h3 class="work-quick-col-title">Featured <span class="work-quick-col-count">· 2</span></h3>
-            <ul class="work-quick-list">
-              <li><a href="#case-moovez">Moovez / Quotely</a></li>
-              <li><a href="#case-epsilon">Project Epsilon</a></li>
-            </ul>
+        <div class="work-quick-strip">
+          <div class="work-quick-group work-quick-group--tiers">
+            <a href="#featured-work">Featured</a>
+            <a href="#additional-work">More</a>
+            <a href="#deep-dives">Deep dives</a>
           </div>
-          <div class="work-quick-col">
-            <h3 class="work-quick-col-title">More projects <span class="work-quick-col-count">· 3</span></h3>
-            <ul class="work-quick-list">
-              <li><a href="#case-bvxpress">BVXpress (9 yrs)</a></li>
-              <li><a href="#case-pricing">Pricing redesign</a></li>
-              <li><a href="#case-netsweeper">Netsweeper</a></li>
-            </ul>
-          </div>
-          <div class="work-quick-col">
-            <h3 class="work-quick-col-title">Deep dives <span class="work-quick-col-count">· 6</span></h3>
-            <ul class="work-quick-list">
-              <li><a class="work-quick-link-external" href="bvxpress-pricing.html">BVXpress pricing<span class="work-quick-external-mark" aria-hidden="true">↗</span></a></li>
-              <li><a class="work-quick-link-external" href="quotely-evals.html">Quotely evals<span class="work-quick-external-mark" aria-hidden="true">↗</span></a></li>
-              <li><a class="work-quick-link-external" href="sms-agent-evals.html">Agent evals<span class="work-quick-external-mark" aria-hidden="true">↗</span></a></li>
-            </ul>
-            <a class="work-quick-view-all" href="#deep-dives">View all below</a>
+          <div class="work-quick-group work-quick-group--cases">
+            <a href="#case-moovez">Moovez</a>
+            <a href="#case-epsilon">Epsilon</a>
+            <a href="#case-bvxpress">BVXpress</a>
+            <a href="#case-pricing">Pricing</a>
+            <a href="#case-netsweeper">Netsweeper</a>
           </div>
         </div>
       </nav>
@@ -926,7 +188,7 @@
         <summary>
           <div class="cs-header teal">
             <h3>20× Faster Quoting: Computer Vision + Operations Research</h3>
-            <div class="cs-meta">Moovez (Last-Mile Delivery) • 2024 to Present • Now commercialized as Quotely SaaS</div>
+            <div class="cs-meta"><a href="https://moovez.ca" target="_blank" rel="noopener noreferrer">Moovez</a> (Last-Mile Delivery) &bull; <a href="https://quoteperfectly.com" target="_blank" rel="noopener noreferrer">Quotely</a> SaaS &bull; 2024 to Present</div>
             <div class="case-study-meta">
               <span class="case-tag teal">AI / Logistics</span>
               <span class="case-tag teal">Computer Vision</span>
@@ -1194,8 +456,7 @@
         <summary>
           <div class="cs-header amber">
             <h3>Pricing Architecture: 9-Year Loss-Leader Ladder Without a Price Book</h3>
-            <div class="cs-meta">BVXpress / ICI (M&amp;A advisory &amp; deal SaaS) &bull; Sep 2012 &ndash; Dec 2021
-              &bull; 9-year tenure &bull; Chicago, IL</div>
+            <div class="cs-meta"><a href="https://www.bvxpress.com" target="_blank" rel="noopener noreferrer">BVXpress</a> / ICI (M&amp;A advisory &amp; deal SaaS) &bull; Sep 2012 &ndash; Dec 2021 &bull; Chicago, IL</div>
             <div class="case-study-meta">
               <span class="case-tag amber">B2B SaaS</span>
               <span class="case-tag amber">Pricing</span>
@@ -1450,7 +711,7 @@
             </div>
             <h4>BVXpress pricing architecture</h4>
             <p>Loss-leader ladder, feature fences, and custom deal templates across a nine-year SaaS portfolio without a public price book.</p>
-            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">9 min read</span></div>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span></div>
           </a>
           <a class="deep-dive-card skill-filter-target" href="quotely-evals.html" data-skills="eval-harnesses multi-model-evals vlm-computer-vision">
             <span class="case-tag teal">Deep dive</span>
@@ -1461,7 +722,7 @@
             </div>
             <h4>Quotely eval architecture</h4>
             <p>Four-layer eval system for vision, catalog matching, logistics snapshots, and end-to-end quote accuracy with CI gates.</p>
-            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">8 min read</span></div>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span></div>
           </a>
           <a class="deep-dive-card skill-filter-target" href="sms-agent-evals.html" data-skills="eval-harnesses sms-voice-agents">
             <span class="case-tag teal">Deep dive</span>
@@ -1471,19 +732,19 @@
             </div>
             <h4>Conversational agent evals</h4>
             <p>When Cohen&rsquo;s &kappa; applies, HITL recall/precision, and fixture task-success gates for SMS support agents.</p>
-            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">6 min read</span></div>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span></div>
           </a>
           <a class="deep-dive-card skill-filter-target" href="hris-ma.html">
             <span class="case-tag amber">Product notes</span>
             <h4>HRIS for M&amp;A</h4>
             <p>BVXpress product for ICI clients: workforce ingestion, diligence reporting, and transaction compliance workflows.</p>
-            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">7 min read</span></div>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span></div>
           </a>
           <a class="deep-dive-card skill-filter-target" href="telehealth.html">
             <span class="case-tag blue">Product notes</span>
             <h4>Dual-sided telehealth platform</h4>
             <p>Patient and clinician experiences designed for white-label deployment to a regional government health system.</p>
-            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">7 min read</span></div>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span></div>
           </a>
           <a class="deep-dive-card skill-filter-target" href="cybersecurity-marketplace.html" data-skills="mixpanel attribution-modeling">
             <span class="case-tag purple">Concept</span>
@@ -1493,7 +754,7 @@
             </div>
             <h4>Cybersecurity marketplace</h4>
             <p>Search-first discovery for physical appliances, virtual appliances, and service add-ons with Mixpanel + Pendo instrumentation.</p>
-            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">10 min read</span></div>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span></div>
           </a>
         </div>
       </div>
@@ -1501,87 +762,42 @@
 
     <section id="career-arc">
       <h2>Career Arc</h2>
-      <div style="display:grid;grid-template-columns:auto 1fr;gap:0.5rem 1.5rem;align-items:baseline;">
-        <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">
-          2024&ndash;Now</div>
-        <div><strong>Moovez / Quotely</strong>: Founding PM; Validated & commercialized a standalone SaaS. <a
-            class="cs-link" href="#case-moovez">Quoting &amp; OR case study</a></div>
-        <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">
-          2022&ndash;2025</div>
-        <div><strong>Fractional Product Lead</strong>: Embedded leadership across logistics, FinTech, EdTech, and
-          healthcare; <strong>Netsweeper</strong> alert-trust redesign (85% false-alert reduction across 35 schools);
-          Village Wellth pricing architecture drove 3&times; take rate.
+      <div class="career-grid">
+        <div class="career-date">2024&ndash;Now</div>
+        <div class="career-entry"><strong><a href="https://moovez.ca" target="_blank" rel="noopener noreferrer">Moovez</a> / <a href="https://quoteperfectly.com" target="_blank" rel="noopener noreferrer">Quotely</a></strong>: Founding PM; validated &amp; commercialized a standalone SaaS. <a class="cs-link" href="#case-moovez">Quoting &amp; OR case study</a></div>
+        <div class="career-date">2022&ndash;2025</div>
+        <div class="career-entry"><strong>Fractional Product Lead</strong>: Embedded leadership across logistics, FinTech, EdTech, and healthcare; <strong>Netsweeper</strong> alert-trust redesign (85% false-alert reduction across 35 schools); Village Wellth pricing architecture drove 3&times; take rate.
           <a class="cs-link" href="#case-netsweeper">Netsweeper case study</a> &middot;
           <a class="cs-link" href="#case-pricing">Pricing redesign</a></div>
-        <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--teal);white-space:nowrap;">2022&ndash;2025
-        </div>
-        <div style="color:var(--teal);"><strong>MBA, University of Calgary</strong>: Energy economics and product
-          leadership; deployability models became <a class="cs-link" href="#case-epsilon">Project Epsilon</a>.
+        <div class="career-date accent">2022&ndash;2025</div>
+        <div class="career-entry accent"><strong>MBA, University of Calgary</strong>: Energy economics and product leadership; deployability models became <a class="cs-link" href="#case-epsilon">Project Epsilon</a>.
           <em>Concurrent with fractional product work.</em></div>
-        <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">
-          2012&ndash;2021</div>
-        <div><strong>BVXpress</strong>: Product & Chief of Staff; built the product function from zero and launched five
-          products. <a class="cs-link" href="bvxpress-pricing.html">Pricing architecture case study</a></div>
+        <div class="career-date">2012&ndash;2021</div>
+        <div class="career-entry"><strong><a href="https://www.bvxpress.com" target="_blank" rel="noopener noreferrer">BVXpress</a></strong>: Product &amp; Chief of Staff; built the product function from zero and launched five products. <a class="cs-link" href="bvxpress-pricing.html">Pricing architecture case study</a></div>
       </div>
-      <div style="margin-top:1rem;font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);">CSM &middot;
-        CSPO (Scrum Alliance, 2022) &middot; B.S. Business &amp; Finance, Illinois Tech (2012)</div>
+      <div class="career-certs">CSM &middot; CSPO (Scrum Alliance, 2022) &middot; B.S. Business &amp; Finance, Illinois Tech (2012)</div>
     </section>
 
     <section id="my-approach">
       <h2>My Approach</h2>
       <ul class="principles-list">
         <li>Build for operational simplicity first, add features only when they solve real problems
-          <span
-            style="display:block;font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;font-weight:400;">&#8594;
-            Cut dispatcher chat overlay, subscription model, and route optimization from Moovez V1 to protect quote-flow
-            focus.</span>
+          <span class="principle-example">&#8594; Cut dispatcher chat overlay, subscription model, and route optimization from Moovez V1 to protect quote-flow focus.</span>
         </li>
         <li>Fix decision-making upstream before building dashboards downstream
-          <span
-            style="display:block;font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;font-weight:400;">&#8594;
-            Froze Netsweeper feature development for a full quarter; rebuilt alert signal quality before adding any new
-            detection categories.</span>
+          <span class="principle-example">&#8594; Froze Netsweeper feature development for a full quarter; rebuilt alert signal quality before adding any new detection categories.</span>
         </li>
         <li>Prioritize signal quality over data volume
-          <span
-            style="display:block;font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;font-weight:400;">&#8594;
-            Replaced last-click attribution with Bayesian MMM across 134,900 records &amp; 6 channels; adstock +
-            Hill-function saturation beat more data with a worse model.</span>
+          <span class="principle-example">&#8594; Replaced last-click attribution with Bayesian MMM across 134,900 records &amp; 6 channels; adstock + Hill-function saturation beat more data with a worse model.</span>
         </li>
         <li>Positive feedback in demos masks workflow non-adoption: measure active use, not satisfaction
-          <span
-            style="display:block;font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;font-weight:400;">&#8594;
-            BVXpress: &lt;20% weekly active users despite strong demo feedback. Pivoted roadmap after telemetry revealed
-            the real friction point.</span>
+          <span class="principle-example">&#8594; BVXpress: &lt;20% weekly active users despite strong demo feedback. Pivoted roadmap after telemetry revealed the real friction point.</span>
         </li>
         <li>Reframe the metric before you reframe the roadmap
-          <span
-            style="display:block;font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;font-weight:400;">&#8594;
-            Shifting Netsweeper from &ldquo;detection accuracy&rdquo; to &ldquo;operational trust&rdquo; resolved a
-            roadmap standoff with engineering without adding a single feature.</span>
+          <span class="principle-example">&#8594; Shifting Netsweeper from &ldquo;detection accuracy&rdquo; to &ldquo;operational trust&rdquo; resolved a roadmap standoff with engineering without adding a single feature.</span>
         </li>
       </ul>
     </section>
-
-    <section id="systems">
-      <h2>Systems I Work In</h2>
-      <div class="systems-tags">
-        <span>AI Agents</span>
-        <span>Marketplaces</span>
-        <span>Workflow Automation</span>
-        <span>Decision Analytics</span>
-        <span>Pricing Systems</span>
-        <span>Operational Tooling</span>
-        <span>B2B SaaS</span>
-        <span>Detection Systems</span>
-        <span>Conversational Interfaces</span>
-        <span>Computer Vision</span>
-        <span>Operations Research</span>
-        <span>Energy &amp; Infrastructure</span>
-        <span>Scenario Modeling</span>
-      </div>
-    </section>
-  </div>
   </div>
 
   <footer class="site-footer" id="contact">
