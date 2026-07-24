@@ -451,11 +451,13 @@
     }
 
     .case-study-details {
-      margin-bottom: 2.5rem;
-      border: 2px solid var(--border-color);
-      transition: box-shadow 0.2s ease;
-      padding: 0;
-    }
+  margin-bottom: 2.5rem;
+  border: 2px solid var(--border-color);
+  transition: box-shadow 0.2s ease;
+  padding: 0;
+  border-radius: 6px;
+  border-color: var(--border-color);
+}
 
     .case-study-details:hover {
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
@@ -645,17 +647,49 @@
 
 </head>
 
-<body>
+<body class="page-home has-site-header">
 
+  <header class="site-header" id="top">
+    <div class="site-header-inner">
+      <a href="#about" class="site-wordmark" aria-label="Bob Lavania — home">Bob Lavania</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#how-i-deliver">How I work</a>
+        <a href="#selected-work">Work</a>
+        <a href="#career-arc">Career</a>
+        <a href="#my-approach">Approach</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <aside class="page-toc" aria-label="On this page">
+    <div class="page-toc-inner">
+      <div class="page-toc-label">On this page</div>
+      <a href="#about">About</a>
+      <a href="#how-i-deliver">How I deliver</a>
+      <a href="#selected-work">Selected work</a>
+      <a class="toc-sub" href="#featured-work">Featured</a>
+      <a class="toc-sub" href="#additional-work">More projects</a>
+      <a class="toc-sub" href="#deep-dives">Deep dives</a>
+      <a href="#career-arc">Career arc</a>
+      <a href="#my-approach">My approach</a>
+      <a href="#systems">Systems</a>
+    </div>
+  </aside>
+
+  <div class="page-with-toc">
   <div class="container">
-    <header>
+    <header id="about">
       <h1>Find the real problem, build the permanent fix</h1>
       <h2>Diagnostic reframing and system building across AI logistics, HR tech, and pricing architecture</h2>
-      <p class="subhead">I identify structural bottlenecks behind operational chaos and build systems that make fixes permanent.</p>
 
       <div class="fit-block">
         <div class="fit-block-title">Why hire me? The answer in three parts</div>
-        <p class="fit-block-lede">When asked "Why would I hire you?", here's my answer: <strong>I find the real problem behind the stated one and build the system that makes the fix permanent.</strong> This pattern repeats across every domain I've worked in:</p>
+        <p class="fit-block-lede"><strong>I identify structural bottlenecks behind operational chaos and build systems that make fixes permanent.</strong> This pattern repeats across every domain I've worked in:</p>
         <ul class="fit-list">
           <li><strong>Diagnostic Reframing</strong>: I identify the structural bottleneck behind surface problems. "Slow quoting" was actually trust erosion. "Low accuracy" was alert fatigue. "Pricing confusion" was decision architecture requiring advisor intervention.</li>
           <li><strong>Production System Building</strong>: I ship AI and automation systems that eliminate ambiguity. Built CV pipelines + OR engines (20x faster quoting). Built HRIS adapter architecture (M&A workforce integration). Built pricing engines (3x take rate).</li>
@@ -732,7 +766,7 @@
       </div>
     </header>
 
-    <section>
+    <section id="how-i-deliver">
       <h2>How I deliver</h2>
       <p class="theme-lede">Three operating themes from the work above: what you get commercially, how it is built, and
         where to see it in the case studies below.</p>
@@ -799,24 +833,117 @@
 
     <section id="selected-work">
       <h2>Selected Work</h2>
-      <nav class="case-nav" aria-label="Jump to case studies">
-        <a href="#case-moovez">Moovez / Quotely</a>
-        <a href="quotely-evals.html">Quotely evals</a>
-        <a href="sms-agent-evals.html">Agent evals</a>
-        <a href="#case-bvxpress">BVXpress (9 yrs)</a>
-        <a href="hris-ma.html">HRIS for M&amp;A</a>
-        <a href="telehealth.html">Telehealth Platform</a>
-        <a href="cybersecurity-marketplace.html">Cybersecurity Marketplace</a>
-        <a href="#case-epsilon">Project Epsilon</a>
-        <a href="#case-pricing">Pricing redesign</a>
-        <a href="#case-netsweeper">Netsweeper</a>
+      <p class="work-intro">Case studies, expandable summaries, and separate deep-dive pages.</p>
+
+      <div class="work-skills-bar" aria-label="Skills in this section">
+        <div class="work-skills-bar-header">
+          <span class="work-skills-bar-label">Skills in this section</span>
+          <button type="button" class="work-skills-clear" hidden>Show all</button>
+        </div>
+        <div class="work-skills-groups">
+          <div class="work-skills-group">
+            <span class="work-skills-group-label">Financial &amp; Operations Modeling</span>
+            <div class="work-skills-chips">
+              <button type="button" class="work-skills-filter work-skill-chip skill-finops" data-skill="npv-irr-cf-modeling">NPV / IRR / CF Modeling</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-finops" data-skill="pricing-architecture">Pricing Architecture</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-finops" data-skill="monte-carlo">Monte Carlo</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-finops" data-skill="pypsa">PyPSA (Linear Programming)</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-finops" data-skill="operations-research">Operations Research</button>
+            </div>
+          </div>
+          <div class="work-skills-group">
+            <span class="work-skills-group-label">LLM, VLM &amp; AI Systems</span>
+            <div class="work-skills-chips">
+              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="context-engineering">Context engineering</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="prompt-orchestration">Prompt orchestration</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="eval-harnesses">Eval harnesses</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="multi-model-evals">Multi-model evals</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="llm-pipelines">LLM pipelines</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="vlm-computer-vision">VLM / computer vision</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="sms-voice-agents">SMS / voice agents</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="openai-gemini">OpenAI &amp; Gemini</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="lovable">Lovable</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-ai" data-skill="n8n">n8n</button>
+            </div>
+          </div>
+          <div class="work-skills-group">
+            <span class="work-skills-group-label">Analytics &amp; GTM Strategy</span>
+            <div class="work-skills-chips">
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="stp">STP</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="pricing-strategy">Pricing strategy</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="value-based-pricing">Value-based pricing</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="tier-consolidation">Tier consolidation</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="arpu-optimization">ARPU optimization</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="media-mix-models">Media Mix Models</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="attribution-modeling">Attribution modeling</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="r">R</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="sql">SQL</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="mixpanel">Mixpanel</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="segment">Segment</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="heap">Heap</button>
+              <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="hubspot">HubSpot</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="work-quick-nav" aria-label="Jump to work">
+        <p class="work-quick-nav-label">Jump to work</p>
+        <div class="work-quick-grid">
+          <div class="work-quick-col">
+            <h3 class="work-quick-col-title">Featured <span class="work-quick-col-count">· 2</span></h3>
+            <ul class="work-quick-list">
+              <li><a href="#case-moovez">Moovez / Quotely</a></li>
+              <li><a href="#case-epsilon">Project Epsilon</a></li>
+            </ul>
+          </div>
+          <div class="work-quick-col">
+            <h3 class="work-quick-col-title">More projects <span class="work-quick-col-count">· 3</span></h3>
+            <ul class="work-quick-list">
+              <li><a href="#case-bvxpress">BVXpress (9 yrs)</a></li>
+              <li><a href="#case-pricing">Pricing redesign</a></li>
+              <li><a href="#case-netsweeper">Netsweeper</a></li>
+            </ul>
+          </div>
+          <div class="work-quick-col">
+            <h3 class="work-quick-col-title">Deep dives <span class="work-quick-col-count">· 6</span></h3>
+            <ul class="work-quick-list">
+              <li><a class="work-quick-link-external" href="bvxpress-pricing.html">BVXpress pricing<span class="work-quick-external-mark" aria-hidden="true">↗</span></a></li>
+              <li><a class="work-quick-link-external" href="quotely-evals.html">Quotely evals<span class="work-quick-external-mark" aria-hidden="true">↗</span></a></li>
+              <li><a class="work-quick-link-external" href="sms-agent-evals.html">Agent evals<span class="work-quick-external-mark" aria-hidden="true">↗</span></a></li>
+            </ul>
+            <a class="work-quick-view-all" href="#deep-dives">View all below</a>
+          </div>
+        </div>
       </nav>
 
-      <div class="case-study" id="case-moovez">
-        <div class="cs-header teal">
-          <h3>20× Faster Quoting: Computer Vision + Operations Research</h3>
-          <div class="cs-meta">Moovez (Last-Mile Delivery) • 2024 to Present • Now commercialized as Quotely SaaS</div>
+      <div class="work-tier" id="featured-work">
+        <div class="work-tier-header">
+          <h3 class="work-tier-title">Featured</h3>
         </div>
+
+      <details class="case-study-details skill-filter-target" id="case-moovez" data-skills="operations-research vlm-computer-vision sms-voice-agents pricing-architecture r sql heap segment">
+        <summary>
+          <div class="cs-header teal">
+            <h3>20× Faster Quoting: Computer Vision + Operations Research</h3>
+            <div class="cs-meta">Moovez (Last-Mile Delivery) • 2024 to Present • Now commercialized as Quotely SaaS</div>
+            <div class="case-study-meta">
+              <span class="case-tag teal">AI / Logistics</span>
+              <span class="case-tag teal">Computer Vision</span>
+              <span class="status-badge live">Live SaaS</span>
+            </div>
+            <div class="case-study-skills" aria-label="Skills demonstrated">
+              <span class="work-skill-chip skill-finops">Operations Research</span>
+              <span class="work-skill-chip skill-ai">VLM / computer vision</span>
+              <span class="work-skill-chip skill-ai">SMS / voice agents</span>
+              <span class="work-skill-chip skill-finops">Pricing Architecture</span>
+              <span class="work-skill-chip skill-gtm">Heap</span>
+              <span class="work-skill-chip skill-gtm">Segment</span>
+            </div>
+            <span class="case-expand-hint">Expand full case study</span>
+          </div>
+        </summary>
+        <div>
 
         <div class="cs-grid">
           <div class="cs-label">Challenge</div>
@@ -939,212 +1066,209 @@
             <p style="margin-top:0.5rem;">Separately, I designed eval metrics for conversational agents: when Cohen&rsquo;s &kappa; applies, HITL recall/precision, and fixture task-success gates (Moovez SMS agent). <a class="cs-link" href="sms-agent-evals.html">Agent evals &rarr;</a></p>
           </div>
         </div>
-      </div>
-
-      <details class="case-study-details" id="case-bvxpress">
-        <summary>
-          <div class="cs-header amber">
-            <h3>Zero-to-One PM: Building 5 Products & a Commercial Engine from Scratch</h3>
-            <div class="cs-meta">BVXpress / ICI (M&amp;A advisory &amp; deal SaaS) &bull; Sep 2012 &ndash; Dec 2021
-              &bull; 9-year tenure &bull; Chicago, IL</div>
-            <span class="case-expand-hint">Expand full case study</span>
-          </div>
-        </summary>
-        <div>
-
-          <div class="cs-grid">
-            <div class="cs-label">Market Context</div>
-            <div class="cs-content">
-              <p>In 2012, M&amp;A advisors and business brokers for sub-$50M deals were running entirely on Excel,
-                email, and relationship memory. There was no vertical SaaS for this workflow: generic CRMs (Salesforce)
-                didn&rsquo;t understand deal structure, and the few niche tools that existed were designed for
-                investment banks, not independent advisors. The wedge was not better analysis; it was getting advisors
-                out of Excel and looking professional to clients faster.</p>
-            </div>
-          </div>
-
-          <div class="cs-grid">
-            <div class="cs-label">Discovery</div>
-            <div class="cs-content">
-              <p>After launching the first two products, in-house telemetry showed <strong>fewer than 20% of users were
-                  active weekly</strong>, as positive feedback in demos had masked the reality that users weren&rsquo;t
-                changing workflows. In-app guided onboarding surfaced that users were abandoning before completing their
-                first deal flow. Opportunity maps identified the highest-friction point: not the deal modeling (what had
-                been built) but the <strong>client-facing presentation step</strong>. Advisors were spending 4+ hours
-                per engagement manually formatting outputs into client-ready reports. Focus groups with senior advisors
-                confirmed it: &ldquo;I don&rsquo;t need better analysis. I need to get out of Excel faster and look
-                professional to my client.&rdquo;</p>
-            </div>
-          </div>
-
-          <div class="cs-grid">
-            <div class="cs-label">Decision &amp; Cuts</div>
-            <div class="cs-content">
-              <p>Pivoted the roadmap from analytical depth to <strong>presentation and export speed</strong>. Products
-                3-5 were sequenced to address successive steps in the advisor&rsquo;s client-facing workflow, not
-                internal analysis.</p>
-              <p><strong>Cut:</strong> Planned &ldquo;deal database&rdquo; product (low discovery demand at high build
-                cost) and a fee-benchmarking tool (telemetry showed it was a demo feature, not a workflow feature). Each
-                subsequent launch was gated on confirmed workflow adoption from a cohort of 20+ existing users before
-                scaling.</p>
-            </div>
-          </div>
-
-          <div class="cs-grid">
-            <div class="cs-label">What Was Built</div>
-            <div class="cs-content">
-              <ul>
-                <li>Built the Product Business Unit from scratch as first PM hire; launched 5 products from whiteboard
-                  to market, operated a total of 8 products (including HRIS for M&amp;A: a BVXpress product for ICI
-                  clients and acquired companies, not internal-only tooling)</li>
-                <li>Personalized onboarding, lifecycle messaging, and lead-routing workflows</li>
-                <li>Automated pricing evolution based on customer usage-pattern analysis</li>
-                <li>MQL&rarr;SQL pipeline velocity and CAC payback tracking built from scratch</li>
-                <li>Re-architected landing page and product messaging funnels</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="cs-grid">
-            <div class="cs-label">Results</div>
-            <div class="cs-content">
-              <div class="metric-highlight">ARPU grew from $450 &rarr; $600 over 2 years (voluntary upgrade, not a price
-                hike)</div>
-              <ul>
-                <li><strong>14% retention increase</strong> over 2 years from onboarding depth &amp; lifecycle messaging
-                </li>
-                <li><strong>7% conversion lift</strong> from switching landing page message from &ldquo;most accurate
-                  valuation tool&rdquo; to &ldquo;fastest route from Excel to client presentation&rdquo;</li>
-                <li><strong>1,400+ users</strong> across 8 products serving research, workflow, and growth operations
-                </li>
-                <li>Multi-product adopters (3+ products) retained at <strong>2&times; the rate</strong> of
-                  single-product users, which drove the GTM shift to onboarding depth over acquisition breadth</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="cs-grid">
-            <div class="cs-label">Key Insight</div>
-            <div class="cs-content">
-              <p><strong>Positive demo feedback masked workflow non-adoption.</strong> The right metric was active
-                weekly users, not NPS. The ARPU jump came from users voluntarily upgrading to access presentation tools,
-                confirming the workflow-friction diagnosis, not a pricing decision.</p>
-            </div>
-          </div>
-
         </div>
       </details>
 
-      <details class="case-study-details" id="case-epsilon">
+      <details class="case-study-details skill-filter-target" id="case-epsilon" data-skills="pypsa monte-carlo operations-research npv-irr-cf-modeling">
         <summary>
           <div class="cs-header energy">
             <h3>Scenario-First Energy Modeling: Domain Core + Multi-Engine Adapters</h3>
-            <div class="cs-meta">Project Epsilon • Energy systems · Infrastructure • Originated from MBA deployability
-              models</div>
+            <div class="cs-meta">Project Epsilon • Energy systems · Infrastructure • Originated from MBA deployability models</div>
+            <div class="case-study-meta">
+              <span class="case-tag energy">Energy</span>
+              <span class="case-tag energy">Operations Research</span>
+              <span class="status-badge live">Live platform</span>
+            </div>
+            <div class="case-study-skills" aria-label="Skills demonstrated">
+              <span class="work-skill-chip skill-finops">PyPSA (Linear Programming)</span>
+              <span class="work-skill-chip skill-finops">Monte Carlo</span>
+              <span class="work-skill-chip skill-finops">Operations Research</span>
+              <span class="work-skill-chip skill-finops">NPV / IRR / CF Modeling</span>
+            </div>
             <span class="case-expand-hint">Expand full case study</span>
           </div>
         </summary>
         <div>
 
+        <div class="cs-grid">
+          <div class="cs-label">Challenge</div>
+          <div class="cs-content">
+            <p>Clean-energy planning slows down when <strong>sizing, stress-testing, and finance run in disconnected
+                tools</strong>: assumptions drift, comparisons break, and nobody can defend a single narrative from
+              deck to data room. During my MBA I built spreadsheet models to reason about deployability; they surfaced
+              the questions but stayed siloed.</p>
+            <p><strong>Engineering risk:</strong> Naively porting workbook logic to a UI yields surface parity without
+              semantic correctness (hidden unit mismatches, unsafe handoffs between sizing and stress, economics that
+              ignore feeder reality).</p>
+          </div>
+        </div>
+
+        <div class="cs-grid">
+          <div class="cs-label">Solution</div>
+          <div class="cs-content">
+            <p><strong>Project Epsilon</strong> connects those worlds with <strong>one version-controlled
+                <code>Scenario</code></strong> that feeds every engine, eliminating copy-paste drift between models.
+            </p>
+            <ul>
+              <li><strong>Six-step guided workflow:</strong> define scenario → size portfolio → stress-test → evaluate
+                finance → validate network → generate report</li>
+              <li><strong>Three production adapters (today):</strong> DC-PPA · ISO-RTO · Microgrid, plus
+                <strong>network validation</strong> (feeder / N-1 / AC power flow) as the physical feasibility layer
+              </li>
+              <li><strong>Explicit handoffs:</strong> typed <code>CapacitySeed</code> from sizing into stress and
+                finance</li>
+              <li><strong>Assurance layer:</strong> structured audit findings, 100-point confidence scoring with
+                severity-based deductions, SHA-256 scenario-hash staleness, prerequisite gating so stress cannot run
+                on silent stale inputs</li>
+              <li><strong>BOM bridge:</strong> sizing flows emit starter equipment catalog rows (procurement-grade
+                narrative from modeled MW/MWh)</li>
+              <li><strong>Reporting:</strong> compare runs, field-by-field assumption diffs, Markdown/HTML export</li>
+            </ul>
+            <p><strong>Positioning:</strong> Planning and diligence for data centers, microgrids, and RTO-style
+              stress, rather than a real-time EMS.</p>
+          </div>
+        </div>
+
+        <div class="cs-grid">
+          <div class="cs-label">Technical Stack</div>
+          <div class="cs-content">
+            <p><strong>Python:</strong> custom <strong>PyPSA linear programs</strong> for 24/7 CFE and microgrid
+              sizing; <strong>ISO-RTO Monte Carlo</strong> stress testing; <strong>agent-based VPP dispatch</strong>;
+              <strong>AC power flow</strong> / distribution validation. Typed <code>Scenario</code> contract,
+              <code>EngineRegistry</code>, <code>ScenarioStore</code>, normalized finance assumptions (e.g. WACC,
+              battery efficiency) for cross-engine comparability.</p>
+            <p><strong>Delivery:</strong> Public app hosted on <strong>Cloudflare Workers</strong> (<a
+                href="https://epsilon.xblavania.workers.dev/" target="_blank"
+                rel="noopener noreferrer">epsilon.xblavania.workers.dev</a>).</p>
+          </div>
+        </div>
+
+        <div class="cs-grid">
+          <div class="cs-label">My Role</div>
+          <div class="cs-content">
+            <p>Product builder and engineer: learned distributed-energy dynamics deeply enough to <strong>shape module
+                boundaries</strong> (what must be true for sizing, stress, finance, and network to tell one coherent
+              story). Implemented custom PyPSA LPs, ABM-style VPP dispatch, Monte Carlo stress paths, and end-to-end
+              architecture that <strong>bridges physical network validation with financial planning</strong>. Owned
+              scenario contract, adapter patterns, and assurance story, rather than just a spreadsheet port.</p>
+          </div>
+        </div>
+
+        <div class="cs-grid">
+          <div class="cs-label">Results</div>
+          <div class="cs-content">
+            <div class="metric-highlight"><a href="https://epsilon.xblavania.workers.dev/" target="_blank"
+                rel="noopener noreferrer" style="color: inherit;">Live platform: epsilon.xblavania.workers.dev</a>
+            </div>
+            <ul>
+              <li><strong>Single scenario state</strong> across engines; field-by-field diffs and run comparison</li>
+              <li><strong>Structured audit + confidence</strong> and stale-run detection tied to scenario hashes</li>
+              <li><strong>At a glance:</strong> 6 workflow steps · 3 production adapters · 100-point confidence model
+                · 11 starter BOM SKUs</li>
+            </ul>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.75rem; margin-bottom: 0;">Outputs are
+              for analysis and professional judgment only; they do not constitute legal, regulatory, or FERC filing
+              advice.</p>
+          </div>
+        </div>
+
+        <div class="cs-grid">
+          <div class="cs-label">Key Insight</div>
+          <div class="cs-content">
+            <p><strong>Each workflow step surfaces a risk class the others cannot see.</strong> Siloed software breaks
+              narrative coherence between pitch physics and finance; deployability is a <strong>coupling
+                problem</strong>. The product’s job is to make those couplings explicit, comparable, and reviewable,
+              not to maximize chart polish.</p>
+          </div>
+        </div>
+        </div>
+      </details>
+      </div>
+
+      <div class="work-tier" id="additional-work">
+        <div class="work-tier-header">
+          <h3 class="work-tier-title">More projects</h3>
+        </div>
+
+      <details class="case-study-details skill-filter-target" id="case-bvxpress" data-skills="pricing-architecture arpu-optimization">
+        <summary>
+          <div class="cs-header amber">
+            <h3>Pricing Architecture: 9-Year Loss-Leader Ladder Without a Price Book</h3>
+            <div class="cs-meta">BVXpress / ICI (M&amp;A advisory &amp; deal SaaS) &bull; Sep 2012 &ndash; Dec 2021
+              &bull; 9-year tenure &bull; Chicago, IL</div>
+            <div class="case-study-meta">
+              <span class="case-tag amber">B2B SaaS</span>
+              <span class="case-tag amber">Pricing</span>
+              <span class="status-badge shipped">Shipped</span>
+            </div>
+            <div class="case-study-skills" aria-label="Skills demonstrated">
+              <span class="work-skill-chip skill-finops">Pricing Architecture</span>
+              <span class="work-skill-chip skill-gtm">ARPU optimization</span>
+            </div>
+            <span class="case-expand-hint">Expand summary</span>
+          </div>
+        </summary>
+        <div>
+
           <div class="cs-grid">
-            <div class="cs-label">Challenge</div>
+            <div class="cs-label">Commercial Problem</div>
             <div class="cs-content">
-              <p>Clean-energy planning slows down when <strong>sizing, stress-testing, and finance run in disconnected
-                  tools</strong>: assumptions drift, comparisons break, and nobody can defend a single narrative from
-                deck to data room. During my MBA I built spreadsheet models to reason about deployability; they surfaced
-                the questions but stayed siloed.</p>
-              <p><strong>Engineering risk:</strong> Naively porting workbook logic to a UI yields surface parity without
-                semantic correctness (hidden unit mismatches, unsafe handoffs between sizing and stress, economics that
-                ignore feeder reality).</p>
+              <p>Heterogeneous buyers (advisors, brokers, appraisers) with different jobs and ACV tolerance — and <strong>no public price book</strong>. Every customer got a composed deal (module mix &times; seats &times; term &times; negotiated discount). The wrong move would have been discounting <strong>BVX</strong> to win deals <strong>NTV</strong> should land.</p>
             </div>
           </div>
 
           <div class="cs-grid">
-            <div class="cs-label">Solution</div>
+            <div class="cs-label">Architecture</div>
             <div class="cs-content">
-              <p><strong>Project Epsilon</strong> connects those worlds with <strong>one version-controlled
-                  <code>Scenario</code></strong> that feeds every engine, eliminating copy-paste drift between models.
-              </p>
-              <ul>
-                <li><strong>Six-step guided workflow:</strong> define scenario → size portfolio → stress-test → evaluate
-                  finance → validate network → generate report</li>
-                <li><strong>Three production adapters (today):</strong> DC-PPA · ISO-RTO · Microgrid, plus
-                  <strong>network validation</strong> (feeder / N-1 / AC power flow) as the physical feasibility layer
-                </li>
-                <li><strong>Explicit handoffs:</strong> typed <code>CapacitySeed</code> from sizing into stress and
-                  finance</li>
-                <li><strong>Assurance layer:</strong> structured audit findings, 100-point confidence scoring with
-                  severity-based deductions, SHA-256 scenario-hash staleness, prerequisite gating so stress cannot run
-                  on silent stale inputs</li>
-                <li><strong>BOM bridge:</strong> sizing flows emit starter equipment catalog rows (procurement-grade
-                  narrative from modeled MW/MWh)</li>
-                <li><strong>Reporting:</strong> compare runs, field-by-field assumption diffs, Markdown/HTML export</li>
-              </ul>
-              <p><strong>Positioning:</strong> Planning and diligence for data centers, microgrids, and RTO-style
-                stress, rather than a real-time EMS.</p>
+              <p><strong>NTV</strong> (also branded Capitalization 2.0 / AltBV) was a deliberate <strong>loss-leader</strong> into an adjacent terminal-value market. <strong>BVX</strong> was the margin target SKU. Upgrade was driven by <strong>in-product feature fences</strong> — spreadsheet capitalization vs full deal equilibrium — not BVX discounting. Custom deals let NTV carry the deepest discount without training discount expectation on BVX.</p>
             </div>
           </div>
 
           <div class="cs-grid">
-            <div class="cs-label">Technical Stack</div>
+            <div class="cs-label">Telemetry</div>
             <div class="cs-content">
-              <p><strong>Python:</strong> custom <strong>PyPSA linear programs</strong> for 24/7 CFE and microgrid
-                sizing; <strong>ISO-RTO Monte Carlo</strong> stress testing; <strong>agent-based VPP dispatch</strong>;
-                <strong>AC power flow</strong> / distribution validation. Typed <code>Scenario</code> contract,
-                <code>EngineRegistry</code>, <code>ScenarioStore</code>, normalized finance assumptions (e.g. WACC,
-                battery efficiency) for cross-engine comparability.</p>
-              <p><strong>Delivery:</strong> Public app hosted on <strong>Cloudflare Workers</strong> (<a
-                  href="https://epsilon.xblavania.workers.dev/" target="_blank"
-                  rel="noopener noreferrer">epsilon.xblavania.workers.dev</a>).</p>
-            </div>
-          </div>
-
-          <div class="cs-grid">
-            <div class="cs-label">My Role</div>
-            <div class="cs-content">
-              <p>Product builder and engineer: learned distributed-energy dynamics deeply enough to <strong>shape module
-                  boundaries</strong> (what must be true for sizing, stress, finance, and network to tell one coherent
-                story). Implemented custom PyPSA LPs, ABM-style VPP dispatch, Monte Carlo stress paths, and end-to-end
-                architecture that <strong>bridges physical network validation with financial planning</strong>. Owned
-                scenario contract, adapter patterns, and assurance story, rather than just a spreadsheet port.</p>
+              <p>In-house analytics showed <strong>fewer than 20% weekly active users</strong> despite strong demo feedback — the value metric was <strong>client-ready presentation speed</strong>, not model depth. Killed fee-benchmarking and deal-database bets; pivoted products 3–5 to presentation/export; evolved custom deal templates from usage-pattern analysis over nine years.</p>
             </div>
           </div>
 
           <div class="cs-grid">
             <div class="cs-label">Results</div>
             <div class="cs-content">
-              <div class="metric-highlight"><a href="https://epsilon.xblavania.workers.dev/" target="_blank"
-                  rel="noopener noreferrer" style="color: inherit;">Live platform: epsilon.xblavania.workers.dev</a>
-              </div>
+              <div class="metric-highlight">ARPU $450 &rarr; $600 (voluntary module upgrades, not list-price hikes)</div>
               <ul>
-                <li><strong>Single scenario state</strong> across engines; field-by-field diffs and run comparison</li>
-                <li><strong>Structured audit + confidence</strong> and stale-run detection tied to scenario hashes</li>
-                <li><strong>At a glance:</strong> 6 workflow steps · 3 production adapters · 100-point confidence model
-                  · 11 starter BOM SKUs</li>
+                <li><strong>14% retention lift</strong> from onboarding depth &amp; lifecycle messaging</li>
+                <li><strong>7% conversion lift</strong> from repositioning to &ldquo;Excel &rarr; client presentation&rdquo;</li>
+                <li>Multi-product adopters (3+) retained at <strong>2&times;</strong> single-product rate</li>
               </ul>
-              <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.75rem; margin-bottom: 0;">Outputs are
-                for analysis and professional judgment only; they do not constitute legal, regulatory, or FERC filing
-                advice.</p>
             </div>
           </div>
 
           <div class="cs-grid">
             <div class="cs-label">Key Insight</div>
             <div class="cs-content">
-              <p><strong>Each workflow step surfaces a risk class the others cannot see.</strong> Siloed software breaks
-                narrative coherence between pitch physics and finance; deployability is a <strong>coupling
-                  problem</strong>. The product’s job is to make those couplings explicit, comparable, and reviewable,
-                not to maximize chart polish.</p>
+              <p><strong>Revenue expanded when packaging matched the value metric.</strong> Presentation modules and feature fences drove voluntary ARPU growth — a pricing architecture outcome, not a list-price hike. Loss-leader economics only work when you instrument conversion, expansion, and blended margin.</p>
+              <p style="margin-top:0.75rem;"><a class="cs-link" href="bvxpress-pricing.html"><strong>Read full pricing case study &rarr;</strong></a></p>
             </div>
           </div>
+
         </div>
       </details>
 
-      <details class="case-study-details" id="case-pricing">
+      <details class="case-study-details skill-filter-target" id="case-pricing" data-skills="stp tier-consolidation pricing-strategy">
         <summary>
           <div class="cs-header amber">
             <h3>3× Take Rate Improvement: Pricing Architecture Redesign</h3>
             <div class="cs-meta">B2C SaaS (M&A Financing Platform) • 2023</div>
+            <div class="case-study-meta">
+              <span class="case-tag amber">Pricing</span>
+              <span class="case-tag amber">FinTech</span>
+              <span class="status-badge shipped">Shipped</span>
+            </div>
+            <div class="case-study-skills" aria-label="Skills demonstrated">
+              <span class="work-skill-chip skill-gtm">STP</span>
+              <span class="work-skill-chip skill-gtm">Tier consolidation</span>
+              <span class="work-skill-chip skill-gtm">Pricing strategy</span>
+            </div>
             <span class="case-expand-hint">Expand full case study</span>
           </div>
         </summary>
@@ -1220,11 +1344,16 @@
         </div>
       </details>
 
-      <details class="case-study-details" id="case-netsweeper">
+      <details class="case-study-details skill-filter-target" id="case-netsweeper">
         <summary>
           <div class="cs-header blue">
             <h3>85% False Alert Reduction: Student Safety Detection System</h3>
             <div class="cs-meta">Netsweeper (EdTech) • 2022 to 2023 • 35-school district deployment</div>
+            <div class="case-study-meta">
+              <span class="case-tag blue">EdTech</span>
+              <span class="case-tag blue">Detection systems</span>
+              <span class="status-badge shipped">Shipped</span>
+            </div>
             <span class="case-expand-hint">Expand full case study</span>
           </div>
         </summary>
@@ -1305,9 +1434,72 @@
 
         </div>
       </details>
+      </div>
+
+      <div class="work-tier" id="deep-dives">
+        <div class="work-tier-header">
+          <h3 class="work-tier-title">Deep dives</h3>
+        </div>
+        <div class="deep-dive-grid">
+          <a class="deep-dive-card skill-filter-target" href="bvxpress-pricing.html" data-skills="pricing-architecture arpu-optimization value-based-pricing">
+            <span class="case-tag amber">Deep dive</span>
+            <div class="case-study-skills" aria-label="Skills demonstrated">
+              <span class="work-skill-chip skill-finops">Pricing Architecture</span>
+              <span class="work-skill-chip skill-gtm">ARPU optimization</span>
+              <span class="work-skill-chip skill-gtm">Value-based pricing</span>
+            </div>
+            <h4>BVXpress pricing architecture</h4>
+            <p>Loss-leader ladder, feature fences, and custom deal templates across a nine-year SaaS portfolio without a public price book.</p>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">9 min read</span></div>
+          </a>
+          <a class="deep-dive-card skill-filter-target" href="quotely-evals.html" data-skills="eval-harnesses multi-model-evals vlm-computer-vision">
+            <span class="case-tag teal">Deep dive</span>
+            <div class="case-study-skills" aria-label="Skills demonstrated">
+              <span class="work-skill-chip skill-ai">Eval harnesses</span>
+              <span class="work-skill-chip skill-ai">Multi-model evals</span>
+              <span class="work-skill-chip skill-ai">VLM / computer vision</span>
+            </div>
+            <h4>Quotely eval architecture</h4>
+            <p>Four-layer eval system for vision, catalog matching, logistics snapshots, and end-to-end quote accuracy with CI gates.</p>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">8 min read</span></div>
+          </a>
+          <a class="deep-dive-card skill-filter-target" href="sms-agent-evals.html" data-skills="eval-harnesses sms-voice-agents">
+            <span class="case-tag teal">Deep dive</span>
+            <div class="case-study-skills" aria-label="Skills demonstrated">
+              <span class="work-skill-chip skill-ai">Eval harnesses</span>
+              <span class="work-skill-chip skill-ai">SMS / voice agents</span>
+            </div>
+            <h4>Conversational agent evals</h4>
+            <p>When Cohen&rsquo;s &kappa; applies, HITL recall/precision, and fixture task-success gates for SMS support agents.</p>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">6 min read</span></div>
+          </a>
+          <a class="deep-dive-card skill-filter-target" href="hris-ma.html">
+            <span class="case-tag amber">Product notes</span>
+            <h4>HRIS for M&amp;A</h4>
+            <p>BVXpress product for ICI clients: workforce ingestion, diligence reporting, and transaction compliance workflows.</p>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">7 min read</span></div>
+          </a>
+          <a class="deep-dive-card skill-filter-target" href="telehealth.html">
+            <span class="case-tag blue">Product notes</span>
+            <h4>Dual-sided telehealth platform</h4>
+            <p>Patient and clinician experiences designed for white-label deployment to a regional government health system.</p>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">7 min read</span></div>
+          </a>
+          <a class="deep-dive-card skill-filter-target" href="cybersecurity-marketplace.html" data-skills="mixpanel attribution-modeling">
+            <span class="case-tag purple">Concept</span>
+            <div class="case-study-skills" aria-label="Skills demonstrated">
+              <span class="work-skill-chip skill-gtm">Mixpanel</span>
+              <span class="work-skill-chip skill-gtm">Attribution modeling</span>
+            </div>
+            <h4>Cybersecurity marketplace</h4>
+            <p>Search-first discovery for physical appliances, virtual appliances, and service add-ons with Mixpanel + Pendo instrumentation.</p>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span><span class="read-time">10 min read</span></div>
+          </a>
+        </div>
+      </div>
     </section>
 
-    <section>
+    <section id="career-arc">
       <h2>Career Arc</h2>
       <div style="display:grid;grid-template-columns:auto 1fr;gap:0.5rem 1.5rem;align-items:baseline;">
         <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">
@@ -1329,13 +1521,13 @@
         <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);white-space:nowrap;">
           2012&ndash;2021</div>
         <div><strong>BVXpress</strong>: Product & Chief of Staff; built the product function from zero and launched five
-          products. <a class="cs-link" href="#case-bvxpress">Zero-to-one case study</a></div>
+          products. <a class="cs-link" href="bvxpress-pricing.html">Pricing architecture case study</a></div>
       </div>
       <div style="margin-top:1rem;font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);">CSM &middot;
         CSPO (Scrum Alliance, 2022) &middot; B.S. Business &amp; Finance, Illinois Tech (2012)</div>
     </section>
 
-    <section>
+    <section id="my-approach">
       <h2>My Approach</h2>
       <ul class="principles-list">
         <li>Build for operational simplicity first, add features only when they solve real problems
@@ -1371,7 +1563,7 @@
       </ul>
     </section>
 
-    <section>
+    <section id="systems">
       <h2>Systems I Work In</h2>
       <div class="systems-tags">
         <span>AI Agents</span>
@@ -1390,8 +1582,9 @@
       </div>
     </section>
   </div>
+  </div>
 
-  <footer class="site-footer">
+  <footer class="site-footer" id="contact">
     <div class="footer-contact">
       <div class="footer-inner">
         <p class="footer-name"><strong>Bob Lavania:</strong> Product Manager &amp; BizOps Leader</p>
@@ -1408,18 +1601,23 @@
           <a href="index.html" aria-current="page">Home</a>
           <span class="footer-nav-divider">·</span>
           <span class="footer-nav-label">Deep-dives:</span>
+          <a href="bvxpress-pricing.html">BVXpress pricing</a>
+          <a href="hris-ma.html">HRIS / M&amp;A</a>
           <a href="quotely-evals.html">Quotely evals</a>
           <a href="sms-agent-evals.html">Agent evals</a>
           <a href="cybersecurity-marketplace.html">Cyber marketplace</a>
           <a href="telehealth.html">Telehealth</a>
-          <a href="hris-ma.html">HRIS / M&amp;A</a>
         </nav>
-        <span class="footer-location">San Francisco, CA &amp; Calgary, AB · Remote</span>
+        <div class="footer-utility-actions">
+          <a href="#top" class="back-to-top">Back to top</a>
+          <span class="footer-location">San Francisco, CA &amp; Calgary, AB · Remote</span>
+        </div>
       </div>
     </div>
   </footer>
 
   <script src="footer.js"></script>
+  <script src="nav.js"></script>
   <script>
     (function () {
       function openCaseFromHash() {

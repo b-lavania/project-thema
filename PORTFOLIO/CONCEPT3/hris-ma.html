@@ -382,11 +382,37 @@
   <link rel="stylesheet" href="theme.css">
 
 </head>
-<body>
+<body class="has-site-header">
+
+<header class="site-header" id="top">
+  <div class="site-header-inner">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html#about">About</a>
+      <a href="index.html#how-i-deliver">Deliver</a>
+      <a href="index.html#selected-work">Work</a>
+      <a href="index.html#career-arc">Career</a>
+      <a href="index.html#my-approach">Approach</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+      <nav aria-label="Breadcrumb" class="breadcrumbs">
+        <a href="index.html">Portfolio</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="index.html#deep-dives">Selected Work</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">HRIS for M&amp;A</span>
+      </nav>
+    </div>
+  </div>
+</header>
 
 <div class="container">
   <header>
-    <p class="back-link"><a href="index.html">← Portfolio</a></p>
     <h1>HRIS built for M&amp;A transaction readiness</h1>
     <p class="subhead"><strong>BVXpress</strong> was the SaaS business unit within <strong>ICI</strong> (M&amp;A advisory). From 2012–2021 I owned the complete HRIS end-to-end. <strong>The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling.</strong> Scope: HRIS ingestion, normalization, people analytics, diligence reporting, and transaction compliance, shaped by post-merger integration teams on live deals.</p>
 
@@ -595,13 +621,18 @@
         <a href="sms-agent-evals.html">Agent evals</a>
         <a href="cybersecurity-marketplace.html">Cyber marketplace</a>
         <a href="telehealth.html">Telehealth</a>
+        <a href="bvxpress-pricing.html">BVXpress pricing</a>
         <a href="hris-ma.html" aria-current="page">HRIS / M&amp;A</a>
       </nav>
-      <span class="footer-location">San Francisco, CA &amp; Calgary, AB · Remote</span>
+      <div class="footer-utility-actions">
+        <a href="#top" class="back-to-top">Back to top</a>
+        <span class="footer-location">San Francisco, CA &amp; Calgary, AB · Remote</span>
+      </div>
     </div>
   </div>
 </footer>
 
 <script src="footer.js"></script>
+<script src="nav.js"></script>
 </body>
 </html>

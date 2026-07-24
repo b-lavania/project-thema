@@ -82,11 +82,37 @@
 </style>
   <link rel="stylesheet" href="theme.css">
 </head>
-<body>
+<body class="has-site-header">
+
+<header class="site-header" id="top">
+  <div class="site-header-inner">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html#about">About</a>
+      <a href="index.html#how-i-deliver">Deliver</a>
+      <a href="index.html#selected-work">Work</a>
+      <a href="index.html#career-arc">Career</a>
+      <a href="index.html#my-approach">Approach</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+      <nav aria-label="Breadcrumb" class="breadcrumbs">
+        <a href="index.html">Portfolio</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="index.html#case-moovez">Moovez / Quotely</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Agent Evals</span>
+      </nav>
+    </div>
+  </div>
+</header>
 
 <div class="container">
   <header>
-    <p class="back-link"><a href="index.html#case-moovez">&larr; Moovez / Quotely case study</a></p>
     <h1>Evaluating conversational agents: HITL and agreement metrics</h1>
     <p class="subhead">A technical showcase on choosing eval metrics for agents with retrieval and human escalation. When Cohen&rsquo;s &kappa; belongs in the stack, how to measure HITL quality, and why V1 ship gates should be task-success floors on fixtures, not mislabeled confidence scores. Illustrated with Moovez&rsquo;s SMS support agent.</p>
 
@@ -243,11 +269,15 @@
         <a href="telehealth.html">Telehealth</a>
         <a href="hris-ma.html">HRIS / M&amp;A</a>
       </nav>
-      <span class="footer-location">San Francisco, CA &amp; Calgary, AB &middot; Remote</span>
+      <div class="footer-utility-actions">
+        <a href="#top" class="back-to-top">Back to top</a>
+        <span class="footer-location">San Francisco, CA &amp; Calgary, AB &middot; Remote</span>
+      </div>
     </div>
   </div>
 </footer>
 
 <script src="footer.js"></script>
+<script src="nav.js"></script>
 </body>
 </html>

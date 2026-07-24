@@ -47,8 +47,14 @@ It replaces the typo-named draft `pricin.md`. Study phases produce **site-ready 
 |--------|------------|
 | **Parent** | M&A advisory firm (**ICI** in portfolio copy) |
 | **BVXpress** | The firm's **SaaS business unit** — deal-structuring and valuation software for advisors, brokers, and appraisers (2012–2021; employee #3 / first product hire) |
-| **BVX** | **Upper-end** product — full valuation capability; the **economic target** of the commercial system |
-| **NTV** | **New Terminal Value** — **low-end** product, **devised as a loss-leader** to open an adjacent market and pull users to BVX via deliberate feature-set differentiation |
+| **BVX** | **Upper-end** product — full **deal structuring + iterative valuation** (Equilibrium method); margin target SKU |
+| **NTV** | **New Terminal Value** — **loss-leader** SKU; same program as **Capitalization 2.0** and **AltBV** (alternate branding only) |
+| **Capitalization 2.0** | Method/marketing name for NTV — AGM vs GGM terminal-value model |
+| **AltBV** | Alternate brand/landing for the same NTV program (e.g. `altbv.com`) — not a separate product |
+
+**One program, three names:** **NTV** (product SKU on BVXpress), **Capitalization 2.0** (method narrative), **AltBV** (alternate go-to-market branding). Feature fences and case copy should treat them as **one loss-leader SKU**.
+
+**Ground truth for NTV capabilities:** [bvxpress.com/products/ntv](https://www.bvxpress.com/products/ntv). Supporting context: [bvxpress.com/products](https://www.bvxpress.com/products), [mauniversity.org](https://www.mauniversity.org) (Capitalization 2.0 / AGM education). `altbv.com` was an alternate landing for the same program (site unreachable at time of doc update — use NTV product page, not AltBV URL, for specs).
 
 ### The NTV → BVX commercial strategy (not just a tier list)
 
@@ -86,7 +92,7 @@ NTV module (loss-leader price in custom deal)
 - **Telemetry** (in-house analytics suite + Pendo/Mixpanel-class tooling) drove: which accounts got NTV-only vs NTV+BVX bundles, which features to fence, enhance/deprecate, and **automated pricing evolution** from usage patterns
 - **Measured outcomes:** ARPU $450→$600 (voluntary BVX/suite upgrades, not list hikes); 14% retention lift; 7% conversion lift from repositioning; 2× retention at 3+ products
 
-When writing case studies: **NTV = strategic loss-leader**, **BVX = margin target**, **feature fences = upgrade engine**. Do not describe NTV as "Net Transaction Value."
+When writing case studies: **NTV = Capitalization 2.0 = AltBV** (one loss-leader program); **BVX = margin target**; **feature fences = upgrade engine**. Do not describe NTV as "Net Transaction Value." Use [bvxpress.com/products/ntv](https://www.bvxpress.com/products/ntv) for NTV capability claims.
 
 ---
 
@@ -96,9 +102,9 @@ This section maps **every framework in this doc** to what actually ran at BVXpre
 
 ### 1. Market structure and the NTV loss-leader bet
 
-**Core market (BVX):** M&A advisors and business brokers running sub-$50M deals on Excel — needed full valuation and deal-structuring workflow, client-ready output, professional presentation.
+**Core market (BVX):** **M&A advisors, business brokers, buyers/sellers** who need live **price + terms + deal structure** equilibrium — cash vs seller-financed, asset vs stock, mezzanine, revolver/term loan structures, optimal buyer equity, Deal Optimizer / Deal Quantifier workflows ([bvxpress.com](https://www.bvxpress.com), [mauniversity.org/Working/bvx-method](https://www.mauniversity.org/Working/bvx-method)).
 
-**Adjacent market (NTV entry):** Buyers whose job-to-be-done was **terminal-value / exit-value framing** without full BVX complexity or price. They would not have entered at BVX's capability or ACV — but could be **acquired economically** with NTV.
+**Adjacent market (NTV entry):** Buyers doing **terminal value / capitalization** with conventional methods (GGM, constant WACC, constant capital structure) — especially **appraisers, valuators, and accountants** who need a sanity check on terminal value, not full M&A deal structuring. Per [bvxpress.com/products/ntv](https://www.bvxpress.com/products/ntv), NTV surfaces flaws in conventional methodology (constant capital structure, no debt principal repayment) and demonstrates **GGM vs AGM (Capitalization 2.0)** via pro-forma buyer statements.
 
 **Strategic intent:**
 
@@ -115,26 +121,36 @@ This section maps **every framework in this doc** to what actually ran at BVXpre
 
 ### 2. Feature-set differentiation (the upgrade engine)
 
-Packaging was not only on the **price sheet** — it was **in the product**. NTV and BVX shared a family UX but differed on capability fences.
+Packaging was not only on the **price sheet** — it was **in the product**. NTV and BVX address different jobs; BVX subsumes NTV's terminal-value insight inside a full transaction model.
 
-**Fence types to document on case pages** (fill with exact feature list from memory / old specs):
+**NTV vs BVX — feature fence matrix** (NTV = NTV / Capitalization 2.0 / AltBV — same program; specs from [bvxpress.com/products/ntv](https://www.bvxpress.com/products/ntv), July 2026)
 
-| Fence dimension | NTV (loss-leader) | BVX (target SKU) |
-|-----------------|-------------------|------------------|
-| Valuation scope | Terminal / exit-value workflow | Full business valuation & deal structure |
-| Model depth | [Fill: simplified assumptions, fewer scenarios] | [Fill: full scenario / sensitivity tooling] |
-| Output / presentation | [Fill: basic export] | [Fill: client-ready presentation suite — drove ARPU expansion] |
-| Collaboration / seats | [Fill: limits] | [Fill: team / multi-user patterns] |
-| Integrations / data | [Fill: if applicable] | [Fill: if applicable] |
-| Support / onboarding | [Fill: if differentiated] | [Fill: if differentiated] |
+| Fence dimension | NTV (loss-leader) | BVX (margin target) |
+|-----------------|-------------------|---------------------|
+| **Primary job** | Fix **terminal value / capitalization** under debt repayment & changing capital structure | **Full business valuation + deal structure** in one equilibrium model |
+| **Delivery format** | **Spreadsheet model** (AGM implemented for ease of use) | **Desktop / cloud application** (`app.bvxpress.com`); single-screen interactive UI |
+| **Valuation method** | **Capitalization 2.0** — Advanced Growth Model (AGM) vs Gordon Growth Model (GGM) | **Iterative DCF / Equilibrium method** — no WACC, no Gordon Growth terminal formula |
+| **Approaches included** | Income / capitalization lens on **terminal value** | Income approach (DCF) only — **no Market Approach, no Asset Approach** |
+| **Terminal value** | Core product: AGM handles **changing capital structure + debt amortization** (GGM overvalues 10–50% per product copy) | Three TV paths: user exit EBITDA multiple, Purchase Multiple (PM), or perpetuity parameters — discounts **Net Proceeds**, not raw TV |
+| **Deal structuring** | Pro-forma buyer under **GGM vs AGM** comparison | Full deal: revolver, term loan, over-advance, balloon, mezzanine, earn-out, non-compete, consulting, real estate ROI |
+| **Input surface** | Capitalization / terminal-value parameters | Single screen: income stmt, balance sheet, growth, financing, deal structure, taxation, exit strategy |
+| **Optimization engines** | Spreadsheet calculator | **Deal Quantifier™** (interactive what-if) + **Deal Optimizer™** (max price / min equity via NLP iterations) |
+| **Party equilibrium** | Educational / diagnostic (buyer pro-forma under two capitalization methods) | Satisfies **seller, buyer, lender, business, tax authority** constraints simultaneously |
+| **Financing depth** | Illustrates buyer statements under GGM vs AGM | Revolver (% A/R, % inventory), term loan (% FMV FA), CapEx loan, buyer equity %, mezzanine warrants |
+| **What-if analysis** | Compare GGM vs AGM valuation outcomes | Cash vs seller-financed price; stock vs asset; financing terms; strategic buyer scenarios |
+| **Output / export** | Capitalization 2.0 demonstration | Full financials: income stmt, cash flow, balance sheet, buyer ROE, liquidation proceeds, **Print/Export** reports |
+| **Education layer** | Positioned with **Capitalization 2.0** narrative | **M&A University** (BVXHelp) — iterative method, definitions, outputs, working methodology |
+| **Typical buyer persona** | Appraiser / valuator **sanity-checking** terminal value; consultant teaching capitalization flaws | M&A advisor / broker **live deal**; buyer minimizing equity; seller maximizing price |
+| **Upgrade trigger (fence hit)** | User needs multi-year DCF, deal terms, lender covenants, or live transaction structuring | N/A — top of ladder |
 
-**How telemetry used fences:**
+**Loss-leader logic tied to features:**
 
-- Track **fence hits** — users repeatedly attempting BVX-only actions inside NTV (upgrade signal)
-- Track **workflow completion** — NTV users who complete terminal-value job but churn on presentation step (expand with presentation module, not deeper discount)
-- Track **time-to-first-client-output** — repositioned GTM when &lt;20% WAU showed demos ≠ adoption (**7% conversion lift** from message change)
+- NTV is **credible and complete for its job** (terminal value under realistic debt dynamics) — not a crippled demo.
+- NTV is **intentionally bounded** — spreadsheet capitalization tool, not a transaction equilibrium engine.
+- **GGM vs AGM output** creates professional "aha" for valuators → natural pull to BVX for deal-room work.
+- Telemetry should track: NTV users exporting AGM results but attempting deal-structure inputs; repeat visits to M&A University iterative-method content; conversion to BVX trial.
 
-**Key insight:** Village Wellth fixed **decision architecture** (too many tiers). BVXpress fixed **capability architecture** (NTV vs BVX fences) **and** **deal architecture** (custom net price per account).
+**Presentation / export expansion** (suite layer — drove ARPU $450→$600): Client-ready **Print/Export** and presentation-speed workflow sit above both SKUs; voluntary upgrades to presentation/export capabilities were the measured ARPU driver per portfolio case, not list-price increases.
 
 ---
 
@@ -217,6 +233,8 @@ DEAL =
 ---
 
 ### 7. What to publish (site priority)
+
+**Published:** [`PORTFOLIO/CONCEPT3/bvxpress-pricing.html`](../PORTFOLIO/CONCEPT3/bvxpress-pricing.html) — pricing-first case study (loss-leader ladder, feature fence matrix, custom deals, telemetry loop).
 
 1. **`/work/bvxpress`** — this section as narrative spine (loss-leader strategy + telemetry + custom deals)
 2. **`/work/bvxpress/ntv`** — adjacent market entry, loss-leader economics, fence design, conversion metrics to BVX
@@ -826,7 +844,7 @@ EXPAND MODULES (presentation, suite) ── ARPU without list hike
 
 **Publish angle:** "NTV was the loss-leader. BVX was the business. Telemetry told us where to fence."
 
-**Site task:** Fill the feature fence table in Part 0C §2 with exact NTV vs BVX capabilities from memory.
+**Site task:** Feature fence table populated from [bvxpress.com/products/ntv](https://www.bvxpress.com/products/ntv) (ground truth). NTV = Capitalization 2.0 = AltBV — one program, different branding.
 
 ---
 
@@ -907,7 +925,7 @@ Van Westendorp or MaxDiff; n=15–30 operators (or proxy). Output: acceptable ra
 | 1 | Packaging Diagnostic on a public SaaS page | 1 | 2 | First teardown draft |
 | 2 | Value metric tree ×3 (BVX, NTV, Quotely) | 1 | 2 | Framework worked examples |
 | 3 | Loss-Leader Ladder framework page | 1 | 2 | `/pricing/frameworks/loss-leader-ladder` |
-| 4 | Fill NTV vs BVX feature fence table (Part 0C §2) | 1 | 2 | Case page credibility |
+| 4 | ~~Fill NTV vs BVX feature fence table (Part 0C §2)~~ Done (July 2026 sources) | 1 | 2 | Case page credibility |
 | 5 | Telemetry-to-Price Loop filled for BVXpress | 1 | 2 | Framework page |
 | 6 | Quotely price book | 2 | 4 | Price book page |
 | 7 | Hybrid canvas Quotely + agent | 2 | 2 | Canvas filled example |
@@ -1036,7 +1054,9 @@ Pass without notes. Portfolio hub should already be live.
 | Price waterfall | List → discounts → net |
 | EVC | Economic value to customer (price ceiling) |
 | HITL | Human-in-the-loop (cost and quality lever in agent pricing) |
-| NTV | New Terminal Value — loss-leader SKU to enter adjacent market; pulls users to BVX via feature fences |
+| NTV | New Terminal Value — loss-leader SKU (**same program** as Capitalization 2.0 and AltBV); pulls users to BVX via feature fences |
+| Capitalization 2.0 | Method/marketing name for NTV (AGM vs GGM) |
+| AltBV | Alternate brand for NTV — not a separate SKU |
 | BVX | Upper-end / margin-target SKU — full valuation capability |
 | Loss-Leader Ladder | Low-margin land SKU → feature-fenced upgrade → margin SKU → expand modules |
 | BVXpress | SaaS business unit of the M&A advisory parent (ICI) |
@@ -1079,47 +1099,45 @@ Use these as first drafts for portfolio pages. Expand with screenshots, anonymiz
 
 ### E.1 NTV — New Terminal Value (loss-leader / adjacent market)
 
-**Headline:** NTV wasn't the cheap tier — it was the loss-leader that opened an adjacent market BVX couldn't land on its own.
+**Also branded as:** **Capitalization 2.0** (method name) · **AltBV** (alternate landing/GTM). One program, three names — not three products.
 
-**Context:** **BVXpress** is the SaaS business unit of an M&A advisory firm. **NTV (New Terminal Value)** was **devised** as the **low-end, loss-leader product**: scoped for terminal-value / exit-value workflow in a buyer segment that would not enter at BVX price or capability.
+**Headline:** NTV wasn't cheap BVX — it was Capitalization 2.0 in a spreadsheet, built to win valuators before deal-structuring upsell.
 
-**Strategic intent:**
+**Ground truth:** [bvxpress.com/products/ntv](https://www.bvxpress.com/products/ntv) — **NTV (New Terminal Value)** implements the **Advanced Growth Model (AGM)** instead of the Gordon Growth Model (GGM) for terminal value when **capital structure changes** and **debt principal is repaid**. Product copy: GGM can **overvalue 10–50%**; AGM derivation is complex, so it ships as a **simple spreadsheet**.
 
-- **Adjacent market entry** — acquire users economically where full BVX was the wrong fit at first touch
-- **Loss-leader economics** — NTV margin sacrificed for ecosystem entry; success = **NTV→BVX conversion** + blended deal margin
-- **Not a discounted BVX** — capability scoped in-product; deepest custom discounts applied to NTV leg, not BVX
+**Adjacent market:** Appraisers, valuators, accountants, and consultants in **capitalization / terminal value** who do not yet need full M&A deal equilibrium — matches "sanity check" and buy-side advisory personas on the main BVX site.
 
-**Feature-set role:** NTV completes a credible terminal-value job but **fences** full valuation, depth, and downstream workflow behind BVX. Telemetry tracked fence hits and upgrade paths.
+**Loss-leader packaging:**
 
-**Commercial architecture:**
+- Priced for **ecosystem entry**, not standalone margin
+- Generates **pro-forma buyer statements under GGM vs AGM** — professional proof point that creates upgrade pull
+- Does **not** include Deal Optimizer, multi-party equilibrium, or deep financing stack (those fences live in BVX)
 
-- Every customer: **unique pricing and discount** — NTV leg often most aggressively discounted
-- Telemetry tuned which segments got NTV-only vs NTV+BVX bundles
-- **Automated pricing evolution** from usage-pattern analysis across cohorts
+**Upgrade path to BVX:** User hits need for iterative DCF, deal terms (revolver, mezzanine, seller note), asset vs stock, live what-if, or client-ready transaction outputs → BVX.
 
-**Key insight for site:** A loss-leader is a packaging strategy, not a price cut on your premium product.
+**Key insight:** The loss-leader is **methodologically complete for terminal value** but **commercially incomplete for transactions** — that gap is the fence.
 
 ---
 
 ### E.2 BVX — upper end / margin target
 
-**Headline:** BVX was the business — NTV brought them in; feature fences and presentation modules pulled revenue up.
+**Headline:** BVX is transaction valuation — equilibrium of price, terms, and deal structure for all parties.
 
-**Context:** **BVX** is the **upper-end** product: full business valuation and deal-structuring for advisors and brokers. The **economic target** of the NTV loss-leader ladder.
+**Context:** [bvxpress.com](https://www.bvxpress.com) — **BVX®** integrates price, financing, and structure. Uses **Iterative DCF** (not WACC; not Gordon Growth TV); **Deal Quantifier™** for what-if; **Deal Optimizer™** for max seller price / min buyer equity ([mauniversity.org/Working/bvx-method](https://www.mauniversity.org/Working/bvx-method)).
 
-**The upgrade engine:**
+**Capability highlights (public):**
 
-- Users arriving via NTV upgraded to BVX when **feature-set differentiation** made the capability gap real (not when sales discounted BVX)
-- Suite telemetry: &lt;20% WAU despite strong demos → value metric was **client-ready output**, not model depth alone
-- Presentation/export modules became expansion fences → **ARPU $450→$600** without list-price hikes
+- Inputs: income statement, balance sheet, growth, financing, deal structure, taxation, exit strategy
+- Financing: revolver, term loan, over-advance, balloon, mezzanine, earn-out, non-compete, consulting, RE ROI
+- Outputs: business value, buyer equity, buyer ROE, full pro-forma financials, liquidation proceeds, print/export
+- What-if: cash vs seller-financed; stock vs asset; strategic buyer; financing term impact
+- No industry codes or market comps required — balance sheet + financing markets proxy for industry
 
-**Commercial architecture:**
+**Commercial role:** Margin target SKU; tighter discount bands in custom deals; bundle with NTV when segment data supports joint adoption.
 
-- **Tighter discount bands** on BVX than NTV in custom deals
-- Bundle preference (NTV+BVX) when segment data supported joint adoption
-- Multi-product depth (3+ products) → **2× retention**
+**Suite telemetry story:** &lt;20% WAU despite demo praise → value metric was **client-ready presentation speed**, not deeper model math → presentation/export expansion drove **ARPU $450→$600**.
 
-**Key insight for site:** Protect the margin SKU's price integrity; pull upgrades with fences, not discounts.
+**Key insight:** Protect the margin SKU's price integrity; pull upgrades with fences, not discounts.
 
 ---
 
@@ -1149,6 +1167,8 @@ Use these as first drafts for portfolio pages. Expand with screenshots, anonymiz
 |------|--------|
 | 2026-07-22 | Initial study + portfolio system (`pricin.md` → `pricing.md`) |
 | 2026-07-22 | NTV reframed as loss-leader for adjacent market; Part 0C deep dive; Loss-Leader Ladder framework (K) |
+| 2026-07-23 | NTV vs BVX feature fence matrix from bvxpress.com/products/ntv; NTV = Capitalization 2.0 = AltBV (one program) |
+| 2026-07-23 | Published portfolio case: PORTFOLIO/CONCEPT3/bvxpress-pricing.html |
 
 ---
 

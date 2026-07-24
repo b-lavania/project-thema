@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing Architecture at BVXpress | Case Study | Bob Lavania</title>
+<meta name="description" content="How BVXpress ran a 9-year commercial system without a public price book: NTV loss-leader, BVX margin SKU, feature fences, custom deals, and telemetry-driven packaging evolution.">
+<meta property="og:title" content="Pricing Architecture at BVXpress | 9-Year Commercial System">
+<meta property="og:description" content="Loss-leader ladder, feature-set fencing, and custom deal architecture — instrumented by telemetry for nine years at BVXpress / ICI.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --bg-color: #ffffff;
+    --text-main: #111111;
+    --text-muted: #555555;
+    --text-light: #777777;
+    --border-color: #000000;
+    --border-light: #cccccc;
+    --accent: #000000;
+    --teal: #0f6e56;
+    --teal-light: #e1f5ee;
+    --amber: #ba7517;
+    --amber-light: #fef3e6;
+    --blue: #185fa5;
+    --blue-light: #e6f2ff;
+    --purple: #6b46c1;
+    --purple-light: #f3f4ff;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    padding: 1.25rem;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    padding: 0 2rem;
+  }
+
+  header, section {
+    border-bottom: 1px solid var(--border-color);
+    padding: 2rem 0;
+  }
+
+  header { padding-top: 1.25rem; }
+
+  .back-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+  }
+
+  .back-link a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .back-link a:hover { color: var(--text-main); }
+
+  h1 {
+    font-size: 2.35rem;
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .subhead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 760px;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .hero-quote {
+    font-size: 1.08rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--text-main);
+    border-left: 3px solid var(--teal);
+    padding: 0.85rem 1rem;
+    margin: 1rem 0 0;
+    max-width: 760px;
+    background: var(--teal-light);
+  }
+
+  .cred-strip {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    color: var(--text-main);
+    margin-top: 1.25rem;
+  }
+
+  .proof-points {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+  }
+
+  .proof-card {
+    border: 2px solid var(--border-color);
+    padding: 1rem;
+    background: var(--bg-color);
+  }
+
+  .proof-card.teal { border-color: var(--teal); background: var(--teal-light); }
+  .proof-card.amber { border-color: var(--amber); background: var(--amber-light); }
+  .proof-card.blue { border-color: var(--blue); background: var(--blue-light); }
+  .proof-card.purple { border-color: var(--purple); background: var(--purple-light); }
+
+  .proof-number {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-mono);
+  }
+
+  .proof-card.teal .proof-number { color: var(--teal); }
+  .proof-card.amber .proof-number { color: var(--amber); }
+  .proof-card.blue .proof-number { color: var(--blue); }
+  .proof-card.purple .proof-number { color: var(--purple); }
+
+  .proof-label {
+    font-size: 0.82rem;
+    color: var(--text-main);
+    line-height: 1.3;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .section-lead {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .pain-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .pain-list li { margin-bottom: 0.35rem; }
+
+  .metric-highlight {
+    background: #fffbea;
+    border-left: 3px solid var(--amber);
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-weight: 500;
+    color: var(--text-main);
+    font-size: 0.95rem;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .compare-card, .arch-card {
+    border: 2px solid var(--border-color);
+    padding: 1.15rem;
+  }
+
+  .arch-card {
+    border-color: var(--teal);
+    background: var(--teal-light);
+  }
+
+  .compare-card.legacy {
+    border-color: var(--border-light);
+    background: #fafafa;
+  }
+
+  .compare-card.modern {
+    border-color: var(--teal);
+    background: var(--teal-light);
+  }
+
+  .compare-card h3, .arch-card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.65rem;
+  }
+
+  .arch-card h3 { color: var(--teal); }
+
+  .flow-block {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--text-main);
+    padding: 0.65rem 0.75rem;
+    border: 1px dashed var(--border-light);
+    background: var(--bg-color);
+    margin: 0.75rem 0;
+    white-space: pre-wrap;
+  }
+
+  .compare-card ul, .arch-card ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .compare-card ul li, .arch-card ul li { margin-bottom: 0.3rem; }
+
+  .arch-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .fence-wrap {
+    overflow-x: auto;
+    margin-top: 0.75rem;
+    border: 1px solid var(--border-color);
+  }
+
+  .fence-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .fence-table th,
+  .fence-table td {
+    border: 1px solid var(--border-light);
+    padding: 0.65rem 0.75rem;
+    vertical-align: top;
+    text-align: left;
+  }
+
+  .fence-table thead th {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #fafafa;
+    color: var(--text-muted);
+  }
+
+  .fence-table tbody th {
+    font-weight: 600;
+    color: var(--text-main);
+    background: #fafafa;
+    width: 18%;
+    font-size: 0.78rem;
+  }
+
+  .fence-table .col-ntv { background: var(--amber-light); }
+  .fence-table .col-bvx { background: var(--blue-light); }
+
+  .fence-table tr.highlight-row th,
+  .fence-table tr.highlight-row td {
+    font-weight: 500;
+    border-top: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .fence-caption {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+    font-family: var(--font-mono);
+  }
+
+  .fence-caption a { color: var(--blue); }
+
+  .learn-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .learn-card {
+    border: 1px solid var(--border-light);
+    padding: 1rem 1.15rem;
+    background: #fafafa;
+  }
+
+  .learn-card h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .learn-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .cs-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+  }
+
+  .cs-grid:last-child { border-bottom: 1px solid var(--border-color); }
+
+  .cs-label {
+    padding: 0.85rem 1rem;
+    border-right: 1px solid var(--border-color);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    background: #fafafa;
+  }
+
+  .cs-content {
+    padding: 0.85rem 1rem;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .cs-content strong { color: var(--text-main); }
+
+  .loop-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .loop-step {
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+    font-size: 0.82rem;
+  }
+
+  .loop-step strong {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--teal);
+    margin-bottom: 0.35rem;
+  }
+
+  .loop-step p {
+    color: var(--text-muted);
+    line-height: 1.4;
+    font-size: 0.8rem;
+  }
+
+  .expand-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin-top: 0.75rem;
+  }
+
+  .expand-table th,
+  .expand-table td {
+    border: 1px solid var(--border-light);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .expand-table thead th {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    background: #fafafa;
+    color: var(--text-muted);
+  }
+
+  .quote-block {
+    font-size: 1.05rem;
+    line-height: 1.45;
+    font-weight: 500;
+    color: var(--text-muted);
+    font-style: italic;
+    max-width: 640px;
+    margin-top: 1rem;
+  }
+
+  .inline-link {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .inline-link:hover { color: var(--text-main); }
+
+  @media (max-width: 900px) {
+    .proof-points { grid-template-columns: 1fr 1fr; }
+    .compare-grid, .arch-grid, .learn-grid, .loop-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .container { border: none; padding: 0 1rem; }
+    body { padding: 1rem; }
+    h1 { font-size: 1.85rem; }
+    .proof-points { grid-template-columns: 1fr; }
+    .cs-grid { grid-template-columns: 1fr; }
+    .cs-label { border-right: none; border-bottom: 1px dashed var(--border-color); }
+  }
+</style>
+  <link rel="stylesheet" href="theme.css">
+
+</head>
+<body class="has-site-header">
+
+<header class="site-header" id="top">
+  <div class="site-header-inner">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html#about">About</a>
+      <a href="index.html#how-i-deliver">Deliver</a>
+      <a href="index.html#selected-work">Work</a>
+      <a href="index.html#career-arc">Career</a>
+      <a href="index.html#my-approach">Approach</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+      <nav aria-label="Breadcrumb" class="breadcrumbs">
+        <a href="index.html">Portfolio</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="index.html#case-bvxpress">BVXpress</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Pricing Architecture</span>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <header>
+    <h1>Pricing Architecture at BVXpress: A 9-Year Commercial System Without a Price Book</h1>
+    <p class="subhead"><strong>BVXpress</strong> was the SaaS business unit within <strong>ICI</strong> (M&amp;A advisory). From 2012–2021 I owned pricing and packaging architecture across <strong>NTV</strong> (loss-leader), <strong>BVX</strong> (margin SKU), and suite expansion — instrumented by in-house telemetry, not a public SKU matrix.</p>
+
+    <blockquote class="hero-quote">We didn&rsquo;t discount BVX to grow. We built NTV as a loss-leader to enter an adjacent market, used feature fences to pull users to BVX, and used telemetry to evolve custom deals for nine years — without a public price book.</blockquote>
+
+    <div class="cred-strip">
+      <span>Pricing Architecture</span>
+      <span>Custom deals</span>
+      <span>Telemetry</span>
+      <span>Sep 2012 – Dec 2021</span>
+    </div>
+
+    <div class="proof-points">
+      <div class="proof-card teal">
+        <div class="proof-number">$450 → $600</div>
+        <div class="proof-label">ARPU from voluntary module upgrades — no list-price hike</div>
+      </div>
+      <div class="proof-card amber">
+        <div class="proof-number">2×</div>
+        <div class="proof-label">Retention at 3+ products vs single-product adopters</div>
+      </div>
+      <div class="proof-card blue">
+        <div class="proof-number">14%</div>
+        <div class="proof-label">Retention lift from onboarding depth &amp; lifecycle messaging</div>
+      </div>
+      <div class="proof-card purple">
+        <div class="proof-number">7%</div>
+        <div class="proof-label">Conversion lift from value-metric repositioning</div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>The commercial problem</h2>
+    <p class="section-lead">This was not an Excel-vs-SaaS product story. It was a <strong>pricing architecture</strong> problem: heterogeneous buyers, no single list price, and a margin SKU we could not afford to train customers to discount.</p>
+    <ul class="pain-list">
+      <li><strong>Heterogeneous buyers</strong> — M&amp;A advisors, brokers, appraisers, and valuators with different jobs-to-be-done and ACV tolerance</li>
+      <li><strong>No public price book</strong> — every customer received a composed deal: module mix &times; seats &times; term &times; negotiated discount &times; expansion rights</li>
+      <li><strong>Wrong default</strong> — discounting BVX to win deals NTV should land would erode the margin anchor and train permanent discount expectation</li>
+      <li><strong>Success metric</strong> — blended deal margin, NTV&rarr;BVX conversion, and multi-product depth — not any single SKU standalone P&amp;L</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Three-layer commercial architecture</h2>
+    <div class="arch-grid">
+      <div class="arch-card">
+        <h3>Loss-Leader Ladder</h3>
+        <p>Low-margin land SKU acquires an adjacent segment; margin captured on the target SKU and suite expansion.</p>
+        <ul>
+          <li>NTV / Capitalization 2.0 / AltBV (one program)</li>
+          <li>&rarr; BVX (margin target)</li>
+          <li>&rarr; presentation &amp; suite modules</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <h3>Feature-set fencing</h3>
+        <p>Upgrade driven by in-product capability gaps — not sales discounting the premium product.</p>
+        <ul>
+          <li>Spreadsheet capitalization vs full deal equilibrium</li>
+          <li>GGM vs AGM diagnostic vs Deal Optimizer</li>
+          <li>Telemetry on fence-hit events</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <h3>Custom Deal Architecture</h3>
+        <p>Per-account module composition and discount logic when every buyer is different.</p>
+        <ul>
+          <li>Deepest discount on NTV leg</li>
+          <li>Tighter bands on BVX</li>
+          <li>Bundle preference when telemetry predicts joint adoption</li>
+        </ul>
+      </div>
+    </div>
+    <div class="flow-block">Adjacent segment (won't buy BVX at entry)
+        │
+        ▼
+   NTV (loss-leader land) ──feature ceiling──► friction / upgrade signal
+        │
+        ▼
+   BVX (target SKU, full margin)
+        │
+        ▼
+   Presentation + suite modules (ARPU expansion without list hike)</div>
+  </section>
+
+  <section>
+    <h2>NTV: adjacent market entry</h2>
+    <p class="metric-highlight"><strong>One program, three names:</strong> <strong>NTV</strong> (product SKU on BVXpress), <strong>Capitalization 2.0</strong> (method narrative), <strong>AltBV</strong> (alternate GTM branding). Not three products.</p>
+    <p class="section-lead">NTV was not cheap BVX. It was a deliberate loss-leader to enter buyers doing <strong>terminal value / capitalization</strong> work — especially appraisers and valuators sanity-checking Gordon Growth Model (GGM) assumptions — who would not enter at BVX price or capability. Product specs: <a class="inline-link" href="https://www.bvxpress.com/products/ntv" target="_blank" rel="noopener noreferrer">bvxpress.com/products/ntv</a>.</p>
+    <ul class="pain-list">
+      <li><strong>Loss-leader economics:</strong> thin or negative margin on NTV acceptable when measured against NTV&rarr;BVX conversion and blended deal margin</li>
+      <li><strong>Credible job completion:</strong> GGM vs AGM (Advanced Growth Model) pro-forma comparison — methodologically complete for terminal value, commercially incomplete for live transactions</li>
+      <li><strong>Upgrade pull:</strong> when users need multi-year DCF, deal terms, lender covenants, or client-ready transaction outputs — that gap is the fence to BVX</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Feature fence matrix</h2>
+    <p class="section-lead">Packaging lived in the product, not only on the price sheet. This table is the upgrade engine — deliberate capability architecture, not tier renaming.</p>
+    <div class="fence-wrap">
+      <table class="fence-table">
+        <thead>
+          <tr>
+            <th scope="col">Fence dimension</th>
+            <th scope="col" class="col-ntv">NTV (loss-leader)</th>
+            <th scope="col" class="col-bvx">BVX (margin target)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <th scope="row">Primary job</th>
+            <td class="col-ntv">Fix <strong>terminal value / capitalization</strong> under debt repayment &amp; changing capital structure</td>
+            <td class="col-bvx"><strong>Full business valuation + deal structure</strong> in one equilibrium model</td>
+          </tr>
+          <tr class="highlight-row">
+            <th scope="row">Delivery format</th>
+            <td class="col-ntv"><strong>Spreadsheet model</strong> (AGM for ease of use)</td>
+            <td class="col-bvx"><strong>Desktop / cloud app</strong> (<code>app.bvxpress.com</code>); single-screen interactive UI</td>
+          </tr>
+          <tr>
+            <th scope="row">Valuation method</th>
+            <td class="col-ntv"><strong>Capitalization 2.0</strong> — AGM vs GGM</td>
+            <td class="col-bvx"><strong>Iterative DCF / Equilibrium</strong> — no WACC, no Gordon Growth terminal formula</td>
+          </tr>
+          <tr>
+            <th scope="row">Approaches</th>
+            <td class="col-ntv">Income / capitalization lens on <strong>terminal value</strong></td>
+            <td class="col-bvx">Income approach (DCF) only — no Market or Asset Approach</td>
+          </tr>
+          <tr>
+            <th scope="row">Terminal value</th>
+            <td class="col-ntv">AGM handles changing capital structure + debt amortization (GGM overvalues 10–50% per product copy)</td>
+            <td class="col-bvx">Three TV paths; discounts <strong>Net Proceeds</strong>, not raw TV</td>
+          </tr>
+          <tr class="highlight-row">
+            <th scope="row">Deal structuring</th>
+            <td class="col-ntv">Pro-forma buyer under <strong>GGM vs AGM</strong> comparison</td>
+            <td class="col-bvx">Full deal: revolver, term loan, over-advance, balloon, mezzanine, earn-out, non-compete, consulting, RE ROI</td>
+          </tr>
+          <tr>
+            <th scope="row">Optimization</th>
+            <td class="col-ntv">Spreadsheet calculator</td>
+            <td class="col-bvx"><strong>Deal Quantifier™</strong> (what-if) + <strong>Deal Optimizer™</strong> (max price / min equity)</td>
+          </tr>
+          <tr>
+            <th scope="row">Party equilibrium</th>
+            <td class="col-ntv">Educational / diagnostic (buyer pro-forma under two capitalization methods)</td>
+            <td class="col-bvx">Satisfies <strong>seller, buyer, lender, business, tax authority</strong> constraints simultaneously</td>
+          </tr>
+          <tr>
+            <th scope="row">What-if analysis</th>
+            <td class="col-ntv">Compare GGM vs AGM valuation outcomes</td>
+            <td class="col-bvx">Cash vs seller-financed; stock vs asset; financing terms; strategic buyer scenarios</td>
+          </tr>
+          <tr class="highlight-row">
+            <th scope="row">Output / export</th>
+            <td class="col-ntv">Capitalization 2.0 demonstration</td>
+            <td class="col-bvx">Full financials + buyer ROE + liquidation proceeds + <strong>Print/Export</strong> reports</td>
+          </tr>
+          <tr>
+            <th scope="row">Typical buyer</th>
+            <td class="col-ntv">Appraiser / valuator <strong>sanity-checking</strong> terminal value</td>
+            <td class="col-bvx">M&amp;A advisor / broker on a <strong>live deal</strong></td>
+          </tr>
+          <tr class="highlight-row">
+            <th scope="row">Upgrade trigger</th>
+            <td class="col-ntv">Needs multi-year DCF, deal terms, lender covenants, or live transaction structuring</td>
+            <td class="col-bvx">N/A — top of ladder</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fence-caption">NTV = NTV / Capitalization 2.0 / AltBV (same program). Ground truth: <a href="https://www.bvxpress.com/products/ntv" target="_blank" rel="noopener noreferrer">bvxpress.com/products/ntv</a></p>
+  </section>
+
+  <section>
+    <h2>Custom deal composition</h2>
+    <p class="section-lead">No public price book. Every account was a negotiated composition — evolved over nine years from usage-pattern analysis.</p>
+    <div class="flow-block">DEAL =
+  Module mix (NTV only | NTV+BVX | BVX primary | + suite modules)
+× Seat count / user bands
+× Term (annual, multi-year)
+× Customer-specific discount (negotiated — often deepest on NTV land)
+× Expansion rights (upgrade to BVX, add presentation, add products)</div>
+    <ul class="pain-list">
+      <li><strong>NTV leg:</strong> deepest discount acceptable — loss-leader acquisition into the ecosystem</li>
+      <li><strong>BVX leg:</strong> tighter discount bands — protect margin on the target SKU</li>
+      <li><strong>Bundle over single-module:</strong> prefer NTV+BVX in year 1 when telemetry predicted joint adoption</li>
+      <li><strong>Trade-based discounting:</strong> term length, logo rights, case study, faster close — not &ldquo;because AE asked&rdquo;</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Telemetry-to-Price Loop</h2>
+    <p class="section-lead">In-house analytics suite plus Pendo/Mixpanel-class tooling ran a perpetual commercial feedback loop — not a one-time packaging exercise.</p>
+    <div class="loop-grid">
+      <div class="loop-step">
+        <strong>1. Instrument</strong>
+        <p>Module usage, deal-flow completion, export/presentation actions, fence-hit attempts</p>
+      </div>
+      <div class="loop-step">
+        <strong>2. Diagnose</strong>
+        <p>&lt;20% WAU despite demo praise; abandonment before first deal flow; fee-benchmarking = demo feature, zero workflow</p>
+      </div>
+      <div class="loop-step">
+        <strong>3. Hypothesize</strong>
+        <p>Value metric = <strong>client-ready output speed</strong>, not model depth; NTV lands adjacent segment; BVX fences drive upgrade</p>
+      </div>
+      <div class="loop-step">
+        <strong>4. Change</strong>
+        <p>Kill deal-database &amp; fee-benchmarking; pivot products 3–5 to presentation/export; tune NTV/BVX fences and deal templates by segment</p>
+      </div>
+      <div class="loop-step">
+        <strong>5. Measure</strong>
+        <p>WAU, NTV&rarr;BVX upgrade, multi-product count, ARPU, retention (+14%), conversion (+7%), 3+ products at 2&times; retention</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Value metric discovery</h2>
+    <p class="section-lead">Telemetry surfaced that the meter scaling price was wrong — not that the product lacked analytical depth.</p>
+    <div class="compare-grid">
+      <div class="compare-card legacy">
+        <h3>Before</h3>
+        <p style="font-size:0.92rem;color:var(--text-muted);margin-bottom:0.65rem;"><strong style="color:var(--text-main);">&ldquo;Most accurate valuation tool&rdquo;</strong></p>
+        <ul>
+          <li>Demos loved; &lt;20% weekly active users</li>
+          <li>Users abandoned before first deal flow</li>
+          <li>Fee-benchmarking scored in demos, never in workflow</li>
+        </ul>
+      </div>
+      <div class="compare-card modern">
+        <h3>After</h3>
+        <p style="font-size:0.92rem;color:var(--text-muted);margin-bottom:0.65rem;"><strong style="color:var(--text-main);">&ldquo;Fastest route from Excel to client presentation&rdquo;</strong></p>
+        <ul>
+          <li><strong>7% conversion lift</strong> from repositioning alone</li>
+          <li>Presentation/export modules became expand fences</li>
+          <li><strong>ARPU $450&rarr;$600</strong> from voluntary upgrades</li>
+        </ul>
+      </div>
+    </div>
+    <p class="quote-block">&ldquo;I don&rsquo;t need better analysis. I need to get out of Excel faster and look professional to my client.&rdquo; — senior advisor, focus group</p>
+    <p class="metric-highlight" style="margin-top:1rem;"><strong>Pricing reframe:</strong> This was a <strong>value metric correction</strong>. Revenue expanded when we aligned packaging and module fences to workflow output — not when we raised list prices on existing modules.</p>
+  </section>
+
+  <section>
+    <h2>Expansion without list-price hikes</h2>
+    <p class="section-lead">Annual list-price increases on existing modules were not the growth engine. Module adoption and upgrade paths were.</p>
+    <table class="expand-table">
+      <thead>
+        <tr>
+          <th scope="col">Lever</th>
+          <th scope="col">Mechanism</th>
+          <th scope="col">Proof</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>NTV &rarr; BVX</strong></td>
+          <td>Feature fences + in-product upgrade path</td>
+          <td>Core loss-leader payoff</td>
+        </tr>
+        <tr>
+          <td><strong>BVX &rarr; presentation/export</strong></td>
+          <td>Workflow friction fix (4+ hr formatting per engagement)</td>
+          <td>Voluntary ARPU $450&rarr;$600</td>
+        </tr>
+        <tr>
+          <td><strong>Single &rarr; multi-product</strong></td>
+          <td>Land-and-expand in custom deals</td>
+          <td>3+ products &rarr; 2&times; retention</td>
+        </tr>
+        <tr>
+          <td><strong>Positioning</strong></td>
+          <td>Message aligned to value metric</td>
+          <td>7% conversion lift</td>
+        </tr>
+        <tr>
+          <td><strong>Onboarding depth</strong></td>
+          <td>Lifecycle messaging, guided first deal flow</td>
+          <td>14% retention increase</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Outcomes</h2>
+    <ul class="pain-list">
+      <li><strong>9-year commercial system</strong> — perpetual evolution via telemetry, not a one-time tier redesign</li>
+      <li><strong>ARPU $450&rarr;$600</strong> over two years from voluntary BVX and suite module upgrades</li>
+      <li><strong>14% retention lift</strong> and <strong>7% conversion lift</strong> from packaging and positioning changes instrumented by telemetry</li>
+      <li><strong>2&times; retention</strong> for customers adopting 3+ products — drove GTM shift to onboarding depth over acquisition breadth</li>
+      <li><strong>1,400+ users</strong> across 8 products (context, not hero) — research, workflow, and growth operations</li>
+    </ul>
+    <p class="section-lead" style="margin-top:1rem;">For a separate, time-bounded packaging experiment (4&rarr;3 tiers, 3&times; take rate), see the <a class="inline-link" href="index.html#case-pricing">Village Wellth pricing case</a> on the portfolio index — decision architecture proof, not the anchor commercial system.</p>
+  </section>
+
+  <section>
+    <h2>Frameworks you can reuse</h2>
+    <div class="learn-grid">
+      <div class="learn-card">
+        <h4>Loss-Leader Ladder</h4>
+        <p>Deliberate low-margin SKU to enter an adjacent segment; margin captured on the target SKU. Measure conversion and blended deal margin — not loss-leader standalone P&amp;L.</p>
+      </div>
+      <div class="learn-card">
+        <h4>Telemetry-to-Price Loop</h4>
+        <p>Instrument &rarr; diagnose &rarr; hypothesize &rarr; change packaging &rarr; measure. The operational method behind nine years of custom deal evolution.</p>
+      </div>
+      <div class="learn-card">
+        <h4>Custom Deal Architecture</h4>
+        <p>Per-customer module + discount composition when every buyer is different and a public price book would lie about how deals actually close.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Role context</h2>
+    <div class="cs-grid">
+      <div class="cs-label">Role</div>
+      <div class="cs-content">First PM hire at BVXpress; built the product function from zero; launched 5 products from whiteboard to market; operated 8 products total over 9 years.</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">Scope</div>
+      <div class="cs-content">Pricing/packaging architecture, telemetry-driven commercial evolution, GTM messaging, onboarding, and suite expansion — alongside product roadmap and launch gates.</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">Related</div>
+      <div class="cs-content">For product depth on the HRIS SKU in the same suite, see <a class="inline-link" href="hris-ma.html">HRIS for M&amp;A Transactions</a>.</div>
+    </div>
+  </section>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-contact">
+    <div class="footer-inner">
+      <p class="footer-name"><strong>Bob Lavania:</strong> Product Manager &amp; BizOps Leader</p>
+      <p class="footer-cta">Ideal for: Seed to Series-B companies (10 to 50 people) looking to build or scale AI-driven products. Comfortable with equity compensation and excited about 0 to 1 product development.</p>
+      <div class="footer-actions">
+        <span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span>
+        <a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-utility">
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="Portfolio">
+        <a href="index.html">Home</a>
+        <span class="footer-nav-divider">·</span>
+        <span class="footer-nav-label">Deep-dives:</span>
+        <a href="bvxpress-pricing.html" aria-current="page">BVXpress pricing</a>
+        <a href="hris-ma.html">HRIS / M&amp;A</a>
+        <a href="quotely-evals.html">Quotely evals</a>
+        <a href="sms-agent-evals.html">Agent evals</a>
+        <a href="cybersecurity-marketplace.html">Cyber marketplace</a>
+        <a href="telehealth.html">Telehealth</a>
+      </nav>
+      <div class="footer-utility-actions">
+        <a href="#top" class="back-to-top">Back to top</a>
+        <span class="footer-location">San Francisco, CA &amp; Calgary, AB · Remote</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="footer.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>

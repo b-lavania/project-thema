@@ -261,7 +261,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 #### BVXpress product ladder (pricing / portfolio source of truth)
 - **BVXpress**: SaaS business unit of **ICI** (M&A advisory parent) — not a standalone startup.
 - **BVX**: **Upper-end** product — full valuation capability; **margin target** of the commercial system.
-- **NTV (New Terminal Value)**: **Low-end product devised as a loss-leader** — enter an **adjacent market** that would not buy BVX at entry; pull users to BVX through **deliberate feature-set differentiation** (in-product capability fences, not BVX discounting).
+- **NTV (New Terminal Value)**: **Loss-leader** SKU — **same program** as **Capitalization 2.0** (method name) and **AltBV** (alternate branding/landing). Ground truth: [bvxpress.com/products/ntv](https://www.bvxpress.com/products/ntv). Enter adjacent valuation-theory market; pull users to BVX via **feature-set differentiation** (not BVX discounting).
 - **Commercial model**: No public price book; **customized unique pricing and discounts for every customer** (NTV leg often deepest discount); **in-house telemetry suite** drove fence placement, NTV→BVX conversion cohorts, enhance/deprecate, and **automated pricing evolution** from usage patterns.
 - **Expansion motion**: NTV (loss-leader) → BVX (margin) → presentation tools + suite modules; multi-product adopters (3+) retained at 2×; ARPU $450→$600 from voluntary upgrades, not list-price hikes.
 - **Deep dive / frameworks**: [`ENGINEERING/pricing.md`](../../ENGINEERING/pricing.md) Part 0C (Loss-Leader Ladder, Telemetry-to-Price Loop, Custom Deal Architecture)
