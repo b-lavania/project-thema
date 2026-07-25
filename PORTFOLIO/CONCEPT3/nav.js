@@ -30,6 +30,7 @@
         });
         skillFilters.forEach(function (btn) {
           btn.classList.remove('is-active');
+          btn.setAttribute('aria-pressed', 'false');
         });
         if (skillClear) skillClear.hidden = true;
         return;
@@ -42,12 +43,15 @@
         target.classList.toggle('skill-dimmed', skills.indexOf(activeSkill) === -1);
       });
       skillFilters.forEach(function (btn) {
-        btn.classList.toggle('is-active', btn.getAttribute('data-skill') === activeSkill);
+        var isActive = btn.getAttribute('data-skill') === activeSkill;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
       });
       if (skillClear) skillClear.hidden = false;
     }
 
     skillFilters.forEach(function (btn) {
+      btn.setAttribute('aria-pressed', 'false');
       btn.addEventListener('click', function () {
         var skill = btn.getAttribute('data-skill');
         applySkillFilter(skill === activeSkill ? null : skill);
@@ -135,6 +139,18 @@
     window.addEventListener('scroll', setActiveSection, { passive: true });
     setActiveSection();
   }
+
+  document.querySelectorAll('.cs-close-link').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var details = btn.closest('details');
+      if (!details) return;
+      var summary = details.querySelector('summary');
+      details.open = false;
+      if (summary) {
+        summary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  });
 
   var backToTop = document.querySelector('.back-to-top');
   if (backToTop) {

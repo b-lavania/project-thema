@@ -41,6 +41,16 @@
   --layout-max:     72rem;
   --layout-gutter:  clamp(1rem, 3vw, 2.5rem);
   --prose-measure:  68ch;
+
+  /* Vertical rhythm — assign by role, not by element type:
+     meta: meta label → chips/rows inside a chrome block
+     subhead: one chrome block → the next (intro → filter, filter → jump)
+     block: section h2 → body; jump nav → first tier
+     section: tier → tier, case → case */
+  --space-meta:    0.5rem;   /* meta label → chips */
+  --space-subhead: 1.25rem;  /* chrome cluster → chrome cluster; about grid gap */
+  --space-block:   1.5rem;   /* section h2 → body; chrome → content */
+  --space-section: 2.5rem;   /* tier → tier, case → case */
 }
 
 /* ─── Breathing room ─────────────────────────────────── */
@@ -59,6 +69,12 @@ body {
 .cs-label {
   border-right: none;
   background: transparent;        /* was #fafafa on some pages */
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
 }
 
 /* Slightly more air in each row */
@@ -70,9 +86,14 @@ body {
 
 /* ─── Tags / chips: borderless pills instead of outlined boxes ── */
 .tech-chip {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.48rem;
   border: none;
-  background: #edeae4;
   border-radius: 3px;
+  background: #edeae4;
+  color: var(--text-main);
 }
 
 /* ─── Cards: swap thick black border for a lighter stroke + radius ── */
@@ -95,20 +116,23 @@ body {
 
 /* Section heading "PRODUCT & BIZOPS TOOLKIT" */
 .tech-stack-label {
-  font-size: 0.8rem;
-  margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: var(--space-meta);
 }
 
 /* Sub-group headings e.g. "FINANCIAL & OPERATIONS MODELING" */
 .tech-stack-sub {
-  font-size: 0.72rem;
-  margin-bottom: 0.35rem;
-}
-
-/* Individual chips e.g. "NPV / IRR / CF Modeling" */
-.tech-chip {
-  font-size: 0.82rem;
-  padding: 0.28rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+  margin-bottom: 0.45rem;
 }
 
 /* More vertical air between groups */
@@ -440,12 +464,12 @@ body.has-site-header {
   color: var(--text-muted);
   line-height: 1.55;
   max-width: var(--prose-measure);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-subhead);
 }
 
 .work-quick-nav {
   display: block;
-  margin-bottom: 2.25rem;
+  margin-bottom: var(--space-block);
   padding: 0;
   border: none;
   border-radius: 0;
@@ -458,7 +482,7 @@ body.has-site-header {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-muted);
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-meta);
   font-weight: 600;
 }
 
@@ -512,7 +536,7 @@ body.has-site-header {
 }
 
 .work-tier {
-  margin-bottom: 2.75rem;
+  margin-bottom: var(--space-section);
 }
 
 .work-tier:last-child {
@@ -524,8 +548,8 @@ body.has-site-header {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5rem 1rem;
-  margin-bottom: 1.15rem;
-  padding-bottom: 0.65rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -560,17 +584,17 @@ body.has-site-header {
 
 .case-tag,
 .status-badge {
-  display: inline-block;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.62rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 0.18rem 0.45rem;
   border-radius: 3px;
   line-height: 1.3;
 }
 
 .case-tag {
+  display: inline-block;
+  padding: 0.18rem 0.45rem;
   background: #edeae4;
   color: var(--text-main);
 }
@@ -582,13 +606,40 @@ body.has-site-header {
 .case-tag.energy { background: #e8ede9; color: #2d5a4a; }
 
 .status-badge {
-  background: var(--text-main);
-  color: #f5f3f0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 0.15rem 0.45rem;
 }
 
-.status-badge.live { background: var(--teal); }
-.status-badge.concept { background: var(--amber); }
-.status-badge.shipped { background: var(--blue); }
+.status-badge::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-badge.live::before {
+  background: #00b074;
+}
+
+.status-badge.shipped::before {
+  background: var(--blue);
+}
+
+.status-badge.concept::before {
+  background: var(--amber);
+}
+
+.cs-header .status-badge {
+  border-color: rgba(245, 243, 240, 0.35);
+  color: rgba(245, 243, 240, 0.85);
+}
 
 /* ─── Toolkit skill chips (Selected Work) ───────────── */
 
@@ -643,12 +694,12 @@ body.has-site-header {
 }
 
 .deep-dive-card .case-study-skills {
-  margin-top: 0.35rem;
+  margin-top: 0;
   margin-bottom: 0.15rem;
 }
 
 .work-skills-bar {
-  margin-bottom: 1.75rem;
+  margin-bottom: var(--space-subhead);
   padding: 0 0 0.85rem;
   border: none;
   border-bottom: 1px solid var(--border-light);
@@ -662,7 +713,7 @@ body.has-site-header {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-meta);
 }
 
 .work-skills-bar-label {
@@ -706,7 +757,7 @@ body.has-site-header {
 
 .work-skills-group-label {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-light);
@@ -780,21 +831,16 @@ button.work-skills-filter.work-skill-chip.is-active {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
 }
 
-.deep-dive-card .case-tag,
-.deep-dive-card .case-tag.teal,
-.deep-dive-card .case-tag.amber,
-.deep-dive-card .case-tag.blue,
-.deep-dive-card .case-tag.purple {
-  background: #edeae4;
-  color: var(--text-muted);
-}
-
 .deep-dive-card h4 {
   font-size: 1rem;
   font-weight: 600;
   margin: 0.55rem 0 0.45rem;
   line-height: 1.3;
   color: var(--text-main);
+}
+
+.deep-dive-card > h4:first-child {
+  margin-top: 0;
 }
 
 .deep-dive-card p {
@@ -1008,6 +1054,7 @@ body.page-home h1,
 body.page-home h2,
 body.page-home h3,
 body.page-home h4,
+body.page-home h5,
 body.page-home p,
 body.page-home ul,
 body.page-home ol,
@@ -1033,33 +1080,38 @@ body.page-home {
 .page-home .container > header,
 .page-home .container > section {
   border-bottom: 1px solid var(--border-color);
-  padding: 2.5rem 0;
+  padding: var(--space-section) 0;
 }
 
 .page-home .container > header {
-  padding-top: 1.5rem;
+  padding-top: var(--space-block);
 }
 
+/* Heading voices (intentional hierarchy):
+   1. Chrome / meta labels — mono, uppercase, muted (h2, fit-block-title, filter labels, cs-label)
+   2. Tier titles — sans, normal case, dark (.work-tier-title; signals content starts here)
+   3. Case titles — sans bold on dark (.cs-header h4; marquee element) */
 .page-home h1 {
   font-size: clamp(2rem, 2.5vw + 1rem, 2.85rem);
   line-height: 1.15;
   font-weight: 700;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
+  color: var(--text-main);
 }
 
 .page-home .subhead {
   font-size: 1.1rem;
   color: var(--text-muted);
   max-width: var(--prose-measure);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-block);
   line-height: 1.5;
 }
 
 .page-home h2 {
   font-size: 1.05rem;
   font-weight: 600;
-  margin-bottom: 1.35rem;
+  margin-bottom: var(--space-block);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-family: var(--font-mono);
@@ -1075,7 +1127,10 @@ body.page-home {
 }
 
 .page-home .about-main-grid {
-  margin-top: 1.75rem;
+  margin-top: var(--space-block);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-subhead);
 }
 
 .page-home .fit-block {
@@ -1091,7 +1146,7 @@ body.page-home {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-muted);
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-meta);
 }
 
 .page-home .fit-block-lede {
@@ -1160,7 +1215,7 @@ body.page-home {
 .page-home .cs-header.blue { border-left-color: var(--blue); }
 .page-home .cs-header.energy { border-left-color: var(--energy); }
 
-.page-home .cs-header h3 {
+.page-home .cs-header h4 {
   margin-bottom: 0.4rem;
   font-size: 1.65rem;
   font-weight: 700;
@@ -1267,8 +1322,52 @@ body.page-home {
   color: var(--text-main);
 }
 
+.page-home .cs-followup {
+  margin-top: 0.5rem;
+}
+
+.page-home .cs-followup.cs-followup--spaced {
+  margin-top: 0.75rem;
+}
+
+.page-home .cs-disclaimer {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+
+.page-home .metric-highlight a {
+  color: inherit;
+}
+
+.page-home .cs-close-wrap {
+  margin: 0;
+  padding: 1rem 1.25rem 1.25rem;
+  border-top: 1px solid var(--border-light);
+  text-align: right;
+}
+
+.page-home .cs-close-link {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--blue);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.page-home .cs-close-link:hover {
+  color: var(--text-main);
+}
+
 .page-home .case-study-details {
-  margin-bottom: 2.5rem;
+  margin-bottom: var(--space-section);
   border: 2px solid var(--border-color);
   transition: box-shadow 0.2s ease;
   padding: 0;
@@ -1321,7 +1420,7 @@ body.page-home {
 .page-home .principles-list li {
   position: relative;
   padding-left: 3rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-block);
   font-size: 1.05rem;
   font-weight: 500;
   line-height: 1.4;
@@ -1352,7 +1451,7 @@ body.page-home {
 .page-home .career-grid {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.5rem 1.5rem;
+  gap: 1rem 1.5rem;
   align-items: baseline;
 }
 
@@ -1396,7 +1495,7 @@ body.page-home {
   .page-home .about-main-grid {
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
-    gap: 1.5rem;
+    gap: var(--space-block);
     align-items: start;
   }
 
