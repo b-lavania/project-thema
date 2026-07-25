@@ -6,7 +6,7 @@
 
 **Three-part proof:**
 1. **Diagnostic reframing** — I identify the structural bottleneck behind operational chaos (e.g., "slow quoting" was actually trust erosion; "low accuracy" was alert fatigue)
-2. **Production system building** — I ship AI and automation systems that eliminate ambiguity (CV pipelines, OR engines, conversational agents, adapter architectures)
+2. **Production system building** — I ship AI and automation systems that eliminate ambiguity (CV pipelines, OR engines, conversational agents, hybrid RAG + playbooks, eval harnesses, adapter architectures)
 3. **Commercial outcome measurement** — I tie every system to business metrics (20x faster quoting → 93% fill rate; 85% false-positive reduction → contract renewal; 3x take rate → churn elimination)
 
 ## Positioning thesis (lead with this everywhere)
@@ -15,7 +15,7 @@
 
 **Primary identity:** Founding Product Lead for operational AI in logistics, freight, dispatch, and field service.
 
-**Live credential (present tense):** I run Moovez's marketplace operations platform and Quotely's AI layer in production — end-to-end **quote-to-dispatch**: customer booking and order tracking, dispatcher workflows, crew assignment and availability, plus CV/OR job costing and conversational intake. Lead with system metrics (**60 min→3 min** job costing, **~50%** support deflection, **~93%** fill rate), not $500K GMV.
+**Live credential (present tense):** I run Moovez's marketplace operations platform and Quotely's AI layer in production — end-to-end **quote-to-dispatch**: customer booking and order tracking, dispatcher workflows, crew assignment and availability, plus CV/OR job costing, conversational intake, quote-accuracy ops (Command), and institutional RAG (Qortex). Lead with system metrics (**60 min→3 min** job costing, **~50%** support deflection, **~93%** fill rate), not $500K GMV.
 
 **Range (supporting evidence only — not co-equal targets):** HRIS/M&A (BVXpress), growth/attribution (fractional), platform/pricing — cite only when JD-relevant.
 
@@ -47,8 +47,8 @@ This file consolidates all resume variants and portfolio metrics into a single s
 ## Three Operating Themes (Portfolio-Derived Positioning)
 1. **Pricing Architecture** — Redesigning how value is captured: tier consolidation, real-time quote engines, discount logic, ARPU optimization. Done across M&A SaaS, logistics, education, and insurance.
    - Proof: 3x take rate · $450→$600 ARPU · 18% lower CAC
-2. **Operational Intelligence** — Replacing manual, chaotic processes with AI systems (computer vision, conversational agents, OR engines, predictive frameworks). Built and deployed in production.
-   - Proof: 60 min→3 min quoting · 50% support deflection · 85% false-alert reduction
+2. **Operational Intelligence** — Replacing manual, chaotic processes with AI systems (computer vision, conversational agents, OR engines, hybrid RAG, eval harnesses, predictive frameworks). Built and deployed in production.
+   - Proof: 60 min→3 min quoting · 50% support deflection · 85% false-alert reduction · hybrid RAG + playbooks + quote-accuracy ops loop (Quotely Command / Qortex)
 3. **Zero-to-One Build** — Launching products from whiteboard and building the commercial engine around them: messaging, funnels, retention, unit economics.
    - Proof: 5 products launched · 14% retention lift · 7% conversion lift · 93% fill rate
 
@@ -57,6 +57,7 @@ This file consolidates all resume variants and portfolio metrics into a single s
 ## Key Insights (from Case Studies)
 
 - **AI systems**: "AI systems succeed when they reduce operational ambiguity, not when they maximize sophistication. Focused on structured information capture and reliable handoffs over open-ended interaction." (Moovez/Quotely) → Led me to engineer hard operational handoffs instead of freeform chat loops, deflecting 50% of support tickets.
+- **Ops knowledge / RAG**: "When a wrong number can hurt the business, the answer is playbooked — not LLM-invented. RAG synthesizes from evidence; refuse when evidence is thin." (Quotely-Qortex / Command) → Led me to build deterministic YAML playbooks for SLAs and metrics, hybrid RAG (dense + lexical + RRF) over a git-diffable corpus, and structured Outcomes instead of freeform chat for internal ops knowledge and agent retrieve packs.
 - **Pricing**: "Pricing problems are often decision architecture problems, not just monetization problems. Simplifying choices can be more valuable than optimizing price points." (Village Wellth) → Led me to consolidate 4 pricing tiers into 3, resulting in a 3x increase in take rate by eliminating plan confusion.
 - **Detection**: "Detection systems fail when users stop trusting the signal. Accuracy metrics alone are insufficient. Operational reliability matters more than theoretical performance." (Netsweeper) → Led me to freeze feature additions and aggressively prune high false-alert vectors, reducing alerts by 85% and restoring district trust.
 - **Energy/Infrastructure**: "Each workflow step surfaces a risk class the others cannot see. Deployability is a coupling problem — the product's job is to make those couplings explicit, comparable, and reviewable." (Project Epsilon) → Drove the architecture of the Scenario contract interface, eliminating model drift.
@@ -77,13 +78,13 @@ This file consolidates all resume variants and portfolio metrics into a single s
 ## Skills & Core Domains (Structured for LLM Parsing)
 - **Product contexts**: Marketplaces, eCommerce, Risk & insurance, Applied tech (chatbots, voice agents, computer vision), HR Tech / HRIS (M&A workforce integration)
 - **Domains**: AI/Engineering, Marketplace Commerce, eCommerce, Risk & Insurance, Marketing Science, Operations Research, User Research, HR Tech & People Systems
-- **AI/Modeling Methods**: LLM pipelines, prompt orchestration, Computer Vision (CV), conversational/SMS agents, Bayesian Media Mix Modeling (MMM), Multi-Touch Attribution (MTA), Ridge Regression, Monte Carlo stress testing, PyPSA linear programming, 3D bin packing
+- **AI/Modeling Methods**: LLM pipelines, prompt orchestration, Computer Vision (CV), conversational/SMS agents, **hybrid RAG** (dense + lexical retrieval, reciprocal rank fusion / RRF, embedding indexes, listwise rerank), **structured catalog matching** (quoting path — distinct from vector RAG), **playbook / deterministic Outcome routing** (high-stakes facts not LLM-invented), **eval harnesses** (golden sets, multi-model scoring on accuracy/latency/cost, fixture pass-rate floors, retrieval hit@k), **quote accuracy ops** (MAE minutes/crew, ±15% band, outcome-capture SLA, annotation → retrain export), agent retrieve packs, Bayesian Media Mix Modeling (MMM), Multi-Touch Attribution (MTA), Ridge Regression, Monte Carlo stress testing, PyPSA linear programming, 3D bin packing
 - **Product/Growth Methods**: Supply-demand balancing, checkout funnel optimization, pricing systems, entitlement logic, hypothesis testing, **A/B testing and controlled experiments** (traffic splits, null-hypothesis framing), cohort analysis, STP (segmentation, targeting, positioning), GTM scaling, conversion lift, attribution modeling
 - **Product analytics & experimentation**: Deep background in product analytics, attribution modeling, and quantitative synthesis of product decisions from telemetry; tools include Mixpanel, Pendo, Heap, Segment, Microsoft Clarity, Hotjar; built **in-house analytics suites** (BVXpress) for customer behavior, profile/segment tests, and feature enhance-vs-deprecate decisions
 - **User research methods**: User interviews, focus groups, tree testing, opportunity maps, session replay, funnel diagnostics, clickable prototypes
 - **Market research / analytics**: Hypothesis testing, R, SQL, Media Mix Models, attribution models, STP
 - **HR / HCM (BVXpress HRIS — integration & product scope)**: Workday, SAP SuccessFactors, ADP (adapter targets); Frappe HRMS (payroll reference implementation); universal adapter pattern, normalized employee data model, transaction-ready workforce dashboards, bidirectional sync, event-driven updates, API-first diligence reporting
-- **Tools/Tech (confirmed by role)**: Aha! (Netsweeper, BVXpress), Pendo (BVXpress), Heap (Moovez), Segment (Moovez), Microsoft Clarity & Hotjar (Moovez), opportunity maps (fractional startups, BVXpress, Moovez, Liohan, and others), Jira, Confluence, Notion, Figma, Amplitude, Productboard, Google Analytics, Mixpanel, R, SQL, HubSpot, ActiveCampaign, Zoho, Cursor, Windsurf, Lovable, n8n, Zapier, Stripe/Square APIs, .NET / Azure (BVXpress HRIS)
+- **Tools/Tech (confirmed by role)**: Aha! (Netsweeper, BVXpress), Pendo (BVXpress), Heap (Moovez), Segment (Moovez), Microsoft Clarity & Hotjar (Moovez), opportunity maps (fractional startups, BVXpress, Moovez, Liohan, and others), Jira, Confluence, Notion, Figma, Amplitude, Productboard, Google Analytics, Mixpanel, R, SQL, HubSpot, ActiveCampaign, Zoho, Cursor, Windsurf, Lovable, n8n, Zapier, Stripe/Square APIs, .NET / Azure (BVXpress HRIS), **FastAPI, Qdrant, OpenAI embeddings (text-embedding-3-large), Gemini, React/TypeScript** (Quotely Command / Qortex — Moovez/Quotely ROLE 1)
 
 ---
 
@@ -95,19 +96,135 @@ Use these five method lanes when writing the Summary method bullets (operating s
 
 1. **Discover** — Opportunity maps, focus groups, tree tests, user interviews, session replay (Heap, Microsoft Clarity, Hotjar), funnel diagnostics, clickable prototypes. Outcome: scope cuts and roadmap bets grounded in where users actually stall.
 2. **Decide** — STP, pricing architecture, tier consolidation, hypothesis framing, entitlement logic. Outcome: plan architecture and pricing UX that remove decision friction (not cosmetic label changes).
-3. **Build** — Operations research (3D bin packing, job-duration models), PyPSA linear programming, computer vision pipelines, conversational/SMS agents, LLM prompt orchestration, Cursor/Windsurf for MVP validation. Outcome: production systems that replace manual ops without proportional headcount.
-4. **Measure** — A/B tests and controlled rollouts (traffic redirects, null-hypothesis tests), Segment, Mixpanel, Pendo, Heap, Microsoft Clarity, Hotjar, cohort analysis, Bayesian media mix modeling (R, SQL), attribution and funnel instrumentation, in-house telemetry (BVXpress). Outcome: what to kill, keep, or scale after launch; conversion and attribution clarity for fractional clients.
+3. **Build** — Operations research (3D bin packing, job-duration models), PyPSA linear programming, computer vision pipelines, conversational/SMS agents (retrieval-backed replies, HITL escalation), LLM prompt orchestration, **hybrid RAG** (ingest → chunk → embed → Qdrant; dense + lexical + RRF retrieve; playbook short-circuit for high-stakes facts), **structured catalog matching** for quoting (not vector RAG on the quote path), **eval harnesses** (four-layer vision/catalog/logistics/E2E eval; golden sets; multi-model scoring), **quote-accuracy ops console** (MAE, ±15%, outcome capture, annotation export), Cursor/Windsurf for MVP validation. Outcome: production systems that replace manual ops without proportional headcount.
+4. **Measure** — A/B tests and controlled rollouts (traffic redirects, null-hypothesis tests), Segment, Mixpanel, Pendo, Heap, Microsoft Clarity, Hotjar, cohort analysis, Bayesian media mix modeling (R, SQL), attribution and funnel instrumentation, in-house telemetry (BVXpress), **eval gates** (golden-set pass rates, retrieval hit@k, fixture task-success floors, multi-model accuracy/latency/cost scoring), **quote accuracy KPIs** (MAE minutes/crew, within ±15%, outcome-capture SLA). Outcome: what to kill, keep, or scale after launch; conversion and attribution clarity for fractional clients; release gates for AI systems.
 5. **Commercialize** — Real-time quoting engines, Stripe/Square payment flows, GTM automation (HubSpot, ActiveCampaign), lifecycle messaging, ARPU and take-rate levers. Outcome: unit economics and cash flow tied to product changes.
 
 **Industries (map JD industry terms here when truthful):** Transport and last-mile logistics, warehousing and fulfillment, construction materials marketplaces, finance and insurance, M&A and deal-structuring, consumer health and digital health (B2C telehealth, patient experience, virtual care), marketing attribution and e-commerce growth, energy and infrastructure planning, HR technology and workforce systems (M&A transaction readiness).
 
-**Product categories (map JD product scope here when truthful):** **Moovez (ROLE 1):** marketplace ops / lightweight TMS — quote-to-dispatch, crew management, booking, order status, dispatch assignment (last-mile moving). TMS/WMS integration and marketplace ops (ROLE 2 construction materials), CRM and marketing automation (HubSpot, ActiveCampaign, Zoho), pricing and real-time quote engines, MMM and attribution platforms, content-compliance and trust/safety AI, B2B SaaS workflow suites, B2C digital health and telehealth platforms (patient experience, virtual care, white-label SaaS — ROLE 2 regional govt), HRIS / HCM / people analytics (ROLE 5 BVXpress HRIS), payroll integration layers, workforce diligence dashboards.
+**Product categories (map JD product scope here when truthful):** **Moovez (ROLE 1):** marketplace ops / lightweight TMS — quote-to-dispatch, crew management, booking, order status, dispatch assignment (last-mile moving); **Quotely Command** (quote-accuracy ops console) and **Quotely-Qortex** (hybrid RAG institutional knowledge + agent retrieve packs). TMS/WMS integration and marketplace ops (ROLE 2 construction materials), CRM and marketing automation (HubSpot, ActiveCampaign, Zoho), pricing and real-time quote engines, MMM and attribution platforms, content-compliance and trust/safety AI, B2B SaaS workflow suites, B2C digital health and telehealth platforms (patient experience, virtual care, white-label SaaS — ROLE 2 regional govt), HRIS / HCM / people analytics (ROLE 5 BVXpress HRIS), payroll integration layers, workforce diligence dashboards.
 
-**Tools palette (one per statement max; mirror JD tool names when listed):** Heap, Microsoft Clarity, Hotjar, Segment, Mixpanel, Aha!, Pendo, Notion, Figma, Amplitude, Productboard, Google Analytics, R, SQL, Cursor, Windsurf, Lovable, n8n, Zapier, Stripe/Square, HubSpot, ActiveCampaign, Jira, Confluence.
+**Tools palette (one per statement max; mirror JD tool names when listed):** Heap, Microsoft Clarity, Hotjar, Segment, Mixpanel, Aha!, Pendo, Notion, Figma, Amplitude, Productboard, Google Analytics, R, SQL, Cursor, Windsurf, Lovable, n8n, Zapier, Stripe/Square, HubSpot, ActiveCampaign, Jira, Confluence, FastAPI, Qdrant, OpenAI embeddings, Gemini.
 
 **Skills-only familiarity (not a shipped deployment unless a ROLE block says so):** n8n, Zapier, CRM as a category, and TMS/WMS **integration** patterns outside the Moovez ops platform and ROLE 2 construction marketplace engagement. At Moovez, TMS-class workflows (dispatch, crews, orders, booking) are **ROLE 1 shipped scope**, not familiarity-only. Phrase external TMS/WMS as comfortable working in / integrates with unless ROLE-backed.
 
-**Do not invent:** Only cite tools/methods from this block, Skills & Core Domains, or a specific ROLE block.
+**Do not invent:** Only cite tools/methods from this block, Skills & Core Domains, or a specific ROLE block. **AI/RAG guardrails:** Do not claim LangChain (custom pipeline by design). Do not claim production "X% MAE improvement" unless a measured number exists in a ROLE block. **Quoting path** uses structured catalog matching; **vector RAG** is for Qortex knowledge / agent packs — do not conflate. Do not rebrand identity as ML Engineer in Summary.
+
+---
+
+## STAR Story Bank (generation source)
+
+**Purpose:** Structured Situation → Task → Action → Result stories for resume bullets, narrative brief, cover letter, and interview prep. Generators: when a role block has both **PM Story** and **STAR** entries, use PM Story for bullets 1–2 (product decision framing) and STAR stories for bullets 3–4 or when JD keywords match story **Tags**.
+
+**Format:** Each story is self-contained. Do not merge metrics across stories. Pick 1–2 STAR stories per role per generation; prefer JD tag matches.
+
+### STAR-01: Quote speed as the booking wedge
+- **Role**: ROLE 1 (Moovez/Quotely)
+- **Tags**: `[Marketplace]`, `[0-to-1]`, `[Pricing]`, `[User Research]`, `[AI/CV]`, `[Operations Research]`
+- **JD match**: logistics, marketplace, quoting, conversion, funnel, speed-to-quote, field service
+- **Situation**: Last-mile moving customers called 3–5 movers and booked whoever returned a price first. Moovez dispatchers spent 60+ minutes per phone quote; competitors with instant digital quotes were winning on speed, not price. Session replay showed 60%+ checkout abandonment at manual dimension-entry.
+- **Task**: Remove the dispatcher call bottleneck without sacrificing pricing accuracy on multi-item, multi-floor jobs — the core conversion lever was time-to-credible-price.
+- **Action**: Ran focus groups, tree tests, and opportunity maps; chose photo-based CV intake over simplified forms after replay proved dimension-entry was the abandonment driver. Built OR engine (3D bin packing) instead of lookup tables after static pricing showed 40%+ margin error on complex jobs. Cut V1 scope (dispatcher chat overlay, subscriptions, route optimization) to protect quote-flow reliability.
+- **Result**: Quote time **60 min → ~3 min** (20x faster); **~93% fill rate** vs ~70% industry; GMV $500k+; inbound operator interest drove Quotely SaaS commercialization.
+
+### STAR-02: SMS agent with retrieval gates, not chat novelty
+- **Role**: ROLE 1 (Moovez/Quotely)
+- **Tags**: `[AI/CV]`, `[Eval]`, `[Operations]`, conversational agents
+- **JD match**: conversational AI, support deflection, agent evals, HITL, retrieval quality
+- **Situation**: Post-launch, status and intake calls consumed dispatcher capacity. A freeform chatbot risked inventing booking state or hiding cases that needed a human — support deflection had to be safe, not just high-volume.
+- **Task**: Deflect routine SMS (intake, confirmations, reschedules) while escalating policy-bound and ambiguous cases with measurable ship gates.
+- **Action**: Deployed retrieval-backed SMS/voice agent with structured handoffs to order state. Specified V1 fixture suite: retrieval **hit@4**, HITL recall/precision (missed vs noisy escalations), intake-completion floors — measured retrieval before debating reply fluency. Paired with customer-facing order status to cut "where's my crew?" calls.
+- **Result**: **~50% support ticket deflection** with zero human intervention on routine flows; escalation paths preserved dispatcher capacity for exceptions.
+
+### STAR-03: Four-layer eval harness for photo-to-quote
+- **Role**: ROLE 1 (Moovez/Quotely)
+- **Tags**: `[Eval]`, `[AI/CV]`, ML product, quality gates
+- **JD match**: eval harnesses, model quality, AI product, release gates, computer vision
+- **Situation**: Photo-to-quote chained vision detection, catalog enrichment, and OR pricing — a failure in any layer looked like "bad AI" downstream. Team needed to isolate which subsystem broke without re-running expensive VLM calls on every change.
+- **Task**: Build layered offline evals so releases could be gated by subsystem, not end-to-end guesswork.
+- **Action**: Designed four eval layers: (1) vision detection consistency/accuracy, (2) structured catalog match rate and unknown-fallback tracking, (3) logistics golden-file snapshot tests on frozen inputs, (4) E2E minutes MAE and ±15% hit rate vs actuals. Added multi-model testbench (Gemini Flash, GPT-4.1) on accuracy, latency, and cost for vision path.
+- **Result**: Failures isolate to a single subsystem; catalog and logistics layers run cheap without Gemini; E2E metrics tie to Command accuracy definitions (MAE, ±15%).
+
+### STAR-04: Quotely Command — closing the quote-accuracy loop
+- **Role**: ROLE 1 (Moovez/Quotely)
+- **Tags**: `[Eval]`, `[Operations]`, B2B SaaS, quote accuracy
+- **JD match**: ops console, ML ops, accuracy monitoring, tenant health, feedback loops
+- **Situation**: After commercializing Quotely to other operators, quotes without captured actuals (minutes, crew) couldn't improve the Vision model or prove ROI. Tenants with low outcome capture hid accuracy problems until jobs completed.
+- **Task**: Build an internal quote-intelligence console that tracks accuracy KPIs and drives outcome capture before model retrain.
+- **Action**: Built **Quotely Command**: MAE (minutes/crew), within ±15%, outcome-capture SLA (chase at 7d, escalate at 14d, target ≥80%), attention queue for pending outcomes and accuracy misses, annotation export for Vision retrain. Defined metrics as product SLAs, not invented lift percentages.
+- **Result**: Ops loop connects quoted jobs → actuals → annotations → retrain export; attention queue surfaces tenants and quotes needing follow-up (product KPIs defined; no fabricated production lift % in resume).
+
+### STAR-05: Qortex — playbooked facts, RAG for synthesis
+- **Role**: ROLE 1 (Moovez/Quotely)
+- **Tags**: `[RAG]`, `[Eval]`, `[AI/CV]`, knowledge systems, agents
+- **JD match**: RAG, vector search, embeddings, LLM products, agent tooling, institutional knowledge
+- **Situation**: Vision, Content, Voice, and Command agents each maintained forked facts files; internal ops questions (SLAs, metrics, forensics) risked LLM-invented numbers in customer-facing or operator contexts.
+- **Task**: Centralize Quotely institutional knowledge with deterministic answers for high-stakes facts and grounded RAG for forensics — Outcome > chat.
+- **Action**: Built **Quotely-Qortex**: Markdown/YAML/ops-JSON source of truth; ingest → chunk → embed (OpenAI text-embedding-3-large) → Qdrant; hybrid dense + lexical + RRF retrieve + Gemini rerank/synthesis; YAML playbooks short-circuit SLAs/metrics; golden eval suite as release gate; `/v1/retrieve` packs per agent. Quarantined Moovez marketplace KB from B2B default corpus. Custom pipeline (no LangChain).
+- **Result**: Playbook path returns exact SLA numbers; thin evidence → `insufficient_evidence` refuse; agent packs replace stale local forks; reindex from MD/JSON alone rebuilds vector index.
+
+### STAR-06: Automated vs manual quoting experiment
+- **Role**: ROLE 1 (Moovez/Quotely)
+- **Tags**: `[Experimentation]`, `[Pricing]`, conversion
+- **JD match**: A/B testing, experimentation, product analytics, controlled rollout
+- **Situation**: Automated quoting was faster but carried margin risk if accuracy lagged manual dispatcher estimates — leadership needed evidence before full traffic cutover.
+- **Task**: Validate automated quote path against manual quoting under controlled conditions before scaling.
+- **Action**: Ran controlled experiment redirecting traffic to automated vs manual quoting paths; framed null hypothesis before scaling; instrumented with Segment for conversion and quote-to-booking funnel.
+- **Result**: Evidence-backed scale decision for automated quote path; reduced reliance on dispatcher phone quotes as primary booking driver.
+
+### STAR-07: Pricing tier consolidation (Village Wellth)
+- **Role**: ROLE 2 (Fractional — Village Wellth)
+- **Tags**: `[Pricing]`, `[User Research]`, churn, decision architecture
+- **JD match**: pricing, packaging, tier consolidation, PLG, conversion, fintech
+- **Situation**: Four overlapping M&A financing tiers caused plan-selection paralysis; churn concentrated at plan step, not product dissatisfaction. M&A advisors pre-filtered clients because they didn't trust self-serve plan picks.
+- **Task**: Remove decision friction without cosmetic relabeling — structural plan architecture fix.
+- **Action**: Opportunity maps + STP showed two tiers served all real segments; focus groups and tree tests validated 4→3 consolidation; killed lowest-adoption tiers despite short-term upsell loss.
+- **Result**: **3x take rate** within two billing cycles; churn from plan indecision near zero; advisors recommended platform more broadly.
+
+### STAR-08: Bayesian MMM replacing last-click attribution
+- **Role**: ROLE 2 (Fractional — E-commerce)
+- **Tags**: `[Attribution]`, marketing science, experimentation
+- **JD match**: MMM, attribution, CAC, media mix, growth analytics, R
+- **Situation**: E-commerce client optimized spend on last-click attribution, misallocating budget across six channels and inflating perceived CAC efficiency.
+- **Task**: Replace last-click with a model that accounts for adstock, saturation, and cross-channel effects for budget decisions.
+- **Action**: Built Bayesian Media Mix Model in R merging 134,900 records across 6 spend channels with GA4 and HubSpot; applied adstock and Hill-function saturation with ridge regression; segmented for ARPU levers.
+- **Result**: Projected **18% CAC reduction**; **24% ARPU increase** from segmentation-informed spend shifts.
+
+### STAR-09: Operational trust over detection coverage (Netsweeper)
+- **Role**: ROLE 3 (Netsweeper)
+- **Tags**: `[AI/CV]`, `[Trust/Safety]`, `[Data Quality]`
+- **JD match**: trust & safety, false positives, AI product, K-12, content moderation, signal quality
+- **Situation**: K-12 district staff stopped opening alert dashboards — ~8/10 alerts were false positives. Engineering wanted new detection categories; client contract at risk.
+- **Task**: Restore staff trust in alerts before expanding detection surface area.
+- **Action**: Reframed success metric from "detection accuracy" to "operational trust." Froze new features one quarter; redirected outsourced team to false-positive pruning, alert workflow redesign, QA cycles. Tree tests showed high-severity alerts buried under noise — redesigned workflow.
+- **Result**: **85% false-alert reduction** across 35-school deployment; staff re-engaged dashboard unprompted; contract renewed.
+
+### STAR-10: Presentation speed over analytical depth (BVXpress)
+- **Role**: ROLE 5 (BVXpress)
+- **Tags**: `[0-to-1]`, `[Growth]`, `[User Research]`, `[Pricing]`
+- **JD match**: 0-to-1, B2B SaaS, workflow adoption, ARPU, retention, GTM
+- **Situation**: After first two product launches, <20% weekly active users despite positive demos — advisors spent 4+ hours formatting client presentations, not running better models.
+- **Task**: Pivot roadmap from analytical depth to client-facing workflow speed; build repeatable growth engine.
+- **Action**: Telemetry + opportunity maps identified presentation/export as top friction; sequenced products 3–5 on client workflow; killed deal-database and fee-benchmarking features (demo features, not workflow). Gated launches on 20+ user cohort adoption. Landing message test: "fastest Excel → client presentation" vs "most accurate valuation."
+- **Result**: ARPU **$450→$600** from voluntary upgrades; **14% retention lift**; **7% conversion lift** on landing; multi-product adopters (3+) retained at 2×.
+
+### STAR-11: HRIS adapter-first for M&A diligence (BVXpress)
+- **Role**: ROLE 5 (BVXpress HRIS)
+- **Tags**: `[HR Tech]`, `[HRIS]`, `[M&A]`, `[Integrations]`, `[0-to-1]`
+- **JD match**: HRIS, HCM, M&A integration, workforce analytics, diligence, Workday/ADP
+- **Situation**: Live M&A deals needed combined workforce visibility; rip-and-replace HR migrations took 6–18 months while deal teams reconciled spreadsheets and couldn't answer diligence questions.
+- **Task**: Ship transaction-ready HRIS that ingests, normalizes, and reports — source payroll systems stay authoritative.
+- **Action**: Focus groups and workflow interviews killed "replace every payroll system"; built universal adapter pattern + Frappe HRMS reference; prioritized ingestion validation, duplicate handling, confidence scores after tree tests failed on conflicting dashboard numbers; shipped diligence dashboards (payroll/contract risk, comp burden).
+- **Result**: **3 HR/diligence teams** onboarded on live deals; adapter-first architecture vs months-long migrations; BVXpress product for ICI clients and acquired companies.
+
+### STAR-12: Quotely commercialization from production signal
+- **Role**: ROLE 1 (Moovez/Quotely)
+- **Tags**: `[0-to-1]`, `[Pricing]`, B2B SaaS, commercialization
+- **JD match**: product-led growth, SaaS, spin-out, B2B, logistics tech
+- **Situation**: Moovez built CV + OR quoting as internal marketplace advantage; other logistics operators began asking to license the intelligence layer after seeing quote accuracy and speed.
+- **Task**: Separate ops platform (Moovez TMS) from pricing/intake SaaS (Quotely) without breaking production marketplace.
+- **Action**: Commercialized intelligence layer as Quotely (quoteperfectly.com); kept Moovez as production proving ground; added Command + Qortex as internal ops/accuracy layer for B2B tenants.
+- **Result**: Standalone SaaS sold to other logistics operators; marketplace remains proving ground for quote-to-dispatch at **~93% fill rate**.
 
 ---
 
@@ -118,7 +235,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **2012–2021 (9 yrs)**: Built the product function from scratch at BVXpress — **employee #3 (first product hire)**; launched 5 products, 1,400+ users; also owned **HRIS for M&A transaction readiness** in the BVXpress suite (shipped to ICI clients and acquired companies).
 - **2022–2023**: Full-time PM at Netsweeper, shipping an AI content-compliance product for K-12.
 - **2022–2025 (concurrent)**: Fractional Product Lead across AI, logistics, FinTech, consumer health/telehealth (B2C patient experience), and marketplace startups; won 2024 TechStars Pitch Competition (Calgary) with consumer-facing telehealth platform concept.
-- **2024–Present**: Founding PM at Moovez/Quotely — marketplace ops platform (quote-to-dispatch TMS) plus AI layer commercialized as Quotely SaaS.
+- **2024–Present**: Founding PM at Moovez/Quotely — marketplace ops platform (quote-to-dispatch TMS) plus AI layer commercialized as Quotely SaaS; built internal **Quotely Command** (quote-accuracy ops) and **Quotely-Qortex** (hybrid RAG + playbooks + agent retrieve packs).
 
 ---
 
@@ -130,7 +247,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **Title**: Founding Product Manager
 - **Dates**: Jan 2024 - Present
 - **Location**: Remote / Calgary, AB
-- **Tags**: `[0-to-1]`, `[Marketplace]`, `[TMS]`, `[AI/CV]`, `[Pricing]`, `[Operations]`, `[User Research]`, `[eCommerce-adjacent logistics]`, `[Experimentation]`
+- **Tags**: `[0-to-1]`, `[Marketplace]`, `[TMS]`, `[AI/CV]`, `[RAG]`, `[Eval]`, `[Pricing]`, `[Operations]`, `[User Research]`, `[eCommerce-adjacent logistics]`, `[Experimentation]`
 - **Research & analytics tooling (confirmed)**: Heap, Microsoft Clarity, Hotjar, Segment, focus groups, tree testing, opportunity maps
 - **Environment**: Reported directly to CEO. **Employee #6 (first product hire).** Product lead owning user research, conversions, retention, and experimentation. Oversaw a team of 4 developers (1 direct report).
 - **Problem**: Dispatchers were manually estimating job costs over the phone (60+ min per quote), causing margin erosion from inaccurate pricing and losing customers to faster competitors.
@@ -148,8 +265,12 @@ Use these five method lanes when writing the Summary method bullets (operating s
 | **Order status** | Customer-visible status (booked → scheduled → in progress → complete); ops-facing state for exceptions | Cuts "where's my crew?" calls; feeds support deflection |
 | **Dispatch** | Assign jobs to crews/trucks; manage day-of execution and exceptions | Directly tied to **~93% fill rate** vs ~70% industry |
 | **Crew management** | Crew availability, capacity, assignment; weekend supply gaps surfaced in data | Informed crew-forecasting roadmap bets |
+| **Quotely Command** | Internal quote-intelligence console: MAE (minutes/crew), within ±15%, outcome-capture chase (7d) / escalate (14d), attention queue, annotation export for Vision retrain | Closes the loop between quoted jobs and actuals; surfaces tenants and quotes needing follow-up |
+| **Quotely-Qortex** | Institutional RAG "second brain": Markdown/YAML/ops-JSON source of truth → ingest/chunk/embed → Qdrant; hybrid dense + lexical + RRF retrieve; Gemini synthesis; playbook short-circuit for SLAs/metrics; golden eval gate; agent retrieve packs (Vision/Content/Voice/Command) | Outcome > chat for ops knowledge — refuse when evidence is thin |
 
-**Quotely (commercialized SaaS):** The **pricing + intake intelligence** layer (CV, OR, multi-model eval, agents) — sold to other logistics operators. Moovez marketplace is the **production proving ground**; the ops platform is what turns quotes into completed jobs.
+**Quotely (commercialized SaaS):** The **pricing + intake intelligence** layer (CV, structured catalog matching, OR, four-layer eval harness, multi-model scoring, SMS agents, Qortex RAG) — sold to other logistics operators. Moovez marketplace is the **production proving ground**; the ops platform is what turns quotes into completed jobs.
+
+**AI architecture note (truth filter):** The **quoting path** uses structured catalog matching + OR — not vector RAG. Vector RAG (Qortex) serves institutional ops knowledge, forensics, and agent retrieve packs. Custom pipeline (no LangChain) by design for debuggability.
 
 **Explicit cuts (V1):** Real-time dispatcher chat overlay, customer subscription model, full route optimization — deferred to protect quote-flow and dispatch reliability first.
 
@@ -163,9 +284,13 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **Decision made (and what got cut)**: CV approach was chosen over a structured form because the form's dimension-entry step was the primary abandonment driver — simplifying the form was not enough. OR engine was chosen over lookup-table pricing because multi-item, multi-floor jobs had 40%+ margin error with static tables, which caused the very dispatcher call the product was meant to eliminate. V1 explicitly cut: real-time dispatcher chat overlay, customer subscription model, and automated route optimization — all deferred to preserve quote-flow focus.
 - **Post-launch iteration**: Segment instrumentation showed 70%+ of bookings came from returning customers, shifting roadmap priority to lifecycle messaging and retention over new-user acquisition. Fill rate data revealed weekend supply bottlenecks, leading to crew availability forecasting on the roadmap. The OR engine's accuracy drew inbound interest from other logistics operators, which was unplanned — that signal drove the decision to commercialize it as Quotely rather than keep it proprietary.
 
+**STAR stories (see Story Bank):** STAR-01 (quote speed wedge), STAR-02 (SMS retrieval gates), STAR-03 (four-layer eval), STAR-04 (Command accuracy loop), STAR-05 (Qortex RAG), STAR-06 (automated vs manual experiment), STAR-12 (Quotely commercialization).
 - Engineered 3D bin-packing Operations Research engine solving three NP-hard sub-problems simultaneously (job duration, crew count, truck loading) — reduced job costing latency by 95% and increased volume predictive accuracy to 85%.
-- Built Computer Vision pipeline where customers photograph items for instant quote generation; CV model estimates volume, weight class, and handling complexity — no dispatcher call required. Built multi-model evaluation testbench scoring Gemini Flash and GPT-4.1 on accuracy, latency, and cost.
-- Deployed SMS/Voice AI agent for automated intake, booking confirmations, and reschedules, deflecting 50% of support tickets with zero human intervention.
+- Built Computer Vision pipeline where customers photograph items for instant quote generation; CV model estimates volume, weight class, and handling complexity — no dispatcher call required. **Structured catalog matching** enriches detected items before OR pricing (not vector RAG on the quote path).
+- Built **four-layer eval harness** for the quote pipeline: (1) vision detection consistency and accuracy scoring, (2) catalog match rate / unknown-fallback tracking, (3) logistics golden-file snapshot tests, (4) end-to-end minutes MAE and ±15% hit rate vs actuals. Multi-model evaluation testbench scores Gemini Flash and GPT-4.1 on accuracy, latency, and cost.
+- Built **Quotely Command** — internal quote-accuracy ops console tracking MAE (minutes/crew), within ±15%, outcome-capture SLA (chase at 7d, escalate at 14d, target ≥80%), attention queue for pending outcomes and accuracy misses, and annotation export path for Vision model retrain.
+- Built **Quotely-Qortex** — hybrid RAG institutional knowledge system: Markdown/YAML/ops-JSON source of truth; ingest → chunk → embed (OpenAI text-embedding-3-large) → Qdrant; dense + lexical retrieval fused with reciprocal rank fusion (RRF) + Gemini listwise rerank; deterministic YAML playbooks for high-stakes SLAs/metrics (numbers never LLM-invented); golden eval suite as release gate; agent retrieve packs for Vision/Content/Voice/Command agents.
+- Deployed SMS/Voice AI agent for automated intake, booking confirmations, and reschedules, deflecting 50% of support tickets with zero human intervention. Specified V1 ship gates on fixture suite: retrieval hit@4, HITL recall/precision, intake completion — measure retrieval quality upstream of reply fluency.
 - Built real-time pricing and payment flows (Stripe, Square) based on distance and volume, eliminating the major checkout bottleneck and reducing quote-to-payment drop-off.
 - Built opportunity maps for quote-to-booking; focus groups and tree tests plus session replay (Heap, Clarity, Hotjar) and event instrumentation (Segment) drove checkout simplification and intake prioritization — not tool-led discovery.
 - Ran a **controlled experiment** redirecting traffic to **automated quoting vs. manual quoting**, testing against the null hypothesis before scaling the automated quote path.
@@ -174,6 +299,8 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - Ran **dispatch and crew capacity** against demand; Segment/fill-rate data exposed weekend supply bottlenecks and informed crew-availability forecasting on the roadmap.
 - Separated **ops platform** (Moovez) from **pricing/intake SaaS** (Quotely): intelligence layer commercialized after OR accuracy drew inbound operator interest.
 - System successfully commercialized as Quotely (quoteperfectly.com), a standalone SaaS now sold to other logistics operators.
+- **Portfolio deep-dives (eval/RAG):** `PORTFOLIO/CONCEPT3/quotely-evals.html`, `PORTFOLIO/CONCEPT3/sms-agent-evals.html` (live: https://xblavania.netlify.app/quotely-evals, https://xblavania.netlify.app/sms-agent-evals)
+- **Repo (internal):** Quotely-Command (`github.com/moovez/Quotely-Command`) — Command console + Qortex RAG stack; not a separate employer.
 
 ### ROLE 2: Fractional Product Consultant
 - **Company**: Various startups (Village Wellth, Liohan, e-commerce, insurance/finance, construction)
@@ -195,10 +322,13 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **Decision made (and what got cut)**: Consolidated from 4 tiers to 3 by killing the two lowest-adoption plans. The decision was structural, not cosmetic — better labels or tooltips would not fix a plan architecture that required advisor intervention to navigate. Launching with fewer tiers meant losing upsell optionality in the short term, a deliberate tradeoff validated by the research.
 - **Post-launch iteration**: 3x take rate improvement tracked within the first two billing cycles. The primary driver was advisor behavior change — advisors stopped pre-filtering clients and started recommending the platform more broadly once plan selection stopped being a barrier. Churn from plan indecision dropped to near zero, confirming the structural diagnosis.
 
+**STAR stories (see Story Bank):** STAR-07 (tier consolidation).
+
 - Opportunity maps surfaced plan-confusion patterns; STP and segmentation informed tier consolidation validated with focus groups and tree tests before launch.
 - Achieved a 3x increase in take rate and materially reduced churn from plan confusion.
 
 #### Marketing Science & MMM (E-commerce)
+- **STAR stories (see Story Bank):** STAR-08 (Bayesian MMM).
 - Replaced legacy last-click attribution with a Bayesian Media Mix Model (MMM) in R, merging 134,900 records across 6 spend channels with GA4 and HubSpot data; applied adstock and Hill-function saturation logic with ridge regression.
 - Achieved projected 18% reduction in CAC and leveraged segmentation for 24% increase in ARPU.
 
@@ -238,6 +368,8 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **Decision made (and what got cut)**: Reframed the product's core success metric from "detection accuracy" to "operational trust" — a shift that unlocked the correct prioritization framework and resolved the roadmap standoff with engineering. Deprioritized all new feature development for a full quarter. Redirected the outsourced team entirely to false-positive pruning, alert workflow redesign, and structured QA cycles. Rejected the proposal to add new detection model categories until the existing signal quality was restored.
 - **Post-launch iteration**: After the 85% false-alert reduction, district IT admins re-engaged with the dashboard unprompted — the behavioral signal that trust had been restored. The client relationship stabilized and the contract was renewed. Restored trust reopened conversations about feature expansion that had previously been dismissed as noise by a staff that had stopped believing in the system.
 
+**STAR stories (see Story Bank):** STAR-09 (operational trust).
+
 - Managed roadmap and backlog in Aha!; aligned district stakeholders and internal teams on prioritization after focus groups and tree tests on alert workflows.
 - Took ownership of the backlog and engineering relationship, reframing the product's core metric from "detection accuracy" to "operational trust" — a shift that unlocked the right prioritization framework.
 - Prioritized signal quality over feature expansion; redesigned alert workflows to aggressively prune false-positive vectors through iterative model refinement and structured QA cycles with the outsourced team.
@@ -272,6 +404,8 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **Decision made (and what got cut)**: Pivoted the roadmap from analytical depth to presentation and export speed. Products 3–5 were sequenced to address successive steps in the advisor's client-facing workflow, not internal analysis. Killed a planned "deal database" product (surfaced low discovery demand at high build cost) and a fee-benchmarking tool that in-house telemetry showed was a demo feature, not a workflow feature. Each subsequent launch was gated on confirmed workflow adoption from a cohort of 20+ existing users before scaling.
 - **Post-launch iteration**: The ARPU jump from $450 to $600 was not from a price increase — it came from users voluntarily upgrading to access the presentation and export tools, which confirmed the workflow-friction diagnosis. Retention analysis showed multi-product adopters (3+ products) retained at 2x the rate of single-product users, which drove the GTM shift to onboarding depth over acquisition breadth. The 7% conversion lift came from switching the landing page message from "most accurate valuation tool" to "fastest route from Excel to client presentation" — a direct output of the discovery work.
 
+**STAR stories (see Story Bank):** STAR-10 (presentation speed pivot).
+
 - Built the Product Business Unit from scratch as **employee #3 (first product hire)**; launched 5 products from whiteboard to market and operated a total of 8 products serving 1,400+ users across research, workflow, and growth operations.
 - Roadmap and releases tracked in Aha!; **in-house telemetry/analytics suite** plus Pendo informed which workflows to fix first and which features to enhance or deprecate; focus groups and tree tests validated pricing, onboarding, and workflow changes across the 8-product suite.
 - Automated pricing evolution based on customer usage-pattern analysis, increasing ARPU from $450 to $600 over 2 years (3x take rate improvement).
@@ -298,6 +432,9 @@ Use these five method lanes when writing the Summary method bullets (operating s
   - **Workflow interviews** and **build-vs-buy matrix**: killed "replace every payroll system" — stakeholders wanted source HRIS/payroll to remain system of record; product should connect, normalize, and report. Drove **universal adapter pattern** and **Frappe HRMS** for payroll depth (compliance-heavy) rather than rebuilding payroll engines.
   - **Shadowing reconciliation** during diligence: duplicate records and inconsistent fields drove reversion to spreadsheets. **Tree tests** on dashboard tasks (headcount by country, comp burden, retention risk) failed when numbers disagreed across sources — prioritized validation at ingestion, duplicate handling, and **confidence scores** before net-new analytics.
   - **Prototype walkthroughs** and **tree tests** on core diligence flows with HR leads in post-close integration: users would not adopt mid-transaction unless paths were obvious under pressure — informed minimal dashboard set and plain-language IA.
+
+**STAR stories (see Story Bank):** STAR-11 (HRIS adapter-first).
+
 - **Key product requirements (shipped or architected)**:
   1. **Universal adapter pattern** — system-agnostic integration layer; Frappe HRMS as reference implementation; extend to Workday, SAP SuccessFactors, ADP, regional payroll.
   2. **Normalized data model** — job titles → job families; compensation → currency-neutral views; org hierarchy mapping; employment type categorization.
@@ -336,6 +473,11 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **Live platform**: churnos.xblavania.workers.dev
 - Built causal analytics platform using Bayesian inference for retention forecasting, churn analysis, and funnel optimization; includes P&L outcome simulation for subscription and marketplace operators.
 
+#### Quotely Command + Qortex (Moovez/Quotely internal AI layer — see ROLE 1)
+- **Repo**: github.com/moovez/Quotely-Command
+- Command: quote-accuracy ops console (MAE, ±15%, outcome capture, attention queue, annotation → retrain).
+- Qortex: hybrid RAG + playbooks + golden eval + agent retrieve packs — institutional second brain for Quotely B2B ops.
+
 ---
 
 ## Education
@@ -346,6 +488,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 ---
 
 ## Resume generation notes
+- **STAR Story Bank**: Use `## STAR Story Bank` for structured Situation/Task/Action/Result narratives. Match story **Tags** and **JD match** fields to the target JD. Prefer STAR stories for bullets 3–4 when PM Story already covers bullets 1–2. Do not merge metrics across stories.
 - **Company descriptor line**: If the role block includes **Company descriptor (resume)**, **Employee #N**, **first product hire**, or **only product hire**, weave into the company description line using compact form: e.g. `Employee #6 (first product hire)` or `Employee #3 (first product hire)`. Do not say "PM hire."
 - **Role header format (compressed)**: Use format `Title @ Company    City, State/Province, Month Year - Month Year` for all roles. Examples: `Product Manager & Chief of Staff @ BVXpress    Lincolnshire, IL, Sep 2012 - Dec 2021`, `Founding Product Manager @ Moovez    Calgary, AB, Jan 2024 - Present`.
 - **Voice (research & analytics)**: Never write "used Hotjar/Pendo/Heap" as the outcome. Write the **decision or change**: tier consolidation, funnel fix, alert workflow redesign, scope cut, checkout step removed, A/B or controlled-test outcome. Tools may appear only as evidence for that decision, inside the relevant ROLE block.
@@ -353,6 +496,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **UX / research-heavy JDs**: Prioritize ROLE 1, ROLE 5, ROLE 3 (Netsweeper), ROLE 2 fractional (Village Wellth, Liohan line, etc.).
 - **Growth / analytics JDs**: Prioritize ROLE 2 (MMM, R, SQL, attribution, STP), Segment/Moovez funnel work, ChurnOS, BVXpress GTM metrics.
 - **Marketplace / ops JDs**: Prioritize ROLE 1, construction marketplace (ROLE 2), Moovez/Quotely outcomes.
+- **AI / RAG / eval / ML-product JDs**: Prioritize ROLE 1 Quotely Command + Qortex bullets (hybrid RAG, playbooks, four-layer eval, quote-accuracy ops, SMS retrieval hit@k / HITL gates). Emphasize **Outcome > chat**, playbook routing for high-stakes facts, and structured catalog matching vs vector RAG distinction. Surface portfolio eval deep-dives when JD mentions eval harnesses, RAG, or agent quality. Do not claim LangChain or invented MAE lift percentages.
 - **HR / HRIS / people-analytics JDs**: Prioritize **Persona D**; ROLE 5 **HRIS for M&A Transactions** subsection (discovery → adapter pattern → normalized model → diligence dashboards). Mirror JD terms: HCM, HRIS, workforce integration, M&A diligence, payroll integration, Workday/SuccessFactors/ADP when JD lists them. Emphasize user research outcomes (focus groups, opportunity maps, tree tests, workflow shadowing) over stack laundry lists. Tie M&A deal-room context from BVXpress core SaaS only when JD mentions M&A or transactions.
 - **Healthcare / digital health / telehealth / consumer health JDs**: Surface ROLE 2 regional govt telehealth project when JD mentions: consumer health, B2C health, patient experience, patient engagement, virtual care, remote care, care delivery, digital health, telehealth, healthcare workflows, clinical systems, or health tech. Emphasize dual-sided (patient-facing + provider-facing) product design, white-label SaaS positioning, and end-to-end patient journey (intake, virtual visits, discharge, follow-ups, medication management). Include TechStars Calgary 2024 win as third-party validation.
 - **Only cite tools listed under a ROLE block or in Skills above** — do not invent tools per engagement.

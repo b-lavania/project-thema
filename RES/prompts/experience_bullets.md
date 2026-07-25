@@ -45,6 +45,7 @@ ANTI-BUILDER RULES
 - No more than 1 bullet may lead with Built, Engineered, Automated, Deployed, or Architected.
 - Never start a bullet with "Led implementation" or "Spearheaded."
 - If the role block contains "#### PM Story", treat that subsection as the PRIMARY source for bullets 1-2.
+- If master context includes **STAR Story Bank** entries linked to this role (e.g. "STAR stories (see Story Bank): STAR-0X"), use matching STAR stories for bullets 3-4 or when JD tags align — distill Action+Result into 150-180 char PM MOVE bullets; never paste STAR labels into resume output.
 - Use implementation bullets only to support the PM Story, not as the main framing.
 
 BULLET FORMAT

@@ -38,6 +38,9 @@ PM STORY TO EMPHASIZE:
 - ROLE X: [which PM Story subsection matters and why]
 - ROLE Y: ...
 
+STAR STORIES TO EMPHASIZE:
+- [List 1-3 STAR-IDs from the Story Bank whose Tags/JD match align with this JD, and which proof beat each supports]
+
 TRADEOFFS TO HIGHLIGHT:
 - [What was cut, sequenced, deprioritized, or reframed]
 
