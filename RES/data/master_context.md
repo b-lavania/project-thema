@@ -9,6 +9,30 @@
 2. **Production system building** — I ship AI and automation systems that eliminate ambiguity (CV pipelines, OR engines, conversational agents, hybrid RAG + playbooks, eval harnesses, adapter architectures)
 3. **Commercial outcome measurement** — I tie every system to business metrics (20x faster quoting → 93% fill rate; 85% false-positive reduction → contract renewal; 3x take rate → churn elimination)
 
+## Why Me (voice + Summary source)
+
+**Core insight (candidate voice):** Quoting and ops AI failures usually look like UX or model problems but are really **operations and measurement** problems. At Quotely, the full thread (structured intake, operations-research pricing, eval harnesses, accuracy ops, grounded knowledge) was one system; surrounding teams often lacked depth across those layers. Professional frustration: incredible cross-stack work gets boxed as generic PM. Positioning fix: lead with the **problem class** (ambiguous ops, unmeasured AI), not the recognition gap.
+
+### 30-second "why me" (spoken, first person)
+
+Use for interviews, networking, recruiter screens. ~75 words at normal pace.
+
+> You should hire me when quoting, dispatch, or ops AI is failing in production, not in a slide deck. I see those problems as one thread: structured intake, pricing logic, eval gates, and feedback loops that tie quotes to actual job outcomes. At Quotely I connected computer vision, operations research, harness engineering, and grounded retrieval before the org had language for most of it. I am the founding product hire who ships the full system and measures fill rate, margin, and trust, not demo metrics.
+
+### Summary paragraph source (resume Profile)
+
+**Generation rules:** Third person. Metric-free (no digits, %, $, durations). No em/en dashes. No tool or employer names. Generators may adapt tagline domains to the JD; keep paragraph structure.
+
+**Tagline (default):** Founding Product Manager: Connecting operational AI from intake through measurement for logistics, marketplaces, and quote-to-cash workflows
+
+**Paragraph (default):** Rebuilds quote-to-cash when manual dispatch and unmeasured AI erode margin and customer trust. Owns the full thread from structured intake through pricing logic, eval loops, and production ops feedback, not a single layer in isolation.
+
+**Tagline (ops-AI / eval-heavy JDs):** Founding Product Manager: Shipping measured operational AI across quoting, dispatch, and field-service workflows
+
+**Paragraph (ops-AI variant):** Fixes ops AI that ships as demos by treating speed, accuracy, and trust as one system problem. Connects research, pricing engines, eval gates, and live ops when teams split that work across separate roles.
+
+**Inevitable-win anchor (Quotely):** Once photo intake and complex multi-stop jobs were in scope, phone dispatch and lookup-table pricing could not scale. The bottleneck was always structured state plus measurement. That diagnosis preceded the buildout of vision, catalog matching, operations-research pricing, harness engineering, accuracy ops, and institutional knowledge with playbooked facts.
+
 ## Positioning thesis (lead with this everywhere)
 
 > **I find the real operational bottleneck, reduce ambiguity, and build the system that makes the fix permanent.**
@@ -488,6 +512,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 ---
 
 ## Resume generation notes
+- **Why Me / Summary source**: Use `## Why Me (voice + Summary source)` for Profile paragraph seeds. Default to metric-free tagline + paragraph there; adapt domain labels to JD. For spoken/networking context only, use the 30-second block (first person). Do not put first-person "why me" text in resume Summary output.
 - **STAR Story Bank**: Use `## STAR Story Bank` for structured Situation/Task/Action/Result narratives. Match story **Tags** and **JD match** fields to the target JD. Prefer STAR stories for bullets 3–4 when PM Story already covers bullets 1–2. Do not merge metrics across stories.
 - **Company descriptor line**: If the role block includes **Company descriptor (resume)**, **Employee #N**, **first product hire**, or **only product hire**, weave into the company description line using compact form: e.g. `Employee #6 (first product hire)` or `Employee #3 (first product hire)`. Do not say "PM hire."
 - **Role header format (compressed)**: Use format `Title @ Company    City, State/Province, Month Year - Month Year` for all roles. Examples: `Product Manager & Chief of Staff @ BVXpress    Lincolnshire, IL, Sep 2012 - Dec 2021`, `Founding Product Manager @ Moovez    Calgary, AB, Jan 2024 - Present`.

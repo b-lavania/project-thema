@@ -1,16 +1,34 @@
 (function () {
   'use strict';
 
+  function scrollToTop(e) {
+    if (e) e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   document.querySelectorAll('.container > section, .container > header').forEach(function (block) {
+    if (block.classList.contains('page-hero')) return;
     if (block.querySelector('.section-jump-top')) return;
     var jump = document.createElement('p');
     jump.className = 'section-jump-top';
     var link = document.createElement('a');
     link.href = '#top';
     link.textContent = 'Jump to top';
+    link.addEventListener('click', scrollToTop);
     jump.appendChild(link);
     block.appendChild(jump);
   });
+
+  document.querySelectorAll('.back-to-top').forEach(function (link) {
+    link.addEventListener('click', scrollToTop);
+  });
+
+  var backToTop = document.querySelector('.back-to-top');
+  if (backToTop) {
+    window.addEventListener('scroll', function () {
+      backToTop.classList.toggle('is-visible', window.scrollY > 480);
+    }, { passive: true });
+  }
 
   var selectedWork = document.getElementById('selected-work');
   if (selectedWork) {
@@ -151,17 +169,5 @@
       }
     });
   });
-
-  var backToTop = document.querySelector('.back-to-top');
-  if (backToTop) {
-    window.addEventListener('scroll', function () {
-      backToTop.classList.toggle('is-visible', window.scrollY > 480);
-    }, { passive: true });
-
-    backToTop.addEventListener('click', function (e) {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
 
 })();

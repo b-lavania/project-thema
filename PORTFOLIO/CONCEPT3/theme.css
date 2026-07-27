@@ -165,8 +165,8 @@ body {
 }
 
 .footer-name {
-  font-size: 1.2rem;
-  line-height: 1.35;
+  font-size: 0.98rem;
+  line-height: 1.55;
   font-weight: 500;
   color: #f5f3f0;
   margin: 0 0 1rem;
@@ -177,9 +177,9 @@ body {
 }
 
 .footer-cta {
-  font-size: 1.05rem;
-  line-height: 1.5;
-  font-weight: 500;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  font-weight: 400;
   color: rgba(245, 243, 240, 0.92);
   margin: 0 0 1.25rem;
   max-width: 52rem;
@@ -467,23 +467,51 @@ body.has-site-header {
   margin-bottom: var(--space-subhead);
 }
 
-.work-quick-nav {
-  display: block;
+/* Unified filter + jump chrome */
+.work-chrome {
   margin-bottom: var(--space-block);
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  background: transparent;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  background: #f7f4f0;
 }
 
-.work-quick-nav-label {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.68rem;
+.work-chrome-section--filter {
+  margin-bottom: 0.85rem;
+}
+
+.work-chrome-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 0 0 0.85rem;
+}
+
+.work-chrome-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: var(--space-meta);
+}
+
+.work-chrome-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-muted);
-  margin: 0 0 var(--space-meta);
   font-weight: 600;
+  display: block;
+  margin-bottom: var(--space-meta);
+}
+
+.work-chrome-row .work-chrome-label {
+  margin-bottom: 0;
+}
+
+.work-chrome-section--jump .work-chrome-label {
+  margin-bottom: var(--space-meta);
 }
 
 .work-quick-strip {
@@ -491,12 +519,12 @@ body.has-site-header {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.65rem 1.25rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.72rem;
-  padding: 0.55rem 0.85rem;
-  background: #f3f0ec;
-  border-radius: 6px;
-  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  width: 100%;
   max-width: 100%;
 }
 
@@ -544,23 +572,20 @@ body.has-site-header {
 }
 
 .work-tier-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem 1rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .work-tier-title {
   font-family: var(--font-sans);
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 600;
   text-transform: none;
   letter-spacing: -0.01em;
   color: var(--text-main);
   margin: 0;
+  line-height: 1.3;
 }
 
 .work-tier-desc {
@@ -698,50 +723,6 @@ body.has-site-header {
   margin-bottom: 0.15rem;
 }
 
-.work-skills-bar {
-  margin-bottom: var(--space-subhead);
-  padding: 0 0 0.85rem;
-  border: none;
-  border-bottom: 1px solid var(--border-light);
-  border-radius: 0;
-  background: transparent;
-}
-
-.work-skills-bar-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1rem;
-  margin-bottom: var(--space-meta);
-}
-
-.work-skills-bar-label {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.work-skills-clear {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--blue);
-  background: none;
-  border: none;
-  padding: 0.2rem 0;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.work-skills-clear:hover {
-  color: var(--text-main);
-}
-
 .work-skills-groups {
   display: flex;
   flex-direction: column;
@@ -756,7 +737,7 @@ body.has-site-header {
 }
 
 .work-skills-group-label {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -799,6 +780,33 @@ button.work-skills-filter.work-skill-chip.is-active {
 #selected-work.selected-work--filtering .skill-filter-target.skill-dimmed {
   opacity: 0.42;
   transition: opacity 0.2s ease;
+}
+
+.page-home .work-tier-title {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
+  margin-bottom: 0;
+}
+
+.work-skills-clear {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--blue);
+  background: none;
+  border: none;
+  padding: 0.2rem 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.work-skills-clear:hover {
+  color: var(--text-main);
 }
 
 @media (max-width: 480px) {
@@ -1083,13 +1091,22 @@ body.page-home {
   padding: var(--space-section) 0;
 }
 
+.page-home .container > header.page-hero {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.page-home .container > section#about {
+  padding-top: var(--space-subhead);
+}
+
 .page-home .container > header {
   padding-top: var(--space-block);
 }
 
 /* Heading voices (intentional hierarchy):
-   1. Chrome / meta labels — mono, uppercase, muted (h2, fit-block-title, filter labels, cs-label)
-   2. Tier titles — sans, normal case, dark (.work-tier-title; signals content starts here)
+   1. Chrome / meta labels — mono, uppercase, muted (h2, fit-block-title, work-chrome-label, cs-label)
+   2. Tier titles — sans subheads at 1.1rem (.work-tier-title; content grouping)
    3. Case titles — sans bold on dark (.cs-header h4; marquee element) */
 .page-home h1 {
   font-size: clamp(2rem, 2.5vw + 1rem, 2.85rem);
@@ -1106,6 +1123,12 @@ body.page-home {
   max-width: var(--prose-measure);
   margin-bottom: var(--space-block);
   line-height: 1.5;
+}
+
+@media (min-width: 1024px) {
+  .page-home .subhead {
+    max-width: min(52rem, 75%);
+  }
 }
 
 .page-home h2 {
@@ -1127,10 +1150,43 @@ body.page-home {
 }
 
 .page-home .about-main-grid {
-  margin-top: var(--space-block);
+  margin-top: 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-subhead);
+}
+
+.page-home .about-values {
+  margin-top: var(--space-section);
+  padding-top: var(--space-section);
+  border-top: 1px solid var(--border-light);
+}
+
+.page-home .about-values-title {
+  margin-bottom: var(--space-block);
+}
+
+.page-home .about-values .principles-list li {
+  max-width: var(--prose-measure);
+}
+
+@media (min-width: 1024px) {
+  .page-home .about-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 360px);
+    gap: var(--space-block);
+    align-items: start;
+  }
+
+  .page-home .fit-block-lede,
+  .page-home .fit-list,
+  .page-home .fit-engagement {
+    max-width: none;
+  }
+
+  .page-home .about-values .principles-list li {
+    max-width: calc(var(--prose-measure) + 3rem);
+  }
 }
 
 .page-home .fit-block {
@@ -1146,6 +1202,17 @@ body.page-home {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-muted);
+  margin-bottom: var(--space-meta);
+  font-weight: 600;
+}
+
+.page-home h3.tech-stack-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 600;
   margin-bottom: var(--space-meta);
 }
 
@@ -1472,6 +1539,8 @@ body.page-home {
 
 .page-home .career-entry {
   max-width: var(--prose-measure);
+  font-size: 0.98rem;
+  line-height: 1.55;
 }
 
 .page-home .career-entry a {
@@ -1492,13 +1561,6 @@ body.page-home {
 }
 
 @media (min-width: 1024px) {
-  .page-home .about-main-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: var(--space-block);
-    align-items: start;
-  }
-
   .work-skills-groups {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
