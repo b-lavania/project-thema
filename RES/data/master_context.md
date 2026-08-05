@@ -31,6 +31,10 @@ Use for interviews, networking, recruiter screens. ~75 words at normal pace.
 
 **Paragraph (ops-AI variant):** Fixes ops AI that ships as demos by treating speed, accuracy, and trust as one system problem. Connects research, pricing engines, eval gates, and live ops when teams split that work across separate roles.
 
+**Tagline (channel / MSP / cloud-distributor JDs):** Product Manager: Partner marketplaces and measured AI for MSP channel programs and multi-vendor cloud distribution
+
+**Paragraph (channel variant):** Designs partner-facing catalogs and agent platforms where MSP success depends on end-client trust, not feature breadth. Grounds marketplace discovery in MSP/MSSP workflow research and instruments attach funnels before scaling GTM.
+
 **Inevitable-win anchor (Quotely):** Once photo intake and complex multi-stop jobs were in scope, phone dispatch and lookup-table pricing could not scale. The bottleneck was always structured state plus measurement. That diagnosis preceded the buildout of vision, catalog matching, operations-research pricing, harness engineering, accuracy ops, and institutional knowledge with playbooked facts.
 
 ## Positioning thesis (lead with this everywhere)
@@ -48,7 +52,8 @@ Use for interviews, networking, recruiter screens. ~75 words at normal pace.
 ## Target Personas (demoted to range tags — Persona A is the headline)
 
 - **Persona A (Founding / Ops-AI Product Lead)** — **HEADLINE**: Founding PM, Principal Product, Head of AI Product at Series-A/B ops-AI companies. First product hire who ships production AI in logistics/field-service workflows.
-- **Persona B (Platform/Ops PM)** — *range*: marketplaces, product operations, quoting/pricing systems
+- **Persona B (Platform/Ops PM)** — *range*: marketplaces, product operations, quoting/pricing systems, **cloud distributor / partner marketplaces**
+- **Persona E (Channel / Platform PM)** — *range*: MSP/MSSP partner programs, IT channel distribution, multi-vendor catalog marketplaces, partner enablement and attach-rate GTM
 - **Persona C (Growth PM)** — *range*: experimentation, attribution, conversion lifts (fractional)
 - **Persona D (HR / HRIS PM)** — *range*: M&A workforce integration, people analytics (BVXpress HRIS shipped to ICI clients and acquired companies)
 
@@ -86,6 +91,7 @@ This file consolidates all resume variants and portfolio metrics into a single s
 - **Detection**: "Detection systems fail when users stop trusting the signal. Accuracy metrics alone are insufficient. Operational reliability matters more than theoretical performance." (Netsweeper) → Led me to freeze feature additions and aggressively prune high false-alert vectors, reducing alerts by 85% and restoring district trust.
 - **Energy/Infrastructure**: "Each workflow step surfaces a risk class the others cannot see. Deployability is a coupling problem — the product's job is to make those couplings explicit, comparable, and reviewable." (Project Epsilon) → Drove the architecture of the Scenario contract interface, eliminating model drift.
 - **HR / M&A integration**: "Legacy HRIS optimizes for payroll and ESS; M&A optimizes for rapid ingestion, normalized workforce truth, and diligence-ready answers. Integration beats replacement — source systems stay authoritative, the product connects and reports." (BVXpress HRIS — shipped as a BVXpress product for ICI clients and acquired companies) → Led adapter-first architecture, ingestion validation, and transaction dashboards instead of rip-and-replace migrations.
+- **Channel / MSP**: "MSP partners stop reselling when the product creates operational pain for end clients — not when the feature matrix is thin. Trust and signal quality are channel retention metrics." (Netsweeper via MSP channel; cyber marketplace MSP/MSSP discovery) → Reframed Netsweeper success as operational trust before feature expansion; designed cyber marketplace discovery around partner bundle configuration and shortlist confidence, not checkout conversion.
 
 ---
 
@@ -100,15 +106,16 @@ This file consolidates all resume variants and portfolio metrics into a single s
 ---
 
 ## Skills & Core Domains (Structured for LLM Parsing)
-- **Product contexts**: Marketplaces, eCommerce, Risk & insurance, Applied tech (chatbots, voice agents, computer vision), HR Tech / HRIS (M&A workforce integration)
-- **Domains**: AI/Engineering, Marketplace Commerce, eCommerce, Risk & Insurance, Marketing Science, Operations Research, User Research, HR Tech & People Systems
+- **Product contexts**: Marketplaces, eCommerce, Risk & insurance, Applied tech (chatbots, voice agents, computer vision), HR Tech / HRIS (M&A workforce integration), **IT channel / MSP & MSSP** (cloud distribution, partner resale, managed services)
+- **Domains**: AI/Engineering, Marketplace Commerce, eCommerce, Risk & Insurance, Marketing Science, Operations Research, User Research, HR Tech & People Systems, **IT Channel & Cloud Distribution** (MSP/MSSP partner programs, multi-vendor catalog marketplaces)
 - **AI/Modeling Methods**: LLM pipelines, prompt orchestration, Computer Vision (CV), conversational/SMS agents, **hybrid RAG** (dense + lexical retrieval, reciprocal rank fusion / RRF, embedding indexes, listwise rerank), **structured catalog matching** (quoting path — distinct from vector RAG), **playbook / deterministic Outcome routing** (high-stakes facts not LLM-invented), **eval harnesses** (golden sets, multi-model scoring on accuracy/latency/cost, fixture pass-rate floors, retrieval hit@k), **quote accuracy ops** (MAE minutes/crew, ±15% band, outcome-capture SLA, annotation → retrain export), agent retrieve packs, Bayesian Media Mix Modeling (MMM), Multi-Touch Attribution (MTA), Ridge Regression, Monte Carlo stress testing, PyPSA linear programming, 3D bin packing
 - **Product/Growth Methods**: Supply-demand balancing, checkout funnel optimization, pricing systems, entitlement logic, hypothesis testing, **A/B testing and controlled experiments** (traffic splits, null-hypothesis framing), cohort analysis, STP (segmentation, targeting, positioning), GTM scaling, conversion lift, attribution modeling
 - **Product analytics & experimentation**: Deep background in product analytics, attribution modeling, and quantitative synthesis of product decisions from telemetry; tools include Mixpanel, Pendo, Heap, Segment, Microsoft Clarity, Hotjar; built **in-house analytics suites** (BVXpress) for customer behavior, profile/segment tests, and feature enhance-vs-deprecate decisions
 - **User research methods**: User interviews, focus groups, tree testing, opportunity maps, session replay, funnel diagnostics, clickable prototypes
 - **Market research / analytics**: Hypothesis testing, R, SQL, Media Mix Models, attribution models, STP
 - **HR / HCM (BVXpress HRIS — integration & product scope)**: Workday, SAP SuccessFactors, ADP (adapter targets); Frappe HRMS (payroll reference implementation); universal adapter pattern, normalized employee data model, transaction-ready workforce dashboards, bidirectional sync, event-driven updates, API-first diligence reporting
-- **Tools/Tech (confirmed by role)**: Aha! (Netsweeper, BVXpress), Pendo (BVXpress), Heap (Moovez), Segment (Moovez), Microsoft Clarity & Hotjar (Moovez), opportunity maps (fractional startups, BVXpress, Moovez, Liohan, and others), Jira, Confluence, Notion, Figma, Amplitude, Productboard, Google Analytics, Mixpanel, R, SQL, HubSpot, ActiveCampaign, Zoho, Cursor, Windsurf, Lovable, n8n, Zapier, Stripe/Square APIs, .NET / Azure (BVXpress HRIS), **FastAPI, Qdrant, OpenAI embeddings (text-embedding-3-large), Gemini, React/TypeScript** (Quotely Command / Qortex — Moovez/Quotely ROLE 1)
+- **Tools/Tech (confirmed by role)**: Aha! (Netsweeper, BVXpress), Pendo (BVXpress, cyber marketplace concept), Heap (Moovez), Segment (Moovez), Microsoft Clarity & Hotjar (Moovez), opportunity maps (fractional startups, BVXpress, Moovez, Liohan, and others), Jira, Confluence, Notion, Figma, Amplitude, Productboard, Google Analytics, **Mixpanel** (BVXpress-class telemetry, cyber marketplace instrumentation model), R, SQL, HubSpot, ActiveCampaign, Zoho, Cursor, Windsurf, Lovable, n8n, Zapier, Stripe/Square APIs, .NET / Azure (BVXpress HRIS), **FastAPI, Qdrant, OpenAI embeddings (text-embedding-3-large), Gemini, React/TypeScript** (Quotely Command / Qortex — Moovez/Quotely ROLE 1)
+- **Channel / partner programs (confirmed by role)**: MSP and MSSP resale and discovery (Netsweeper channel; cyber marketplace fractional); Canadian MSP landscape research (BVXpress-era search-fund engagement); partner-facing catalog UX (search-first discovery, bundle configuration, trust signals); cloud-distributor marketplace patterns (multi-SKU catalogs, provisioning attach, white-label client portals — map to JD terms when truthful)
 
 ---
 
@@ -124,15 +131,43 @@ Use these five method lanes when writing the Summary method bullets (operating s
 4. **Measure** — A/B tests and controlled rollouts (traffic redirects, null-hypothesis tests), Segment, Mixpanel, Pendo, Heap, Microsoft Clarity, Hotjar, cohort analysis, Bayesian media mix modeling (R, SQL), attribution and funnel instrumentation, in-house telemetry (BVXpress), **eval gates** (golden-set pass rates, retrieval hit@k, fixture task-success floors, multi-model accuracy/latency/cost scoring), **quote accuracy KPIs** (MAE minutes/crew, within ±15%, outcome-capture SLA). Outcome: what to kill, keep, or scale after launch; conversion and attribution clarity for fractional clients; release gates for AI systems.
 5. **Commercialize** — Real-time quoting engines, Stripe/Square payment flows, GTM automation (HubSpot, ActiveCampaign), lifecycle messaging, ARPU and take-rate levers. Outcome: unit economics and cash flow tied to product changes.
 
-**Industries (map JD industry terms here when truthful):** Transport and last-mile logistics, warehousing and fulfillment, construction materials marketplaces, finance and insurance, M&A and deal-structuring, consumer health and digital health (B2C telehealth, patient experience, virtual care), marketing attribution and e-commerce growth, energy and infrastructure planning, HR technology and workforce systems (M&A transaction readiness).
+**Industries (map JD industry terms here when truthful):** Transport and last-mile logistics, warehousing and fulfillment, construction materials marketplaces, finance and insurance, M&A and deal-structuring, consumer health and digital health (B2C telehealth, patient experience, virtual care), marketing attribution and e-commerce growth, energy and infrastructure planning, HR technology and workforce systems (M&A transaction readiness), **IT channel and managed services** (MSP, MSSP, cloud distribution, cybersecurity resale, SMB IT services).
 
-**Product categories (map JD product scope here when truthful):** **Moovez (ROLE 1):** marketplace ops / lightweight TMS — quote-to-dispatch, crew management, booking, order status, dispatch assignment (last-mile moving); **Quotely Command** (quote-accuracy ops console) and **Quotely-Qortex** (hybrid RAG institutional knowledge + agent retrieve packs). TMS/WMS integration and marketplace ops (ROLE 2 construction materials), CRM and marketing automation (HubSpot, ActiveCampaign, Zoho), pricing and real-time quote engines, MMM and attribution platforms, content-compliance and trust/safety AI, B2B SaaS workflow suites, B2C digital health and telehealth platforms (patient experience, virtual care, white-label SaaS — ROLE 2 regional govt), HRIS / HCM / people analytics (ROLE 5 BVXpress HRIS), payroll integration layers, workforce diligence dashboards.
+**Product categories (map JD product scope here when truthful):** **Moovez (ROLE 1):** marketplace ops / lightweight TMS — quote-to-dispatch, crew management, booking, order status, dispatch assignment (last-mile moving); **Quotely Command** (quote-accuracy ops console) and **Quotely-Qortex** (hybrid RAG institutional knowledge + agent retrieve packs). TMS/WMS integration and marketplace ops (ROLE 2 construction materials), CRM and marketing automation (HubSpot, ActiveCampaign, Zoho), pricing and real-time quote engines, MMM and attribution platforms, content-compliance and trust/safety AI, B2B SaaS workflow suites, B2C digital health and telehealth platforms (patient experience, virtual care, white-label SaaS — ROLE 2 regional govt), HRIS / HCM / people analytics (ROLE 5 BVXpress HRIS), payroll integration layers, workforce diligence dashboards, **cloud distributor / partner marketplaces** (multi-vendor SKU catalogs, search-first discovery, appliance + virtual + managed-service bundles — ROLE 2 cyber marketplace concept), **MSP platform aggregation** (consolidation + shared services layer — BVXpress-era search-fund research).
 
 **Tools palette (one per statement max; mirror JD tool names when listed):** Heap, Microsoft Clarity, Hotjar, Segment, Mixpanel, Aha!, Pendo, Notion, Figma, Amplitude, Productboard, Google Analytics, R, SQL, Cursor, Windsurf, Lovable, n8n, Zapier, Stripe/Square, HubSpot, ActiveCampaign, Jira, Confluence, FastAPI, Qdrant, OpenAI embeddings, Gemini.
 
 **Skills-only familiarity (not a shipped deployment unless a ROLE block says so):** n8n, Zapier, CRM as a category, and TMS/WMS **integration** patterns outside the Moovez ops platform and ROLE 2 construction marketplace engagement. At Moovez, TMS-class workflows (dispatch, crews, orders, booking) are **ROLE 1 shipped scope**, not familiarity-only. Phrase external TMS/WMS as comfortable working in / integrates with unless ROLE-backed.
 
-**Do not invent:** Only cite tools/methods from this block, Skills & Core Domains, or a specific ROLE block. **AI/RAG guardrails:** Do not claim LangChain (custom pipeline by design). Do not claim production "X% MAE improvement" unless a measured number exists in a ROLE block. **Quoting path** uses structured catalog matching; **vector RAG** is for Qortex knowledge / agent packs — do not conflate. Do not rebrand identity as ML Engineer in Summary.
+**Do not invent:** Only cite tools/methods from this block, Skills & Core Domains, or a specific ROLE block. **AI/RAG guardrails:** Do not claim LangChain (custom pipeline by design). Do not claim production "X% MAE improvement" unless a measured number exists in a ROLE block. **Quoting path** uses structured catalog matching; **vector RAG** is for Qortex knowledge / agent packs — do not conflate. Do not rebrand identity as ML Engineer in Summary. **Channel guardrails:** Cyber marketplace is **conceptual design** with MSP/MSSP discovery — do not claim shipped production marketplace or revenue. Netsweeper channel exposure is **product sold through MSP partners** — do not claim direct quota-carrying sales role. Search-fund MSP work is **landscape research / advisory** at end of BVXpress tenure — do not claim built an MSP roll-up platform.
+
+---
+
+## IT Channel & MSP Experience (generation source)
+
+**Purpose:** Consolidated channel proof for JDs mentioning MSP, MSSP, IT channel, cloud distributor, partner marketplace, Pax8/Sherweb/Ingram-class roles. Pull from the three engagements below; match STAR-09/13/14 and ROLE 2 cyber + ROLE 3 Netsweeper + ROLE 5 search-fund blocks.
+
+**Headline (when JD is channel-heavy):** Direct MSP/MSSP exposure across cybersecurity channel resale (Netsweeper), partner-marketplace discovery (cyber catalog concept), and Canadian MSP consolidation research (search-fund advisory).
+
+### Pillar 1 — Netsweeper (ROLE 3): product sold through MSP channel
+- Netsweeper **sold heavily through MSP partners** reselling web filtering and content-intelligence to K-12 districts and other end clients.
+- PM lens: partner retention depends on **end-client operational trust**, not detection coverage — false-alert fatigue threatened both district adoption **and MSP account stability**.
+- Map to JD terms: MSP, channel partner, trust & safety, compliance resale, partner enablement, operational signal quality.
+
+### Pillar 2 — Cybersecurity marketplace (ROLE 2 fractional): MSP/MSSP discovery
+- Fractional PM engagement for a **cybersecurity vendor (name confidential)** — designed a **conceptual** multi-vendor marketplace (physical appliances, virtual appliances, service add-ons).
+- Ran **extensive discovery with MSPs and MSSPs** on evaluation, bundling, and resale workflows.
+- Product thesis: **search-first discovery** (facets for deployment model, trust signals, comparison on decision dimensions, bundle config during evaluation); **shortlist** as conversion milestone, not checkout.
+- Instrumentation model: **Mixpanel** funnels + **Pendo** guidance for first-time evaluators (defined pre-build).
+- **Portfolio:** `PORTFOLIO/CONCEPT3/cybersecurity-marketplace.html` (live: https://xblavania.netlify.app/cybersecurity-marketplace)
+- Map to JD terms: cloud marketplace, distributor catalog, partner platform, SKU attach, provisioning UX, multi-vendor bundles, PSA-adjacent evaluation workflows.
+
+### Pillar 3 — BVXpress era (ROLE 5): Canadian MSP consolidation research
+- End of BVXpress tenure: advised a **search fund** exploring **"Uber for MSPs"** via MSP consolidation + **platform aggregation** (shared services layer across acquired shops).
+- Researched **many Canadian MSPs** — service mix, stack fragmentation (PSA/RMM), regional patterns, roll-up vs. platform leverage.
+- Map to JD terms: MSP consolidation, platform strategy, Canadian market, marketplace expansion, M&A thesis, partner ecosystem.
+
+**Sherweb / cloud-distributor mapping (opinion — use in cover letters / interviews, not as resume facts):** Distributor wins by owning **partner provisioning + catalog discovery + attach services**, not acquiring MSPs. Cyber marketplace discovery parallels Sherweb partner platform + cloud marketplace. Agent 365 / AI Readiness parallels Netsweeper trust restoration + Pendo-style partner enablement for complex catalogs.
 
 ---
 
@@ -216,8 +251,8 @@ Use these five method lanes when writing the Summary method bullets (operating s
 
 ### STAR-09: Operational trust over detection coverage (Netsweeper)
 - **Role**: ROLE 3 (Netsweeper)
-- **Tags**: `[AI/CV]`, `[Trust/Safety]`, `[Data Quality]`
-- **JD match**: trust & safety, false positives, AI product, K-12, content moderation, signal quality
+- **Tags**: `[AI/CV]`, `[Trust/Safety]`, `[Data Quality]`, `[Channel/MSP]`
+- **JD match**: trust & safety, false positives, AI product, K-12, content moderation, signal quality, MSP channel, partner retention
 - **Situation**: K-12 district staff stopped opening alert dashboards — ~8/10 alerts were false positives. Engineering wanted new detection categories; client contract at risk.
 - **Task**: Restore staff trust in alerts before expanding detection surface area.
 - **Action**: Reframed success metric from "detection accuracy" to "operational trust." Froze new features one quarter; redirected outsourced team to false-positive pruning, alert workflow redesign, QA cycles. Tree tests showed high-severity alerts buried under noise — redesigned workflow.
@@ -250,6 +285,24 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **Action**: Commercialized intelligence layer as Quotely (quoteperfectly.com); kept Moovez as production proving ground; added Command + Qortex as internal ops/accuracy layer for B2B tenants.
 - **Result**: Standalone SaaS sold to other logistics operators; marketplace remains proving ground for quote-to-dispatch at **~93% fill rate**.
 
+### STAR-13: Cyber marketplace — MSP/MSSP discovery for search-first catalog
+- **Role**: ROLE 2 (Fractional — cybersecurity vendor, name confidential)
+- **Tags**: `[Marketplace]`, `[Channel/MSP]`, `[User Research]`, cybersecurity, catalog UX
+- **JD match**: cloud marketplace, MSP, MSSP, IT channel, distributor, partner platform, catalog discovery, attach rate, multi-vendor bundles, cloud distribution
+- **Situation**: A cybersecurity vendor needed a unified marketplace for physical appliances, virtual appliances, and managed service add-ons — but channel buyers (MSPs and MSSPs) stalled in dense catalogs where deployment model, compatibility, and bundle configuration were opaque until late in evaluation.
+- **Task**: Design a search-first discovery model grounded in partner workflow research, with instrumentation to validate where evaluators stall before build.
+- **Action**: Ran extensive discovery with **MSPs and MSSPs** on how they evaluate, bundle, and resell cyber infrastructure. Designed search-first UX: intent-aware query, deployment-model facets, inline trust signals (certified compatible, commonly bundled), comparison on buyer decision dimensions, bundle configuration during evaluation (not post-commit). Defined Mixpanel funnel (search → refine → compare → shortlist → add-on config) and Pendo guidance map for first-time catalog users. Portfolio deep-dive documents concept and measurement model.
+- **Result**: Conceptual marketplace design with channel-informed IA and explicit telemetry model; shortlist-as-conversion thesis validated through partner interviews (concept stage — not a shipped production deployment).
+
+### STAR-14: Canadian MSP consolidation landscape (search-fund platform thesis)
+- **Role**: ROLE 5 (BVXpress — end of tenure advisory)
+- **Tags**: `[Channel/MSP]`, `[M&A]`, market research, platform strategy
+- **JD match**: MSP, IT channel, consolidation, platform aggregation, Canadian market, cloud distributor strategy, marketplace expansion
+- **Situation**: Near the end of the BVXpress tenure, a **search fund** explored an "Uber for MSPs" thesis — roll up regional MSPs and unify them on a shared platform layer rather than EBITDA-only stacking.
+- **Task**: Research the Canadian MSP landscape to stress-test consolidation logic, service-mix patterns, and what platform capabilities would justify a shared operating layer.
+- **Action**: Researched **many Canadian MSPs** — operating models, service lines (security, M365, backup, vCIO), geographic density, PSA/RMM stack fragmentation, and where platform aggregation would create partner leverage vs. integration debt.
+- **Result**: Landscape synthesis informing platform-aggregation vs. roll-up-only strategy; structural read on why distributors/marketplaces that own provisioning + attach (vs. acquiring MSPs directly) can scale partner enablement faster.
+
 ---
 
 ## Career Arc
@@ -257,8 +310,8 @@ Use these five method lanes when writing the Summary method bullets (operating s
 8+ years in product management across B2B SaaS, AI, marketplaces, logistics, healthcare, and FinTech.
 
 - **2012–2021 (9 yrs)**: Built the product function from scratch at BVXpress — **employee #3 (first product hire)**; launched 5 products, 1,400+ users; also owned **HRIS for M&A transaction readiness** in the BVXpress suite (shipped to ICI clients and acquired companies).
-- **2022–2023**: Full-time PM at Netsweeper, shipping an AI content-compliance product for K-12.
-- **2022–2025 (concurrent)**: Fractional Product Lead across AI, logistics, FinTech, consumer health/telehealth (B2C patient experience), and marketplace startups; won 2024 TechStars Pitch Competition (Calgary) with consumer-facing telehealth platform concept.
+- **2022–2023**: Full-time PM at Netsweeper, shipping an AI content-compliance product for K-12 **and MSP channel resale**.
+- **2022–2025 (concurrent)**: Fractional Product Lead across AI, logistics, FinTech, consumer health/telehealth (B2C patient experience), marketplace startups, and **cybersecurity vendor marketplace (MSP/MSSP discovery)**; won 2024 TechStars Pitch Competition (Calgary) with consumer-facing telehealth platform concept.
 - **2024–Present**: Founding PM at Moovez/Quotely — marketplace ops platform (quote-to-dispatch TMS) plus AI layer commercialized as Quotely SaaS; built internal **Quotely Command** (quote-accuracy ops) and **Quotely-Qortex** (hybrid RAG + playbooks + agent retrieve packs).
 
 ---
@@ -331,7 +384,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **Company descriptor (resume)**: Fractional product lead for early-stage startups; **often the only product hire**, turning operational complexity into scalable systems through experimentation, conversion lift, and attribution clarity (telemetry-driven decisions), plus hands-on data science and ops execution when needed; also delivered healthcare/telehealth workflow design and prototyping for a regional government engagement.
 - **Dates**: Feb 2022 - May 2024 (includes short Liohan engagement, Jan–May 2024)
 - **Location**: Remote / Calgary, AB
-- **Tags**: `[Fractional]`, `[eCommerce]`, `[Risk/Insurance]`, `[Marketplace]`, `[User Research]`, `[Experimentation]`, `[Attribution]`, `[Healthcare]`, `[Digital Health]`
+- **Tags**: `[Fractional]`, `[eCommerce]`, `[Risk/Insurance]`, `[Marketplace]`, `[User Research]`, `[Experimentation]`, `[Attribution]`, `[Healthcare]`, `[Digital Health]`, `[Channel/MSP]`
 - **Research tooling (confirmed)**: Focus groups, tree testing, opportunity maps (across fractional engagements — pricing, funnel, onboarding, positioning, **conversion experiments**, and **attribution** work)
 - **Experimentation & analytics scope**: Product analytics, funnel diagnostics, A/B-style tests and controlled rollouts where applicable; attribution modeling (including Bayesian MMM); conversion-lift work tied to pricing, onboarding, and GTM changes — not tool-led reporting.
 - **Liohan (Jan–May 2024, small engagement)**: Opportunity maps clarified problem spaces and sequenced bets before build; informed roadmap priorities and scope cuts.
@@ -362,6 +415,17 @@ Use these five method lanes when writing the Summary method bullets (operating s
 #### Marketplace in Building & Construction Materials
 - Architected TMS/WMS integration hooks and monetization strategy for a construction materials marketplace.
 
+#### Cybersecurity Marketplace (MSP/MSSP channel — vendor name confidential)
+- **Client**: Cybersecurity vendor (name confidential); **conceptual design** engagement during fractional period (not a shipped production deployment).
+- **Product positioning**: Multi-vendor marketplace for **physical appliances**, **virtual appliances**, and **managed service add-ons** in a single catalog — sold and evaluated through **MSP and MSSP partners**.
+- **Problem**: Channel buyers stalled in dense cyber catalogs — deployment model confusion, opaque add-on compatibility, vendor-taxonomy filters that didn't match partner evaluation mental models.
+- **Discovery**: Extensive **MSP and MSSP interviews** on how partners evaluate, bundle, provision, and resell cyber infrastructure to end clients.
+- **Product decisions**: Search-first discovery over category browse; deployment model as primary facet; inline trust signals (certified compatible, commonly bundled); comparison on decision dimensions (throughput, compliance, SLA, add-on matrix); bundle configuration during evaluation; **shortlist** as primary success metric.
+- **Instrumentation model (pre-build)**: Mixpanel discovery funnel (search → refine → compare → shortlist → add-on config); Pendo guidance for first-time evaluators; event taxonomy for drop-off diagnosis.
+- **Portfolio / product notes**: `PORTFOLIO/CONCEPT3/cybersecurity-marketplace.html` (live: https://xblavania.netlify.app/cybersecurity-marketplace)
+- **Tags**: `[Fractional]`, `[Marketplace]`, `[Channel/MSP]`, `[User Research]`, cybersecurity, catalog UX
+- **STAR stories (see Story Bank):** STAR-13 (cyber marketplace MSP discovery).
+
 #### Digital Health / Telehealth (Regional Government)
 - **Client**: Regional government (name confidential); project cancelled by government before launch
 - **Product positioning**: Consumer-facing (patient-side) and provider-facing (clinician-side) telehealth platform; designed for white-label deployment to healthcare providers and regional health systems.
@@ -377,17 +441,18 @@ Use these five method lanes when writing the Summary method bullets (operating s
 
 ### ROLE 3: Product Manager (AI Vision)
 - **Company**: Netsweeper — web filtering & content intelligence platform (Waterloo, ON; ~40 employees; est. 1999 — not a startup)
-- **Company descriptor (resume)**: K-12 web filtering and content-intelligence platform (~40 employees); **only product hire on the team at the time**.
+- **Company descriptor (resume)**: K-12 web filtering and content-intelligence platform sold through **MSP channel partners** (~40 employees); **only product hire on the team at the time**.
 - **Title**: Product Manager
 - **Dates**: Jul 2022 - 2023 (Full-Time)
 - **Location**: Remote / Waterloo, ON
-- **Tags**: `[AI/CV]`, `[Trust/Safety]`, `[Data Quality]`, `[User Research]`
+- **Tags**: `[AI/CV]`, `[Trust/Safety]`, `[Data Quality]`, `[User Research]`, `[Channel/MSP]`
 - **At join**: **Only product hire** on the team at the time (company not a startup).
+- **Channel context**: Netsweeper **sold heavily through MSP partners** who resold filtering and student-safety monitoring to school districts and other end clients. Product success was a **channel retention** problem — partners churned when end clients stopped trusting alerts.
 - **Research & roadmap tooling (confirmed)**: Aha!, focus groups, tree testing
 - **Problem**: A student-monitoring and content-compliance AI product was behind schedule, running on an outsourced engineering team, with a district client losing trust in the system due to high false-alert rates — staff were ignoring alerts because they couldn't trust the signal.
 
 #### PM Story
-- **Market context**: K-12 content filtering and student safety monitoring is a trust-sensitive, compliance-driven market. Districts purchase these tools under regulatory pressure but adoption depends entirely on whether staff act on alerts. The competitive dynamic is not feature-depth — it is whether the system generates a signal that counselors and IT admins are willing to act on. Alert fatigue had already collapsed trust at similar products district-wide; Netsweeper was at risk of the same outcome.
+- **Market context**: K-12 content filtering and student safety monitoring is a trust-sensitive, compliance-driven market. **Netsweeper sold heavily through MSP partners** who resold to districts — partner success depended on end-client staff actually acting on alerts, not on detection breadth alone. Districts purchase under regulatory pressure but adoption depends entirely on whether staff act on alerts. The competitive dynamic is not feature-depth — it is whether the system generates a signal that counselors and IT admins are willing to act on. Alert fatigue threatened **both district contracts and MSP partner retention** at similar products district-wide; Netsweeper was at risk of the same outcome.
 - **Discovery & research findings**: Focus groups with district IT admins and school counselors revealed the core behavioral problem: staff had stopped opening the alert dashboard entirely. Not because they didn't care about student safety — because 8 out of 10 alerts had been false positives long enough that checking them felt like wasted time. The research surfaced a competing hypothesis clearly: the engineering team wanted to add new detection categories (more coverage = more value). The research showed the opposite — more detection with the same false-positive rate would accelerate trust collapse, not restore it. Tree tests on the alert workflow showed counselors couldn't locate high-severity alerts — they were visually buried under low-severity noise.
 - **Decision made (and what got cut)**: Reframed the product's core success metric from "detection accuracy" to "operational trust" — a shift that unlocked the correct prioritization framework and resolved the roadmap standoff with engineering. Deprioritized all new feature development for a full quarter. Redirected the outsourced team entirely to false-positive pruning, alert workflow redesign, and structured QA cycles. Rejected the proposal to add new detection model categories until the existing signal quality was restored.
 - **Post-launch iteration**: After the 85% false-alert reduction, district IT admins re-engaged with the dashboard unprompted — the behavioral signal that trust had been restored. The client relationship stabilized and the contract was renewed. Restored trust reopened conversations about feature expansion that had previously been dismissed as noise by a staff that had stopped believing in the system.
@@ -397,7 +462,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - Managed roadmap and backlog in Aha!; aligned district stakeholders and internal teams on prioritization after focus groups and tree tests on alert workflows.
 - Took ownership of the backlog and engineering relationship, reframing the product's core metric from "detection accuracy" to "operational trust" — a shift that unlocked the right prioritization framework.
 - Prioritized signal quality over feature expansion; redesigned alert workflows to aggressively prune false-positive vectors through iterative model refinement and structured QA cycles with the outsourced team.
-- Reduced false alerts by 85% across the 35-school district deployment, restoring staff trust and stabilizing the client relationship.
+- Reduced false alerts by 85% across the 35-school district deployment, restoring staff trust and stabilizing the client relationship — **protecting MSP channel partner retention**.
 - Redesigned workflow edge-case handling that had previously caused the highest-volume incorrect alerts.
 
 ---
@@ -408,7 +473,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **Title**: Product Manager & Chief of Staff
 - **Dates**: Sep 2012 - Dec 2021 (9-year tenure)
 - **Location**: Lincolnshire, IL
-- **Tags**: `[Growth]`, `[0-to-1]`, `[Pricing]`, `[M&A]`, `[User Research]`, `[HR Tech]`, `[HRIS]`, `[Experimentation]`
+- **Tags**: `[Growth]`, `[0-to-1]`, `[Pricing]`, `[M&A]`, `[User Research]`, `[HR Tech]`, `[HRIS]`, `[Experimentation]`, `[Channel/MSP]`
 - **At join**: **Employee #3 (first product hire).**
 - **Research & product tooling (confirmed)**: Aha!, **in-house analytics/telemetry suite (built at BVXpress)**, Pendo, focus groups, tree testing, opportunity maps, workflow interviews, prototype walkthroughs, build-vs-buy analysis
 - **Experimentation & analytics**: Used Mixpanel-class telemetry, Pendo, and **custom in-house analytics** to understand customer behavior, run tests on **customer profiles/segments**, and decide which features to enhance vs. deprecate; landing-page and onboarding experiments informed conversion lift (e.g. 7% message test).
@@ -436,6 +501,14 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - Built personalized onboarding, lifecycle messaging, and lead-routing workflows, driving a 14% retention increase over 2 years.
 - Re-architected landing page and product messaging funnels, achieving a 7% conversion lift.
 - GTM automation: built MQL→SQL pipeline velocity and CAC payback tracking from scratch.
+
+#### Canadian MSP consolidation research (search-fund advisory — end of tenure)
+- **Context**: Near end of BVXpress tenure (~2020–2021), engaged by a **search fund** exploring an **"Uber for MSPs"** thesis — acquire regional MSPs and unify on a **platform aggregation** layer (shared services, not EBITDA-only roll-up).
+- **Scope**: Landscape research on **Canadian MSPs** — operating models, service-line mix (security, M365, backup, vCIO), PSA/RMM stack fragmentation, consolidation leverage vs. integration debt.
+- **Outcome**: Synthesis informing platform-aggregation strategy (structural read on distributor/marketplace leverage vs. direct MSP acquisition).
+- **Tags**: `[Channel/MSP]`, `[M&A]`, market research, platform strategy
+- **STAR stories (see Story Bank):** STAR-14 (Canadian MSP consolidation research).
+- **Guardrail**: Advisory research only — did not build or operate an MSP roll-up platform.
 
 #### HRIS for M&A Transactions (BVXpress / ICI)
 - **Product positioning**: **The HRIS shipped as a BVXpress product for ICI clients and acquired companies—not internal-only tooling.**
@@ -524,6 +597,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **AI / RAG / eval / ML-product JDs**: Prioritize ROLE 1 Quotely Command + Qortex bullets (hybrid RAG, playbooks, four-layer eval, quote-accuracy ops, SMS retrieval hit@k / HITL gates). Emphasize **Outcome > chat**, playbook routing for high-stakes facts, and structured catalog matching vs vector RAG distinction. Surface portfolio eval deep-dives when JD mentions eval harnesses, RAG, or agent quality. Do not claim LangChain or invented MAE lift percentages.
 - **HR / HRIS / people-analytics JDs**: Prioritize **Persona D**; ROLE 5 **HRIS for M&A Transactions** subsection (discovery → adapter pattern → normalized model → diligence dashboards). Mirror JD terms: HCM, HRIS, workforce integration, M&A diligence, payroll integration, Workday/SuccessFactors/ADP when JD lists them. Emphasize user research outcomes (focus groups, opportunity maps, tree tests, workflow shadowing) over stack laundry lists. Tie M&A deal-room context from BVXpress core SaaS only when JD mentions M&A or transactions.
 - **Healthcare / digital health / telehealth / consumer health JDs**: Surface ROLE 2 regional govt telehealth project when JD mentions: consumer health, B2C health, patient experience, patient engagement, virtual care, remote care, care delivery, digital health, telehealth, healthcare workflows, clinical systems, or health tech. Emphasize dual-sided (patient-facing + provider-facing) product design, white-label SaaS positioning, and end-to-end patient journey (intake, virtual visits, discharge, follow-ups, medication management). Include TechStars Calgary 2024 win as third-party validation.
+- **MSP / IT channel / cloud distributor JDs**: Prioritize `## IT Channel & MSP Experience` and **Persona E**. Surface ROLE 3 Netsweeper (MSP channel resale, operational trust), ROLE 2 cyber marketplace (MSP/MSSP discovery, search-first catalog — **concept only**), ROLE 5 search-fund Canadian MSP research. Match JD terms: MSP, MSSP, IT channel, cloud distributor, partner marketplace, provisioning, attach rate, multi-vendor catalog, Agent 365 / Copilot enablement when combined with ops-AI proof from ROLE 1. Do not claim shipped cyber marketplace or MSP roll-up platform. Link portfolio cyber deep-dive when JD mentions marketplace discovery or partner UX.
 - **Only cite tools listed under a ROLE block or in Skills above** — do not invent tools per engagement.
 
 ---

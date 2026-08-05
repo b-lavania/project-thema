@@ -65,6 +65,15 @@ Goal: Produce a one-page, ATS-safe cover letter that can be pasted directly into
 
 ## Auto log
 
+### Acquia - Senior Product Manager
+- **Date**: 2026-07-27
+- **Track**: Product/AI
+- **JD source**: Pasted Text
+- **Tokens used**: 87,413
+- **Approx cost**: $0.016
+- **Outputs**: Resume, Cover Letter
+
+
 ### Retailogists - PM
 - **Date**: 2026-07-17
 - **Track**: Product/AI

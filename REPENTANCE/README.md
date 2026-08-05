@@ -25,3 +25,4 @@ Each file cross-links to the others. Read in order, then return to whichever par
 
 - [`PORTFOLIO/concept1.html`](../PORTFOLIO/concept1.html): Primary identity — Founding Product Lead. The operator portfolio.
 - [`PORTFOLIO/concept2.html`](../PORTFOLIO/concept2.html): Narrow, secondary asset — Operational Systems Architect advisory page. Sent selectively to VCs and fractional clients. Not a competing identity.
+- [`embodied-ai-expansion.md`](embodied-ai-expansion.md): Agentic AI + embodied / physical AI (Eta Visor) — one story for intros and outreach.
