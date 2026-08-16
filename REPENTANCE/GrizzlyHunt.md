@@ -1,10 +1,21 @@
-# Grizzly Hunt — Branding Brief & Den Prep
+# Grizzly Hunt — Interview Prep (Comprehensive)
 
-Prep doc for Higher Landing / Grizzly Den. Answers are grounded in the [REPENTANCE](README.md) positioning work — sharp, honest, and built for a room that will push back.
+Branding brief, Grizzly Den anchors, behavioral STARs, recruiter screeners, and AI/PM depth. Grounded in [REPENTANCE](README.md) — sharp, honest, built for rooms that push back.
 
 **North star sentence:** I find the real operational bottleneck, reduce ambiguity, and build the system that makes the fix permanent.
 
 **Primary identity:** Founding Product Lead for operational AI — logistics, freight, dispatch, field service.
+
+### Contents
+
+| Section | What |
+|---------|------|
+| [I–V](#i-brand-platform-identity) | Brand platform, snapshot, personality, employer persona, commitment |
+| [VI](#vi-grizzly-den--sample-question-prep) | Grizzly Den question anchors (tables) |
+| [VII](#vii-behavioral-interview--full-star-answers) | Full STAR answers — bugs, incomplete reqs, stakeholder comms |
+| [VIII](#viii-recruiter--screener-questions) | Self-ratings — Agile, OT, IT/OT alignment |
+| [IX](#ix-ai--the-pm-role) | How AI changed spec / dev / QA |
+| [Quick reference](#quick-reference-card-pin-this) | Pin-this card |
 
 ---
 
@@ -259,6 +270,236 @@ The technical proof exists. The narrative is now sharp enough to sell. What's le
 | Software development trends — equipped? | AI-assisted build (Cursor, eval frameworks) yes. I'm a product operator who prototypes, not an eng manager. |
 | Scrum master? | Know the mechanics; not my identity. I run backlogs with a number filter, not ceremony for its own sake. |
 | Building your network? | Warm intro asks to former founders/operators, targeted founder outreach, weekly public post on ops AI, Grizzly + Higher Landing cohort. |
+| Critical bug before release? | **Quotely SMS agent** — blocked ship on retrieval/HITL failures; ~50% deflection after fix. Alt: catalog margin error before photo-to-quote scale. |
+| Test feature with incomplete requirements? | **Photo-to-quote** — tested form vs photo via replay/research; OR vs lookup after 40%+ margin error. Alt: automated quoting A/B. |
+| Explain complex bug to non-technical stakeholder? | **Netsweeper** — false positives as "smoke alarm / crying wolf"; 85% reduction. Alt: SMS agent "commits like an intern" to CEO. |
+| How did AI change spec / dev / QA? | Spec → operating contract + eval criteria. Dev → PM prototypes first slice. QA → layered eval gates. Unchanged: problem selection, alignment, outcomes. See [§IX](#ix-ai--the-pm-role). |
+
+---
+
+## VII. Behavioral Interview — Full STAR Answers
+
+Delivery rule: **STAR**, under **2 minutes**, land on **judgment + outcome**. Lead with Quotely or Netsweeper unless the role skews compliance/QMS (then lead Netsweeper).
+
+---
+
+### Critical bug just before release
+
+**Primary — Quotely SMS agent (~90 sec)**
+
+| | |
+|---|---|
+| **Situation** | About to ship SMS agent to deflect dispatcher calls (intake, confirmations, reschedules). Leadership wanted it live — support volume was crushing the team. |
+| **Task** | Get deflection without a worse problem: bot that sounds helpful but invents booking state, gives wrong policy answers, or hides cases that need a human. |
+| **Action** | Ran V1 fixture suite before flip — not a demo walkthrough. Caught: on policy-bound and edge flows, retrieval missed context; model answered confidently instead of escalating. Framed to leadership as a **trust bug**, not a tuning issue. Blocked release. Reset ship criteria: retrieval hit@4, HITL recall/precision, intake-completion floors — stop debating reply fluency. Rebuilt around structured handoffs to live order state + hard escalation on ambiguity. Paired with customer-facing order status so agent isn't system of record. |
+| **Outcome** | ~2-week slip. Shipped to **~50% support deflection** on routine flows without silent failures. Dispatchers kept capacity for exceptions. |
+| **Close** | "I'd rather slip a release for a trust bug than ship something operators stop believing in." |
+
+**Alternate — Photo-to-quote / catalog layer (~60 sec)**
+
+| | |
+|---|---|
+| **Situation** | Preparing to scale automated photo-to-quote beyond pilot. Demo looked great; release imminent. |
+| **Task** | Validate automated quotes wouldn't destroy margin on complex multi-item, multi-floor jobs. |
+| **Action** | Golden-job validation showed catalog/pricing layer wrong on hard moves — static matching drove **40%+ margin error**. Subsystem testing isolated catalog layer, not vision. Halted rollout; pushed OR engine (3D bin packing) before traffic increase. |
+| **Outcome** | Avoided fast quotes that lose money. Quote time still **60 min → ~3 min**; scaled with evidence. |
+
+**Follow-ups**
+
+| Question | Answer |
+|----------|--------|
+| Who decided to delay? | I brought eval results, framed trust/margin risk, recommended hold. CEO agreed once we showed real fixture failures. |
+| Would you do it again? | Yes. Known state-invention risk on customer-facing agent > date slip. |
+
+---
+
+### Testing a new feature with incomplete requirements
+
+**Primary — Photo-to-quote intake (~90 sec)**
+
+| | |
+|---|---|
+| **Situation** | Requirement was clear at high level: **quotes must get faster**. Customers called 3–5 movers; dispatchers spent 60+ min per phone quote. Incomplete: *how* to fix it — simpler forms vs phone vs "instant digital quoting"; accuracy bar for complex jobs undefined. |
+| **Task** | Figure out what to build and test before full release — reduce ambiguity without shipping fast-but-wrong. |
+| **Action** | Treated as test program, not requirements doc. (1) Session replay: 60%+ abandonment at manual dimension entry — "simpler forms" wrong. (2) Focus groups, tree tests, opportunity maps — photo intake vs typed lists. (3) Prototyped photo + CV on real job types. (4) Tested pricing separately — lookup tables failed on complex jobs (40%+ margin error) → spec needed OR layer. (5) Cut V1 scope (chat overlay, subscriptions, route optimization) to test quote-flow reliability. |
+| **Outcome** | Photo-to-quote + OR on narrowed V1. **60 min → ~3 min**, **~93% fill rate**. Data wrote the spec. |
+| **Close** | "When requirements are incomplete, I test the riskiest assumption first and let the data write the spec." |
+
+**Alternate — Automated quoting rollout (~60 sec)**
+
+| | |
+|---|---|
+| **Situation** | Automated quoting built; incomplete requirements on **accuracy thresholds** vs dispatchers. |
+| **Task** | Release broadly vs test under uncertainty. |
+| **Action** | Controlled experiment — automated vs manual paths; Segment on quote-to-booking; null hypothesis before scale. |
+| **Outcome** | Evidence-backed rollout, not faith-based launch. |
+
+**Follow-ups**
+
+| Question | Answer |
+|----------|--------|
+| What to test first? | Highest risk: customer trust of photo intake + pricing hold on complex jobs. |
+| Stakeholder pushback? | Yes — replay and fixtures made it less political. |
+
+---
+
+### Explaining a complex bug to a non-technical stakeholder
+
+**Primary — Netsweeper / K-12 district (~90 sec)**
+
+| | |
+|---|---|
+| **Situation** | 35-school deployment; staff stopped using alert dashboard. Engineering wanted more detection categories. Superintendent and admins non-technical — system felt broken. |
+| **Task** | Explain real failure, align on fix, stop release plan that would worsen it — without precision/recall lecture. |
+| **Action** | Reframed in their language. Symptom: "We ignore alerts." Translation: "Crying wolf — ~8/10 alerts weren't real, so staff tuned out, including serious ones." Analogy: **smoke alarm every time someone makes toast** → people remove batteries. Not spreadsheet accuracy — **operational trust**. Fix in plain terms: freeze new detection one quarter; reduce false alarms; redesign workflow so high-severity not buried. Tree tests showed where serious alerts got lost. |
+| **Outcome** | **85% false-alert reduction**. Staff re-engaged unprompted. Contract renewed. |
+| **Close** | "I explain technical bugs through the behavior they cause, not the stack that caused them." |
+
+**Alternate — Quotely SMS agent / CEO (~60 sec)**
+
+| | |
+|---|---|
+| **Situation** | Pre-ship testing: bot could answer confidently with wrong booking/policy info — missing context, not escalating. |
+| **Task** | Explain delay to non-technical CEO without retrieval jargon. |
+| **Action** | "Bot texts like a human but **commits like an intern** — wrong confirmation costs crew, customer, dispatcher trust." Ship rule: ambiguous → escalate; routine → automate. |
+| **Outcome** | ~2-week slip; **~50% deflection** without silent failure modes. |
+
+**Follow-ups**
+
+| Question | Answer |
+|----------|--------|
+| Simplifying without dumbing down? | One technical anchor for me; translate only the *decision* it forces. |
+| They disagree? | Evidence — replay, fixtures, workflow tests — not opinion vs opinion. |
+
+---
+
+## VIII. Recruiter / Screener Questions
+
+Honest self-ratings. Adjust framing if role is **internal SaaS ops** (e.g. Isolocity) vs **plant-floor OT**.
+
+---
+
+### 1. Agile / Waterfall / hybrid + mismatched stakeholder expectations
+
+**Rating: 6/10**
+
+| | |
+|---|---|
+| **Strength** | Outcome-first, not ceremony-first. Hybrid career — discovery/backlog in Agile-shaped tools (Jira, Aha!), fixed milestones and waterfall reporting when leadership needs dates locked. Superpower: **translation** — eng wants tickets/tradeoffs; founders want "what moved the number"; clients want confidence nothing broke. Adapt update format per audience (written weekly: decision / metric / ask). |
+| **Gaps** | Formal stakeholder management at scale — fewer reps across five departments than corporate PMO. Building muscle: weekly written updates, WIP limits, backlog tied to a number. Know Scrum mechanics; not a methodology evangelist. |
+| **Example** | Netsweeper: eng wanted new detection; client needed trust restored. Quarter looked waterfall to client (freeze scope, ship trust fixes); eng worked in two-week chunks internally. |
+
+---
+
+### 2. OT / industrial infrastructure projects
+
+**Rating: 2–3/10** *(literal plant-floor OT: SCADA, PLCs, MES)*
+
+| | |
+|---|---|
+| **Gaps** | No managed projects on factory OT side — no PLC, SCADA, brownfield industrial deployments. |
+| **Adjacent** | Operational workflow systems (quote-to-dispatch, TMS-class at Quotely); regulated/trust-sensitive (Netsweeper K-12); energy infrastructure modeling (Project Epsilon — analytical, not plant OT); systems integration pattern (BVXpress HRIS adapters). |
+| **Strength** | High-stakes operational workflows where wrong handoff breaks trust — rhymes with QMS/compliance even without shop-floor tenure. Don't claim OT I don't have. |
+| **If role = internal business ops** (CRM, PM tools, automations) | **7/10** — different question than plant OT. |
+
+---
+
+### 3. Aligning IT and OT teams around a shared plan
+
+**Rating: 3–4/10** *(classic manufacturing-floor IT/OT convergence)*
+
+| | |
+|---|---|
+| **Gaps** | Haven't brokered plant engineers vs corporate IT on OT security, historians, MES rollouts. |
+| **Strength** | Aligned technical and non-technical stakeholders when systems don't share a language: BVXpress HRIS (IT vs M&A advisors vs payroll ops → adapter architecture); Quotely (product vs eng vs dispatchers → structured handoffs); Netsweeper (eng vs MSP vs districts → operational trust as shared metric). Skill: **shared outcome metric both sides commit to** + documented integration boundary. |
+| **Ramp** | At manufacturer-facing co: time with CS/solutions to learn how clients describe OT pain — workflow fast, not pretend PLC topology. |
+
+**Isolocity mapping (internal SaaS ops role)**
+
+| Question | Literal industrial OT | Isolocity JD (internal ops) |
+|----------|----------------------|----------------------------|
+| Methodology + stakeholders | 6 | 6–7 |
+| OT / industrial infrastructure | 2–3 | 5–6 |
+| IT + OT alignment | 3–4 | 6 |
+
+---
+
+## IX. AI & the PM Role
+
+*Across feature spec, development, and QA — what fundamentally changed, what didn't, and why.*
+
+### 30-second version
+
+**Changed:** Speed to prototype, how I write acceptance criteria, how I gate releases — specs include eval floors and handoff rules; dev has PM-built first slice; QA is layered offline evals.
+
+**Didn't change:** Finding the real problem, stakeholder alignment, prioritization, owning business outcomes. AI made the *how* cheaper; not *judgment*.
+
+---
+
+### Feature spec
+
+**Changed**
+
+- Specs include **what "correct" means** before code: retrieval floors, escalation rules, refuse paths, playbooked vs model-generated facts.
+- SMS agent spec: not "build chatbot" — "automate routine intake; escalate on ambiguity; never invent booking state."
+- **Prototyping is part of spec** (Cursor, etc.) — test viability before eng commits a quarter.
+- **Subsystem-aware** — photo-to-quote = vision + catalog + OR + E2E accuracy; spec names which layer owns which failure.
+
+**Didn't change**
+
+- **Problem selection** — still research, replay, operator interviews.
+- **Scope discipline / saying no** — killed chat overlay, subscriptions, route optimization for V1 reliability.
+- **Commercial framing** — fill rate, margin, deflection, trust — not model capability.
+
+**Why:** Spec shifted from behavior description to **operating contract**.
+
+---
+
+### Development
+
+**Changed**
+
+- **PM builds first version** — CV, RAG ingest, eval harnesses, FastAPI. Evidence before PRD wait.
+- **Model choice = product decision** — multi-model testbench (accuracy, latency, cost).
+- **Architecture discussions moved up** — hybrid RAG vs structured catalog on quote path; playbook short-circuits for SLAs.
+- **Iteration speed** — cheap re-test layers (catalog) vs expensive (VLM calls).
+
+**Didn't change**
+
+- **Production still needs eng** — Quotely CTO gap proved prototype ≠ durable production.
+- **Integration with messy reality** — order state, dispatcher workflows, tenant config.
+- **Technical debt / prioritization** — AI can ship wrong things faster; WIP limits still apply.
+
+**Why:** AI collapsed distance between *idea* and *artifact*, not *artifact* and *production system*.
+
+---
+
+### QA
+
+**Changed (biggest shift)**
+
+- **QA = eval design** — four offline layers for photo-to-quote; isolate vision vs catalog vs logistics vs E2E.
+- **Metric-based release gates** — SMS: hit@4, HITL recall/precision; Qortex: golden suite, `insufficient_evidence` on thin retrieval.
+- **Can't QA AI with exploratory clicking** — confident wrong answers; need fixtures, golden jobs, frozen inputs.
+- **Ongoing ops loops** — Quotely Command: MAE, ±15%, outcome-capture SLA post-ship.
+
+**Didn't change**
+
+- **Someone sets acceptable risk** — told CEO: trust risk > date risk.
+- **User acceptance is human** — dispatchers trusting quotes; K-12 staff re-opening dashboards.
+- **Edge cases from the field** — fixtures get you to ship; operators find what you missed.
+
+**Why:** QA moved from "did we build what we spec'd?" to "does the system behave within tolerance across subsystems?" — closer to reliability engineering than UAT.
+
+---
+
+### Synthesis / closer
+
+> AI changed the speed and shape of spec, build, and test — especially QA — but not the PM job's core: find the real problem, define what good means for the business, align humans, own the outcome. Weak PM work got more visible — you can ship a fluent wrong answer in a day.
+
+**If pushed: "More technical PM now?"**
+
+More **prototype-capable**, not more **ceremony-capable**. Less waiting for eng to validate ideas; more eval design and subsystem boundaries. Stakeholder management and backlog discipline didn't get easier because of ChatGPT.
 
 ---
 

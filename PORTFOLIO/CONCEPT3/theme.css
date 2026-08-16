@@ -986,6 +986,19 @@ button.work-skills-filter.work-skill-chip.is-active {
   gap: 1rem 1.5rem;
 }
 
+.footer-field-manual {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.footer-field-manual:hover {
+  color: var(--text-main);
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .site-header-inner,
   .breadcrumb-inner {
@@ -1123,6 +1136,16 @@ body.page-home {
   max-width: var(--prose-measure);
   margin-bottom: var(--space-block);
   line-height: 1.5;
+}
+
+.page-home .page-hero-visual {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-top: var(--space-block);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
 }
 
 @media (min-width: 1024px) {

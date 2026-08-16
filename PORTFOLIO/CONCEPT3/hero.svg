@@ -1,0 +1,94 @@
+<svg viewBox="0 48 900 240" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect x="0" y="48" width="900" height="240" fill="#faf8f6"/>
+  
+  <!-- Left Panel: Noisy Surface Symptoms -->
+  <g id="left-panel">
+    <!-- Scattered chaotic labels -->
+    <rect x="40" y="60" width="85" height="22" rx="2" fill="none" stroke="#6b7280" stroke-width="2"/>
+    <text x="82" y="76" font-family="system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">support tickets</text>
+    
+    <rect x="30" y="100" width="75" height="22" rx="2" fill="none" stroke="#6b7280" stroke-width="2"/>
+    <text x="67" y="116" font-family="system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">slow quotes</text>
+    
+    <rect x="55" y="140" width="80" height="22" rx="2" fill="none" stroke="#6b7280" stroke-width="2"/>
+    <text x="95" y="156" font-family="system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">alert spam</text>
+    
+    <rect x="25" y="180" width="95" height="22" rx="2" fill="none" stroke="#6b7280" stroke-width="2"/>
+    <text x="72" y="196" font-family="system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">escalation queue</text>
+    
+    <rect x="45" y="220" width="70" height="22" rx="2" fill="none" stroke="#6b7280" stroke-width="2"/>
+    <text x="80" y="236" font-family="system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">retry loops</text>
+    
+    <rect x="60" y="260" width="65" height="22" rx="2" fill="none" stroke="#6b7280" stroke-width="2"/>
+    <text x="92" y="276" font-family="system-ui, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">timeouts</text>
+    
+    <!-- Chaotic connecting lines -->
+    <path d="M82 82 Q100 110 67 100" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+    <path d="M67 122 Q50 150 95 140" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+    <path d="M95 162 Q120 180 72 180" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+    <path d="M72 202 Q40 220 80 220" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+    <path d="M80 242 Q110 260 92 260" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Center Panel: Structural Bottleneck -->
+  <g id="center-panel">
+    <!-- Magnifying glass effect circle -->
+    <circle cx="300" cy="160" r="70" fill="none" stroke="#14b8a6" stroke-width="2"/>
+    <circle cx="300" cy="160" r="66" fill="none" stroke="#14b8a6" stroke-width="1" opacity="0.3"/>
+    
+    <!-- Central node -->
+    <rect x="235" y="145" width="130" height="30" rx="4" fill="#14b8a6" fill-opacity="0.1" stroke="#14b8a6" stroke-width="2"/>
+    <text x="300" y="165" font-family="system-ui, sans-serif" font-size="12" fill="#0f766e" text-anchor="middle" font-weight="500">structural bottleneck</text>
+    
+    <!-- Handle of magnifying glass -->
+    <line x1="350" y1="210" x2="375" y2="245" stroke="#14b8a6" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Connection arrows from left -->
+    <path d="M125 160 L215 160" fill="none" stroke="#6b7280" stroke-width="2" stroke-dasharray="4,3"/>
+    <polygon points="210,156 220,160 210,164" fill="#6b7280"/>
+  </g>
+  
+  <!-- Right Panel: Clean System -->
+  <g id="right-panel">
+    <!-- Three connected rectangles -->
+    <rect x="480" y="100" width="100" height="45" rx="2" fill="none" stroke="#374151" stroke-width="2"/>
+    <text x="530" y="120" font-family="system-ui, sans-serif" font-size="11" fill="#374151" text-anchor="middle">Input</text>
+    <text x="530" y="135" font-family="system-ui, sans-serif" font-size="9" fill="#6b7280" text-anchor="middle">validation</text>
+    
+    <rect x="620" y="100" width="100" height="45" rx="2" fill="none" stroke="#374151" stroke-width="2"/>
+    <text x="670" y="120" font-family="system-ui, sans-serif" font-size="11" fill="#374151" text-anchor="middle">Process</text>
+    <text x="670" y="135" font-family="system-ui, sans-serif" font-size="9" fill="#6b7280" text-anchor="middle">orchestration</text>
+    
+    <rect x="760" y="100" width="100" height="45" rx="2" fill="none" stroke="#374151" stroke-width="2"/>
+    <text x="810" y="120" font-family="system-ui, sans-serif" font-size="11" fill="#374151" text-anchor="middle">Output</text>
+    <text x="810" y="135" font-family="system-ui, sans-serif" font-size="9" fill="#6b7280" text-anchor="middle">delivery</text>
+    
+    <!-- Clean connecting lines -->
+    <line x1="580" y1="122" x2="620" y2="122" stroke="#14b8a6" stroke-width="2"/>
+    <polygon points="615,118 625,122 615,126" fill="#14b8a6"/>
+    
+    <line x1="720" y1="122" x2="760" y2="122" stroke="#14b8a6" stroke-width="2"/>
+    <polygon points="755,118 765,122 755,126" fill="#14b8a6"/>
+    
+    <!-- Feedback loop below -->
+    <rect x="620" y="200" width="100" height="35" rx="2" fill="none" stroke="#374151" stroke-width="2"/>
+    <text x="670" y="222" font-family="system-ui, sans-serif" font-size="10" fill="#374151" text-anchor="middle">feedback loop</text>
+    
+    <!-- Vertical connectors to feedback -->
+    <line x1="530" y1="145" x2="530" y2="170" stroke="#6b7280" stroke-width="1.5"/>
+    <line x1="670" y1="145" x2="670" y2="170" stroke="#6b7280" stroke-width="1.5"/>
+    <line x1="810" y1="145" x2="810" y2="170" stroke="#6b7280" stroke-width="1.5"/>
+    <line x1="530" y1="170" x2="810" y2="170" stroke="#6b7280" stroke-width="1.5"/>
+    <line x1="670" y1="170" x2="670" y2="200" stroke="#6b7280" stroke-width="1.5"/>
+    <polygon points="666,195 670,205 674,195" fill="#6b7280"/>
+  </g>
+  
+  <!-- Connection from center to right -->
+  <path d="M365 160 L460 160" fill="none" stroke="#14b8a6" stroke-width="2"/>
+  <polygon points="455,156 465,160 455,164" fill="#14b8a6"/>
+  
+  <!-- Panel dividers (subtle) -->
+  <line x1="300" y1="20" x2="300" y2="300" stroke="#e5e7eb" stroke-width="1" opacity="0.5"/>
+  <line x1="600" y1="20" x2="600" y2="300" stroke="#e5e7eb" stroke-width="1" opacity="0.5"/>
+</svg>

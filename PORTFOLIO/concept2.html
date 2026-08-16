@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bob Lavania | On Product: A Field Manual</title>
+  <title>On Product: A Field Manual for the Continuation of Politics by Other Means | Bob Lavania</title>
   <meta name="description" content="A court treatise on product management as stakeholder theatre. Sun Tzu, Clausewitz, and the Sun King agree: the parade is the job. Shipping is desertion.">
   <meta property="og:title" content="On Product: A Field Manual">
   <meta property="og:description" content="Product management, as practiced, is stakeholder theatre. Shipping is desertion from the parade. A satirical field manual for hiring managers who know the difference.">
@@ -13,9 +13,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-page: #f4efe6;
-      --bg-page-end: #ebe6dc;
-      --surface: #e8e2d6;
+      --bg-page: #f8f7f4;
+      --bg-page-end: #f3f2ef;
+      --surface: #eeedea;
       --text-primary: #1f1a14;
       --text-body: #2a241c;
       --text-secondary: #5a5248;
@@ -52,7 +52,7 @@
       font-size: var(--text-base);
       line-height: var(--leading-body);
       color: var(--text-body);
-      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201, 162, 74, 0.06) 0%, transparent 55%),
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201, 162, 74, 0.025) 0%, transparent 55%),
                   linear-gradient(180deg, var(--bg-page) 0%, var(--bg-page-end) 100%);
       min-height: 100vh;
     }
@@ -75,14 +75,6 @@
       border-bottom-color: var(--gold-label);
     }
 
-    .epigraph {
-      font-style: italic;
-      font-weight: 500;
-      color: var(--text-body);
-      font-size: var(--text-base);
-      margin: 24px auto 32px;
-    }
-
     .treatise-title {
       font-size: var(--text-display);
       font-weight: 700;
@@ -92,17 +84,11 @@
       margin-bottom: 12px;
     }
 
-    .treatise-subtitle {
+    .attribution {
       font-size: var(--text-base);
       font-weight: 600;
       font-style: italic;
       color: var(--gold-label);
-      margin-bottom: 8px;
-    }
-
-    .attribution {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
       margin-bottom: 24px;
     }
 
@@ -138,7 +124,7 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--gold-label);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .chapitre.crimson { color: var(--crimson); }
 
@@ -146,7 +132,10 @@
       font-size: var(--text-chapter);
       font-weight: 600;
       color: var(--text-primary);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
+    }
+    .chapter-title:has(+ .chapter-intro) {
+      margin-bottom: 6px;
     }
 
     .chapter-body {
@@ -163,10 +152,6 @@
 
     .chapter-intro {
       text-align: center;
-      margin-bottom: 8px;
-    }
-    .chapter-intro-spaced {
-      text-align: center;
       margin-bottom: 16px;
     }
 
@@ -181,7 +166,7 @@
     .maxims {
       list-style: none;
       text-align: left;
-      margin: 24px 0;
+      margin: 0 0 8px;
     }
     .maxim {
       display: flex;
@@ -234,30 +219,35 @@
     }
 
     .glossary {
-      background: var(--surface);
-      border: 1px solid var(--border-gilt);
-      border-radius: 4px;
-      padding: 24px 28px;
+      display: grid;
+      grid-template-columns: 12rem 1fr;
+      column-gap: 24px;
       text-align: left;
-      margin: 20px 0;
+      margin: 0 0 8px;
     }
     .glossary dt {
+      grid-column: 1;
       font-weight: 600;
+      font-variant: small-caps;
+      letter-spacing: 0.06em;
       color: var(--gold-label);
-      font-size: var(--text-base);
-      margin-top: 14px;
+      font-size: var(--text-sm);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-gilt-faint);
     }
-    .glossary dt:first-child { margin-top: 0; }
     .glossary dd {
+      grid-column: 2;
       color: var(--text-body);
       font-size: var(--text-base);
-      margin: 4px 0 0 0;
+      margin: 0;
+      padding: 14px 0;
       line-height: var(--leading-body);
+      border-bottom: 1px solid var(--border-gilt-faint);
     }
 
     .desertion-box {
       text-align: left;
-      margin: 28px 0;
+      margin: 0 0 8px;
     }
     .desertion-box p {
       color: var(--text-body);
@@ -328,6 +318,19 @@
       .treatise-title { font-size: 2rem; }
       .chapter-title { font-size: 1.35rem; }
       .maxim { gap: 12px; }
+      .glossary {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+      }
+      .glossary dt {
+        grid-column: 1;
+        padding: 14px 0 4px;
+        border-bottom: none;
+      }
+      .glossary dd {
+        grid-column: 1;
+        padding: 0 0 14px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -340,21 +343,19 @@
 
   <article class="treatise">
 
-    <h1 class="treatise-title" id="top">On Product</h1>
-    <p class="treatise-subtitle">A Field Manual for the Continuation of Politics by Other Means</p>
+    <h1 class="treatise-title" id="top">On Product: A Field Manual for the Continuation of Politics by Other Means</h1>
     <p class="attribution">Bob Lavania, observer of the theatre</p>
 
-    <p class="null-hypothesis">The parade is the prior; shipping is the likelihood, but the court never updates the posterior.</p>
+    <p class="null-hypothesis">The parade is the prior; Shipping is the likelihood; The court never updates the posterior.</p>
 
     <div class="gilt-rule" aria-hidden="true"></div>
-
-    <p class="epigraph">War is the continuation of politics by other means. Product is the continuation of politics by other meetings.</p>
 
     <section>
       <p class="chapitre">Chapitre I</p>
       <h2 class="chapter-title">Definition of the Field</h2>
+      <p class="chapter-body chapter-intro">War is the continuation of politics by other means. Product is the continuation of politics by other meetings.</p>
       <div class="chapter-body">
-        <p>Clausewitz taught that war is not a duel but a trial of force for political ends. Product, in the corporate sense, is the same trial conducted in conference rooms. The stated objective is customer outcome. The actual objective is <strong>surviving the next prioritization meeting with your surface area intact.</strong> That practice has a name: stakeholder theatre. The audience is internal. The customer is scenery.</p>
+        <p>Clausewitz taught that war is not a duel but a trial of force for political ends. Product, in the corporate sense, is the same trial conducted in conference rooms. The stated objective is customer outcome. The actual objective is <strong>surviving the next prioritization meeting with your surface area intact.</strong> That practice has a name: stakeholder theatre; The audience is internal, the customer is mere scenery.</p>
       </div>
       <p class="section-return"><a href="#top">TO THE FORE</a></p>
     </section>
@@ -364,7 +365,7 @@
     <section>
       <p class="chapitre">Chapitre II</p>
       <h2 class="chapter-title">Maxims of the Theatre</h2>
-      <p class="chapter-body chapter-intro">Collected from the masters. Applied to the backlog.</p>
+      <p class="chapter-body chapter-intro">Collected from the masters, applied to the backlog.</p>
 
       <ol class="maxims">
         <li class="maxim">
@@ -373,11 +374,11 @@
         </li>
         <li class="maxim">
           <span class="maxim-num">II</span>
-          <span class="maxim-text">When Cao Cao, Liu Bei, and Sun Quan divided the realm, each called it strategy. When Platform, Growth, and AI divided the backlog, each called it focus.<span class="maxim-source">Three Kingdoms</span></span>
+          <span class="maxim-text">When Cao Cao, Liu Bei, and Sun Quan divided the realm, each called it strategy. When Platform, Growth, and AI divided the backlog, each called it focus.<span class="maxim-source">Three Kingdoms (220 to 280)</span></span>
         </li>
         <li class="maxim">
           <span class="maxim-num">III</span>
-          <span class="maxim-text">The white rose and the red rose both promised the realm; neither promised a ship date.<span class="maxim-source">Wars of the Roses</span></span>
+          <span class="maxim-text">The white rose and the red rose both promised the realm; neither promised a ship date.<span class="maxim-source">Wars of the Roses (1455 to 1487)</span></span>
         </li>
         <li class="maxim">
           <span class="maxim-num">IV</span>
@@ -389,15 +390,15 @@
         </li>
         <li class="maxim">
           <span class="maxim-num">VI</span>
-          <span class="maxim-text">Under the bakufu, the daimyo traveled to the capital on schedule and accomplished nothing of note. We call this QBR.<span class="maxim-source">Tokugawa / sankin-kotai</span></span>
+          <span class="maxim-text">Under the bakufu, the daimyo traveled to the capital on schedule and accomplished nothing of note. We call this QBR.<span class="maxim-source">Tokugawa / sankin-kotai (from 1635)</span></span>
         </li>
         <li class="maxim">
           <span class="maxim-num">VII</span>
-          <span class="maxim-text">In the Bakumatsu, the ceremonies continued while the foreign ships arrived. In product, the all-hands continued while the competitor shipped.<span class="maxim-source">Bakumatsu</span></span>
+          <span class="maxim-text">In the Bakumatsu, the ceremonies continued while the foreign ships arrived. In product, the all-hands continued while the competitor shipped.<span class="maxim-source">Bakumatsu (1853 to 1868)</span></span>
         </li>
         <li class="maxim">
           <span class="maxim-num">VIII</span>
-          <span class="maxim-text">The Meiji Restoration restored the Emperor and invented the org chart. Your transformation restored customer-centricity and invented new job titles for the same warlords.<span class="maxim-source">Meiji</span></span>
+          <span class="maxim-text">The Meiji Restoration restored the Emperor and invented the org chart. Your transformation restored customer-centricity and invented new job titles for the same warlords.<span class="maxim-source">Meiji (1868 to 1912)</span></span>
         </li>
         <li class="maxim">
           <span class="maxim-num">IX</span>
@@ -409,7 +410,7 @@
         </li>
         <li class="maxim">
           <span class="maxim-num">XI</span>
-          <span class="maxim-text">A Lancaster today, a York tomorrow: the stakeholder who championed you before the reorg.<span class="maxim-source">Wars of the Roses</span></span>
+          <span class="maxim-text">A Lancaster today, a York tomorrow: the stakeholder who championed you before the reorg.<span class="maxim-source">Wars of the Roses (1455 to 1487)</span></span>
         </li>
         <li class="maxim">
           <span class="maxim-num">XII</span>
@@ -417,11 +418,11 @@
         </li>
         <li class="maxim">
           <span class="maxim-num">XIII</span>
-          <span class="maxim-text">He who waits for eng capacity will die of old age; he who ships a wedge will be accused of leaving the parade.<span class="maxim-source">Field observation</span></span>
+          <span class="maxim-text">He who waits for eng capacity will die of old age; he who ships a wedge will be accused of leaving the parade.<span class="maxim-source">The Art of War, abridged for the PMO</span></span>
         </li>
         <li class="maxim">
           <span class="maxim-num">XIV</span>
-          <span class="maxim-text">The scholar-official remonstrated against the edict. The edict was filed. The feature factory continued.<span class="maxim-source">Tang court</span></span>
+          <span class="maxim-text">The scholar-official remonstrated against the edict. The edict was filed. The feature factory continued.<span class="maxim-source">Tang court (618 to 907)</span></span>
         </li>
       </ol>
       <p class="section-return"><a href="#top">TO THE FORE</a></p>
@@ -432,7 +433,7 @@
     <section>
       <p class="chapitre">Chapitre III</p>
       <h2 class="chapter-title">Ordre de Bataille</h2>
-      <p class="chapter-body chapter-intro-spaced">A glossary of the court tongue.</p>
+      <p class="chapter-body chapter-intro">A glossary of the court tongue.</p>
 
       <dl class="glossary">
         <dt>Stakeholder theatre</dt>
@@ -474,7 +475,7 @@
         <p>Victory is not measured in shipped code. Victory is measured in retained scope, defended headcount, and a narrative the crown can repeat without embarrassment. The builder who ships a wedge in production has committed an act of desertion. The parade continues without him.</p>
         <p>There is no winning condition in theatre-PM, only <strong>territorial defense</strong>: scope, headcount, narrative. The Wars of the Roses never crowned a permanent peace. The Three Kingdoms never stayed three. The Onin War ended with ash; the Sengoku still came. Meiji "restored" one sovereign and invented another bureaucracy.</p>
         <p>The fog of war is the backlog. The fog of the backlog is the roadmap. Nobody has seen the customer in three quarters, but everyone has seen the deck.</p>
-        <p>Builder proof does not speak court language. Production metrics do not impress the HR business partner who screens for logos and influence theatre. That is not a gap in your resume. That is a gap in the game. The game was never designed for people who ship.</p>
+        <p>Production returns with receipts. The court reads banners. A screen for logos and influence is not a test of the campaign. It is a test of whether you stayed in the parade.</p>
       </div>
       <p class="section-return"><a href="#top">TO THE FORE</a></p>
     </section>

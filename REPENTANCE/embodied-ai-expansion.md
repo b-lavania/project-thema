@@ -2,7 +2,7 @@
 
 > **Purpose:** Explain why your agentic AI track record and embodied AI work (Eta Visor) belong in one story — for intros, recruiter conversations, founder outreach, and portfolio updates.
 >
-> **Assets:** [Eta Visor homepage](https://eta-xr.com/) · [Platform valuation & thesis](https://p-eta.netlify.app/) · Cross-links: [Positioning audit](01-positioning-audit.md) · [Career reset v2](career_direction_reset_v2_748fb06f.plan.md) · [Grizzly prep](GrizzlyAssault.md)
+> **Assets:** [Eta Visor homepage](https://eta-xr.com/) · [Platform valuation & thesis](https://p-eta.netlify.app/) · Cross-links: [Positioning audit](01-positioning-audit.md) · [Career reset v2](career_direction_reset_v2_748fb06f.plan.md) · [Grizzly prep](GrizzlyHunt.md)
 
 ---
 
