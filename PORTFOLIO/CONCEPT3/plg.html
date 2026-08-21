@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product-Led Growth | Case Study | Bob Lavania</title>
+<meta name="description" content="How I owned CAC, ARPU, AOV, TTV, retention, and churn at BVXpress and Moovez: in-product PLG loops, marketplace unit economics, and mix-model CAC honesty when last-click attribution misallocates spend.">
+<meta property="og:title" content="Product-Led Growth as Product Work | BVXpress &amp; Moovez">
+<meta property="og:description" content="Activation through retention at BVXpress; unit economics at Moovez; Bayesian MMM when last-click overstated CAC across six spend channels.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --bg-color: #ffffff;
+    --text-main: #111111;
+    --text-muted: #555555;
+    --text-light: #777777;
+    --border-color: #000000;
+    --border-light: #cccccc;
+    --accent: #000000;
+    --teal: #0f6e56;
+    --teal-light: #e1f5ee;
+    --amber: #ba7517;
+    --amber-light: #fef3e6;
+    --blue: #185fa5;
+    --blue-light: #e6f2ff;
+    --purple: #6b46c1;
+    --purple-light: #f3f4ff;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    padding: 1.25rem;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    padding: 0 2rem;
+  }
+
+  header, section {
+    border-bottom: 1px solid var(--border-color);
+    padding: 2rem 0;
+  }
+
+  header { padding-top: 1.25rem; }
+
+  h1 {
+    font-size: 2.35rem;
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .subhead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 760px;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .hero-quote {
+    font-size: 1.08rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--text-main);
+    border-left: 3px solid var(--teal);
+    padding: 0.85rem 1rem;
+    margin: 1rem 0 0;
+    max-width: 760px;
+    background: var(--teal-light);
+  }
+
+  .cred-strip {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    color: var(--text-main);
+    margin-top: 1.25rem;
+  }
+
+  .proof-points {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+  }
+
+  .proof-points--six {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .proof-card {
+    border: 2px solid var(--border-color);
+    padding: 1rem;
+    background: var(--bg-color);
+  }
+
+  .proof-card.teal { border-color: var(--teal); background: var(--teal-light); }
+  .proof-card.amber { border-color: var(--amber); background: var(--amber-light); }
+  .proof-card.blue { border-color: var(--blue); background: var(--blue-light); }
+  .proof-card.purple { border-color: var(--purple); background: var(--purple-light); }
+
+  .proof-number {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-mono);
+  }
+
+  .proof-card.teal .proof-number { color: var(--teal); }
+  .proof-card.amber .proof-number { color: var(--amber); }
+  .proof-card.blue .proof-number { color: var(--blue); }
+  .proof-card.purple .proof-number { color: var(--purple); }
+
+  .proof-label {
+    font-size: 0.82rem;
+    color: var(--text-main);
+    line-height: 1.3;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .section-lead {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .pain-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .pain-list li { margin-bottom: 0.35rem; }
+
+  .metric-highlight {
+    background: #fffbea;
+    border-left: 3px solid var(--amber);
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-weight: 500;
+    color: var(--text-main);
+    font-size: 0.95rem;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .compare-card {
+    border: 2px solid var(--border-color);
+    padding: 1.15rem;
+  }
+
+  .compare-card.legacy {
+    border-color: var(--border-light);
+    background: #fafafa;
+  }
+
+  .compare-card.modern {
+    border-color: var(--teal);
+    background: var(--teal-light);
+  }
+
+  .compare-card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.65rem;
+  }
+
+  .compare-card ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .compare-card ul li { margin-bottom: 0.3rem; }
+
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .cap-card {
+    border: 1px solid var(--border-color);
+    padding: 1.15rem;
+    transition: all 0.2s ease;
+  }
+
+  .cap-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .cap-card .layer-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .cap-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.45rem;
+    font-weight: 600;
+  }
+
+  .cap-card p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .principles-list {
+    list-style: none;
+    counter-reset: principle;
+  }
+
+  .principles-list li {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-muted);
+  }
+
+  .principles-list li::before {
+    counter-increment: principle;
+    content: "0" counter(principle);
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .principles-list li strong { color: var(--text-main); }
+
+  .cs-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+  }
+
+  .cs-grid:last-child { border-bottom: 1px solid var(--border-color); }
+
+  .cs-label {
+    padding: 0.85rem 1rem;
+    border-right: 1px solid var(--border-color);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    background: #fafafa;
+  }
+
+  .cs-content {
+    padding: 0.85rem 1rem;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .cs-content strong { color: var(--text-main); }
+
+  .inline-link {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .inline-link:hover { color: var(--text-main); }
+
+  .method-line {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .proof-points { grid-template-columns: 1fr 1fr; }
+    .proof-points--six { grid-template-columns: 1fr 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .container { border: none; padding: 0 1rem; }
+    body { padding: 1rem; }
+    h1 { font-size: 1.85rem; }
+    .proof-points { grid-template-columns: 1fr; }
+    .proof-points--six { grid-template-columns: 1fr; }
+    .cs-grid { grid-template-columns: 1fr; }
+    .cs-label { border-right: none; border-bottom: 1px dashed var(--border-color); }
+  }
+</style>
+  <link rel="stylesheet" href="theme.css">
+
+</head>
+<body class="has-site-header">
+
+<header class="site-header" id="top">
+  <div class="site-header-inner">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html#about">About</a>
+      <a href="index.html#how-i-deliver">Deliver</a>
+      <a href="index.html#selected-work">Work</a>
+      <a href="index.html#career-arc">Career</a>
+      <a href="index.html#my-approach">Approach</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+      <nav aria-label="Breadcrumb" class="breadcrumbs">
+        <a href="index.html">Portfolio</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="index.html#deep-dives">Selected Work</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Product-Led Growth</span>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <header>
+    <h1>Product-led growth as product work</h1>
+    <p class="subhead">I owned <strong>CAC, ARPU, AOV, TTV, retention, and churn</strong> at BVXpress and Moovez. Find where users stall, change onboarding or packaging or copy, measure the loop. When paid is in the mix, I will not let last-click set CAC.</p>
+
+    <blockquote class="hero-quote">Diagnose the stall, change one lever, write the metric back &mdash; in-product and on paid mix.</blockquote>
+
+    <div class="cred-strip">
+      <span>Product-led growth</span>
+      <span>Unit economics</span>
+      <span>Instrumentation</span>
+      <span>Attribution</span>
+    </div>
+
+    <div class="cred-strip">
+      <span>CAC</span>
+      <span>ARPU</span>
+      <span>AOV</span>
+      <span>TTV</span>
+      <span>Retention</span>
+      <span>Churn</span>
+      <span>Owned at BVXpress &amp; Moovez/Quotely</span>
+    </div>
+
+    <div class="proof-points proof-points--six">
+      <div class="proof-card teal">
+        <div class="proof-number">+45%</div>
+        <div class="proof-label">TTV / adoption from new onboarding flows (BVXpress)</div>
+      </div>
+      <div class="proof-card amber">
+        <div class="proof-number">$450 &rarr; $600</div>
+        <div class="proof-label">ARPU from voluntary module upgrades (BVXpress)</div>
+      </div>
+      <div class="proof-card blue">
+        <div class="proof-number">+14%</div>
+        <div class="proof-label">Retention over 2 years from lifecycle depth (BVXpress)</div>
+      </div>
+      <div class="proof-card purple">
+        <div class="proof-number">~$100 CAC</div>
+        <div class="proof-label">$1,000+ LTV at 12+ month retention (Moovez)</div>
+      </div>
+      <div class="proof-card teal">
+        <div class="proof-number">12+ mo</div>
+        <div class="proof-label">Retention; 70%+ bookings from returning customers (Moovez)</div>
+      </div>
+      <div class="proof-card amber">
+        <div class="proof-number">18% CAC</div>
+        <div class="proof-label">Projected reduction vs last-click (fractional e-commerce MMM)</div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>How I run growth</h2>
+    <p class="section-lead">The scorecard is the job, not a tool list. Same operator at a B2B SaaS suite and a marketplace: find where the loop breaks, change one lever, put a number on it.</p>
+    <ol class="principles-list">
+      <li><strong>Diagnose the stall</strong> &mdash; telemetry and opportunity maps before roadmap bets. At BVXpress, fewer than 20% weekly active users despite strong demo feedback. At Moovez, 60%+ checkout abandonment at manual item entry.</li>
+      <li><strong>Change one lever</strong> &mdash; onboarding, messaging, packaging, or spend mix. Not a feature dump. One hypothesis, one release, one measurement window.</li>
+      <li><strong>Write the metric back</strong> &mdash; CAC payback, ARPU, TTV, retention, churn. In-product (Pendo, in-house telemetry, Segment) and on paid (mix model when last-click inflates efficiency).</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Where the product loop broke</h2>
+    <p class="section-lead">At BVXpress, demos looked good but users never reached first client-ready output. The value metric was time-to-first-presentation, not &ldquo;most accurate valuation.&rdquo;</p>
+    <ul class="pain-list">
+      <li><strong>WAU under 20%</strong> &mdash; positive feedback in demos masked workflow non-adoption</li>
+      <li><strong>Abandonment before first deal flow</strong> &mdash; in-app onboarding surfaced users quitting before completing their first engagement</li>
+      <li><strong>Wrong headline metric</strong> &mdash; advisors did not need better analysis; they needed to get out of Excel faster and look professional to clients</li>
+      <li><strong>GTM shift</strong> &mdash; retention analysis showed multi-product adopters (3+) retained at 2&times; single-product users, driving onboarding depth over acquisition breadth</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Four product motions</h2>
+    <p class="section-lead">Activate, convert, expand, retain at BVXpress &mdash; instrumented in-product, not a separate growth team.</p>
+    <div class="capabilities-grid">
+      <div class="cap-card">
+        <div class="layer-tag">Activate</div>
+        <h4>+45% TTV / adoption</h4>
+        <p>New user-onboarding flows, including a complex cloud SKU in the 8-product suite. Time-to-first client-ready output was the activation gate.</p>
+      </div>
+      <div class="cap-card">
+        <div class="layer-tag">Convert</div>
+        <h4>+7% conversion</h4>
+        <p>Landing and product messaging: &ldquo;fastest route from Excel to client presentation,&rdquo; not &ldquo;most accurate valuation.&rdquo; Built MQL&rarr;SQL velocity and CAC payback tracking from scratch.</p>
+      </div>
+      <div class="cap-card">
+        <div class="layer-tag">Expand</div>
+        <h4>ARPU $450 &rarr; $600</h4>
+        <p>Usage-informed packaging and voluntary module upgrades. Presentation and export tools drove expansion without list-price hikes.</p>
+      </div>
+      <div class="cap-card">
+        <div class="layer-tag">Retain</div>
+        <h4>+14% retention</h4>
+        <p>Personalized onboarding, lifecycle messaging, and lead-routing over two years. Multi-product depth (3+) retained at 2&times;.</p>
+      </div>
+    </div>
+    <p class="section-lead" style="margin-top:1.25rem;">For how value was captured (loss-leader ladder, feature fences, custom deals), see the <a class="inline-link" href="bvxpress-pricing.html">BVXpress pricing architecture</a> deep dive.</p>
+  </section>
+
+  <section>
+    <h2>Same scorecard, marketplace</h2>
+    <p class="section-lead">At Moovez/Quotely I owned conversions, retention, and experimentation as founding PM. Marketplace unit economics, not SaaS ARPU.</p>
+    <div class="cs-grid">
+      <div class="cs-label">Unit economics</div>
+      <div class="cs-content"><strong>~$100 CAC</strong> with <strong>$1,000+ LTV</strong> and 12+ month retention. Real-time pricing reduced quote-to-payment drop-off.</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">Retention</div>
+      <div class="cs-content">Segment instrumentation showed <strong>70%+ of bookings from returning customers</strong>, shifting roadmap priority to lifecycle messaging over new-user acquisition.</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">TTV</div>
+      <div class="cs-content">Quote time <strong>60 min &rarr; 3 min</strong> (20&times; faster). Customers expected a price in under 2 minutes; speed-to-quote was the primary booking driver.</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">AOV &amp; churn</div>
+      <div class="cs-content">Owned and instrumented. Fill rate reached <strong>~93%</strong> vs ~70% industry average as the commercial outcome of the quote-to-dispatch loop.</div>
+    </div>
+    <p class="section-lead" style="margin-top:1rem;">Full quoting and ops context: <a class="inline-link" href="index.html#case-moovez">Moovez case study on the portfolio index</a>.</p>
+  </section>
+
+  <section>
+    <h2>When last-click overstates CAC</h2>
+    <p class="section-lead">On a fractional e-commerce engagement, the client optimized spend on last-click attribution. That model gives 100% of a conversion to the final ad clicked, making assist channels look wasteful and the last-click channel look artificially cheap. Teams then overspend on the &ldquo;efficient&rdquo; channel and cut the ones that actually created demand.</p>
+    <div class="compare-grid">
+      <div class="compare-card legacy">
+        <h3>Last-click dashboard</h3>
+        <ul>
+          <li>Over-credits final touchpoint</li>
+          <li>Cuts brand and upper-funnel spend</li>
+          <li>Perceived CAC looks better than mix delivers</li>
+          <li>Budget follows vanity, not contribution</li>
+        </ul>
+      </div>
+      <div class="compare-card modern">
+        <h3>Bayesian media mix model</h3>
+        <ul>
+          <li>134,900 records across 6 spend channels</li>
+          <li>Projected <strong>18% CAC reduction</strong> from mix-informed shifts</li>
+          <li><strong>24% ARPU increase</strong> from segmentation-informed spend (not BVXpress $450&rarr;$600)</li>
+          <li>Budget follows contribution, not last click</li>
+        </ul>
+      </div>
+    </div>
+    <p class="method-line">R &middot; GA4 &middot; HubSpot &middot; adstock &middot; Hill saturation &middot; ridge regression</p>
+  </section>
+
+  <section>
+    <h2>Related work</h2>
+    <div class="cs-grid">
+      <div class="cs-label">Capture</div>
+      <div class="cs-content">How voluntary ARPU expansion and feature fences worked: <a class="inline-link" href="bvxpress-pricing.html">BVXpress pricing architecture</a>.</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">Quoting ops</div>
+      <div class="cs-content">Marketplace quote-to-dispatch and fill rate: <a class="inline-link" href="index.html#case-moovez">Moovez case study</a>.</div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-label">Eval depth</div>
+      <div class="cs-content">Four-layer eval harness for Quotely (separate from growth scorecard): <a class="inline-link" href="quotely-evals.html">Quotely evals</a>.</div>
+    </div>
+  </section>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-contact">
+    <div class="footer-inner">
+      <p class="footer-name"><strong>Bob Lavania:</strong> Product Manager &amp; BizOps Leader</p>
+      <p class="footer-cta">Ideal for: Seed to Series-B companies (10 to 50 people) looking to build or scale AI-driven products. Comfortable with equity compensation and excited about 0 to 1 product development.</p>
+      <div class="footer-actions">
+        <span class="contact-reveal" data-v="YmxhdmFuaWFAb3V0bG9vay5jb20=">Click to reveal email</span>
+        <a href="https://linkedin.com/in/blavania" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-utility">
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="Portfolio">
+        <a href="index.html">Home</a>
+        <span class="footer-nav-divider">&middot;</span>
+        <span class="footer-nav-label">Deep-dives:</span>
+        <a href="bvxpress-pricing.html">BVXpress pricing</a>
+        <a href="plg.html" aria-current="page">PLG</a>
+        <a href="hris-ma.html">HRIS / M&amp;A</a>
+        <a href="quotely-evals.html">Quotely evals</a>
+        <a href="sms-agent-evals.html">Agent evals</a>
+        <a href="cybersecurity-marketplace.html">Cyber marketplace</a>
+        <a href="telehealth.html">Telehealth</a>
+      </nav>
+      <div class="footer-utility-actions">
+        <a href="#top" class="back-to-top">Back to top</a>
+        <a href="https://churnos.blavania.com" class="footer-field-manual">churnOS</a>
+        <span class="footer-location">San Francisco, CA &amp; Calgary, AB &middot; Remote</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="footer.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -73,6 +73,7 @@
               <span class="tech-chip">Agent &amp; eval systems</span>
               <span class="tech-chip">Financial &amp; energy modeling</span>
               <span class="tech-chip">GTM analytics &amp; instrumentation</span>
+              <span class="tech-chip">Product-led growth</span>
               <span class="tech-chip">Zero-to-one product delivery</span>
               <span class="tech-chip">Decision architecture &amp; trust</span>
             </div>
@@ -83,7 +84,7 @@
 
     <section id="selected-work">
       <h2>Selected Work</h2>
-      <p class="work-intro">Three themes run through this work: <strong>quoting systems</strong> (CV + OR for logistics ops), <strong>ops &amp; energy modeling</strong> (scenario-first deployability), and <strong>B2B pricing architecture</strong> (tier consolidation, take rate, ARPU). Expandable case summaries below; separate deep-dive pages cover eval harnesses, pricing ladders, and product notes.</p>
+      <p class="work-intro">Four themes run through this work: <strong>quoting systems</strong> (CV + OR for logistics ops), <strong>ops &amp; energy modeling</strong> (scenario-first deployability), <strong>B2B pricing architecture</strong> (tier consolidation, take rate, ARPU), and <strong>product-led growth</strong> (activation, lifecycle, unit economics). Expandable case summaries below; separate deep-dive pages cover eval harnesses, pricing ladders, PLG, and product notes.</p>
 
       <div class="work-chrome" aria-label="Filter and navigate work">
         <div class="work-chrome-section work-chrome-section--filter">
@@ -119,6 +120,9 @@
                 <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="value-based-pricing">Value-based pricing</button>
                 <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="tier-consolidation">Tier consolidation</button>
                 <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="arpu-optimization">ARPU optimization</button>
+                <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="plg">PLG</button>
+                <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="onboarding">Onboarding</button>
+                <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="lifecycle-messaging">Lifecycle messaging</button>
                 <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="attribution-modeling">Attribution modeling</button>
                 <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="r">R</button>
                 <button type="button" class="work-skills-filter work-skill-chip skill-gtm" data-skill="sql">SQL</button>
@@ -136,8 +140,6 @@
           <span class="work-chrome-label">Jump to work</span>
           <div class="work-quick-strip">
             <div class="work-quick-group work-quick-group--tiers">
-              <a href="#featured-work">Featured</a>
-              <a href="#additional-work">More</a>
               <a href="#deep-dives">Deep dives</a>
             </div>
             <div class="work-quick-group work-quick-group--cases">
@@ -152,11 +154,8 @@
       </div>
 
       <div class="work-tier" id="featured-work">
-        <div class="work-tier-header">
-          <h3 class="work-tier-title">Featured</h3>
-        </div>
 
-      <details class="case-study-details skill-filter-target" id="case-moovez" data-skills="operations-research vlm-computer-vision sms-voice-agents pricing-architecture r sql heap segment">
+      <details class="case-study-details skill-filter-target" id="case-moovez" data-skills="operations-research vlm-computer-vision sms-voice-agents pricing-architecture plg onboarding lifecycle-messaging r sql heap segment">
         <summary>
           <div class="cs-header teal">
             <h4>20× Faster Quoting: Computer Vision + Operations Research</h4>
@@ -296,6 +295,7 @@
           <div class="cs-content">
             <p>I designed a four-layer eval architecture for Quotely: vision, catalog matching, logistics snapshots, and end-to-end quote accuracy, with offline/online flywheels and CI gates. <a class="cs-link" href="quotely-evals.html">Quotely evals &rarr;</a></p>
             <p class="cs-followup">Separately, I designed eval metrics for conversational agents: when Cohen&rsquo;s &kappa; applies, HITL recall/precision, and fixture task-success gates (Moovez SMS agent). <a class="cs-link" href="sms-agent-evals.html">Agent evals &rarr;</a></p>
+            <p class="cs-followup cs-followup--spaced"><a class="cs-link" href="plg.html">Unit economics &amp; lifecycle on the PLG page &rarr;</a></p>
           </div>
         </div>
         <p class="cs-close-wrap"><button type="button" class="cs-close-link">Close case study ↑</button></p>
@@ -418,11 +418,8 @@
       </div>
 
       <div class="work-tier" id="additional-work">
-        <div class="work-tier-header">
-          <h3 class="work-tier-title">More</h3>
-        </div>
 
-      <details class="case-study-details skill-filter-target" id="case-bvxpress" data-skills="pricing-architecture arpu-optimization">
+      <details class="case-study-details skill-filter-target" id="case-bvxpress" data-skills="pricing-architecture arpu-optimization plg onboarding lifecycle-messaging">
         <summary>
           <div class="cs-header amber">
             <h4>Pricing Architecture: 9-Year Loss-Leader Ladder Without a Price Book</h4>
@@ -476,7 +473,7 @@
             <h5 class="cs-label">Key Insight</h5>
             <div class="cs-content">
               <p><strong>Revenue expanded when packaging matched the value metric.</strong> Presentation modules and feature fences drove voluntary ARPU growth — a pricing architecture outcome, not a list-price hike. Loss-leader economics only work when you instrument conversion, expansion, and blended margin.</p>
-              <p class="cs-followup cs-followup--spaced"><a class="cs-link" href="bvxpress-pricing.html"><strong>Read full pricing case study &rarr;</strong></a></p>
+              <p class="cs-followup cs-followup--spaced"><a class="cs-link" href="bvxpress-pricing.html"><strong>Read full pricing case study &rarr;</strong></a> &middot; <a class="cs-link" href="plg.html"><strong>PLG deep dive &rarr;</strong></a></p>
             </div>
           </div>
 
@@ -668,8 +665,8 @@
       </div>
 
       <div class="work-tier" id="deep-dives">
-        <div class="work-tier-header">
-          <h3 class="work-tier-title">Deep dives</h3>
+        <div class="work-tier-header work-tier-header--deep-dives">
+          <h3 class="work-tier-title work-tier-title--deep-dives">Deep dives</h3>
         </div>
         <div class="deep-dive-grid">
           <a class="deep-dive-card skill-filter-target" href="bvxpress-pricing.html" data-skills="pricing-architecture arpu-optimization value-based-pricing">
@@ -680,6 +677,16 @@
             </div>
             <h4>BVXpress pricing architecture</h4>
             <p>Loss-leader ladder, feature fences, and custom deal templates across a nine-year SaaS portfolio without a public price book.</p>
+            <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span></div>
+          </a>
+          <a class="deep-dive-card skill-filter-target" href="plg.html" data-skills="plg onboarding lifecycle-messaging arpu-optimization attribution-modeling">
+            <div class="case-study-skills" aria-label="Skills demonstrated">
+              <span class="work-skill-chip skill-gtm">PLG</span>
+              <span class="work-skill-chip skill-gtm">Onboarding</span>
+              <span class="work-skill-chip skill-gtm">Attribution modeling</span>
+            </div>
+            <h4>Product-led growth</h4>
+            <p>Owned CAC, ARPU, TTV, retention, and churn at BVXpress and Moovez: in-product loops, lifecycle, and mix-model CAC honesty.</p>
             <div class="deep-dive-card-footer"><span>Read deep dive &rarr;</span></div>
           </a>
           <a class="deep-dive-card skill-filter-target" href="quotely-evals.html" data-skills="eval-harnesses multi-model-evals vlm-computer-vision">
@@ -728,7 +735,7 @@
       <h2>Career Arc</h2>
       <div class="career-grid">
         <div class="career-date">2024&ndash;Now</div>
-        <div class="career-entry"><strong><a href="https://moovez.ca" target="_blank" rel="noopener noreferrer">Moovez</a> / <a href="https://quoteperfectly.com" target="_blank" rel="noopener noreferrer">Quotely</a></strong>: Founding PM; validated &amp; commercialized a standalone SaaS. <a class="cs-link" href="#case-moovez">Quoting &amp; OR case study</a></div>
+        <div class="career-entry"><strong><a href="https://moovez.ca" target="_blank" rel="noopener noreferrer">Moovez</a> / <a href="https://quoteperfectly.com" target="_blank" rel="noopener noreferrer">Quotely</a></strong>: Founding PM; validated &amp; commercialized a standalone SaaS. <a class="cs-link" href="#case-moovez">Quoting &amp; OR case study</a> &middot; <a class="cs-link" href="plg.html">PLG</a></div>
         <div class="career-date">2022&ndash;2025</div>
         <div class="career-entry"><strong>Fractional Product Lead</strong>: Embedded leadership across logistics, FinTech, EdTech, and healthcare; <strong>Netsweeper</strong> alert-trust redesign (85% false-alert reduction across 35 schools); <strong>VWLL</strong> pricing architecture drove 3&times; take rate.
           <a class="cs-link" href="#case-netsweeper">Netsweeper case study</a> &middot;
@@ -737,7 +744,7 @@
         <div class="career-entry accent"><strong>MBA, University of Calgary</strong>: Energy economics and product leadership; Alberta Product Leadership Certificate (2023); deployability models became <a class="cs-link" href="#case-epsilon">Project Epsilon</a>.
           <em>Concurrent with fractional product work.</em></div>
         <div class="career-date">2012&ndash;2021</div>
-        <div class="career-entry"><strong><a href="https://www.bvxpress.com" target="_blank" rel="noopener noreferrer">BVXpress</a></strong>: Product &amp; Chief of Staff; built the product function from zero and launched five products. <a class="cs-link" href="bvxpress-pricing.html">Pricing architecture case study</a></div>
+        <div class="career-entry"><strong><a href="https://www.bvxpress.com" target="_blank" rel="noopener noreferrer">BVXpress</a></strong>: Product &amp; Chief of Staff; built the product function from zero and launched five products. <a class="cs-link" href="bvxpress-pricing.html">Pricing architecture case study</a> &middot; <a class="cs-link" href="plg.html">PLG</a></div>
       </div>
       <div class="career-certs">CSM (Scrum Alliance, Dec 2021) &middot; CSPO (Scrum Alliance, Jan 2022) &middot; Alberta Product Leadership (Product Calgary, Mar 2023) &middot; B.S. Business &amp; Finance, Illinois Tech (2012)</div>
     </section>
@@ -782,8 +789,9 @@
           <a href="index.html" aria-current="page">Home</a>
           <span class="footer-nav-divider">·</span>
           <span class="footer-nav-label">Deep-dives:</span>
-          <a href="bvxpress-pricing.html">BVXpress pricing</a>
-          <a href="hris-ma.html">HRIS / M&amp;A</a>
+        <a href="bvxpress-pricing.html">BVXpress pricing</a>
+        <a href="plg.html">PLG</a>
+        <a href="hris-ma.html">HRIS / M&amp;A</a>
           <a href="quotely-evals.html">Quotely evals</a>
           <a href="sms-agent-evals.html">Agent evals</a>
           <a href="cybersecurity-marketplace.html">Cyber marketplace</a>
@@ -791,6 +799,7 @@
         </nav>
         <div class="footer-utility-actions">
           <a href="#top" class="back-to-top">Back to top</a>
+          <a href="https://churnos.blavania.com" class="footer-field-manual">churnOS</a>
           <a href="https://product.blavania.com/" class="footer-field-manual">The Field Manual for Product</a>
           <span class="footer-location">San Francisco, CA &amp; Calgary, AB · Remote</span>
         </div>

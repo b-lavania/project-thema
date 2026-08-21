@@ -499,6 +499,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - Roadmap and releases tracked in Aha!; **in-house telemetry/analytics suite** plus Pendo informed which workflows to fix first and which features to enhance or deprecate; focus groups and tree tests validated pricing, onboarding, and workflow changes across the 8-product suite.
 - Automated pricing evolution based on customer usage-pattern analysis, increasing ARPU from $450 to $600 over 2 years (3x take rate improvement).
 - Built personalized onboarding, lifecycle messaging, and lead-routing workflows, driving a 14% retention increase over 2 years.
+- Redesigned user-onboarding flows (including a complex cloud SKU in the suite), driving a 45% lift in adoption / time-to-value.
 - Re-architected landing page and product messaging funnels, achieving a 7% conversion lift.
 - GTM automation: built MQL→SQL pipeline velocity and CAC payback tracking from scratch.
 

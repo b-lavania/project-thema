@@ -1,6 +1,6 @@
 # Grizzly Hunt — Interview Prep (Comprehensive)
 
-Branding brief, Grizzly Den anchors, behavioral STARs, recruiter screeners, and AI/PM depth. Grounded in [REPENTANCE](README.md) — sharp, honest, built for rooms that push back.
+Branding brief, Grizzly Den anchors, behavioral STARs, recruiter screeners, AI/PM depth, and PLG/analytics stories. Grounded in [REPENTANCE](README.md) — sharp, honest, built for rooms that push back.
 
 **North star sentence:** I find the real operational bottleneck, reduce ambiguity, and build the system that makes the fix permanent.
 
@@ -15,6 +15,7 @@ Branding brief, Grizzly Den anchors, behavioral STARs, recruiter screeners, and 
 | [VII](#vii-behavioral-interview--full-star-answers) | Full STAR answers — bugs, incomplete reqs, stakeholder comms |
 | [VIII](#viii-recruiter--screener-questions) | Self-ratings — Agile, OT, IT/OT alignment |
 | [IX](#ix-ai--the-pm-role) | How AI changed spec / dev / QA |
+| [X](#x-plg--product-analytics) | PLG stories, metric wins, Heap/Mixpanel/Segment examples |
 | [Quick reference](#quick-reference-card-pin-this) | Pin-this card |
 
 ---
@@ -274,6 +275,9 @@ The technical proof exists. The narrative is now sharp enough to sell. What's le
 | Test feature with incomplete requirements? | **Photo-to-quote** — tested form vs photo via replay/research; OR vs lookup after 40%+ margin error. Alt: automated quoting A/B. |
 | Explain complex bug to non-technical stakeholder? | **Netsweeper** — false positives as "smoke alarm / crying wolf"; 85% reduction. Alt: SMS agent "commits like an intern" to CEO. |
 | How did AI change spec / dev / QA? | Spec → operating contract + eval criteria. Dev → PM prototypes first slice. QA → layered eval gates. Unchanged: problem selection, alignment, outcomes. See [§IX](#ix-ai--the-pm-role). |
+| Most relevant self-serve PLG product? | **Moovez** (quote-to-book marketplace). Alt: **Village Wellth** (B2B plan-step monetization). See [§X](#x-plg--product-analytics). |
+| Self-serve metric win? | Moovez activation (60% abandonment → photo intake, ~93% fill). Alt: Village Wellth 3x take rate; BVXpress 14% retention lift. |
+| Product analytics example? | **Heap + Clarity** → dimension-entry drop-off → CV intake. **Segment** → 70% repeat bookings → retention pivot. See [§X](#x-plg--product-analytics). |
 
 ---
 
@@ -503,6 +507,104 @@ More **prototype-capable**, not more **ceremony-capable**. Less waiting for eng 
 
 ---
 
+## X. PLG & Product Analytics
+
+**Story picker**
+
+| They emphasize… | Lead story | Metric | Analytics |
+|-----------------|------------|--------|-----------|
+| Consumer PLG | Moovez | 60% abandonment → photo intake | Heap + Clarity |
+| B2B PLG / pricing | Village Wellth | 3x take rate | Opportunity maps + tree tests |
+| Retention / WAU | BVXpress | 14% retention lift | In-house telemetry |
+| Experimentation | Moovez | Automated vs manual quote A/B | Segment |
+
+**Honest positioning:** Strongest PLG proof is **Moovez** (self-serve quote-to-book marketplace) and **Village Wellth** (B2B self-serve monetization at plan step). Not classic freemium dev-tools signup → aha → upgrade. Pattern: find where self-serve breaks, fix activation or monetization, measure value without a human in the loop. Don't lead with Quotely B2B (inbound/sales-assisted) or cyber marketplace Mixpanel model (concept only).
+
+---
+
+### Most relevant self-serve PLG product
+
+**Primary — Moovez marketplace (~2 min)**
+
+| | |
+|---|---|
+| **Product** | Last-mile moving marketplace — priced job, book, pay, track without calling a dispatcher. Employee #6 / first product hire. |
+| **Customers** | Consumers booking local moves (B2C). PLG motion = **booker self-serve funnel**. |
+| **Discovery (minimal sales)** | Marketplace search, referrals, repeat bookings. Wedge = **speed-to-quote** vs calling 3–5 movers. Competitors won on instant price, not cheaper price. |
+| **Adoption path** | Land → photo CV intake (not dimension forms) → OR-backed price → Stripe/Square checkout → order status self-serve → SMS agent for routine flows (~50% deflection). Dispatchers = exceptions only. |
+| **Value without sales** | Quote **60 min → ~3 min**; price anchor before human contact; **~93% fill rate** vs ~70% industry. |
+| **Caveat** | Transactional marketplace PLG, not freemium SaaS. |
+| **Close** | "PLG meant removing humans from the default path and only escalating exceptions." |
+
+**Alternate — Village Wellth (~90 sec)**
+
+| | |
+|---|---|
+| **Product** | Digital M&A financing platform for sub-$10M deals. |
+| **Customers** | Business owners + M&A advisors. |
+| **PLG break** | Four tiers → plan-selection paralysis; advisors pre-filtered clients (didn't trust self-serve picks). |
+| **Fix** | Consolidated 4 → 3 tiers; focus groups + tree tests — users distinguish value in &lt;30 sec. |
+| **Outcome** | **3x take rate** in two billing cycles; plan-indecision churn near zero; advisors recommended platform more broadly. |
+| **Close** | "PLG failed at monetization/activation, not acquisition. Fixing decision architecture unlocked self-serve." |
+
+---
+
+### Self-serve metric initiative
+
+Pick **one** per interview.
+
+**Option A — Activation / conversion (Moovez)** *(recommended)*
+
+| | |
+|---|---|
+| **Metric** | Checkout conversion / quote-to-book activation |
+| **Problem** | **60%+ abandonment** at manual dimension-entry (Heap + Clarity). Users expected price in &lt;2 min. |
+| **Action** | Photo CV intake (not simpler form). OR engine for complex jobs (lookup tables **40%+ margin error**). Cut V1 scope. Segment instrumentation. |
+| **Outcome** | **60 min → ~3 min** quoting; **~93% fill rate**. Segment: **70%+ bookings returning** → retention/lifecycle pivot. |
+
+**Option B — Monetization (Village Wellth)**
+
+| | |
+|---|---|
+| **Metric** | Take rate / plan-step conversion |
+| **Problem** | Churn at plan selection, not product dissatisfaction. |
+| **Action** | Opportunity maps + STP; killed two noise tiers; focus groups + tree tests. |
+| **Outcome** | **3x take rate**; advisor referrals increased. |
+
+**Option C — Retention / activation (BVXpress)**
+
+| | |
+|---|---|
+| **Metric** | Weekly active use / retention |
+| **Problem** | **&lt;20% WAU** despite good demos — advisors spent 4+ hrs formatting presentations. |
+| **Action** | Telemetry + opportunity maps → pivot to export/presentation speed. Killed demo features. Gated launches on 20+ user cohort. Landing test: speed vs accuracy message. |
+| **Outcome** | **14% retention lift**; **7% landing conversion**; ARPU **$450 → $600**; 3+ product adopters retained at **2×**. |
+
+---
+
+### Product analytics influencing decisions
+
+**Primary — Moovez (Heap + Clarity + Segment)**
+
+| Insight | Roadmap / UX change |
+|---------|---------------------|
+| **60%+ drop-off** at manual dimension entry (replay) | Killed "simpler form" → **photo CV intake** default |
+| Static pricing **40%+ wrong** on complex jobs | **OR / 3D bin-packing** before scaling automated quotes |
+| **70%+ bookings** from returning customers (Segment) | Deprioritized acquisition; lifecycle messaging, order status, crew availability |
+| Automated vs manual quoting experiment | Segment on quote-to-book funnel before full traffic cutover |
+
+**Close:** "Analytics didn't produce dashboards — it killed the wrong roadmap."
+
+**Secondary — BVXpress (in-house telemetry)**
+
+High demo scores but **&lt;20% WAU** → users stuck in presentation/export, not model accuracy → roadmap pivot to client workflow speed → **14% retention lift**, **7% conversion lift**.
+
+**Tertiary — E-commerce fractional (Mixpanel + R)**
+
+Bayesian MMM on 134k records — budget reallocation story. Use for growth/monetization analytics depth; weaker for pure PLG UX.
+
+---
+
 ## Quick reference card (pin this)
 
 | Item | Answer |
@@ -514,6 +616,8 @@ More **prototype-capable**, not more **ceremony-capable**. Less waiting for eng 
 | **Target** | Series A/B · 5+ engineers · logistics / freight / field ops · AI-native |
 | **Not targeting** | FAANG · Director PM · generic job boards · "anything's better than current" |
 | **Need to be happy** | Real eng team · domain fit · one number to own · conviction in the problem |
+| **PLG lead** | Moovez self-serve quote-to-book · Village Wellth 3x take rate |
+| **Analytics lead** | Heap/Clarity → CV intake · Segment → retention pivot |
 
 ---
 
