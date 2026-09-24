@@ -62,6 +62,7 @@ from export_guardrails import (
 )
 from outcomes import append_application_record, render_outcomes_tab
 from hunt_tab import render_hunt_tab
+from interview_prep_tab import render_interview_prep_tab
 
 OUTPUT_DIR = RES_ROOT / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -505,112 +506,262 @@ def estimate_cost(usage_list, provider: str = "openai"):
     return total_tokens, cost
 
 
-def inject_sf_professional_theme():
-    """Modern SF-style professional theme with clean typography and neutral palette."""
+def inject_churnos_theme():
+    """ChurnOS portfolio theme: DM Sans / DM Mono, ink + teal, paper page, sharp corners."""
     st.markdown(
         """
 <style>
-/* Load fonts: Inter for body, Lora for headings */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
 
-/* Root variables */
 :root {
-    --sf-primary: #007AFF;
-    --sf-bg: #F9FAFB;
-    --sf-card: #FFFFFF;
-    --sf-border: #E5E7EB;
-    --sf-text: #111827;
-    --sf-text-muted: #6B7280;
+    --ink: #0f1112;
+    --ink-mid: #3a3f45;
+    --ink-soft: #5c6370;
+    --ink-light: #8b92a0;
+    --rule: #e8eaed;
+    --teal: #0a5a46;
+    --teal-light: #f1f8f6;
+    --teal-mid: #1d9e75;
+    --amber: #ba7517;
+    --amber-light: #fdf6ec;
+    --blue: #185fa5;
+    --blue-light: #f0f7ff;
+    --page: #faf9f7;
+    --white: #ffffff;
+    --mono: 'DM Mono', ui-monospace, monospace;
+    --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --radius: 0px;
 }
 
-/* Main app background */
-.stApp {
-    background-color: var(--sf-bg);
+html, .stApp {
+    background-color: var(--page) !important;
 }
 
-/* Typography & Readability */
-section[data-testid="stMain"], .stApp {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    color: var(--sf-text);
-    line-height: 1.6;
+section[data-testid="stMain"], .stApp, [data-testid="stAppViewContainer"] {
+    font-family: var(--sans);
+    color: var(--ink);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Lora', serif !important;
-    color: var(--sf-text) !important;
-    letter-spacing: -0.01em !important;
-    font-weight: 600 !important;
+section[data-testid="stMain"] h1,
+section[data-testid="stMain"] h2,
+section[data-testid="stMain"] h3,
+section[data-testid="stMain"] h4,
+section[data-testid="stMain"] h5,
+section[data-testid="stMain"] h6 {
+    font-family: var(--sans) !important;
+    color: var(--ink) !important;
+    letter-spacing: -0.02em !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
 }
 
 section[data-testid="stMain"] h1 {
-    font-size: 2.25rem !important;
+    font-size: 2.1rem !important;
     margin-bottom: 0.5rem !important;
 }
 
 section[data-testid="stMain"] h2 {
-    font-size: 1.5rem !important;
+    font-size: 1.45rem !important;
     margin-top: 1.5rem !important;
 }
 
-/* Sidebar */
+section[data-testid="stMain"] h3 {
+    font-size: 1.15rem !important;
+}
+
+p, li, label, .stMarkdown {
+    color: var(--ink);
+}
+
+small, .stCaption, [data-testid="stCaptionContainer"] {
+    color: var(--ink-soft) !important;
+}
+
+code, kbd, pre, [data-testid="stCode"] {
+    font-family: var(--mono) !important;
+}
+
+a { color: var(--blue); }
+a:hover { color: var(--teal); }
+
+/* Sidebar — do not restyle icon fonts, collapse chrome, or Baseweb internals */
 section[data-testid="stSidebar"] {
-    background-color: #F3F4F6 !important;
-    border-right: 1px solid var(--sf-border);
+    background-color: var(--page) !important;
+    border-right: 1px solid var(--rule) !important;
+}
+section[data-testid="stSidebar"] > div {
+    background-color: var(--page) !important;
+}
+section[data-testid="stSidebar"] [data-testid="stSidebarUserContent"],
+section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+    min-width: 0;
+}
+section[data-testid="stSidebar"] [data-testid="stIconMaterial"],
+section[data-testid="stSidebar"] span[data-testid="stIconMaterial"],
+section[data-testid="stSidebar"] [data-testid="stMarkdownIcon"],
+section[data-testid="stSidebar"] i,
+section[data-testid="stSidebar"] .material-icons,
+section[data-testid="stSidebar"] [class*="material-symbols"] {
+    font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons" !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+}
+section[data-testid="stSidebar"] [kind="header"],
+section[data-testid="stSidebar"] [kind="headerNoPadding"],
+section[data-testid="stSidebar"] button[data-testid="stBaseButton-header"],
+section[data-testid="stSidebar"] button[data-testid="stBaseButton-headerNoPadding"],
+section[data-testid="stSidebar"] [data-testid="stExpandSidebarButton"],
+section[data-testid="stSidebar"] [data-testid="collapsedControl"] button {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--ink) !important;
+}
+section[data-testid="stSidebar"] [data-testid="stExpander"] {
+    border: 1px solid var(--rule) !important;
+    border-radius: var(--radius) !important;
+    background: var(--white) !important;
+}
+section[data-testid="stSidebar"] [data-testid="stExpander"] summary,
+section[data-testid="stSidebar"] [data-testid="stExpander"] button {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--ink) !important;
+}
+section[data-testid="stSidebar"] .stSelectbox,
+section[data-testid="stSidebar"] .stRadio,
+section[data-testid="stSidebar"] .stCheckbox,
+section[data-testid="stSidebar"] .stTextInput,
+section[data-testid="stSidebar"] .stNumberInput,
+section[data-testid="stSidebar"] .stButton {
+    width: 100%;
+    max-width: 100%;
+}
+section[data-testid="stSidebar"] [data-baseweb="select"] {
+    max-width: 100%;
 }
 
-/* Modern Tabs */
-.stTabs [data-baseweb="tab-list"] {
-    gap: 8px;
+/* Tabs — underline, not pills (main pane only) */
+section[data-testid="stMain"] .stTabs [data-baseweb="tab-list"] {
+    gap: 4px;
     background-color: transparent;
+    border-bottom: 2px solid var(--rule);
 }
-
-.stTabs [data-baseweb="tab"] {
+section[data-testid="stMain"] .stTabs [data-baseweb="tab"] {
+    font-family: var(--mono);
+    font-size: 12px;
     font-weight: 500;
-    border-radius: 8px;
-    padding: 8px 16px;
-    color: var(--sf-text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    color: var(--ink-soft);
+    background: transparent !important;
+}
+section[data-testid="stMain"] .stTabs [aria-selected="true"] {
+    background-color: transparent !important;
+    color: var(--teal) !important;
+    border: none !important;
+    border-bottom: 2px solid var(--teal) !important;
+    box-shadow: none !important;
 }
 
-.stTabs [aria-selected="true"] {
-    background-color: var(--sf-card) !important;
-    color: var(--sf-primary) !important;
-    border: 1px solid var(--sf-border) !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+/* Inputs — outer widget only; do not restyle Baseweb inner divs */
+.stTextInput input, .stTextArea textarea, .stNumberInput input {
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--rule) !important;
+    background: var(--white) !important;
+}
+.stTextInput input:focus, .stTextArea textarea:focus {
+    border-color: var(--teal) !important;
+    box-shadow: 0 0 0 1px var(--teal) !important;
 }
 
-/* Improved Inputs */
-.stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] {
-    border-radius: 8px !important;
-    border: 1px solid var(--sf-border) !important;
-}
-
-/* Output Preview Readability */
-div[data-testid="stText"] pre {
-    font-family: 'SF Mono', 'Inter', sans-serif !important;
+/* Buttons — ChurnOS primary in main pane only */
+section[data-testid="stMain"] .stButton > button,
+section[data-testid="stMain"] .stDownloadButton > button,
+section[data-testid="stMain"] .stFormSubmitButton > button {
+    border-radius: var(--radius) !important;
+    font-family: var(--sans) !important;
+    font-weight: 500 !important;
     font-size: 15px !important;
+    border: 1px solid #063a2e !important;
+    background: linear-gradient(to bottom, var(--teal), #084838) !important;
+    color: var(--white) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+section[data-testid="stMain"] .stButton > button:hover,
+section[data-testid="stMain"] .stDownloadButton > button:hover {
+    background: linear-gradient(to bottom, #128265, var(--teal)) !important;
+    border-color: #084838 !important;
+    color: var(--white) !important;
+}
+section[data-testid="stSidebar"] .stButton > button {
+    border-radius: var(--radius) !important;
+    font-family: var(--sans) !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    border: 1px solid var(--rule) !important;
+    background: linear-gradient(to bottom, #ffffff, #f4f4f2) !important;
+    color: var(--ink) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 0 #fff !important;
+}
+
+/* Secondary / ghost buttons inside forms still get primary; keep it consistent */
+
+div[data-testid="stText"] pre {
+    font-family: var(--mono) !important;
+    font-size: 14px !important;
     line-height: 1.6 !important;
-    background-color: var(--sf-card) !important;
+    background-color: var(--white) !important;
     padding: 20px !important;
-    border-radius: 12px !important;
-    border: 1px solid var(--sf-border) !important;
+    border-radius: var(--radius) !important;
+    border: 2px solid var(--rule) !important;
     white-space: pre-wrap !important;
-    color: var(--sf-text) !important;
+    color: var(--ink) !important;
 }
 
-/* ATS Card */
 .ats-card {
-    background: white;
+    background: var(--white);
     padding: 24px;
-    border-radius: 12px;
-    border: 1px solid var(--sf-border);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-radius: var(--radius);
+    border: 2px solid var(--rule);
 }
 
-/* Button Refinement */
-.stButton button {
-    border-radius: 8px !important;
-    font-weight: 600 !important;
+section[data-testid="stMain"] [data-testid="stMetric"] {
+    background: var(--white);
+    border: 2px solid var(--rule);
+    padding: 12px 16px;
 }
+section[data-testid="stMain"] [data-testid="stMetricLabel"] {
+    font-family: var(--mono) !important;
+    font-size: 11px !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--ink-light) !important;
+}
+section[data-testid="stMain"] [data-testid="stMetricValue"] {
+    font-family: var(--sans) !important;
+    color: var(--teal) !important;
+    font-weight: 700 !important;
+}
+
+section[data-testid="stMain"] div[data-testid="stExpander"] {
+    border: 2px solid var(--rule) !important;
+    border-radius: var(--radius) !important;
+    background: var(--white) !important;
+}
+
+[data-testid="stAlert"] {
+    border-radius: var(--radius) !important;
+}
+
+hr { border-color: var(--rule) !important; }
 </style>
         """,
         unsafe_allow_html=True,
@@ -621,7 +772,7 @@ div[data-testid="stText"] pre {
 # Streamlit App
 # ---------------------------------------------------------------------------
 st.set_page_config(page_title="Project Thema", layout="wide", page_icon="📄")
-inject_sf_professional_theme()
+inject_churnos_theme()
 st.title("Project Thema")
 
 # Sidebar — collapsed into Settings / Workflow / Tools
@@ -884,6 +1035,7 @@ _tab_labels = [
     "Application Questions",
     "Generate & Output",
     "Outcomes",
+    "Interview Prep",
     "Job Search",
 ]
 if _show_pipeline:
@@ -894,8 +1046,9 @@ tab_job = _tabs[0]
 tab_questions = _tabs[1]
 tab_generate = _tabs[2]
 tab_outcomes = _tabs[3]
-tab_hunt = _tabs[4]
-tab_pipeline = _tabs[5] if _show_pipeline else None
+tab_interview_prep = _tabs[4]
+tab_hunt = _tabs[5]
+tab_pipeline = _tabs[6] if _show_pipeline else None
 
 # --- TAB 1: Job Details ---
 with tab_job:
@@ -1932,11 +2085,15 @@ with tab_generate:
 with tab_outcomes:
     render_outcomes_tab()
 
-# --- TAB 5: Job Search ---
+# --- TAB 5: Interview Prep ---
+with tab_interview_prep:
+    render_interview_prep_tab()
+
+# --- TAB 6: Job Search ---
 with tab_hunt:
     render_hunt_tab()
 
-# --- TAB 6: Pipeline (optional) ---
+# --- TAB 7: Pipeline (optional) ---
 if tab_pipeline is not None:
     with tab_pipeline:
         if "gen_results" in st.session_state:

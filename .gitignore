@@ -9,5 +9,7 @@ __pycache__/
 # Outputs
 RES/outputs/
 
+RES/data/interview_prep_state.json
+
 # Tempus
 CRM/crm.db

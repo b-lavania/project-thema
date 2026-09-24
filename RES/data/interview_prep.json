@@ -1,0 +1,905 @@
+{
+  "opening_spine": {
+    "positioning_thesis": "I find the real operational bottleneck, reduce ambiguity, and build the system that makes the fix permanent.",
+    "hr_intro": "I'm a founding product manager with eight-plus years in B2B SaaS. Most recently I run Moovez's quote-to-dispatch marketplace and Quotely's production AI layer — computer vision intake, operations-research pricing, eval gates, and governed RAG for ops knowledge. Before that, Netsweeper through the MSP channel and nine years building the product function at BVXpress. I'm looking for compounding product work on platform-scale ops AI — partner ecosystems and measured agent adoption — not another solo diagnostic engagement.",
+    "hire_me_one_liner": "You should hire me when quoting, dispatch, or ops AI is failing in production — I connect structured intake, pricing logic, eval gates, and feedback loops that tie quotes to actual job outcomes."
+  },
+  "stats": [
+    {
+      "value": "90 sec",
+      "label": "Max per behavioral answer"
+    },
+    {
+      "value": "7–8",
+      "label": "STAR stories to own cold"
+    },
+    {
+      "value": "3",
+      "label": "Questions you must ask them"
+    },
+    {
+      "value": "0",
+      "label": "Architecture monologues on HR screen"
+    }
+  ],
+  "hr_screen_note": "Can they defend advancing you? Will you stay? Are you coachable? Can they write 3 bullets for the hiring manager? They are not scoring MCP vs A2A. Pass by being clear, consistent, and easy to advocate for — not by out-engineering the room.",
+  "roleplay": [
+    {
+      "id": "stakeholders",
+      "category": "Stakeholders",
+      "question": "How do you manage stakeholders when priorities conflict?",
+      "trap": "They want a process lecture (RACI, alignment meetings). Generic 'I align everyone' signals PM theatre, not judgment.",
+      "whatTheyWant": "Explicit tradeoff, a recommendation, and a review date — not consensus theater.",
+      "leadStory": "STAR-09 Netsweeper",
+      "openingLine": "I don't run consensus meetings. I make the tradeoff explicit — what we're optimizing, what we're not, and what evidence would change the bet — then I bring a recommendation, not a blank canvas.",
+      "probe": "Engineering wanted more detection categories. District staff had stopped opening alerts. How did you pick?",
+      "probeAnswer": "I reframed success from detection accuracy to operational trust. We froze new features one quarter and redirected the outsourced team to false-positive pruning and alert workflow redesign. Staff re-engaged unprompted; contract renewed.",
+      "dontSay": "I align stakeholders / I build relationships / RICE prioritization framework"
+    },
+    {
+      "id": "disagreement",
+      "category": "Conflict",
+      "question": "Tell me about a disagreement with engineering or leadership.",
+      "trap": "Blame, ego, or 'we compromised' with no decision. They probe for emotional reactivity under pushback.",
+      "whatTheyWant": "Disagree with data or a reframed metric. Make a call. Escalate rarely.",
+      "leadStory": "STAR-09 Netsweeper (eng) or Moovez V1 cuts (scope pressure)",
+      "openingLine": "At Netsweeper, engineering's hypothesis was more coverage equals more value. Research showed the opposite — more detection with the same false-positive rate would accelerate trust collapse.",
+      "probe": "Did you go over their heads?",
+      "probeAnswer": "No. I brought focus-group evidence and tree tests on alert workflows. We agreed on a time-boxed quarter focused on signal quality only. The behavioral proof was staff reopening dashboards without being asked.",
+      "dontSay": "They were wrong / I had to educate them / we met in the middle"
+    },
+    {
+      "id": "feature-factory",
+      "category": "Prioritization",
+      "question": "How do you avoid being a feature factory?",
+      "trap": "Velocity bragging or JIRA process. They want proof you kill work.",
+      "whatTheyWant": "Outcome owner who gates on behavior signals, not demo applause.",
+      "leadStory": "Moovez V1 cuts + BVXpress kill deal DB",
+      "openingLine": "I'm allergic to feature factories. I gate launches on cohort behavior — if telemetry or research doesn't show a workflow change, it doesn't ship.",
+      "probe": "Give me something you cut.",
+      "probeAnswer": "At Moovez I deferred dispatcher chat overlay, subscriptions, and route optimization to protect quote-flow reliability. At BVXpress I killed a deal database and fee benchmarking — demo features, not workflow features.",
+      "dontSay": "We ship fast / I'm agile / roadmap grooming every sprint"
+    },
+    {
+      "id": "influence",
+      "category": "Influence gap probe",
+      "question": "Your resume doesn't show large-org influence. How do you wield influence?",
+      "trap": "Defensiveness or inventing matrix politics you never ran. HR may accept their premise.",
+      "whatTheyWant": "Honest reframe: prioritization under opposition, not turf wars. Own the gap without shrinking.",
+      "leadStory": "STAR-10 BVXpress pivot + STAR-09 Netsweeper freeze",
+      "openingLine": "Fair push. I haven't run multi-PM turf wars at a Fortune 500. My influence record is prioritization under opposition — reframing the success metric, killing scope with evidence, and redirecting eng for a full quarter when the bet was wrong.",
+      "probe": "So you've never influenced executives?",
+      "probeAnswer": "At BVXpress I was employee three inside an advisory firm with no product function. I influenced by changing what got built: pivot from analytical depth to presentation speed after telemetry showed under 20% weekly active users despite positive demos. ARPU moved from four-fifty to six hundred from voluntary upgrades, not price hikes.",
+      "dontSay": "I'm a people person / I build consensus / fake logo name-drops"
+    },
+    {
+      "id": "failure",
+      "category": "Failure",
+      "question": "Tell me about a failure or mistake.",
+      "trap": "Fake humblebrag ('I work too hard') or blaming the company. Silence after answer tests if you ramble.",
+      "whatTheyWant": "Ownership → diagnosis → system you still use.",
+      "leadStory": "STAR-10 BVXpress presentation pivot",
+      "openingLine": "Early BVXpress I optimized for analytical depth because demos sounded impressive. Telemetry showed fewer than twenty percent weekly active users — users weren't changing workflows.",
+      "probe": "What changed permanently?",
+      "probeAnswer": "I now sequence discovery before roadmap bets and gate launches on a cohort of twenty-plus users showing workflow adoption. That rule still governs how I cut Moovez V1 scope and Netsweeper's feature freeze.",
+      "dontSay": "I can't think of one / my manager was the problem / perfectionism weakness"
+    },
+    {
+      "id": "why-leave",
+      "category": "Motivation",
+      "question": "Why are you looking / why leave your current role?",
+      "trap": "Badmouthing Moovez or sounding flighty. Contradiction check vs resume dates.",
+      "whatTheyWant": "Forward pull toward compounding product work, not escape.",
+      "leadStory": "Positioning thesis — ops AI → platform scale",
+      "openingLine": "I built the zero-to-one ops AI stack at Moovez and commercialized it as Quotely. I want compounding product work at platform scale — partner ecosystems, governed agent adoption, measured AI — not another solo diagnostic gig.",
+      "probe": "Would you take a step down in title?",
+      "probeAnswer": "I'm optimizing for scope and compounding impact, not title inflation. I'd trade vanity title for a team, a roadmap, and a problem class I can own for years — but I need a real product mandate, not a staff PM label with no authority.",
+      "dontSay": "My CEO doesn't listen / I'm bored / I need a job"
+    },
+    {
+      "id": "weakness",
+      "category": "Weakness",
+      "question": "What's your greatest weakness?",
+      "trap": "Humblebrag or weakness that disqualifies you. They compare to reference checks.",
+      "whatTheyWant": "Real gap + mitigation you've actively worked.",
+      "leadStory": "Honest: enterprise stakeholder theatre at scale",
+      "openingLine": "My strongest work is founding and messy-stage ops AI — I reframe bottlenecks and ship systems. Classic enterprise stakeholder theatre at thousand-person scale is thinner on my resume than my builder record.",
+      "probe": "What are you doing about it?",
+      "probeAnswer": "I translate builder wins into decision stories hiring managers can forward: metric reframes, scope kills, partner-trust outcomes. I'm not pretending I've run matrix PM politics — I'm showing I influence by making tradeoffs legible and winning prioritization fights with evidence.",
+      "dontSay": "I care too much / I'm too detail-oriented / I have no weaknesses"
+    },
+    {
+      "id": "ai-production",
+      "category": "AI measurement",
+      "question": "How do you measure AI product success in production?",
+      "trap": "Demo metrics, model accuracy alone, or 'passion for AI.'",
+      "whatTheyWant": "Trust + telemetry + business outcomes. Eval gates before fluency.",
+      "leadStory": "STAR-03 eval harness + STAR-04 Command + STAR-05 Qortex",
+      "openingLine": "AI succeeds when it reduces operational ambiguity, not when it maximizes sophistication. I measure subsystem evals before end-to-end guesswork, quote accuracy MAE and outcome capture SLAs, and retrieval hit rates before debating reply fluency.",
+      "probe": "How do you prevent hallucinations?",
+      "probeAnswer": "At Qortex, high-stakes facts route through YAML playbooks — numbers are never LLM-invented. Thin evidence returns insufficient_evidence. Same instinct as Netsweeper: when users stop trusting the signal, accuracy metrics alone are insufficient.",
+      "dontSay": "We're passionate about AI / GPT-4 / LangChain"
+    },
+    {
+      "id": "channel",
+      "category": "Partners / MSP",
+      "question": "Tell me about partner or channel experience.",
+      "trap": "Claiming shipped cyber marketplace or quota-carrying sales.",
+      "whatTheyWant": "Partner workflow empathy + trust as retention metric.",
+      "leadStory": "Three-pillar trifecta: Netsweeper / Cyber concept / MSP research",
+      "openingLine": "Three angles: Netsweeper sold through MSP partners — end-client trust drove partner retention. Cyber marketplace concept after dozens of MSP and MSSP discovery calls — search-first catalog, shortlist as conversion. BVXpress-era Canadian MSP landscape research for a search-fund platform thesis.",
+      "probe": "Did you ship the marketplace?",
+      "probeAnswer": "Concept and discovery stage — partner-informed IA and telemetry model, not production revenue. I won't oversell it. The insight that stuck: MSP partners stop reselling when the product creates operational pain for end clients, not when the feature matrix is thin.",
+      "dontSay": "I closed partner deals / shipped production marketplace / Sherweb-specific unless that's the interview"
+    },
+    {
+      "id": "salary-silence",
+      "category": "HR trap",
+      "question": "What are your salary expectations? (then silence)",
+      "trap": "Anchor low out of nerves, or refuse and seem difficult. Post-answer silence tests rambling.",
+      "whatTheyWant": "Range with confidence. Stop talking after the number.",
+      "leadStory": "Logistics only — know your floor",
+      "openingLine": "Based on senior PM scope for ops AI and platform work in US/Canada remote, I'm targeting [your range]. Flexible on structure for the right compounding mandate.",
+      "probe": "(silence — they wait)",
+      "probeAnswer": "Hold eye contact. Stop. Do not justify, negotiate against yourself, or fill silence with benefits chatter unless they ask a follow-up.",
+      "dontSay": "I'll take anything / what's your budget? (first) / long justification after the number"
+    }
+  ],
+  "story_bank": [
+    {
+      "id": "STAR-01",
+      "title": "Quote speed as the booking wedge",
+      "role": "ROLE 1 · Moovez / Quotely",
+      "headline_metrics": "60 min → ~3 min · ~93% fill · 20x faster",
+      "tags": [
+        "Marketplace",
+        "0-to-1",
+        "Pricing",
+        "User Research",
+        "AI/CV",
+        "Operations Research"
+      ],
+      "jd_match": "logistics, marketplace, quoting, conversion, funnel, speed-to-quote, field service",
+      "useFor": "0-to-1, marketplace, conversion, speed-to-quote, what you cut",
+      "situation": "Last-mile moving customers called 3–5 movers and booked whoever returned a price first. Moovez dispatchers spent 60+ minutes per phone quote; competitors with instant digital quotes were winning on speed, not price. Session replay showed 60%+ checkout abandonment at manual dimension-entry.",
+      "task": "Remove the dispatcher call bottleneck without sacrificing pricing accuracy on multi-item, multi-floor jobs — the core conversion lever was time-to-credible-price.",
+      "action": "Ran focus groups, tree tests, and opportunity maps; chose photo-based CV intake over simplified forms after replay proved dimension-entry was the abandonment driver. Built an OR engine (3D bin packing) instead of lookup tables after static pricing showed 40%+ margin error on complex jobs. Cut V1 scope — dispatcher chat overlay, subscriptions, route optimization — to protect quote-flow reliability.",
+      "result": "Quote time 60 min → ~3 min (20x faster); ~93% fill rate vs ~70% industry; GMV $500k+; inbound operator interest drove Quotely SaaS commercialization.",
+      "spoken_90s": "Customers booked whoever quoted first, not whoever was cheapest. Dispatchers were spending an hour on the phone while checkout died at dimension entry. I chose photo intake over a simpler form, and an operations-research engine over lookup tables, and I cut chat overlay, subscriptions, and routing from V1 so quote-flow would actually ship. Quotes went from about an hour to about three minutes, fill rate around ninety-three percent.",
+      "if_they_probe": "Why not just simplify the form? Replay showed dimension-entry was the abandonment driver — a shorter form still asked for numbers people didn't know. Why cut routing? Because a faster wrong quote still loses the booking; V1 had to make the priced job real.",
+      "hr_depth": "One conversion story: speed-to-quote, three named cuts, two metrics. Stop.",
+      "hm_depth": "CV vs form, OR vs lookup tables, 40%+ margin error on complex jobs, session replay, Quotely spin-out.",
+      "guardrail": "Do not claim enterprise TMS. Moovez is a lightweight quote-to-dispatch marketplace ops platform.",
+      "dont_say": "We shipped everything / I used Hotjar / we aligned on a vision"
+    },
+    {
+      "id": "STAR-02",
+      "title": "SMS agent with retrieval gates, not chat novelty",
+      "role": "ROLE 1 · Moovez / Quotely",
+      "headline_metrics": "~50% ticket deflection · hit@4 · HITL gates",
+      "tags": [
+        "AI/CV",
+        "Eval",
+        "Operations",
+        "Conversational agents"
+      ],
+      "jd_match": "conversational AI, support deflection, agent evals, HITL, retrieval quality",
+      "useFor": "AI in production, responsible agents, support deflection",
+      "situation": "Post-launch, status and intake calls consumed dispatcher capacity. A freeform chatbot risked inventing booking state or hiding cases that needed a human — support deflection had to be safe, not just high-volume.",
+      "task": "Deflect routine SMS (intake, confirmations, reschedules) while escalating policy-bound and ambiguous cases with measurable ship gates.",
+      "action": "Deployed a retrieval-backed SMS/voice agent with structured handoffs to order state. Specified a V1 fixture suite: retrieval hit@4, HITL recall/precision (missed vs noisy escalations), intake-completion floors — measured retrieval before debating reply fluency. Paired with customer-facing order status to cut 'where's my crew?' calls.",
+      "result": "~50% support ticket deflection with zero human intervention on routine flows; escalation paths preserved dispatcher capacity for exceptions.",
+      "spoken_90s": "After launch, status calls ate dispatcher time. I didn't ship a clever chatbot — I shipped a retrieval-backed SMS agent with structured handoffs into order state, and I gated V1 on retrieval hit rate and human-in-the-loop precision before we argued about how the replies sounded. About half of routine tickets deflected; exceptions still reached a human.",
+      "if_they_probe": "How do you know it wasn't just lucky wording? We measured retrieval quality and missed-escalation recall as ship gates, not demo fluency.",
+      "hr_depth": "Safe deflection, not chatbot hype. One metric: ~50%.",
+      "hm_depth": "hit@4, HITL recall vs noise, order-state handoffs, pairing with customer-visible status.",
+      "guardrail": "Do not claim LangChain. Custom pipeline. Do not invent a fluency score.",
+      "dont_say": "We're passionate about conversational AI"
+    },
+    {
+      "id": "STAR-03",
+      "title": "Four-layer eval harness for photo-to-quote",
+      "role": "ROLE 1 · Moovez / Quotely",
+      "headline_metrics": "4 eval layers · MAE · ±15% band",
+      "tags": [
+        "Eval",
+        "AI/CV",
+        "ML product",
+        "Quality gates"
+      ],
+      "jd_match": "eval harnesses, model quality, AI product, release gates, computer vision",
+      "useFor": "AI measurement, release gates, feature-factory antidote, ML product",
+      "situation": "Photo-to-quote chained vision detection, catalog enrichment, and OR pricing — a failure in any layer looked like 'bad AI' downstream. The team needed to isolate which subsystem broke without re-running expensive VLM calls on every change.",
+      "task": "Build layered offline evals so releases could be gated by subsystem, not end-to-end guesswork.",
+      "action": "Designed four eval layers: (1) vision detection consistency/accuracy, (2) structured catalog match rate and unknown-fallback tracking, (3) logistics golden-file snapshot tests on frozen inputs, (4) E2E minutes MAE and ±15% hit rate vs actuals. Added a multi-model testbench (Gemini Flash, GPT-4.1) on accuracy, latency, and cost for the vision path.",
+      "result": "Failures isolate to a single subsystem; catalog and logistics layers run cheap without Gemini; E2E metrics tie to Command accuracy definitions (MAE, ±15%).",
+      "spoken_90s": "A broken quote looked like 'the AI failed' — it could be vision, catalog, or pricing. I split evals into four layers so we could gate a release on the subsystem that actually broke, and run catalog and logistics tests without burning vision-model calls. End-to-end we track minutes MAE and whether we're inside a plus-or-minus fifteen percent band.",
+      "if_they_probe": "Isn't that engineering, not PM? I specified the layers and the ship gates — what 'good' means for each subsystem — so we stopped arguing from a single demo number.",
+      "hr_depth": "We don't ship AI on vibes — layered evals. No architecture tour.",
+      "hm_depth": "Four layers, golden files, multi-model cost/latency/accuracy bench, MAE and ±15%.",
+      "guardrail": "Do not claim a production MAE-improvement percentage that isn't in the record.",
+      "dont_say": "We use RICE / we A/B tested the model"
+    },
+    {
+      "id": "STAR-04",
+      "title": "Quotely Command — closing the quote-accuracy loop",
+      "role": "ROLE 1 · Moovez / Quotely",
+      "headline_metrics": "MAE · ±15% · chase 7d / escalate 14d · ≥80% capture target",
+      "tags": [
+        "Eval",
+        "Operations",
+        "B2B SaaS",
+        "Quote accuracy"
+      ],
+      "jd_match": "ops console, ML ops, accuracy monitoring, tenant health, feedback loops",
+      "useFor": "AI measurement, B2B SaaS ops, feedback loops, ML ops",
+      "situation": "After commercializing Quotely to other operators, quotes without captured actuals (minutes, crew) couldn't improve the Vision model or prove ROI. Tenants with low outcome capture hid accuracy problems until jobs completed.",
+      "task": "Build an internal quote-intelligence console that tracks accuracy KPIs and drives outcome capture before model retrain.",
+      "action": "Built Quotely Command: MAE (minutes/crew), within ±15%, outcome-capture SLA (chase at 7d, escalate at 14d, target ≥80%), attention queue for pending outcomes and accuracy misses, annotation export for Vision retrain. Defined metrics as product SLAs, not invented lift percentages.",
+      "result": "Ops loop connects quoted jobs → actuals → annotations → retrain export; attention queue surfaces tenants and quotes needing follow-up. Product KPIs defined — no fabricated production lift %.",
+      "spoken_90s": "Once Quotely was in other operators' hands, quotes without actuals couldn't improve the model. I built Command as the accuracy ops loop: MAE, inside a fifteen-percent band, an outcome-capture SLA with chase and escalate, and an attention queue that exports misses for retrain. The product is the loop, not a dashboard vanity metric.",
+      "if_they_probe": "What's the lift? I won't invent a percentage. The honest result is the loop and the SLAs — chase at seven days, escalate at fourteen, capture target eighty percent.",
+      "hr_depth": "We close the loop between quote and actual. Stop before architecture.",
+      "hm_depth": "MAE, ±15%, capture SLA, attention queue, annotation export.",
+      "guardrail": "No fabricated production lift %. KPIs defined; don't upgrade them to outcomes you didn't measure.",
+      "dont_say": "We improved accuracy by X%"
+    },
+    {
+      "id": "STAR-05",
+      "title": "Qortex — playbooked facts, RAG for synthesis",
+      "role": "ROLE 1 · Moovez / Quotely",
+      "headline_metrics": "Playbook path · insufficient_evidence refuse · agent retrieve packs",
+      "tags": [
+        "RAG",
+        "Eval",
+        "AI/CV",
+        "Knowledge systems",
+        "Agents"
+      ],
+      "jd_match": "RAG, vector search, embeddings, LLM products, agent tooling, institutional knowledge",
+      "useFor": "Responsible AI, RAG, agents, hallucination prevention, governance",
+      "situation": "Vision, Content, Voice, and Command agents each maintained forked facts files; internal ops questions (SLAs, metrics, forensics) risked LLM-invented numbers in customer-facing or operator contexts.",
+      "task": "Centralize Quotely institutional knowledge with deterministic answers for high-stakes facts and grounded RAG for forensics — Outcome greater than chat.",
+      "action": "Built Quotely-Qortex: Markdown/YAML/ops-JSON source of truth; ingest, chunk, embed (OpenAI text-embedding-3-large) into Qdrant; hybrid dense + lexical + RRF retrieve plus Gemini rerank/synthesis; YAML playbooks short-circuit SLAs and metrics; golden eval suite as release gate; retrieve packs per agent. Quarantined Moovez marketplace KB from the B2B default corpus. Custom pipeline — evaluated LangChain and passed on token cost and debuggability.",
+      "result": "Playbook path returns exact SLA numbers; thin evidence returns insufficient_evidence; agent packs replace stale local forks; reindex from Markdown/JSON alone rebuilds the vector index.",
+      "spoken_90s": "When a wrong number can hurt the business, the answer is playbooked, not LLM-invented. I centralized ops knowledge so high-stakes SLAs never come from the model, thin evidence refuses, and agents pull a shared retrieve pack instead of forked fact files. We evaluated LangChain and didn't use it — token overhead and debuggability were wrong for this pipeline.",
+      "if_they_probe": "HR version: playbooks plus refuse. HM version: hybrid retrieve, Qdrant, RRF, eval gate — only if they ask how.",
+      "hr_depth": "Wrong numbers aren't generated. Playbook + refuse. No 10-minute architecture.",
+      "hm_depth": "Custom ingest-chunk-embed-retrieve, hybrid + RRF, playbook short-circuit, golden eval, agent packs, LangChain rejected.",
+      "guardrail": "Do not claim LangChain in production. Quoting path is structured catalog matching — vector RAG is Qortex only.",
+      "dont_say": "I used LangChain / I'm passionate about RAG"
+    },
+    {
+      "id": "STAR-06",
+      "title": "Automated vs manual quoting experiment",
+      "role": "ROLE 1 · Moovez / Quotely",
+      "headline_metrics": "Controlled traffic split · null hypothesis before scale",
+      "tags": [
+        "Experimentation",
+        "Pricing",
+        "Conversion"
+      ],
+      "jd_match": "A/B testing, experimentation, product analytics, controlled rollout",
+      "useFor": "Data / experimentation, 'how do you use data', not-a-compromise",
+      "situation": "Automated quoting was faster but carried margin risk if accuracy lagged manual dispatcher estimates — leadership needed evidence before full traffic cutover.",
+      "task": "Validate the automated quote path against manual quoting under controlled conditions before scaling.",
+      "action": "Ran a controlled experiment redirecting traffic to automated vs manual quoting paths; framed a null hypothesis before scaling; instrumented with Segment for conversion and the quote-to-booking funnel.",
+      "result": "Evidence-backed scale decision for the automated quote path; reduced reliance on dispatcher phone quotes as the primary booking driver.",
+      "spoken_90s": "Faster quotes aren't free if they miss margin. I didn't 'compromise' between auto and manual — I ran a controlled traffic split against a null hypothesis, instrumented conversion, and scaled automated quoting when the evidence held.",
+      "if_they_probe": "That's a decision mechanism, not a middle path. We would have killed the auto path if the funnel or margin signal failed.",
+      "hr_depth": "We tested before cutover. One sentence + result.",
+      "hm_depth": "Null hypothesis, Segment funnel, traffic redirect, scale criterion.",
+      "guardrail": "Don't invent a lift % for this experiment — the record is the evidence-backed scale decision.",
+      "dont_say": "We compromised between speed and quality"
+    },
+    {
+      "id": "STAR-07",
+      "title": "Pricing tier consolidation (Village Wellth)",
+      "role": "ROLE 2 · Fractional — Village Wellth",
+      "headline_metrics": "4 → 3 tiers · 3x take rate · churn from plan indecision ~0",
+      "tags": [
+        "Pricing",
+        "User Research",
+        "Churn",
+        "Decision architecture"
+      ],
+      "jd_match": "pricing, packaging, tier consolidation, PLG, conversion, fintech",
+      "useFor": "Saying no, pricing, decision architecture, stakeholders who wanted more SKUs",
+      "situation": "Four overlapping M&A financing tiers caused plan-selection paralysis; churn concentrated at the plan step, not product dissatisfaction. M&A advisors pre-filtered clients because they didn't trust self-serve plan picks.",
+      "task": "Remove decision friction without cosmetic relabeling — a structural plan-architecture fix.",
+      "action": "Opportunity maps plus STP showed two tiers served all real segments; focus groups and tree tests validated 4→3 consolidation; killed the lowest-adoption tiers despite short-term upsell loss.",
+      "result": "3x take rate within two billing cycles; churn from plan indecision near zero; advisors recommended the platform more broadly.",
+      "spoken_90s": "Churn wasn't 'the product' — it was four overlapping plans. Advisors were gatekeeping clients because they didn't trust people to pick a tier. I killed two tiers rather than rewriting labels. Take rate tripled in two billing cycles, and advisors stopped pre-filtering.",
+      "if_they_probe": "Didn't you lose upsell? Yes, on purpose. Two real segments didn't need four SKUs — more plans were noise.",
+      "hr_depth": "Killed tiers, 3x take rate. Structural, not cosmetic.",
+      "hm_depth": "STP, opportunity maps, tree tests, advisor behavior change as the real driver.",
+      "guardrail": null,
+      "dont_say": "We simplified the messaging / we aligned pricing with stakeholders"
+    },
+    {
+      "id": "STAR-08",
+      "title": "Bayesian MMM replacing last-click attribution",
+      "role": "ROLE 2 · Fractional — e-commerce",
+      "headline_metrics": "18% CAC reduction (projected) · 24% ARPU · 134,900 records · 6 channels",
+      "tags": [
+        "Attribution",
+        "Marketing science",
+        "Experimentation"
+      ],
+      "jd_match": "MMM, attribution, CAC, media mix, growth analytics, R",
+      "useFor": "Data / experimentation, growth analytics — backup to STAR-06",
+      "situation": "An e-commerce client optimized spend on last-click attribution, misallocating budget across six channels and inflating perceived CAC efficiency.",
+      "task": "Replace last-click with a model that accounts for adstock, saturation, and cross-channel effects for budget decisions.",
+      "action": "Built a Bayesian Media Mix Model in R merging 134,900 records across 6 spend channels with GA4 and HubSpot; applied adstock and Hill-function saturation with ridge regression; segmented for ARPU levers.",
+      "result": "Projected 18% CAC reduction; 24% ARPU increase from segmentation-informed spend shifts.",
+      "spoken_90s": "They were steering spend with last-click, which made cheap-looking channels look efficient. I replaced that with a Bayesian mix model — adstock, saturation, six channels — and the budget shift was a projected eighteen percent CAC drop and twenty-four percent ARPU from segmentation, not from raising list prices.",
+      "if_they_probe": "Say projected — don't upgrade it to a guaranteed realized number.",
+      "hr_depth": "Last-click was lying; mix model changed budget. Two numbers, say projected.",
+      "hm_depth": "R, adstock, Hill saturation, ridge, 134,900 records, GA4 + HubSpot.",
+      "guardrail": "Keep 'projected' on the CAC/ARPU figures.",
+      "dont_say": "I ran Google Analytics"
+    },
+    {
+      "id": "STAR-09",
+      "title": "Operational trust over detection coverage (Netsweeper)",
+      "role": "ROLE 3 · Netsweeper",
+      "headline_metrics": "85% false-alert cut · 35 schools · contract renewed",
+      "tags": [
+        "AI/CV",
+        "Trust/Safety",
+        "Data Quality",
+        "Channel/MSP"
+      ],
+      "jd_match": "trust & safety, false positives, AI product, K-12, content moderation, signal quality, MSP channel, partner retention",
+      "useFor": "Stakeholders, conflict, influence, responsible AI, channel/MSP, saying no to eng",
+      "situation": "K-12 district staff stopped opening alert dashboards — about 8 in 10 alerts were false positives. Engineering wanted new detection categories; the client contract was at risk. Netsweeper sold through MSP partners, so end-client trust was also partner retention.",
+      "task": "Restore staff trust in alerts before expanding detection surface area.",
+      "action": "Reframed the success metric from detection accuracy to operational trust. Froze new features one quarter; redirected the outsourced team to false-positive pruning, alert workflow redesign, and QA cycles. Tree tests showed high-severity alerts buried under noise — redesigned the workflow.",
+      "result": "85% false-alert reduction across a 35-school deployment; staff re-engaged the dashboard unprompted; contract renewed — protecting MSP partner retention.",
+      "spoken_90s": "Staff had stopped opening alerts because eight in ten were junk. Engineering wanted more detection categories. I didn't align them in a workshop — I recommended we optimize for operational trust, freeze new features for a quarter, and prune false positives. Eighty-five percent fewer false alerts, staff came back unprompted, contract renewed.",
+      "if_they_probe": "Did you go over their heads? No. Research plus a time-boxed quarter. Behavioral proof was staff reopening the dashboard without being asked.",
+      "hr_depth": "Metric reframe, freeze quarter, 85%, contract renewed. Calm tone.",
+      "hm_depth": "Focus groups, tree tests, outsourced-eng redirect, MSP channel retention, workflow redesign.",
+      "guardrail": "Only PM on the team — influence is prioritization under opposition, not matrix turf wars. Not a quota-carrying sales role.",
+      "dont_say": "I aligned stakeholders / they were wrong / we compromised"
+    },
+    {
+      "id": "STAR-10",
+      "title": "Presentation speed over analytical depth (BVXpress)",
+      "role": "ROLE 5 · BVXpress (ICI) · employee #3",
+      "headline_metrics": "ARPU $450→$600 · 14% retention · 7% conversion · 2× retain at 3+ products",
+      "tags": [
+        "0-to-1",
+        "Growth",
+        "User Research",
+        "Pricing"
+      ],
+      "jd_match": "0-to-1, B2B SaaS, workflow adoption, ARPU, retention, GTM",
+      "useFor": "Failure / learning, influence without authority, 0-to-1, what you killed",
+      "situation": "After the first two product launches, under 20% weekly active users despite positive demos — advisors spent 4+ hours formatting client presentations, not running better models. BVXpress was the SaaS unit inside ICI, the M&A advisory parent; I was employee #3, first product hire.",
+      "task": "Pivot the roadmap from analytical depth to client-facing workflow speed; build a repeatable growth engine.",
+      "action": "Telemetry plus opportunity maps identified presentation/export as top friction; sequenced products 3–5 on the client workflow; killed a deal-database and fee-benchmarking (demo features, not workflow). Gated launches on 20+ user cohort adoption. Landing-message test: 'fastest Excel → client presentation' vs 'most accurate valuation.'",
+      "result": "ARPU $450→$600 from voluntary upgrades, not list-price hikes; 14% retention lift; 7% conversion lift on landing; multi-product adopters (3+) retained at 2×.",
+      "spoken_90s": "Early BVXpress I optimized for analytical depth because demos sounded impressive. Telemetry showed under twenty percent weekly active — people weren't changing workflow. I pivoted to presentation speed, killed demo features, and gated launches on a twenty-plus user cohort. ARPU moved from four-fifty to six hundred from voluntary upgrades. I still use that gate.",
+      "if_they_probe": "That's also the failure story: shipped the wrong job-to-be-done first. The system change is the cohort gate — still used at Moovez and Netsweeper.",
+      "hr_depth": "Demos lied, telemetry didn't. Pivot + ARPU. Own the miss.",
+      "hm_depth": "In-house telemetry, kill deal DB and fee bench, landing test, 20+ cohort gate, ICI/BVXpress relationship.",
+      "guardrail": "BVXpress is a SaaS unit within ICI — not a standalone startup. ARPU lift was voluntary upgrades, not a price hike.",
+      "dont_say": "My manager was the problem / I can't think of a failure"
+    },
+    {
+      "id": "STAR-11",
+      "title": "HRIS adapter-first for M&A diligence (BVXpress / ICI)",
+      "role": "ROLE 5 · BVXpress HRIS for ICI clients",
+      "headline_metrics": "3 HR/diligence teams onboarded · adapter-first vs 6–18 month migrations",
+      "tags": [
+        "HR Tech",
+        "HRIS",
+        "M&A",
+        "Integrations",
+        "0-to-1"
+      ],
+      "jd_match": "HRIS, HCM, M&A integration, workforce analytics, diligence, Workday/ADP",
+      "useFor": "Extensibility / platform, integrations, enterprise adjacency",
+      "situation": "Live M&A deals needed combined workforce visibility; rip-and-replace HR migrations took 6–18 months while deal teams reconciled spreadsheets and couldn't answer diligence questions.",
+      "task": "Ship transaction-ready HRIS that ingests, normalizes, and reports — source payroll systems stay authoritative.",
+      "action": "Focus groups and workflow interviews killed 'replace every payroll system'; built a universal adapter pattern plus Frappe HRMS as reference; prioritized ingestion validation, duplicate handling, and confidence scores after tree tests failed on conflicting dashboard numbers; shipped diligence dashboards (payroll/contract risk, comp burden).",
+      "result": "3 HR/diligence teams onboarded on live deals; adapter-first architecture vs months-long migrations; shipped as a BVXpress product for ICI clients and acquired companies — not internal-only tooling.",
+      "spoken_90s": "Deal teams couldn't wait eighteen months for a payroll rip-and-replace. I killed that approach after research and shipped an adapter-first HRIS: ingest, normalize, diligence dashboards, source systems stay truth. Three teams used it on live deals.",
+      "if_they_probe": "Workday/SAP/ADP were adapter targets, not claimed production connectors you personally deployed everywhere. Frappe was the payroll reference implementation.",
+      "hr_depth": "Integration not replacement. Three teams on live deals.",
+      "hm_depth": "Universal adapter, confidence scores, tree-test failure on conflicting numbers, ICI client product.",
+      "guardrail": "HRIS shipped for ICI clients and acquired companies — not internal-only. Don't claim you replaced Workday.",
+      "dont_say": "I built Workday / I ran enterprise HCM at Fortune 500 scale"
+    },
+    {
+      "id": "STAR-12",
+      "title": "Quotely commercialization from production signal",
+      "role": "ROLE 1 · Moovez / Quotely",
+      "headline_metrics": "Spin-out SaaS · marketplace still ~93% fill as proving ground",
+      "tags": [
+        "0-to-1",
+        "Pricing",
+        "B2B SaaS",
+        "Commercialization"
+      ],
+      "jd_match": "product-led growth, SaaS, spin-out, B2B, logistics tech",
+      "useFor": "Why leave / compounding, 0-to-1, platform thinking",
+      "situation": "Moovez built CV + OR quoting as an internal marketplace advantage; other logistics operators began asking to license the intelligence layer after seeing quote accuracy and speed.",
+      "task": "Separate the ops platform (Moovez TMS-class workflows) from pricing/intake SaaS (Quotely) without breaking the production marketplace.",
+      "action": "Commercialized the intelligence layer as Quotely (quoteperfectly.com); kept Moovez as the production proving ground; added Command and Qortex as the internal ops/accuracy layer for B2B tenants.",
+      "result": "Standalone SaaS sold to other logistics operators; marketplace remains the proving ground for quote-to-dispatch at ~93% fill rate.",
+      "spoken_90s": "The quoting engine started as our marketplace edge. Other operators asked to license it. I split ops platform from intelligence SaaS so Moovez stayed the proving ground and Quotely could sell without breaking production dispatch.",
+      "if_they_probe": "Why look now? That's the compounding pull — platform scale, not 'Moovez failed.'",
+      "hr_depth": "Production signal → product company. No trash-talk.",
+      "hm_depth": "Separation of TMS-class ops vs intake/pricing SaaS; Command/Qortex as tenant ops layer.",
+      "guardrail": "Don't badmouth Moovez. Don't claim a $ revenue figure that isn't in the record.",
+      "dont_say": "I'm bored / my CEO doesn't listen"
+    },
+    {
+      "id": "STAR-13",
+      "title": "Cyber marketplace — MSP/MSSP discovery for search-first catalog",
+      "role": "ROLE 2 · Fractional — cybersecurity vendor (confidential)",
+      "headline_metrics": "Concept stage · shortlist-as-conversion · Mixpanel funnel pre-build",
+      "tags": [
+        "Marketplace",
+        "Channel/MSP",
+        "User Research",
+        "Cybersecurity",
+        "Catalog UX"
+      ],
+      "jd_match": "cloud marketplace, MSP, MSSP, IT channel, distributor, partner platform, catalog discovery, attach rate, multi-vendor bundles",
+      "useFor": "Channel / partners, marketplace IA, discovery-led product",
+      "situation": "A cybersecurity vendor needed a unified marketplace for physical appliances, virtual appliances, and managed service add-ons — but channel buyers (MSPs and MSSPs) stalled in dense catalogs where deployment model, compatibility, and bundle configuration were opaque until late in evaluation.",
+      "task": "Design a search-first discovery model grounded in partner workflow research, with instrumentation to validate where evaluators stall before build.",
+      "action": "Ran extensive discovery with MSPs and MSSPs on how they evaluate, bundle, and resell cyber infrastructure. Designed search-first UX: intent-aware query, deployment-model facets, inline trust signals, comparison on buyer decision dimensions, bundle configuration during evaluation. Defined Mixpanel funnel (search → refine → compare → shortlist → add-on config) and Pendo guidance for first-time catalog users.",
+      "result": "Conceptual marketplace design with channel-informed IA and an explicit telemetry model; shortlist-as-conversion thesis validated through partner interviews. Concept stage — not a shipped production deployment.",
+      "spoken_90s": "MSPs weren't failing at checkout — they were failing at understanding deployment model and bundles. After partner discovery I designed search-first catalog UX with shortlist as the conversion milestone, and a Mixpanel funnel before build. Honest: concept and discovery, not shipped revenue. Production channel proof is Netsweeper.",
+      "if_they_probe": "Did you ship it? No. Don't upgrade the stage. Pivot to Netsweeper MSP resale for shipped channel proof.",
+      "hr_depth": "Partner discovery, search-first, concept — say the stage.",
+      "hm_depth": "Facets, trust signals, Mixpanel + Pendo instrumentation model, shortlist metric.",
+      "guardrail": "CONCEPT ONLY. Not shipped production marketplace or revenue. Vendor name confidential.",
+      "dont_say": "I built and shipped a cybersecurity marketplace"
+    },
+    {
+      "id": "STAR-14",
+      "title": "Canadian MSP consolidation landscape (search-fund thesis)",
+      "role": "ROLE 5 · BVXpress-era search-fund advisory",
+      "headline_metrics": "Landscape synthesis · platform aggregation vs roll-up-only",
+      "tags": [
+        "Channel/MSP",
+        "M&A",
+        "Market research",
+        "Platform strategy"
+      ],
+      "jd_match": "MSP, IT channel, consolidation, platform aggregation, Canadian market, cloud distributor strategy",
+      "useFor": "Channel / partners (third pillar), platform strategy, Canadian market",
+      "situation": "Near the end of the BVXpress tenure, a search fund explored an 'Uber for MSPs' thesis — roll up regional MSPs and unify them on a shared platform layer rather than EBITDA-only stacking.",
+      "task": "Research the Canadian MSP landscape to stress-test consolidation logic, service-mix patterns, and what platform capabilities would justify a shared operating layer.",
+      "action": "Researched many Canadian MSPs — operating models, service lines (security, M365, backup, vCIO), geographic density, PSA/RMM stack fragmentation, and where platform aggregation would create partner leverage vs integration debt.",
+      "result": "Landscape synthesis informing platform-aggregation vs roll-up-only strategy; structural read that distributors/marketplaces that own provisioning plus attach can scale partner enablement faster than acquiring MSPs directly.",
+      "spoken_90s": "A search fund wanted Uber-for-MSPs. I researched Canadian MSP operating models and stack fragmentation. The useful conclusion wasn't 'buy shops' — it was that a shared provisioning and attach layer beats an EBITDA-only roll-up. Advisory research only; I did not build a roll-up platform.",
+      "if_they_probe": "I did not operate an MSP aggregator. Don't let them hear 'I built Uber for MSPs.'",
+      "hr_depth": "Research thesis, Canadian MSP landscape, say advisory-only.",
+      "hm_depth": "PSA/RMM fragmentation, platform vs roll-up, distributor attach parallel.",
+      "guardrail": "Advisory research only — did not build or operate an MSP roll-up platform.",
+      "dont_say": "I built an Uber-for-MSPs platform in Canada"
+    }
+  ],
+  "story_assignments": [
+    {
+      "theme": "Stakeholders / conflict",
+      "lead": "STAR-09 Netsweeper",
+      "backup": "STAR-07 Village Wellth"
+    },
+    {
+      "theme": "Prioritization / cuts",
+      "lead": "Moovez V1 deferrals",
+      "backup": "STAR-10 BVXpress kill deal DB"
+    },
+    {
+      "theme": "Feature factory / velocity",
+      "lead": "STAR-03 eval gates",
+      "backup": "Netsweeper freeze quarter"
+    },
+    {
+      "theme": "Data / experimentation",
+      "lead": "STAR-06 auto vs manual quote",
+      "backup": "STAR-08 Bayesian MMM"
+    },
+    {
+      "theme": "AI measurement",
+      "lead": "STAR-04 Command + STAR-03",
+      "backup": "STAR-02 SMS hit@k gates"
+    },
+    {
+      "theme": "Responsible AI",
+      "lead": "STAR-05 Qortex playbooks",
+      "backup": "STAR-09 trust restoration"
+    },
+    {
+      "theme": "Channel / partners",
+      "lead": "STAR-13 cyber MSP discovery",
+      "backup": "STAR-09 MSP resale"
+    },
+    {
+      "theme": "Influence without authority",
+      "lead": "STAR-09 outsourced eng redirect",
+      "backup": "STAR-05 kill forked facts"
+    },
+    {
+      "theme": "Failure / learning",
+      "lead": "STAR-10 presentation pivot",
+      "backup": "Early Moovez form-before-CV"
+    },
+    {
+      "theme": "Extensibility / platform",
+      "lead": "STAR-11 HRIS adapters",
+      "backup": "STAR-05 agent retrieve packs"
+    }
+  ],
+  "psych_tricks": [
+    {
+      "id": "silence",
+      "trick": "Silence after your answer",
+      "test": "Anxiety fill — you undo a crisp answer by over-explaining, apologizing, or adding weaker details.",
+      "tone": "danger",
+      "counter": {
+        "do": [
+          "Finish your STAR at Result. Stop talking even if the room is quiet for 3–5 seconds.",
+          "Keep neutral body language — don't laugh nervously or look down.",
+          "If silence exceeds ~5 seconds, invite direction with one short question (see script).",
+          "Treat silence as their note-taking or deliberate pressure, not automatic rejection."
+        ],
+        "say": "Would you like me to go deeper on the action I took, or the measurable result?",
+        "avoid": [
+          "Adding a fourth bullet you didn't plan ('Also we used Agile…')",
+          "Asking 'Was that the right answer?'",
+          "Rewinding to Situation because you panic"
+        ]
+      }
+    },
+    {
+      "id": "leading-premise",
+      "trick": "Leading premise",
+      "test": "'Given your small-company background, influence must have been hard' — they want you to accept a deficit frame or get defensive.",
+      "tone": "warning",
+      "counter": {
+        "do": [
+          "Acknowledge the observation without agreeing to the conclusion: 'Fair question.'",
+          "Reframe influence as prioritization under opposition — metric reframes, scope kills, eng redirects — not calendar-heavy exec theatre.",
+          "Offer one proof point immediately (Netsweeper quarter freeze or BVXpress presentation pivot).",
+          "Pivot to what you bring: judgment under ambiguity as first/only PM hire."
+        ],
+        "say": "Fair push. I haven't run multi-PM turf wars at a thousand-person org. My influence record is winning prioritization fights with evidence — reframing the success metric at Netsweeper, killing scope at Moovez, pivoting BVXpress from analytical depth to workflow speed after telemetry showed under twenty percent weekly active users.",
+        "avoid": [
+          "Arguing that Moovez 'is basically enterprise'",
+          "Listing fake matrix stakeholders",
+          "Getting visibly irritated at the premise"
+        ]
+      }
+    },
+    {
+      "id": "weakness",
+      "trick": "Weakness humblebrag",
+      "test": "'I work too hard' / perfectionism — they want authenticity and self-awareness, not a rehearsed disqualifier.",
+      "tone": "warning",
+      "counter": {
+        "do": [
+          "Name a real gap that won't torpedo a senior PM role: thin record on large-org stakeholder theatre at scale.",
+          "Pair it with an active mitigation you've already practiced — translating builder wins into decision stories HR can forward.",
+          "Keep it to one gap; don't stack three weaknesses.",
+          "End on forward motion: what you're optimizing for in the next role (compounding mandate, not gigs)."
+        ],
+        "say": "My strongest work is founding and messy-stage ops AI — reframing bottlenecks and shipping measured systems. Classic enterprise stakeholder theatre at scale is thinner on my resume than my builder record. I've mitigated that by leading with prioritization stories hiring managers can verify: metric reframes, scope kills, partner-trust outcomes — not pretending I've run matrix politics I haven't.",
+        "avoid": [
+          "Perfectionism, caring too much, working too hard",
+          "A weakness that's core to the JD ('I'm bad with data')",
+          "Weakness with no mitigation plan"
+        ]
+      }
+    },
+    {
+      "id": "why-leave",
+      "trick": "Why leave trap",
+      "test": "Invites employer trash talk, flight-risk signals, or contradiction with 'still at Moovez' on the resume.",
+      "tone": "danger",
+      "counter": {
+        "do": [
+          "Lead with forward pull, not escape: platform scale, compounding product mandate, partner/agent ecosystems.",
+          "Credit Moovez briefly as proof ground — you built and commercialized Quotely from production signal.",
+          "If asked 'why now,' tie to role scope (team, roadmap, multi-tenant platform) not frustration.",
+          "Keep tone even; no sighs, eye-rolls, or 'finally leaving' energy."
+        ],
+        "say": "I built the zero-to-one ops AI stack at Moovez and commercialized it as Quotely — that's been the right proving ground. I'm looking for compounding product work at platform scale: partner ecosystems, governed agent adoption, and measured AI with a team and roadmap I can own for years — not another solo diagnostic engagement.",
+        "avoid": [
+          "CEO doesn't listen / underpaid / chaotic culture",
+          "Moovez is failing (even if true)",
+          "Vague 'ready for next chapter' with no specifics"
+        ]
+      }
+    },
+    {
+      "id": "salary",
+      "trick": "Salary anchor",
+      "test": "First number wins; post-number silence tests whether you'll negotiate against yourself out of nerves.",
+      "tone": "danger",
+      "counter": {
+        "do": [
+          "Write your range before the call: floor (walk-away), target, stretch — on paper in front of you.",
+          "Give a range anchored to senior PM + ops AI scope in US/Canada remote, not desperation.",
+          "State it once. Stop. Let them respond.",
+          "If pressed early: 'Happy to discuss once we align on scope — what's the band for this role?'",
+          "Separate base / bonus / equity in HM round; HR often wants ballpark only."
+        ],
+        "say": "Based on senior product scope for production ops AI and platform work, I'm targeting [YOUR RANGE]. I'm flexible on structure for the right compounding mandate.",
+        "avoid": [
+          "Saying 'flexible' before giving any number",
+          "Justifying the number with rent, MBA debt, or personal expenses",
+          "Immediately discounting: 'but I'd take less for the right role'",
+          "Asking their budget first without a range ready (unless stalling tactically)"
+        ]
+      }
+    },
+    {
+      "id": "fake-failure",
+      "trick": "Fake failure",
+      "test": "'Tell me about a failure' then probes for blame, victim mindset, or whether you learned anything durable.",
+      "tone": "info",
+      "counter": {
+        "do": [
+          "Use STAR-10 BVXpress: shipped analytical depth before workflow speed — real mistake, no employer bashing.",
+          "Structure: mistake → diagnosis (telemetry not demos) → system change you still use today.",
+          "Pick a failure where the fix is a rule, not a vibe ('I try harder now').",
+          "Keep under 90 seconds; offer to go deeper only if they ask."
+        ],
+        "say": "Early BVXpress I optimized for analytical depth because demos sounded impressive. Telemetry showed fewer than twenty percent weekly active users — users weren't changing workflows. I pivoted the roadmap to presentation and export speed, gated launches on twenty-plus user cohort adoption, and I still use that gate before cutting Moovez scope or freezing Netsweeper features.",
+        "avoid": [
+          "Failure that's secretly a brag ('I trusted people too much')",
+          "Blaming outsourced eng or a bad manager",
+          "Failure with no behavioral change afterward"
+        ]
+      }
+    },
+    {
+      "id": "contradiction",
+      "trick": "Contradiction check",
+      "test": "Rapid follow-ups on the same story from different angles — testing consistency vs. embellishment under pressure.",
+      "tone": "warning",
+      "counter": {
+        "do": [
+          "Pick one anchor story per theme before the call; reuse the same numbers (85% alert reduction, 60→3 min quotes, 3x take rate).",
+          "If asked 'what would engineering say,' answer from their lens without changing your decision or result.",
+          "If you misspoke: 'Let me correct that — the freeze was one quarter, not two.' One correction, move on.",
+          "Don't invent new metrics mid-interview because a follow-up feels harder."
+        ],
+        "say": "Same story, same spine: at Netsweeper engineering wanted more detection categories; research showed trust collapse from false positives. I reframed the metric to operational trust, froze new features one quarter, redirected the outsourced team to signal quality — eighty-five percent false-alert reduction, staff re-engaged unprompted.",
+        "avoid": [
+          "Changing the result number on the second telling",
+          "Contradicting yourself between 'I influenced execs' and 'I was the only PM'",
+          "Long defensive explanations when caught in a minor inconsistency"
+        ]
+      }
+    },
+    {
+      "id": "step-down",
+      "trick": "Step-down probe",
+      "test": "'Would you take a lower title?' — tests desperation, ego, and whether you'll accept a role with no real authority.",
+      "tone": "info",
+      "counter": {
+        "do": [
+          "Separate title from mandate: scope, team, roadmap ownership, budget for bets.",
+          "Signal you're not title-obsessed but won't take a label without authority (staff PM with no product call).",
+          "Ask what the title maps to internally — IC senior vs. people manager vs. glorified project coordinator.",
+          "If they're fishing for cheap senior: polite boundary without closing the door."
+        ],
+        "say": "I'm optimizing for scope and compounding impact, not vanity title. I'd trade a fancier label for a real product mandate — roadmap, team, and a problem I can own for years. I'd want to understand what the title actually controls here before answering yes or no.",
+        "avoid": [
+          "Instant yes — reads desperate",
+          "Instant no with arrogance — reads inflexible",
+          "Accepting Senior PM title with no roadmap authority and hoping to 'grow into it'"
+        ]
+      }
+    },
+    {
+      "id": "reference",
+      "trick": "Reference consistency",
+      "test": "'How would your manager describe you?' — checks alignment with references they'll call (Moovez CEO, past eng leads).",
+      "tone": "info",
+      "counter": {
+        "do": [
+          "Use 2–3 adjectives you'd want a reference to actually say: diagnostic, evidence-led, ships measured systems.",
+          "Tie each adjective to a behavior they'd recognize: 'reframes the bottleneck before building,' 'kills scope with telemetry.'",
+          "Avoid superlatives they'd never say ('best PM they've ever worked with').",
+          "If asked weaknesses from manager's view, reuse your honest gap + mitigation — consistency matters more than perfection."
+        ],
+        "say": "They'd say I'm diagnostic first — I find the operational bottleneck behind the stated problem. They'd also say I'm evidence-led under pushback: at Moovez I cut features to protect quote flow; at Netsweeper I held a quarter on signal quality when eng wanted more surface area. And they'd say I ship systems with measurement built in, not demo AI.",
+        "avoid": [
+          "Traits no reference would confirm ('political genius,' 'influences C-suite daily')",
+          "Mismatch with your stated weakness answer",
+          "Trash-talking a former manager's likely description"
+        ]
+      }
+    },
+    {
+      "id": "no-questions",
+      "trick": "No questions",
+      "test": "'Any questions for us?' → you say none — signals low interest, lack of prep, or passivity.",
+      "tone": "danger",
+      "counter": {
+        "do": [
+          "Always have 3 ready; ask 2 in HR round (save the most technical for HM).",
+          "Ask about success criteria and decision rights — shows seniority without architecture dumps.",
+          "Listen to their answer; one brief follow-up is fine ('When you say X, is that owned by product or partnerships?').",
+          "Close with genuine interest: 'That's helpful — I'd want to dig into [HM topic] in the next round.'"
+        ],
+        "say": "Three I'd rotate: (1) What would success look like for this hire in the first ninety days — and who decides if we hit it? (2) When product and go-to-market disagree on priority, how does your team resolve that today? (3) What's the last AI or agent bet that didn't land — and what signal told you to pivot or kill it?",
+        "avoid": [
+          "No questions",
+          "Only questions about PTO, remote policy, or benefits in the first HR screen",
+          "Questions you could answer from the job posting ('What does the company do?')"
+        ]
+      }
+    }
+  ],
+  "slop_antipatterns": [
+    {
+      "id": "align-stakeholders",
+      "slop": "\"I align stakeholders\"",
+      "whyItFails": "Sounds like PM theatre — calendars, status updates, 'getting buy-in.' Interviewers hear someone who schedules meetings instead of making judgment calls. Real PM work is choosing what NOT to build when Sales, Eng, and a client all want different things.",
+      "instead": "Recommendation + explicit tradeoff. Name what you're optimizing, what you're sacrificing, what evidence would flip the bet, and who owns the review date.",
+      "story": "Netsweeper: engineering wanted new detection categories (more coverage = more value). District staff had stopped opening alerts — eight of ten false positives. I didn't 'align' them in a workshop. I reframed success from detection accuracy to operational trust, froze new features one quarter, and redirected the outsourced team entirely to false-positive pruning. That was a recommendation with a visible tradeoff: zero net-new detection surface for ninety days in exchange for signal quality.",
+      "badExample": "I brought everyone together, listened to all perspectives, and we aligned on a shared vision for the roadmap.",
+      "goodExample": "Engineering wanted more categories; research showed trust was already collapsed. I recommended we optimize for operational trust, not coverage — freeze features one quarter, prune false positives, redesign alert workflow. Contract renewed after staff re-engaged unprompted."
+    },
+    {
+      "id": "passionate-ai",
+      "slop": "\"I'm passionate about AI\"",
+      "whyItFails": "Every candidate says it. It signals novelty-chasing, not production judgment. HR and HMs want someone who knows AI fails when users stop trusting the signal — not someone excited about models.",
+      "instead": "Trust + telemetry + adoption. One memorable line: AI succeeds when it reduces operational ambiguity, not when it maximizes sophistication.",
+      "story": "Memorable snippet — the 'wrong number' rule (Qortex): At Quotely, internal ops questions risked LLM-invented SLA numbers in operator contexts. I built playbook routing so high-stakes facts — SLAs, metrics — never come from the model; thin evidence returns insufficient_evidence. Same instinct as Netsweeper: when counselors stopped opening alerts, the problem wasn't model accuracy on paper — it was operational trust. I measure retrieval hit@4 and HITL escalation before debating reply fluency on the SMS agent. Passion isn't the pitch — measured trust is.",
+      "badExample": "I'm passionate about AI and large language models — I've been following the space closely and love experimenting with new tools.",
+      "goodExample": "When a wrong number can hurt the business, the answer is playbooked, not LLM-invented. That's why I built deterministic YAML routing for SLAs at Qortex and froze Netsweeper features until staff trusted alerts again."
+    },
+    {
+      "id": "rice-jira",
+      "slop": "RICE/JIRA process lecture",
+      "whyItFails": "Process answers hide judgment. Interviewers ask prioritization to hear what you killed, not how you score tickets. A framework without a cut sounds like feature-factory PM.",
+      "instead": "One sentence on method, then a named cut with evidence.",
+      "story": "Script: 'I prioritize by workflow behavior change, not backlog volume — opportunity maps and telemetry before roadmap bets.' Cut example — Moovez V1: pressure to ship dispatcher chat overlay, subscriptions, and route optimization. I cut all three to protect quote-flow reliability. Evidence: session replay showed sixty-plus percent abandonment at manual dimension entry; the wedge was time-to-credible-price, not feature breadth. Result: quotes went from sixty minutes to about three; fill rate around ninety-three percent. Backup cut — BVXpress: killed deal database and fee benchmarking after in-house telemetry showed they were demo features, not workflow features.",
+      "badExample": "We use RICE scoring in Jira — reach times impact times confidence divided by effort — and groom the backlog every sprint with stakeholders.",
+      "goodExample": "I gate on workflow signal, not backlog volume. At Moovez I cut dispatcher chat, subscriptions, and route optimization for V1 because replay showed quote speed was the conversion wedge — not more surface area."
+    },
+    {
+      "id": "qortex-monologue",
+      "slop": "10-minute Qortex architecture on HR screen",
+      "whyItFails": "HR can't advocate for you to the HM if they didn't understand the answer. You sound like an engineer pitching stack, not a PM passing a fit screen. Architecture depth belongs in HM round when they ask how you ship AI.",
+      "instead": "HR: one outcome sentence. HM: layers only if asked.",
+      "story": "HR version (≤15 sec): 'I built an institutional knowledge layer for Quotely ops — grounded answers for high-stakes facts, refuse when evidence is thin — so agents don't invent SLA numbers.' If they ask 'how': 'Hybrid search plus deterministic playbooks for numbers that can't be wrong.' Stop. Save ingest → chunk → embed → Qdrant → RRF → rerank for the HM who asks about eval gates and agent packs.",
+      "badExample": "So we ingest Markdown and YAML, chunk with overlap, embed with text-embedding-3-large into Qdrant, fuse dense and lexical with RRF, rerank with Gemini, and short-circuit playbooks for…",
+      "goodExample": "Ops knowledge where wrong numbers hurt the business — playbooked facts, grounded synthesis for everything else, explicit refuse when evidence is thin."
+    },
+    {
+      "id": "we-compromised",
+      "slop": "\"We compromised\" with no decision",
+      "whyItFails": "Compromise without a decision means nothing shipped or everything shipped — both bad. Interviewers want to hear YOU made a call, what got cut, and what metric moved.",
+      "instead": "Name the decision, the loser, and the measurable result — even if the 'compromise' was a time-boxed experiment.",
+      "story": "Bad: 'Engineering wanted features, the client wanted stability — we compromised.' Good — Netsweeper: 'We didn't split the difference on detection categories. I chose trust over coverage for one quarter — explicit deferral, not a blended roadmap.' Good — Village Wellth: 'We didn't meet in the middle on four tiers. I killed two tiers despite short-term upsell loss — structural fix, not relabeling.' If you truly ran an experiment: 'We ran automated vs manual quoting under controlled traffic — null hypothesis before scale — that's a decision mechanism, not a compromise.'",
+      "badExample": "Sales wanted it fast, engineering wanted quality — we compromised and found a middle path everyone could live with.",
+      "goodExample": "I didn't blend roadmaps — I time-boxed one quarter on signal quality only. New detection categories were deferred, not half-shipped."
+    },
+    {
+      "id": "cyber-msp-overclaim",
+      "slop": "Claiming shipped cyber marketplace or MSP roll-up platform",
+      "whyItFails": "Reference checks and portfolio links show concept vs production. One overclaim kills credibility on everything else — including real Netsweeper MSP channel work and real Moovez production AI.",
+      "instead": "Honest stage label every time: concept + partner discovery vs shipped production.",
+      "story": "Cyber marketplace script: 'Fractional engagement — conceptual marketplace design after extensive MSP and MSSP discovery. Search-first catalog, shortlist as conversion milestone, Mixpanel funnel defined pre-build. Partner-informed IA — not a shipped production deployment or revenue.' MSP roll-up script: 'End of BVXpress tenure I advised a search fund researching Canadian MSP consolidation — landscape synthesis for platform-aggregation thesis. Advisory research only — I did not build or operate an MSP roll-up.' Then pivot to real proof: Netsweeper sold through MSP partners; false-alert reduction protected partner retention.",
+      "badExample": "I built and shipped a cybersecurity marketplace for MSPs. I built an Uber-for-MSPs platform in Canada.",
+      "goodExample": "Concept-stage marketplace design grounded in MSP discovery — honest about stage. Production channel proof is Netsweeper: product sold through MSP partners; trust restoration drove retention."
+    },
+    {
+      "id": "inventing-credentials",
+      "slop": "Inventing LangChain, logo employers, or matrix politics you never ran",
+      "whyItFails": "HM and reference checks will probe stack and org context. Inflating erodes the strong founding-PM story. Truthful nuance (evaluated LangChain, rejected it) reads as engineering judgment, not gap.",
+      "instead": "Claim only what is in your record. Reframe matrix politics as prioritization under opposition in small-org contexts where you were first or only PM.",
+      "story": "LangChain — truthful line: We evaluated LangChain early for Qortex and passed — token overhead and debuggability did not fit an ops pipeline where we need cheap subsystem evals and git-diffable source of truth. Custom ingest-chunk-embed-retrieve pipeline by design. Matrix politics — you have not run multi-PM turf wars at Fortune 500 scale. What you HAVE run: (1) Netsweeper — only PM, redirected outsourced eng for a full quarter against feature-expansion pressure. (2) BVXpress — employee number three, built product function inside advisory firm, killed features telemetry flagged as demo-not-workflow. (3) Moovez — employee number six, cut scope against more-features pressure with replay evidence.",
+      "badExample": "I used LangChain in production. I regularly aligned VP-level stakeholders across matrixed product lines.",
+      "goodExample": "Evaluated LangChain, rejected it for token cost and debuggability — custom pipeline. Influence for me is Netsweeper: one quarter, one bet, trust over coverage — not calendar theatre."
+    }
+  ],
+  "star_scripts": [
+    {
+      "title": "1. Netsweeper disagreement (STAR-09)",
+      "situation": "K-12 staff stopped opening alerts — eight of ten false positives. Eng wanted new detection categories.",
+      "task": "Restore trust before expanding detection surface — MSP partner retention at stake.",
+      "action": "Reframed metric to operational trust. Froze features one quarter. Redirected outsourced team to FP pruning and alert workflow redesign.",
+      "result": "85% false-alert reduction; staff re-engaged unprompted; contract renewed."
+    },
+    {
+      "title": "2. Moovez scope cuts",
+      "situation": "Quote flow was the conversion wedge — 60%+ abandonment at manual dimension entry.",
+      "task": "Ship credible price in under three minutes without sacrificing dispatch reliability.",
+      "action": "CV intake + OR engine. Explicitly cut dispatcher chat overlay, subscriptions, route optimization for V1.",
+      "result": "60 min to ~3 min quotes; ~93% fill rate; Quotely commercialization from inbound operator interest."
+    },
+    {
+      "title": "3. Cyber MSP discovery insight (STAR-13)",
+      "situation": "MSP/MSSP buyers stalled in dense cyber catalogs — deployment model and bundle compatibility opaque.",
+      "task": "Design search-first discovery grounded in partner workflow research (concept stage).",
+      "action": "Intent search, deployment facets, inline trust signals, bundle config during evaluation; shortlist as conversion milestone; Mixpanel funnel defined pre-build.",
+      "result": "Partner-informed IA — honest: concept, not shipped production marketplace."
+    }
+  ],
+  "hr_vs_hm": [
+    {
+      "topic": "Stakeholders",
+      "hr": "1 example, calm tone",
+      "hm": "Full STAR-09 + tradeoff framework"
+    },
+    {
+      "topic": "Disagreements",
+      "hr": "Data and reframed metrics",
+      "hm": "Eng standoff detail + quarter freeze"
+    },
+    {
+      "topic": "Feature factory",
+      "hr": "I cut scope; telemetry gates",
+      "hm": "Moovez cuts + four-layer eval"
+    },
+    {
+      "topic": "AI / agents",
+      "hr": "One line: production + governance",
+      "hm": "Qortex + Command depth"
+    },
+    {
+      "topic": "MSP / channel",
+      "hr": "Three-pillar trifecta",
+      "hm": "Cyber marketplace + platform parallel"
+    },
+    {
+      "topic": "Architecture",
+      "hr": "Stop at outcome names",
+      "hm": "Eval layers, playbook routing, adapter pattern"
+    }
+  ],
+  "questions_to_ask": [
+    "What would success look like for this hire in the first 90 days — and who decides whether we hit it?",
+    "When product and sales disagree on roadmap priority, how does your team resolve it today — and where has that broken down recently?",
+    "What's the last AI or agent bet that didn't land — and what signal told you to pivot or kill it?"
+  ],
+  "prep_todos": [
+    {
+      "id": "intro",
+      "content": "60-sec HR intro aloud (≤75 words, no Qortex architecture)"
+    },
+    {
+      "id": "star09",
+      "content": "STAR-09 Netsweeper disagreement — 3 bullets, ≤75 words"
+    },
+    {
+      "id": "star-cuts",
+      "content": "Moovez V1 cuts — name all three deferrals from memory"
+    },
+    {
+      "id": "star-channel",
+      "content": "MSP trifecta one-liner each (Netsweeper / cyber / research)"
+    },
+    {
+      "id": "influence",
+      "content": "Influence gap answer — no defensiveness drill"
+    },
+    {
+      "id": "salary",
+      "content": "Salary range written — say once, stop"
+    },
+    {
+      "id": "questions",
+      "content": "3 questions for them memorized"
+    },
+    {
+      "id": "guardrails",
+      "content": "Guardrails: no shipped cyber marketplace, no LangChain, no logo invention"
+    }
+  ],
+  "honest_gap_note": "You haven't run Fortune 500 stakeholder theatre or multi-PM turf wars. Your influence record is prioritization under opposition: metric reframes, scope kills, quarter-long eng redirects, adapter-first platform bets. That is real PM judgment — it is not the same skill as calendar-heavy exec alignment. Name the gap once, then prove the adjacent skill with STAR-09 and STAR-10."
+}

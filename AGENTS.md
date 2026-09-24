@@ -13,6 +13,8 @@ Single-user Streamlit resume/cover letter generator. Career truth lives in Markd
 | `RES/data/master_context.md` | **Single source of truth** for generation — edit this to change career facts |
 | `RES/data/history.md` | Auto-appended run log |
 | `RES/data/applications.csv` | CSV-backed outcome tracker (updated by Outcomes tab) |
+| `RES/data/interview_prep.json` | PM behavioral interview prep content (Interview Prep tab) |
+| `RES/data/interview_prep_state.json` | Persisted checklist + practice notes (gitignored) |
 | `RES/prompts/*.md` | 15 prompt fragments (loaded by `generator.py`) |
 | `RES/assets/template.html` / `template.docx` | PDF / DOCX render templates |
 | `RES/outputs/` | Generated files (gitignored) |
@@ -79,6 +81,7 @@ Override via sidebar Advanced or `GEMINI_*_MODEL` / `PAIN_POINT_MODEL` env vars.
 | ❓ Application Questions | Optional portal-specific Q&A |
 | 🚀 Generate & Output | Resume + cover letter generation, preview, download |
 | 📊 Outcomes | **Application tracker** (`applications.csv`; auto-updated on generate) |
+| 🎤 Interview Prep | **Behavioral HR cheatsheet** — roleplay, psych tricks, STAR scripts, checklist |
 | 🔍 Job Search | HUNT-AGENT scraper: Google Jobs + ATS boards |
 | 🎯 Pipeline | **Ops-AI job-hunt OS** (on by default, Outreach mode): pipeline board, memos, draft outreach, log. Full OS (scoreboard, content, review) via sidebar. |
 
