@@ -133,7 +133,7 @@ Use these five method lanes when writing the Summary method bullets (operating s
 
 **Industries (map JD industry terms here when truthful):** Transport and last-mile logistics, warehousing and fulfillment, construction materials marketplaces, finance and insurance, M&A and deal-structuring, consumer health and digital health (B2C telehealth, patient experience, virtual care), marketing attribution and e-commerce growth, energy and infrastructure planning, HR technology and workforce systems (M&A transaction readiness), **IT channel and managed services** (MSP, MSSP, cloud distribution, cybersecurity resale, SMB IT services).
 
-**Product categories (map JD product scope here when truthful):** **Moovez (ROLE 1):** marketplace ops / lightweight TMS — quote-to-dispatch, crew management, booking, order status, dispatch assignment (last-mile moving); **Quotely Command** (quote-accuracy ops console) and **Quotely-Qortex** (hybrid RAG institutional knowledge + agent retrieve packs). TMS/WMS integration and marketplace ops (ROLE 2 construction materials), CRM and marketing automation (HubSpot, ActiveCampaign, Zoho), pricing and real-time quote engines, MMM and attribution platforms, content-compliance and trust/safety AI, B2B SaaS workflow suites, B2C digital health and telehealth platforms (patient experience, virtual care, white-label SaaS — ROLE 2 regional govt), HRIS / HCM / people analytics (ROLE 5 BVXpress HRIS), payroll integration layers, workforce diligence dashboards, **cloud distributor / partner marketplaces** (multi-vendor SKU catalogs, search-first discovery, appliance + virtual + managed-service bundles — ROLE 2 cyber marketplace concept), **MSP platform aggregation** (consolidation + shared services layer — BVXpress-era search-fund research).
+**Product categories (map JD product scope here when truthful):** **Moovez (ROLE 1):** marketplace ops / lightweight TMS — quote-to-dispatch, crew management, booking, order status, dispatch assignment (last-mile moving); **Quotely Command** (quote-accuracy ops console) and **Quotely-Qortex** (hybrid RAG institutional knowledge + agent retrieve packs). TMS/WMS integration and marketplace ops (ROLE 2 **DIS** — Dead Inv Store, construction materials), CRM and marketing automation (HubSpot, ActiveCampaign, Zoho), pricing and real-time quote engines, MMM and attribution platforms, content-compliance and trust/safety AI, B2B SaaS workflow suites, B2C digital health and telehealth platforms (patient experience, virtual care, white-label SaaS — ROLE 2 regional govt), HRIS / HCM / people analytics (ROLE 5 BVXpress HRIS), payroll integration layers, workforce diligence dashboards, **cloud distributor / partner marketplaces** (multi-vendor SKU catalogs, search-first discovery, appliance + virtual + managed-service bundles — ROLE 2 cyber marketplace concept), **MSP platform aggregation** (consolidation + shared services layer — BVXpress-era search-fund research).
 
 **Tools palette (one per statement max; mirror JD tool names when listed):** Heap, Microsoft Clarity, Hotjar, Segment, Mixpanel, Aha!, Pendo, Notion, Figma, Amplitude, Productboard, Google Analytics, R, SQL, Cursor, Windsurf, Lovable, n8n, Zapier, Stripe/Square, HubSpot, ActiveCampaign, Jira, Confluence, FastAPI, Qdrant, OpenAI embeddings, Gemini.
 
@@ -412,8 +412,17 @@ Use these five method lanes when writing the Summary method bullets (operating s
 #### B2B Series-A SaaS (Insurance and Finance)
 - Converted legacy Excel actuarial and waterfall models into scalable APIs. Delivered a $140k pilot automating legacy calculation processes for a private-equity firm.
 
-#### Marketplace in Building & Construction Materials
-- Architected TMS/WMS integration hooks and monetization strategy for a construction materials marketplace.
+#### Dead Inv Store (DIS) — building & construction materials marketplace (Calgary startup)
+- **Company:** **Dead Inv Store (DIS)** — online B2B marketplace for **building & construction materials** (Calgary). Not Retailogists.
+- Fractional PM: marketplace ops, supplier–buyer workflows, integration product.
+- Architected **WMS integration** hooks and monetization for **EasyEcom** and **Blue Yonder** (inventory, fulfillment, order handoffs vs marketplace system of record).
+- TMS/WMS integration patterns; do not invent transaction volumes unless added to a ROLE block.
+
+#### Counter — agentic POS (VCA consultant; open product; Alberta retail productization)
+- **Started:** summer **2026**; **initial retailer conversations:** **Sep 2026**.
+- **Public repo:** [counter.blavania.com](https://counter.blavania.com) / GitHub counter — agent-ready POS store of record (catalog, 86, quote, tickets, checkout; register + SMS + buyer MCP).
+- **Commercialization:** In discussions with **one Alberta retail chain** to productize; **five-store Calgary pilot** chartered — **not deployed** in stores.
+- Payment invariant: `paid`/`fired` only via server `applyPaymentSucceeded`; optional `PosPort.postSale` to classic POS (e.g. OSPOS) on roadmap.
 
 #### Cybersecurity Marketplace (MSP/MSSP channel — vendor name confidential)
 - **Client**: Cybersecurity vendor (name confidential); **conceptual design** engagement during fractional period (not a shipped production deployment).
@@ -494,6 +503,11 @@ Use these five method lanes when writing the Summary method bullets (operating s
 - **Post-launch iteration**: The ARPU jump from $450 to $600 was not from a price increase — it came from users voluntarily upgrading to access the presentation and export tools, which confirmed the workflow-friction diagnosis. Retention analysis showed multi-product adopters (3+ products) retained at 2x the rate of single-product users, which drove the GTM shift to onboarding depth over acquisition breadth. The 7% conversion lift came from switching the landing page message from "most accurate valuation tool" to "fastest route from Excel to client presentation" — a direct output of the discovery work.
 
 **STAR stories (see Story Bank):** STAR-10 (presentation speed pivot).
+
+#### JPOS — POS + warehouse management (client consulting during BVXpress tenure)
+- **Not a BVXpress product** — **consulting engagement** delivered while at BVXpress (ICI advisory employer); product name **JPOS** (low public footprint).
+- Led product for integrated **POS and warehouse management**; **deployed at four sites** with approximately **$200k in monthly sales** processed through the system.
+- Resume guardrail: cite as **client consulting / JPOS**, not as part of the BVXpress M&A SaaS SKU ladder.
 
 - Built the Product Business Unit from scratch as **employee #3 (first product hire)**; launched 5 products from whiteboard to market and operated a total of 8 products serving 1,400+ users across research, workflow, and growth operations.
 - Roadmap and releases tracked in Aha!; **in-house telemetry/analytics suite** plus Pendo informed which workflows to fix first and which features to enhance or deprecate; focus groups and tree tests validated pricing, onboarding, and workflow changes across the 8-product suite.
