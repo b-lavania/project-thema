@@ -169,11 +169,19 @@ body {
   line-height: 1.55;
   font-weight: 500;
   color: #f5f3f0;
-  margin: 0 0 1rem;
+  margin: 0 0 0.2rem;
 }
 
 .footer-name strong {
   font-weight: 700;
+}
+
+.footer-corp {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  font-weight: 400;
+  color: rgba(245, 243, 240, 0.78);
+  margin: 0 0 1rem;
 }
 
 .footer-cta {
